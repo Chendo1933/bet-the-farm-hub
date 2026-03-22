@@ -1,0 +1,15 @@
+# Skill installer files
+*.skill
+
+# Backup files
+*.backup
+*.backup.html
+
+# Eval/dev artifacts
+skill-eval-review.html
+
+# macOS
+.DS_Store
+
+# Skills directory (install locally, don't need in repo)
+skills/
