@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bet The Farm — CFB & NFL Hub</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:       #0b1622;
+    --card:     #112240;
+    --card2:    #172d4d;
+    --navy:     #1a3a5c;
+    --gold:     #c9a84c;
+    --gold2:    #f0c96a;
+    --green:    #22c55e;
+    --red:      #ef4444;
+    --blue:     #3b82f6;
+    --text:     #e2e8f0;
+    --muted:    #7a95b4;
+    --border:   #1e3a5c;
+    --row-alt:  #0f1e30;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; min-height: 100vh; }
+
+  /* ── Header ── */
+  header { background: linear-gradient(135deg, #071626 0%, #112240 100%); border-bottom: 2px solid var(--gold); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
+  .logo span { color: var(--text); font-weight: 400; font-size: 13px; margin-left: 10px; }
+  .note { font-size: 11px; color: var(--muted); }
+
+  /* ── Tab Nav ── */
+  nav { background: var(--card); border-bottom: 1px solid var(--border); display: flex; gap: 2px; padding: 0 16px; overflow-x: auto; }
+  nav button { background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 600; padding: 14px 20px; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all .2s; letter-spacing: .4px; }
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ── Layout ── */
+  .tab-content { display: none; padding: 20px 24px 40px; }
+  .tab-content.active { display: block; }
+  .page-title { font-size: 22px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .page-sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+
+  /* ── Cards ── */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* ── KPI Cards ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--gold); }
+  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; }
+  .kpi-val { font-size: 28px; font-weight: 800; color: var(--gold); line-height: 1.2; margin-top: 4px; }
+  .kpi-val.green { color: var(--green); }
+  .kpi-val.red { color: var(--red); }
+  .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Section header ── */
+  .section-hdr { display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; }
+  .section-hdr h2 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .section-hdr .badge { background: var(--gold); color: #071626; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 99px; text-transform: uppercase; }
+
+  /* ── Tables ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: var(--navy); color: var(--gold); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 10px 12px; cursor: pointer; white-space: nowrap; user-select: none; }
+  thead th:hover { background: #1e4a7a; }
+  thead th .sort-arrow { margin-left: 4px; opacity: .5; font-size: 10px; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:hover { background: #162d4a; }
+  tbody td { padding: 9px 12px; white-space: nowrap; }
+  td.team-name { font-weight: 700; color: var(--text); }
+  td.center { text-align: center; }
+  td.pct-good  { color: var(--green); font-weight: 700; }
+  td.pct-bad   { color: var(--red); font-weight: 700; }
+  td.pct-mid   { color: var(--text); }
+
+  /* ── Filters / search ── */
+  .tbl-controls { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+  .search-box { background: var(--card2); border: 1px solid var(--border); border-radius: 7px; padding: 8px 14px; color: var(--text); font-size: 13px; width: 220px; }
+  .search-box::placeholder { color: var(--muted); }
+  .search-box:focus { outline: none; border-color: var(--gold); }
+  .filter-btn { background: var(--card2); border: 1px solid var(--border); border-radius: 7px; padding: 8px 14px; color: var(--muted); font-size: 12px; cursor: pointer; transition: all .2s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--navy); color: var(--gold); border-color: var(--gold); }
+
+  /* ── Matchup Analyzer ── */
+  .analyzer { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-top: 24px; }
+  .analyzer h2 { font-size: 16px; font-weight: 800; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .analyzer-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .input-group label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; font-weight: 600; }
+  select, input[type=number], input[type=text] { background: var(--card2); border: 1px solid var(--border); border-radius: 7px; padding: 9px 12px; color: var(--text); font-size: 13px; width: 100%; }
+  select:focus, input:focus { outline: none; border-color: var(--gold); }
+  option { background: var(--card2); }
+  .btn-analyze { background: var(--gold); color: #071626; font-weight: 800; font-size: 14px; padding: 11px 28px; border: none; border-radius: 8px; cursor: pointer; transition: all .2s; letter-spacing: .5px; }
+  .btn-analyze:hover { background: var(--gold2); transform: translateY(-1px); }
+
+  .matchup-results { display: none; }
+  .matchup-results.show { display: block; }
+  .matchup-header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-bottom: 16px; text-align: center; }
+  .matchup-team { background: var(--card2); border-radius: 10px; padding: 16px; }
+  .matchup-team h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .matchup-vs { display: flex; align-items: center; justify-content: center; padding: 0 16px; font-size: 22px; font-weight: 900; color: var(--gold); }
+  .stat-compare { display: grid; grid-template-columns: 1fr 180px 1fr; gap: 0; }
+  .stat-row { display: contents; }
+  .stat-row > div { padding: 7px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .stat-row .home-val { justify-content: flex-start; font-weight: 700; }
+  .stat-row .stat-label { justify-content: center; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; background: var(--row-alt); font-weight: 600; }
+  .stat-row .away-val { justify-content: flex-end; font-weight: 700; }
+  .win-val { color: var(--green); }
+  .lose-val { color: var(--red); }
+
+  .projections { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+  .proj-card { background: var(--card2); border-radius: 8px; padding: 14px; border-left: 3px solid var(--gold); }
+  .proj-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
+  .proj-card .val { font-size: 22px; font-weight: 800; color: var(--gold); }
+  .proj-card .note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .flags { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .flag { padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .flag.warn  { background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.3); color: var(--gold2); }
+  .flag.good  { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); color: #86efac; }
+  .flag.info  { background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.3); color: #93c5fd; }
+  .flag.neutral { background: rgba(122,149,180,.1); border: 1px solid rgba(122,149,180,.3); color: var(--muted); }
+
+  /* ── Bet Tracker ── */
+  .tracker-form { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .tracker-form h3 { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 14px; }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .btn-add { background: var(--gold); color: #071626; font-weight: 800; padding: 10px 24px; border: none; border-radius: 7px; cursor: pointer; font-size: 13px; }
+  .btn-add:hover { background: var(--gold2); }
+
+  /* ── Tips ── */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .tip-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; border-top: 3px solid var(--gold); }
+  .tip-card h3 { font-size: 14px; font-weight: 800; color: var(--gold2); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .tip-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .tip-card .edge-badge { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 99px; background: rgba(34,197,94,.2); color: var(--green); margin-left: 6px; text-transform: uppercase; }
+
+  /* ── Charts ── */
+  .chart-wrap { position: relative; height: 260px; }
+
+  /* ── Badges ── */
+  .conf-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: var(--navy); color: var(--muted); margin-left: 6px; }
+  .conf-AFC { background: rgba(59,130,246,.2); color: #93c5fd; }
+  .conf-NFC { background: rgba(34,197,94,.2); color: #86efac; }
+  .conf-SEC { background: rgba(201,168,76,.2); color: var(--gold2); }
+  .conf-B12 { background: rgba(239,68,68,.2); color: #fca5a5; }
+  .conf-B10 { background: rgba(168,85,247,.2); color: #d8b4fe; }
+  .conf-ACC { background: rgba(20,184,166,.2); color: #5eead4; }
+
+  .data-note { font-size: 11px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2); color: var(--gold); border-radius: 6px; padding: 8px 12px; margin-bottom: 14px; }
+
+  @media (max-width: 768px) {
+    .analyzer-inputs { grid-template-columns: 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr; }
+    header { padding: 0 14px; }
+    .tab-content { padding: 14px 14px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🏈 BET THE FARM <span>CFB & NFL Hub</span></div>
+  <div class="note">⚠ Sample data — update weekly from TeamRankings & Pro-Football-Reference</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('overview')">📊 Overview</button>
+  <button onclick="showTab('nfl')">🏈 NFL Teams</button>
+  <button onclick="showTab('cfb')">🎓 CFB Teams</button>
+  <button onclick="showTab('analyzer-nfl')">⚡ NFL Matchup Analyzer</button>
+  <button onclick="showTab('analyzer-cfb')">⚡ CFB Matchup Analyzer</button>
+  <button onclick="showTab('tracker')">📓 Bet Tracker</button>
+  <button onclick="showTab('angles')">🎯 Betting Angles</button>
+</nav>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<div id="tab-overview" class="tab-content active">
+  <div class="page-title">Dashboard Overview</div>
+  <div class="page-sub">Your CFB & NFL betting command center — season 2025-26</div>
+
+  <div class="kpi-grid" id="overview-kpis">
+    <!-- filled by JS -->
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;">
+    <div class="card">
+      <div class="card-title">📈 NFL — Best ATS Teams (Home)</div>
+      <div id="overview-nfl-best"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 CFB — Best ATS Teams (Overall)</div>
+      <div id="overview-cfb-best"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 NFL Totals — Most Overs</div>
+      <div id="overview-nfl-ou"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 CFB Totals — Most Unders</div>
+      <div id="overview-cfb-ou"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ NFL TEAMS ═══════════════════ -->
+<div id="tab-nfl" class="tab-content">
+  <div class="page-title">NFL Team Database</div>
+  <div class="page-sub">2025-26 regular season ATS & O/U records · Click any column header to sort</div>
+  <div class="data-note">⚠ Sample data. Update ATS records from teamrankings.com → NFL → Trends · Update PPG from pro-football-reference.com</div>
+  <div class="tbl-controls">
+    <input class="search-box" id="nfl-search" placeholder="🔍 Search team..." oninput="filterTable('nfl')">
+    <button class="filter-btn active" onclick="filterConf('nfl','all',this)">All</button>
+    <button class="filter-btn" onclick="filterConf('nfl','AFC',this)">AFC</button>
+    <button class="filter-btn" onclick="filterConf('nfl','NFC',this)">NFC</button>
+    <button class="filter-btn" onclick="filterConf('nfl','North',this)">North</button>
+    <button class="filter-btn" onclick="filterConf('nfl','South',this)">South</button>
+    <button class="filter-btn" onclick="filterConf('nfl','East',this)">East</button>
+    <button class="filter-btn" onclick="filterConf('nfl','West',this)">West</button>
+  </div>
+  <div class="tbl-wrap">
+    <table id="nfl-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable('nfl',0)">Team <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',1)">Conf <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',2)">Div <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',3)">W-L <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',4)">ATS W <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',5)">ATS L <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',6)">ATS P <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',7)">ATS% <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',8)">Home ATS <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',9)">Away ATS <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',10)">Over <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',11)">Under <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',12)">O% <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',13)">PPG <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',14)">PAPG <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',15)">Off Rank <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('nfl',16)">Def Rank <span class="sort-arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="nfl-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ CFB TEAMS ═══════════════════ -->
+<div id="tab-cfb" class="tab-content">
+  <div class="page-title">CFB Team Database</div>
+  <div class="page-sub">2025 season ATS & efficiency records · Click any column header to sort</div>
+  <div class="data-note">⚠ Sample data. Update efficiency from kenpom.com or barttorvik.com · Update ATS from teamrankings.com</div>
+  <div class="tbl-controls">
+    <input class="search-box" id="cfb-search" placeholder="🔍 Search team..." oninput="filterTable('cfb')">
+    <button class="filter-btn active" onclick="filterConf('cfb','all',this)">All</button>
+    <button class="filter-btn" onclick="filterConf('cfb','SEC',this)">SEC</button>
+    <button class="filter-btn" onclick="filterConf('cfb','Big 12',this)">Big 12</button>
+    <button class="filter-btn" onclick="filterConf('cfb','Big Ten',this)">Big Ten</button>
+    <button class="filter-btn" onclick="filterConf('cfb','ACC',this)">ACC</button>
+    <button class="filter-btn" onclick="filterConf('cfb','Big East',this)">Big East</button>
+  </div>
+  <div class="tbl-wrap">
+    <table id="cfb-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable('cfb',0)"># <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',1)">Team <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',2)">Conf <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',3)">W-L <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',4)">ATS W <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',5)">ATS L <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',6)">ATS% <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',7)">Home ATS <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',8)">Away ATS <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',9)">Over <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',10)">Under <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',11)">O% <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',12)">SP+ Off <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',13)">SP+ Def <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',14)">PPG <span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('cfb',15)">PAPG <span class="sort-arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="cfb-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ NFL ANALYZER ═══════════════════ -->
+<div id="tab-analyzer-nfl" class="tab-content">
+  <div class="page-title">NFL Matchup Analyzer</div>
+  <div class="page-sub">Select two teams to generate a full breakdown with projections and situational flags</div>
+  <div class="analyzer" id="nfl-analyzer">
+    <h2>⚡ NFL Game Setup</h2>
+    <div class="analyzer-inputs">
+      <div class="input-group"><label>Home Team</label><select id="nfl-home"></select></div>
+      <div class="input-group"><label>Away Team</label><select id="nfl-away"></select></div>
+      <div class="input-group"><label>Spread (Home)</label><input type="number" id="nfl-spread" placeholder="-3.5" step="0.5"></div>
+      <div class="input-group"><label>Game Total</label><input type="number" id="nfl-total" placeholder="46.5" step="0.5"></div>
+      <div class="input-group"><label>Home Days Rest</label><input type="number" id="nfl-hrest" placeholder="7" min="1" max="21"></div>
+      <div class="input-group"><label>Away Days Rest</label><input type="number" id="nfl-arest" placeholder="7" min="1" max="21"></div>
+      <div class="input-group"><label>Surface</label><select id="nfl-surface"><option>Grass</option><option>Turf</option></select></div>
+      <div class="input-group"><label>Weather (Cold/Precip)</label><select id="nfl-weather"><option value="normal">Normal / Dome</option><option value="cold">Cold (&lt;35°F)</option><option value="wind">High Wind (&gt;15mph)</option><option value="precip">Rain / Snow</option></select></div>
+    </div>
+    <button class="btn-analyze" onclick="runAnalyzer('nfl')">Generate Breakdown →</button>
+    <div class="matchup-results" id="nfl-results"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CFB ANALYZER ═══════════════════ -->
+<div id="tab-analyzer-cfb" class="tab-content">
+  <div class="page-title">CFB Matchup Analyzer</div>
+  <div class="page-sub">Select two teams to generate a full breakdown with projections and situational flags</div>
+  <div class="analyzer" id="cfb-analyzer">
+    <h2>⚡ CFB Game Setup</h2>
+    <div class="analyzer-inputs">
+      <div class="input-group"><label>Home Team</label><select id="cfb-home"></select></div>
+      <div class="input-group"><label>Away Team</label><select id="cfb-away"></select></div>
+      <div class="input-group"><label>Spread (Home)</label><input type="number" id="cfb-spread" placeholder="-7.0" step="0.5"></div>
+      <div class="input-group"><label>Game Total</label><input type="number" id="cfb-total" placeholder="52.5" step="0.5"></div>
+      <div class="input-group"><label>Home Days Rest</label><input type="number" id="cfb-hrest" placeholder="7" min="1" max="21"></div>
+      <div class="input-group"><label>Away Days Rest</label><input type="number" id="cfb-arest" placeholder="7" min="1" max="21"></div>
+      <div class="input-group"><label>Game Type</label><select id="cfb-gametype"><option>Regular Season</option><option>Conference Championship</option><option>Bowl Game</option><option>Playoff</option></select></div>
+      <div class="input-group"><label>Revenge Game?</label><select id="cfb-revenge"><option value="no">No</option><option value="home">Home has revenge</option><option value="away">Away has revenge</option></select></div>
+    </div>
+    <button class="btn-analyze" onclick="runAnalyzer('cfb')">Generate Breakdown →</button>
+    <div class="matchup-results" id="cfb-results"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TRACKER ═══════════════════ -->
+<div id="tab-tracker" class="tab-content">
+  <div class="page-title">Bet Tracker</div>
+  <div class="page-sub">Log your CFB & NFL bets — data saves in your browser automatically</div>
+
+  <div class="kpi-grid" id="tracker-kpis"></div>
+
+  <div class="tracker-form">
+    <h3>➕ Log New Bet</h3>
+    <div class="form-grid">
+      <div class="input-group"><label>Date</label><input type="text" id="t-date" placeholder="e.g. 10/05/25"></div>
+      <div class="input-group"><label>Sport</label><select id="t-sport"><option>NFL</option><option>CFB</option></select></div>
+      <div class="input-group"><label>Matchup</label><input type="text" id="t-matchup" placeholder="e.g. Chiefs @ Bills"></div>
+      <div class="input-group"><label>Bet Type</label><select id="t-type"><option>Spread</option><option>Moneyline</option><option>Total (Over)</option><option>Total (Under)</option><option>Parlay</option><option>Prop</option><option>Futures</option></select></div>
+      <div class="input-group"><label>Pick</label><input type="text" id="t-pick" placeholder="e.g. Chiefs -3.5"></div>
+      <div class="input-group"><label>Odds</label><input type="number" id="t-odds" placeholder="-110"></div>
+      <div class="input-group"><label>Stake ($)</label><input type="number" id="t-stake" placeholder="50" min="0" step="5"></div>
+      <div class="input-group"><label>Result</label><select id="t-result"><option>Pending</option><option>Win</option><option>Loss</option><option>Push</option></select></div>
+    </div>
+    <button class="btn-add" onclick="addBet()">Add Bet</button>
+  </div>
+
+  <div class="section-hdr"><h2>Bet History</h2><div class="badge" id="bet-count">0 bets</div></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Sport</th><th>Matchup</th><th>Type</th><th>Pick</th>
+        <th>Odds</th><th>Stake</th><th>Result</th><th>P&L</th><th>Action</th>
+      </tr></thead>
+      <tbody id="bets-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════ ANGLES ═══════════════════ -->
+<div id="tab-angles" class="tab-content">
+  <div class="page-title">Betting Angles & Situational Edges</div>
+  <div class="page-sub">Key spots and patterns to exploit in CFB and NFL betting</div>
+
+  <div class="section-hdr"><h2>🏈 NFL Edges</h2></div>
+  <div class="tips-grid" id="nfl-tips"></div>
+
+  <div class="section-hdr" style="margin-top:28px;"><h2>🎓 CFB Edges</h2></div>
+  <div class="tips-grid" id="cfb-tips"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════════════════════
+
+// NFL Teams: name, conf, div, W, L, atsW, atsL, atsP, homeAtsW, homeAtsL, awayAtsW, awayAtsL, over, under, ouPush, ppg, papg, offRank, defRank
+const NFL = [
+  ["Kansas City Chiefs","AFC","West",14,3,11,6,1,6,2,5,4,9,8,1,28.4,20.1,4,8],
+  ["Philadelphia Eagles","NFC","East",14,3,12,5,1,7,1,5,4,11,6,1,30.2,20.4,2,10],
+  ["Detroit Lions","NFC","North",13,4,11,6,1,7,1,4,5,12,5,1,32.1,22.6,1,15],
+  ["Buffalo Bills","AFC","East",13,4,10,7,1,6,2,4,5,10,7,1,29.8,22.3,3,12],
+  ["Baltimore Ravens","AFC","North",12,5,9,8,1,5,3,4,5,10,7,1,27.6,21.4,6,9],
+  ["Green Bay Packers","NFC","North",12,5,11,6,1,7,1,4,5,11,6,1,26.8,21.2,7,11],
+  ["Minnesota Vikings","NFC","North",13,4,10,7,1,6,2,4,5,9,8,1,25.4,22.8,9,14],
+  ["Los Angeles Rams","NFC","West",11,6,10,7,1,6,2,4,5,11,6,1,28.6,24.2,5,18],
+  ["Houston Texans","AFC","South",11,6,9,8,1,5,3,4,5,9,8,1,24.8,22.6,11,16],
+  ["Washington Commanders","NFC","East",11,6,10,7,1,6,2,4,5,10,7,1,27.2,23.4,8,17],
+  ["San Francisco 49ers","NFC","West",10,7,8,9,1,5,3,3,6,9,8,1,26.4,24.6,10,13],
+  ["Denver Broncos","AFC","West",10,7,9,8,1,5,3,4,5,9,8,1,25.2,23.8,12,19],
+  ["Pittsburgh Steelers","AFC","North",10,7,8,9,1,5,3,3,6,8,9,1,22.4,21.6,18,7],
+  ["Tampa Bay Buccaneers","NFC","South",9,8,9,8,1,5,3,4,5,8,9,1,24.6,24.8,13,20],
+  ["Indianapolis Colts","AFC","South",9,8,8,9,1,4,4,4,5,9,8,1,23.4,24.2,14,21],
+  ["Los Angeles Chargers","AFC","West",9,8,10,7,1,6,2,4,5,10,7,1,26.8,25.4,7,22],
+  ["Cincinnati Bengals","AFC","North",9,8,7,10,1,4,4,3,6,11,6,1,28.2,27.4,5,25],
+  ["Seattle Seahawks","NFC","West",9,8,8,9,1,4,4,4,5,10,7,1,25.6,25.2,11,23],
+  ["Atlanta Falcons","NFC","South",8,9,9,8,1,5,3,4,5,9,8,1,23.8,24.4,15,24],
+  ["Dallas Cowboys","NFC","East",7,10,7,10,1,4,4,3,6,10,7,1,24.2,26.6,13,26],
+  ["Chicago Bears","NFC","North",6,11,7,10,1,4,4,3,6,9,8,1,21.6,26.8,19,27],
+  ["New Orleans Saints","NFC","South",5,12,6,11,1,3,5,3,6,7,10,1,19.4,28.6,22,29],
+  ["New England Patriots","AFC","East",4,13,6,11,1,3,5,3,6,6,11,1,18.2,28.4,24,28],
+  ["Las Vegas Raiders","AFC","West",4,13,5,12,1,3,5,2,7,5,12,1,17.8,30.2,26,30],
+  ["New York Giants","NFC","East",4,13,5,12,1,3,5,2,7,4,13,1,16.4,29.8,28,31],
+  ["Carolina Panthers","NFC","South",4,13,6,11,1,3,5,3,6,5,12,1,17.2,31.4,27,32],
+  ["Tennessee Titans","AFC","South",5,12,7,10,1,4,4,3,6,7,10,1,18.6,27.8,23,27],
+  ["Jacksonville Jaguars","AFC","South",6,11,8,9,1,4,4,4,5,8,9,1,21.4,26.2,20,25],
+  ["Cleveland Browns","AFC","North",3,14,5,12,1,3,5,2,7,5,12,1,16.8,31.6,29,31],
+  ["New York Jets","AFC","East",5,12,7,10,1,4,4,3,6,6,11,1,19.8,27.6,21,28],
+  ["Arizona Cardinals","NFC","West",7,10,9,8,1,5,3,4,5,10,7,1,22.8,25.8,16,22],
+  ["Miami Dolphins","AFC","East",8,9,8,9,1,4,4,4,5,9,8,1,26.4,26.2,10,20],
+];
+
+// CFB Teams: rank, name, conf, W, L, atsW, atsL, atsP, homeAtsW, homeAtsL, awayAtsW, awayAtsL, over, under, ouPush, spOff, spDef, ppg, papg
+const CFB = [
+  [1,"Ohio State","Big Ten",13,2,10,5,1,7,1,3,4,8,7,1,42.3,5.8,40.2,22.4],
+  [2,"Georgia","SEC",13,2,9,6,1,6,2,3,4,9,6,1,38.6,6.2,38.8,19.6],
+  [3,"Texas","SEC",13,2,11,4,1,7,1,4,3,10,5,1,40.4,7.1,39.6,21.2],
+  [4,"Penn State","Big Ten",13,3,10,6,1,6,2,4,4,8,8,1,36.8,8.4,34.8,22.4],
+  [5,"Notre Dame","Independent",13,2,10,5,1,7,1,3,4,7,8,1,35.2,9.2,33.4,21.6],
+  [6,"Tennessee","SEC",11,3,9,5,1,6,2,3,4,8,7,1,37.4,10.6,36.8,24.2],
+  [7,"Oregon","Big Ten",12,2,9,5,1,6,2,3,4,9,5,1,38.8,9.4,38.2,22.8],
+  [8,"Boise State","MWC",12,2,10,4,1,7,1,3,3,11,4,1,36.4,11.8,36.2,23.6],
+  [9,"SMU","ACC",12,3,9,6,1,6,2,3,5,10,6,1,37.6,12.2,37.8,25.4],
+  [10,"Alabama","SEC",9,4,7,6,1,4,3,3,4,7,6,1,35.8,14.4,34.6,26.8],
+  [11,"Clemson","ACC",10,4,9,5,1,6,2,3,4,8,6,1,34.8,13.6,33.8,24.2],
+  [12,"Iowa State","Big 12",11,3,10,4,1,7,1,3,3,8,7,1,34.2,14.8,34.4,24.8],
+  [13,"Colorado","Big 12",9,4,9,4,1,5,2,4,3,10,4,1,36.6,16.2,37.2,28.4],
+  [14,"Ole Miss","SEC",10,3,8,5,1,5,2,3,4,9,5,1,35.4,15.6,36.4,27.2],
+  [15,"Indiana","Big Ten",11,2,9,4,1,6,1,3,3,8,5,1,33.8,14.2,33.4,24.6],
+  [16,"Kansas State","Big 12",9,4,8,5,1,5,2,3,4,7,7,1,32.6,16.8,32.8,26.4],
+  [17,"Miami FL","ACC",10,3,9,4,1,6,2,3,3,9,5,1,34.4,15.4,34.6,26.2],
+  [18,"Texas A&M","SEC",9,4,7,6,1,4,3,3,4,6,8,1,31.8,17.2,31.4,27.6],
+  [19,"LSU","SEC",9,4,8,5,1,5,2,3,4,8,6,1,33.6,16.6,33.8,26.8],
+  [20,"Missouri","SEC",8,5,7,6,1,4,3,3,4,8,6,1,32.4,17.8,32.2,27.4],
+  [21,"Michigan","Big Ten",8,5,7,6,1,4,3,3,4,7,7,1,30.8,18.4,30.4,27.8],
+  [22,"Arizona","Big 12",8,5,8,5,1,5,2,3,4,9,5,1,33.2,17.4,33.6,27.2],
+  [23,"Washington","Big Ten",8,5,7,6,1,4,3,3,4,8,6,1,32.6,18.2,32.8,28.4],
+  [24,"Arkansas","SEC",7,6,7,6,1,4,3,3,4,7,7,1,30.4,19.6,30.2,28.6],
+  [25,"UNLV","MWC",9,5,9,5,1,6,2,3,4,11,4,1,34.8,18.6,35.4,28.8],
+  [26,"Oklahoma","SEC",6,7,6,7,1,3,4,3,4,6,8,1,28.6,21.4,28.2,29.6],
+  [27,"Michigan State","Big Ten",7,6,7,6,1,4,3,3,4,8,6,1,29.8,20.2,30.4,28.8],
+  [28,"Kansas","Big 12",8,5,8,5,1,5,2,3,4,9,5,1,31.4,18.8,31.6,27.4],
+  [29,"Duke","ACC",9,4,8,5,1,5,2,3,4,8,6,1,30.6,19.4,30.8,27.2],
+  [30,"North Carolina","ACC",7,6,6,7,1,3,4,3,4,7,7,1,28.4,22.6,27.8,30.2],
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  TEAM TIPS DATA
+// ═══════════════════════════════════════════════════════════════
+const NFL_TIPS = [
+  { icon:"🏟️", title:"Home Underdogs", edge:"~54% ATS", body:"NFL home dogs cover at one of the highest rates in sports betting. A home dog of +3 to +7 — especially a team with a strong defense — is a consistent long-term edge." },
+  { icon:"🌧️", title:"Bad Weather Games", edge:"Lean Under", body:"Wind over 15mph or significant precipitation suppresses scoring. Total drops of 1.5–3 pts are common when weather is a factor. Fade overs in outdoor cold-weather games." },
+  { icon:"🔄", title:"Divisional Games", edge:"Tighter Spreads", body:"NFL divisional matchups are historically tighter contests. Fade large favorites (7+) within the division — teams know each other well and coaches game-plan specifically." },
+  { icon:"⏰", title:"Short Rest (3-4 days)", edge:"Fade Favorites", body:"Teams on short rest (Thursday games) cover at just 46% as the favorite. Especially true for teams that traveled in their previous game. Lean toward the team with full rest." },
+  { icon:"📺", title:"Prime Time Inflation", edge:"Fade Public", body:"Prime-time games attract heavy public action. Sharp money often fades inflated public favorites in Sunday/Monday night games. Look for +3 to +6 dogs in marquee matchups." },
+  { icon:"🎯", title:"QB Injury / Change", edge:"Market Overreacts", body:"When a top-10 QB misses a game, books move the spread 7–10 pts. But backup QBs are inconsistent — the market often overreacts. Look for value on the backup team's dog price." },
+  { icon:"🗓️", title:"Week 17-18 Motivation", edge:"Rest Starters", body:"Teams with playoff seeding locked often rest starters late in the season. Always check lineup news before betting teams that have nothing to play for in Weeks 17-18." },
+  { icon:"🏔️", title:"Altitude (Denver)", edge:"Fatigue Factor", body:"Games in Denver see visiting teams fatigue in the 4th quarter more often than chance. Look at Denver home games in early season before opponents adapt." },
+];
+
+const CFB_TIPS = [
+  { icon:"🏠", title:"Home Underdog Spot", edge:"~54% ATS", body:"College home dogs cover at an elevated rate, especially in rivalry games. Any home team getting 7+ points from a rival or regional opponent is worth examining." },
+  { icon:"👀", title:"Look-Ahead Spots", edge:"Fade Favorites", body:"When a ranked team is a big favorite in a tune-up game before a rivalry, they frequently underperform ATS. Track the schedule: who's next on their schedule?" },
+  { icon:"😤", title:"Revenge Games", edge:"Strong Signal", body:"Teams coming off a blowout loss at home against a rival cover at elevated rates the following week. The 'embarrassment factor' is real and the public fades them too hard." },
+  { icon:"📅", title:"After Bye Week", edge:"+3% ATS Edge", body:"Teams coming off a bye week cover at roughly 53–54% historically. Extra rest, more film time, and healthy rosters. Target teams catching a tough opponent after their off week." },
+  { icon:"✈️", title:"Long Road Trips", edge:"Fade Visitors", body:"West Coast teams traveling east for a noon kickoff are at a physiological disadvantage. 3-hour time zone shifts affect performance — lean toward the home team or under." },
+  { icon:"📊", title:"SP+ vs Vegas Line Gap", edge:"Best Edge Source", body:"When SP+ (collegefootballdata.com) projects a margin 4+ points different from the Vegas spread, that's a sharp signal. Track this weekly — it's the CFB bettor's best tool." },
+  { icon:"🌬️", title:"Weather Totals", edge:"Under Angle", body:"CFB totals are often set assuming favorable conditions. Wind, cold, and rain hit passing offenses hard. Total drops of 3–7 pts on game day create big under value." },
+  { icon:"🏆", title:"Bowl Game Motivation", edge:"Fading Big Brands", body:"Teams that wanted a better bowl spot and got snubbed are motivated to cover. Also: teams playing in their home region vs. a traveling opponent have a real crowd edge." },
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let bets = JSON.parse(localStorage.getItem('btf_bets') || '[]');
+let sortStates = { nfl: {col:-1, dir:1}, cfb: {col:-1, dir:1} };
+let confFilters = { nfl: 'all', cfb: 'all' };
+
+// ═══════════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (id === 'tracker') renderTracker();
+  if (id === 'overview') renderOverview();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TABLE RENDERING
+// ═══════════════════════════════════════════════════════════════
+function atsClass(pct) {
+  if (pct >= 0.55) return 'pct-good';
+  if (pct <= 0.45) return 'pct-bad';
+  return 'pct-mid';
+}
+function ouClass(pct) {
+  if (pct >= 0.57) return 'pct-good';
+  if (pct <= 0.43) return 'pct-bad';
+  return 'pct-mid';
+}
+function pct(w, l) { return l + w === 0 ? 0 : w / (w + l); }
+function confBadge(c) {
+  const k = c.replace(/\s/g,'').replace('+','').replace('-','');
+  let cls = '';
+  if (c==='AFC') cls='conf-AFC'; else if (c==='NFC') cls='conf-NFC';
+  else if (c==='SEC') cls='conf-SEC'; else if (c==='Big 12') cls='conf-B12';
+  else if (c==='Big Ten') cls='conf-B10'; else if (c==='ACC') cls='conf-ACC';
+  return `<span class="conf-badge ${cls}">${c}</span>`;
+}
+
+function renderNFL(data) {
+  const tbody = document.getElementById('nfl-tbody');
+  tbody.innerHTML = data.map(t => {
+    const [name,conf,div,w,l,aw,al,ap,haw,hal,aaw,aal,ov,un,oup,ppg,papg,offR,defR] = t;
+    const atsPct = pct(aw,al), hPct = pct(haw,hal), aPct = pct(aaw,aal), ouPct = pct(ov,un);
+    return `<tr data-conf="${conf}" data-div="${div}" data-name="${name.toLowerCase()}">
+      <td class="team-name">${name}</td>
+      <td class="center">${confBadge(conf)}</td>
+      <td class="center"><span style="color:var(--muted);font-size:11px">${div}</span></td>
+      <td class="center">${w}-${l}</td>
+      <td class="center">${aw}</td>
+      <td class="center">${al}</td>
+      <td class="center">${ap}</td>
+      <td class="center ${atsClass(atsPct)}">${(atsPct*100).toFixed(1)}%</td>
+      <td class="center">${haw}-${hal} <span style="font-size:11px;color:var(--muted)">(${(hPct*100).toFixed(0)}%)</span></td>
+      <td class="center">${aaw}-${aal} <span style="font-size:11px;color:var(--muted)">(${(aPct*100).toFixed(0)}%)</span></td>
+      <td class="center">${ov}</td>
+      <td class="center">${un}</td>
+      <td class="center ${ouClass(ouPct)}">${(ouPct*100).toFixed(1)}%</td>
+      <td class="center">${ppg}</td>
+      <td class="center">${papg}</td>
+      <td class="center">#${offR}</td>
+      <td class="center">#${defR}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCFB(data) {
+  const tbody = document.getElementById('cfb-tbody');
+  tbody.innerHTML = data.map(t => {
+    const [rank,name,conf,w,l,aw,al,ap,haw,hal,aaw,aal,ov,un,oup,spOff,spDef,ppg,papg] = t;
+    const atsPct = pct(aw,al), hPct = pct(haw,hal), aPct = pct(aaw,aal), ouPct = pct(ov,un);
+    return `<tr data-conf="${conf}" data-name="${name.toLowerCase()}">
+      <td class="center" style="color:var(--gold);font-weight:800">${rank}</td>
+      <td class="team-name">${name}</td>
+      <td class="center">${confBadge(conf)}</td>
+      <td class="center">${w}-${l}</td>
+      <td class="center">${aw}</td>
+      <td class="center">${al}</td>
+      <td class="center ${atsClass(atsPct)}">${(atsPct*100).toFixed(1)}%</td>
+      <td class="center">${haw}-${hal} <span style="font-size:11px;color:var(--muted)">(${(hPct*100).toFixed(0)}%)</span></td>
+      <td class="center">${aaw}-${aal} <span style="font-size:11px;color:var(--muted)">(${(aPct*100).toFixed(0)}%)</span></td>
+      <td class="center">${ov}</td>
+      <td class="center">${un}</td>
+      <td class="center ${ouClass(ouPct)}">${(ouPct*100).toFixed(1)}%</td>
+      <td class="center" style="color:var(--gold)">${spOff > 0 ? '+' : ''}${spOff}</td>
+      <td class="center" style="color:${spDef > 0 ? 'var(--green)' : 'var(--red)'}">+${spDef}</td>
+      <td class="center">${ppg}</td>
+      <td class="center">${papg}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FILTER & SORT
+// ═══════════════════════════════════════════════════════════════
+function filterConf(sport, val, btn) {
+  confFilters[sport] = val;
+  document.querySelectorAll(`#tab-${sport} .filter-btn`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters(sport);
+}
+
+function filterTable(sport) { applyFilters(sport); }
+
+function applyFilters(sport) {
+  const search = document.getElementById(`${sport}-search`).value.toLowerCase();
+  const conf   = confFilters[sport];
+  const rows   = document.querySelectorAll(`#${sport}-tbody tr`);
+  rows.forEach(row => {
+    const name   = row.dataset.name || '';
+    const rconf  = row.dataset.conf || '';
+    const rdiv   = row.dataset.div  || '';
+    const matchSearch = name.includes(search);
+    const matchConf   = conf === 'all' || rconf === conf || rdiv === conf ||
+                        (conf === 'North' && rdiv === 'North') ||
+                        (conf === 'South' && rdiv === 'South') ||
+                        (conf === 'East'  && rdiv === 'East')  ||
+                        (conf === 'West'  && rdiv === 'West');
+    row.style.display = matchSearch && matchConf ? '' : 'none';
+  });
+}
+
+function sortTable(sport, colIdx) {
+  const st = sortStates[sport];
+  const dir = st.col === colIdx ? -st.dir : 1;
+  sortStates[sport] = { col: colIdx, dir };
+
+  const tbody = document.getElementById(`${sport}-tbody`);
+  const rows  = Array.from(tbody.querySelectorAll('tr'));
+
+  rows.sort((a, b) => {
+    const av = a.cells[colIdx]?.textContent.replace(/[^0-9.\-]/g,'') || '';
+    const bv = b.cells[colIdx]?.textContent.replace(/[^0-9.\-]/g,'') || '';
+    const an = parseFloat(av), bn = parseFloat(bv);
+    if (!isNaN(an) && !isNaN(bn)) return (an - bn) * dir;
+    return av.localeCompare(bv) * dir;
+  });
+
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MATCHUP ANALYZER
+// ═══════════════════════════════════════════════════════════════
+function populateDropdowns() {
+  const nflH = document.getElementById('nfl-home');
+  const nflA = document.getElementById('nfl-away');
+  const cfbH = document.getElementById('cfb-home');
+  const cfbA = document.getElementById('cfb-away');
+  NFL.sort((a,b) => a[0].localeCompare(b[0])).forEach(t => {
+    nflH.add(new Option(t[0], t[0]));
+    nflA.add(new Option(t[0], t[0]));
+  });
+  CFB.sort((a,b) => a[1].localeCompare(b[1])).forEach(t => {
+    cfbH.add(new Option(t[1], t[1]));
+    cfbA.add(new Option(t[1], t[1]));
+  });
+  if (nflA.options.length > 1) nflA.selectedIndex = 1;
+  if (cfbA.options.length > 1) cfbA.selectedIndex = 1;
+}
+
+function findTeam(sport, name) {
+  if (sport === 'nfl') return NFL.find(t => t[0] === name);
+  return CFB.find(t => t[1] === name);
+}
+
+function runAnalyzer(sport) {
+  const homeEl = document.getElementById(`${sport}-home`);
+  const awayEl = document.getElementById(`${sport}-away`);
+  const hn = homeEl.value, an = awayEl.value;
+  const home = findTeam(sport, hn);
+  const away = findTeam(sport, an);
+  if (!home || !away || hn === an) { alert('Please select two different teams.'); return; }
+
+  const spread  = parseFloat(document.getElementById(`${sport}-spread`).value) || 0;
+  const total   = parseFloat(document.getElementById(`${sport}-total`).value)  || 0;
+  const hRest   = parseInt(document.getElementById(`${sport}-hrest`).value)    || 7;
+  const aRest   = parseInt(document.getElementById(`${sport}-arest`).value)    || 7;
+
+  const weather = sport === 'nfl' ? document.getElementById('nfl-weather').value : 'normal';
+  const revenge = sport === 'cfb' ? document.getElementById('cfb-revenge').value : 'no';
+
+  // Extract fields based on sport
+  let hW,hL,hAW,hAL,hAaW,hAaL,hOv,hUn,hPPG,hPAPG,hOff,hDef;
+  let aW,aL,aAW,aAL,aAaW,aAaL,aOv,aUn,aPPG,aPAPG,aOff,aDef;
+
+  if (sport === 'nfl') {
+    [,,,hW,hL,hAW,hAL,,hAaW,hAaL,,hOv,hUn,,hPPG,hPAPG,hOff,hDef] = home;
+    [,,,aW,aL,aAW,aAL,,aAaW,aAaL,,aOv,aUn,,aPPG,aPAPG,aOff,aDef] = away;
+  } else {
+    [,,,,hW,hL,hAW,hAL,,hAaW,hAaL,,hOv,hUn,,hOff,hDef,hPPG,hPAPG] = home;
+    [,,,,aW,aL,aAW,aAL,,aAaW,aAaL,,aOv,aUn,,aOff,aDef,aPPG,aPAPG] = away;
+  }
+
+  const hAtsPct = pct(hAW, hAL);
+  const aAtsPct = pct(aAW, aAL);
+  const hHomeAtsPct = pct(hAaW, hAaL);  // home team's home ATS
+  const aAwayAtsPct = pct(aAaW, aAaL);  // away team's away ATS
+  const hOuPct = pct(hOv, hUn);
+  const aOuPct = pct(aOv, aUn);
+
+  // Projections
+  const projTotal = ((hPPG + aPAPG) + (aPPG + hPAPG)) / 2;
+  const totalGap  = total - projTotal;
+  const restEdge  = hRest - aRest;
+
+  // Flags
+  const flags = [];
+  if (spread > 0) flags.push({ type:'good',  icon:'🏠', msg:`Home Underdog (+${spread}): home dogs cover ~54% historically in ${sport.toUpperCase()}` });
+  if (spread < -7 && sport==='cfb') flags.push({ type:'warn', icon:'⚠️', msg:`Large CFB favorite (${spread}): big spreads are notoriously hard to cover — look for live lines to adjust` });
+  if (spread < -6 && sport==='nfl') flags.push({ type:'warn', icon:'⚠️', msg:`Large NFL favorite (${spread}): NFL teams covering 6+ is tougher than it looks — public inflates lines` });
+  if (restEdge >= 2) flags.push({ type:'good', icon:'😴', msg:`Home team has ${restEdge}-day rest advantage — better-rested teams cover at ~54%` });
+  if (restEdge <= -2) flags.push({ type:'warn', icon:'😴', msg:`Away team has ${Math.abs(restEdge)}-day rest advantage — worth factoring in` });
+  if (weather === 'wind') flags.push({ type:'info', icon:'💨', msg:'High wind: Lean Under — passing game suppressed, total likely 3-5 pts too high' });
+  if (weather === 'precip') flags.push({ type:'info', icon:'🌧️', msg:'Rain/Snow: Strong Under lean — wet ball, footing issues, conservative play-calling' });
+  if (weather === 'cold') flags.push({ type:'info', icon:'🥶', msg:'Cold weather: Mild Under lean — especially affects teams with dome/warm-weather offenses' });
+  if (totalGap > 3) flags.push({ type:'warn', icon:'📉', msg:`Posted total (${total}) is ${totalGap.toFixed(1)} pts above projection (${projTotal.toFixed(1)}) — lean Under` });
+  if (totalGap < -3) flags.push({ type:'good', icon:'📈', msg:`Posted total (${total}) is ${Math.abs(totalGap).toFixed(1)} pts below projection (${projTotal.toFixed(1)}) — lean Over` });
+  if (revenge === 'home') flags.push({ type:'good', icon:'😤', msg:'Home team has revenge motivation — teams in this spot cover at elevated rates' });
+  if (revenge === 'away') flags.push({ type:'warn', icon:'😤', msg:'Away team has revenge motivation — factor this into your line assessment' });
+  if (aAwayAtsPct < 0.45) flags.push({ type:'good', icon:'✈️', msg:`${an} has poor road ATS record (${(aAwayAtsPct*100).toFixed(0)}%) — exploitable home edge` });
+  if (hHomeAtsPct > 0.6) flags.push({ type:'good', icon:'🏟️', msg:`${hn} is outstanding at home ATS (${(hHomeAtsPct*100).toFixed(0)}%) — strong lean` });
+
+  if (flags.length === 0) flags.push({ type:'neutral', icon:'🔍', msg:'No major situational flags detected — standard matchup analysis applies' });
+
+  const colorH = hAtsPct >= 0.55 ? 'var(--green)' : hAtsPct <= 0.45 ? 'var(--red)' : 'var(--text)';
+  const colorA = aAtsPct >= 0.55 ? 'var(--green)' : aAtsPct <= 0.45 ? 'var(--red)' : 'var(--text)';
+
+  const offLabel = sport === 'nfl' ? 'Off Rank' : 'SP+ Off';
+  const defLabel = sport === 'nfl' ? 'Def Rank' : 'SP+ Def';
+  const hOffDisp = sport === 'nfl' ? `#${hOff}` : `+${hOff}`;
+  const aOffDisp = sport === 'nfl' ? `#${aOff}` : `+${aOff}`;
+  const hDefDisp = sport === 'nfl' ? `#${hDef}` : `+${hDef}`;
+  const aDefDisp = sport === 'nfl' ? `#${aDef}` : `+${aDef}`;
+
+  const statsHTML = [
+    ['W-L', `${hW}-${hL}`, `${aW}-${aL}`, null],
+    ['ATS % (Overall)', `${(hAtsPct*100).toFixed(1)}%`, `${(aAtsPct*100).toFixed(1)}%`, null],
+    ['Home/Away ATS %', `${(hHomeAtsPct*100).toFixed(1)}%`, `${(aAwayAtsPct*100).toFixed(1)}%`, null],
+    ['Over %', `${(hOuPct*100).toFixed(1)}%`, `${(aOuPct*100).toFixed(1)}%`, null],
+    [offLabel, hOffDisp, aOffDisp, null],
+    [defLabel, hDefDisp, aDefDisp, null],
+    ['PPG For', hPPG, aPPG, null],
+    ['PPG Against', hPAPG, aPAPG, null],
+  ].map(([label, hv, av]) => `
+    <div class="stat-row">
+      <div class="home-val">${hv}</div>
+      <div class="stat-label">${label}</div>
+      <div class="away-val">${av}</div>
+    </div>`).join('');
+
+  const html = `
+    <div style="margin-top:20px;">
+      <div class="matchup-header">
+        <div class="matchup-team">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Home</div>
+          <h3 style="color:${colorH}">${hn}</h3>
+          <div style="font-size:13px;color:var(--muted)">ATS ${hAW}-${hAL} · ${(hAtsPct*100).toFixed(1)}%</div>
+          ${spread !== 0 ? `<div style="margin-top:8px;font-size:16px;font-weight:800;color:var(--gold)">${spread > 0 ? '+' : ''}${spread}</div>` : ''}
+        </div>
+        <div class="matchup-vs">VS</div>
+        <div class="matchup-team">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Away</div>
+          <h3 style="color:${colorA}">${an}</h3>
+          <div style="font-size:13px;color:var(--muted)">ATS ${aAW}-${aAL} · ${(aAtsPct*100).toFixed(1)}%</div>
+          ${spread !== 0 ? `<div style="margin-top:8px;font-size:16px;font-weight:800;color:var(--gold)">${spread > 0 ? '-' : '+'}${Math.abs(spread)}</div>` : ''}
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 180px 1fr;gap:0;background:var(--card2);border-radius:10px;overflow:hidden;margin-bottom:16px;">
+        <div style="padding:10px 12px;background:var(--navy);font-size:11px;font-weight:700;color:var(--gold);text-align:left;text-transform:uppercase;letter-spacing:.5px">Home</div>
+        <div style="padding:10px 12px;background:var(--navy);font-size:11px;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.5px">Metric</div>
+        <div style="padding:10px 12px;background:var(--navy);font-size:11px;font-weight:700;color:var(--gold);text-align:right;text-transform:uppercase;letter-spacing:.5px">Away</div>
+        ${statsHTML}
+      </div>
+
+      <div class="projections">
+        <div class="proj-card">
+          <div class="label">Proj. Game Total</div>
+          <div class="val">${projTotal.toFixed(1)}</div>
+          <div class="note">Posted: ${total || '–'} ${total ? `(${totalGap > 0 ? '+' : ''}${totalGap.toFixed(1)} vs projection)` : ''}</div>
+        </div>
+        <div class="proj-card">
+          <div class="label">Total Lean</div>
+          <div class="val" style="color:${totalGap > 2 ? 'var(--red)' : totalGap < -2 ? 'var(--green)' : 'var(--text)'}">${totalGap > 2 ? '⬇ Under' : totalGap < -2 ? '⬆ Over' : '— Neutral'}</div>
+          <div class="note">Based on scoring averages</div>
+        </div>
+        <div class="proj-card">
+          <div class="label">Rest Edge</div>
+          <div class="val" style="font-size:16px;color:${restEdge > 0 ? 'var(--green)' : restEdge < 0 ? 'var(--red)' : 'var(--muted)'}">${restEdge > 0 ? `Home +${restEdge}d` : restEdge < 0 ? `Away +${Math.abs(restEdge)}d` : 'Even'}</div>
+          <div class="note">Home: ${hRest}d · Away: ${aRest}d</div>
+        </div>
+        <div class="proj-card">
+          <div class="label">ATS Edge</div>
+          <div class="val" style="font-size:16px;color:${hAtsPct > aAtsPct ? 'var(--green)' : 'var(--red)'}">${hAtsPct > aAtsPct ? '🏠 Home' : '✈️ Away'}</div>
+          <div class="note">By ATS record: ${hn} ${(hAtsPct*100).toFixed(0)}% vs ${an} ${(aAtsPct*100).toFixed(0)}%</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">⚡ Situational Flags</div>
+      <div class="flags">
+        ${flags.map(f => `<div class="flag ${f.type}">${f.icon} ${f.msg}</div>`).join('')}
+      </div>
+    </div>`;
+
+  const resultsEl = document.getElementById(`${sport}-results`);
+  resultsEl.innerHTML = html;
+  resultsEl.classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BET TRACKER
+// ═══════════════════════════════════════════════════════════════
+function calcPnl(odds, stake, result) {
+  if (result === 'Pending') return null;
+  if (result === 'Push') return 0;
+  const o = parseFloat(odds), s = parseFloat(stake);
+  if (result === 'Win') return o >= 100 ? s * (o / 100) : s * (100 / Math.abs(o));
+  if (result === 'Loss') return -s;
+  return null;
+}
+
+function addBet() {
+  const bet = {
+    id: Date.now(),
+    date:    document.getElementById('t-date').value,
+    sport:   document.getElementById('t-sport').value,
+    matchup: document.getElementById('t-matchup').value,
+    type:    document.getElementById('t-type').value,
+    pick:    document.getElementById('t-pick').value,
+    odds:    document.getElementById('t-odds').value,
+    stake:   document.getElementById('t-stake').value,
+    result:  document.getElementById('t-result').value,
+  };
+  bet.pnl = calcPnl(bet.odds, bet.stake, bet.result);
+  bets.unshift(bet);
+  localStorage.setItem('btf_bets', JSON.stringify(bets));
+  renderTracker();
+  ['t-date','t-matchup','t-pick','t-odds','t-stake'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteBet(id) {
+  bets = bets.filter(b => b.id !== id);
+  localStorage.setItem('btf_bets', JSON.stringify(bets));
+  renderTracker();
+}
+
+function updateResult(id, result) {
+  const bet = bets.find(b => b.id === id);
+  if (bet) {
+    bet.result = result;
+    bet.pnl = calcPnl(bet.odds, bet.stake, bet.result);
+    localStorage.setItem('btf_bets', JSON.stringify(bets));
+    renderTracker();
+  }
+}
+
+function renderTracker() {
+  const settled = bets.filter(b => b.result !== 'Pending');
+  const wins = settled.filter(b => b.result === 'Win').length;
+  const losses = settled.filter(b => b.result === 'Loss').length;
+  const totalStaked = settled.reduce((s,b) => s + parseFloat(b.stake||0), 0);
+  const totalPnl = settled.reduce((s,b) => s + (b.pnl||0), 0);
+  const winRate = wins + losses > 0 ? wins / (wins + losses) : 0;
+  const roi = totalStaked > 0 ? totalPnl / totalStaked : 0;
+
+  document.getElementById('tracker-kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">Total Bets</div><div class="kpi-val">${settled.length}</div><div class="kpi-sub">${bets.filter(b=>b.result==='Pending').length} pending</div></div>
+    <div class="kpi"><div class="kpi-label">Win Rate</div><div class="kpi-val ${winRate>=.525?'green':winRate<=.48?'red':''}">${(winRate*100).toFixed(1)}%</div><div class="kpi-sub">${wins}W - ${losses}L</div></div>
+    <div class="kpi"><div class="kpi-label">Net P&L</div><div class="kpi-val ${totalPnl>=0?'green':'red'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</div><div class="kpi-sub">on $${totalStaked.toFixed(0)} wagered</div></div>
+    <div class="kpi"><div class="kpi-label">ROI</div><div class="kpi-val ${roi>=0?'green':'red'}">${(roi*100).toFixed(1)}%</div><div class="kpi-sub">Break-even: 52.4%</div></div>
+  `;
+
+  document.getElementById('bet-count').textContent = `${bets.length} bets`;
+
+  document.getElementById('bets-tbody').innerHTML = bets.map(b => {
+    const pnl = b.pnl;
+    const pnlStr = pnl === null ? '—' : (pnl >= 0 ? `+$${pnl.toFixed(2)}` : `-$${Math.abs(pnl).toFixed(2)}`);
+    const pnlColor = pnl === null ? 'var(--muted)' : pnl > 0 ? 'var(--green)' : pnl < 0 ? 'var(--red)' : 'var(--muted)';
+    const resBg = b.result==='Win' ? 'rgba(34,197,94,.15)' : b.result==='Loss' ? 'rgba(239,68,68,.15)' : b.result==='Push' ? 'rgba(100,100,100,.2)' : 'transparent';
+    return `<tr>
+      <td>${b.date}</td>
+      <td><span class="conf-badge ${b.sport==='NFL'?'conf-NFC':'conf-SEC'}">${b.sport}</span></td>
+      <td>${b.matchup}</td>
+      <td style="color:var(--muted);font-size:12px">${b.type}</td>
+      <td style="font-weight:600">${b.pick}</td>
+      <td class="center">${b.odds}</td>
+      <td class="center">$${parseFloat(b.stake||0).toFixed(2)}</td>
+      <td class="center">
+        <select style="background:${resBg};border:none;color:var(--text);font-size:12px;padding:3px 6px;border-radius:4px;cursor:pointer" onchange="updateResult(${b.id},this.value)">
+          ${['Pending','Win','Loss','Push'].map(r => `<option value="${r}" ${b.result===r?'selected':''}>${r}</option>`).join('')}
+        </select>
+      </td>
+      <td class="center" style="color:${pnlColor};font-weight:700">${pnlStr}</td>
+      <td class="center"><button onclick="deleteBet(${b.id})" style="background:rgba(239,68,68,.2);border:none;color:var(--red);border-radius:4px;padding:4px 8px;cursor:pointer;font-size:11px">✕</button></td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:30px">No bets logged yet. Add your first bet above.</td></tr>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  OVERVIEW
+// ═══════════════════════════════════════════════════════════════
+function renderOverview() {
+  const settled = bets.filter(b => b.result !== 'Pending');
+  const wins = settled.filter(b => b.result === 'Win').length;
+  const losses = settled.filter(b => b.result === 'Loss').length;
+  const totalPnl = settled.reduce((s,b) => s + (b.pnl||0), 0);
+  const winRate = wins + losses > 0 ? wins / (wins + losses) : 0;
+
+  document.getElementById('overview-kpis').innerHTML = `
+    <div class="kpi"><div class="kpi-label">NFL Teams Tracked</div><div class="kpi-val">${NFL.length}</div><div class="kpi-sub">2025-26 season</div></div>
+    <div class="kpi"><div class="kpi-label">CFB Programs Tracked</div><div class="kpi-val">${CFB.length}</div><div class="kpi-sub">2025 season</div></div>
+    <div class="kpi"><div class="kpi-label">Bets Logged</div><div class="kpi-val">${settled.length}</div><div class="kpi-sub">${bets.filter(b=>b.result==='Pending').length} pending</div></div>
+    <div class="kpi" style="border-left-color:${totalPnl>=0?'var(--green)':'var(--red)'}"><div class="kpi-label">Net P&L</div><div class="kpi-val ${totalPnl>=0?'green':'red'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(0)}</div><div class="kpi-sub">${(winRate*100).toFixed(1)}% win rate</div></div>
+  `;
+
+  // Best home ATS in NFL
+  const nflSorted = [...NFL].sort((a,b) => pct(b[8],b[9]) - pct(a[8],a[9])).slice(0,5);
+  document.getElementById('overview-nfl-best').innerHTML = nflSorted.map((t,i) => {
+    const p = pct(t[8],t[9]);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:600">${i+1}. ${t[0]}</span>
+      <span class="${atsClass(p)}" style="font-weight:700">${t[8]}-${t[9]} (${(p*100).toFixed(0)}%)</span>
+    </div>`;
+  }).join('');
+
+  // Best overall ATS in CFB
+  const cfbSorted = [...CFB].sort((a,b) => pct(b[5],b[6]) - pct(a[5],a[6])).slice(0,5);
+  document.getElementById('overview-cfb-best').innerHTML = cfbSorted.map((t,i) => {
+    const p = pct(t[5],t[6]);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:600">${i+1}. ${t[1]}</span>
+      <span class="${atsClass(p)}" style="font-weight:700">${t[5]}-${t[6]} (${(p*100).toFixed(0)}%)</span>
+    </div>`;
+  }).join('');
+
+  // Most overs NFL
+  const nflOvSorted = [...NFL].sort((a,b) => pct(b[12],b[13]) - pct(a[12],a[13])).slice(0,5);
+  document.getElementById('overview-nfl-ou').innerHTML = nflOvSorted.map((t,i) => {
+    const p = pct(t[12],t[13]);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:600">${i+1}. ${t[0]}</span>
+      <span class="${ouClass(p)}" style="font-weight:700">O${t[12]}-U${t[13]} (${(p*100).toFixed(0)}%)</span>
+    </div>`;
+  }).join('');
+
+  // Most unders CFB
+  const cfbUnSorted = [...CFB].sort((a,b) => pct(b[11],b[10]) - pct(a[11],a[10])).slice(0,5);
+  document.getElementById('overview-cfb-ou').innerHTML = cfbUnSorted.map((t,i) => {
+    const p = pct(t[11],t[10]);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:600">${i+1}. ${t[1]}</span>
+      <span class="${ouClass(p)}" style="font-weight:700">O${t[10]}-U${t[11]} (${(p*100).toFixed(0)}% under)</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TIPS
+// ═══════════════════════════════════════════════════════════════
+function renderTips() {
+  document.getElementById('nfl-tips').innerHTML = NFL_TIPS.map(t =>
+    `<div class="tip-card"><h3>${t.icon} ${t.title}<span class="edge-badge">${t.edge}</span></h3><p>${t.body}</p></div>`
+  ).join('');
+  document.getElementById('cfb-tips').innerHTML = CFB_TIPS.map(t =>
+    `<div class="tip-card"><h3>${t.icon} ${t.title}<span class="edge-badge">${t.edge}</span></h3><p>${t.body}</p></div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+renderNFL(NFL);
+renderCFB(CFB);
+populateDropdowns();
+renderTracker();
+renderOverview();
+renderTips();
+</script>
+</body>
+</html>

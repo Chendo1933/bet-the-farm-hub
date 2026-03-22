@@ -587,6 +587,92 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-odds{font-size:13px;font-weight:900;color:var(--gold);}
 .hb-kelly{font-size:11px;color:var(--muted);}
 .team-mascot{display:block;font-size:9px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;line-height:1.3;margin-top:1px;}
+
+/* ── MOBILE NAV BAR ───────────────────────────────────── */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--card);border-top:2px solid var(--border);padding:6px 0 env(safe-area-inset-bottom,6px);flex-direction:row;justify-content:space-around;align-items:center;}
+.mn-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:10px;min-width:56px;transition:color .15s;}
+.mn-btn span{font-size:10px;font-weight:700;letter-spacing:.2px;}
+.mn-btn .mn-icon{font-size:20px;line-height:1;}
+.mn-btn.active{color:var(--gold);}
+.mn-btn:active{background:rgba(255,255,255,.06);}
+/* Mobile slide-up "More" sheet */
+.mobile-menu-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.55);}
+.mobile-menu-sheet{display:none;position:fixed;bottom:0;left:0;right:0;z-index:401;background:var(--card);border-top:2px solid var(--border);border-radius:20px 20px 0 0;padding:14px 16px calc(env(safe-area-inset-bottom,0px) + 72px);max-height:80vh;overflow-y:auto;}
+.mobile-menu-sheet.open,.mobile-menu-overlay.open{display:block;}
+.mm-sheet-hdr{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;padding:4px 0 12px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+.mm-sheet-btn{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;color:var(--text);font-size:15px;font-weight:700;padding:13px 8px;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;text-align:left;border-radius:8px;}
+.mm-sheet-btn:last-child{border-bottom:none;}
+.mm-sheet-btn:active{background:rgba(255,255,255,.06);}
+
+/* ── MOBILE RESPONSIVE ≤640px ─────────────────────────── */
+@media(max-width:640px){
+  /* Hide desktop nav, show mobile nav */
+  nav{display:none;}
+  .mobile-nav{display:flex;}
+  body{padding-bottom:70px;}
+  /* Slimmer header */
+  header{padding:0 14px;height:50px;}
+  .hdr-note{display:none;}
+  .logo{font-size:17px;}
+  .logo span{display:none;}
+  /* Tab padding */
+  .tab-content{padding:12px 12px 80px !important;}
+  /* KPI grid 2 cols */
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .kpi-val{font-size:22px;}
+  /* Tables scroll nicely */
+  .tbl-wrap{-webkit-overflow-scrolling:touch;}
+  /* Search full width */
+  .search-box{width:100%;}
+  .tbl-controls{flex-direction:column;align-items:stretch;}
+  /* Analyzer */
+  .scmp{grid-template-columns:1fr 90px 1fr;}
+  .sport-inputs.active{grid-template-columns:1fr 1fr;}
+  /* Schedule rows stack */
+  .gr-main{flex-direction:column;align-items:flex-start;gap:8px;}
+  .gr-bets{width:100%;}
+  .bet-btn{flex:1;min-width:0;}
+  /* Best Bets grid single col */
+  .bb-grid{grid-template-columns:1fr;}
+  /* Today's games grid single col */
+  .tg-cards{grid-template-columns:1fr;}
+  /* Tips grid single col */
+  .tips-grid{grid-template-columns:1fr;}
+  /* Bet slip stacked */
+  .bs-item{grid-template-columns:1fr 75px 36px;}
+  .bsi-odds{display:none;}
+}
+
+/* ── HOT BETS MOBILE OPTIMIZATIONS ≤640px ───────────── */
+@media(max-width:640px){
+  /* Full-width cards */
+  .hb-grid{grid-template-columns:1fr;gap:10px;}
+  /* Bigger pick text */
+  .hb-pick{font-size:17px;}
+  /* Compact header */
+  .hb-page-title{font-size:18px;}
+  .hb-page-sub{display:none;}
+  /* Bigger pill tap targets */
+  .hb-pill{padding:9px 16px;font-size:12px;min-height:38px;}
+  /* Sort row: hide legend on mobile to save space */
+  .hb-tier-legend{display:none;}
+  .hb-sort-row{flex-wrap:wrap;gap:8px;}
+  /* Bigger add button */
+  .hb-add-btn{font-size:12px;padding:8px 16px;}
+  .hb-analyze-btn{font-size:12px;padding:8px 12px;}
+  /* Sim box more readable */
+  .hb-sim-item{font-size:12px;}
+  /* Why text slightly bigger */
+  .hb-why{font-size:12px;}
+  /* Footer row bigger */
+  .hb-odds{font-size:14px;}
+  /* Factors wrap nicely */
+  .hb-factor{font-size:10px;padding:4px 9px;}
+  /* Parlay builder full width */
+  .hb-pb-header{flex-direction:column;align-items:flex-start;}
+  .hb-pb-actions{width:100%;justify-content:flex-end;}
+  .hb-pb-stats{gap:14px;}
+}
 /* Data Health panel */
 .dh-toggle-btn{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:700;padding:5px 12px;border-radius:7px;cursor:pointer;transition:all .15s;}
 .dh-toggle-btn:hover,.dh-toggle-btn.active{border-color:var(--gold);color:var(--gold);}
@@ -662,6 +748,44 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button onclick="showTab('glossary',this)">📖 Glossary</button>
   <button onclick="showTab('dataedit',this)" style="display:none">✏️ Update Data</button>
 </nav>
+
+<!-- ── MOBILE BOTTOM NAV ──────────────────────────────── -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mn-btn active" id="mn-overview" onclick="showTab('overview',this);mobileNavActivate('overview')">
+    <span class="mn-icon">📊</span><span>Overview</span>
+  </button>
+  <button class="mn-btn" id="mn-hotbets" onclick="showTab('hotbets',this);mobileNavActivate('hotbets')">
+    <span class="mn-icon">🔥</span><span>Hot Bets</span>
+  </button>
+  <button class="mn-btn" id="mn-analyzer" onclick="showTab('analyzer',this);mobileNavActivate('analyzer')">
+    <span class="mn-icon">⚡</span><span>Analyzer</span>
+  </button>
+  <button class="mn-btn" id="mn-tracker" onclick="showTab('tracker',this);mobileNavActivate('tracker')">
+    <span class="mn-icon">📓</span><span>Tracker</span>
+  </button>
+  <button class="mn-btn" id="mn-more" onclick="openMobileMenu()">
+    <span class="mn-icon">☰</span><span>More</span>
+  </button>
+</div>
+
+<!-- ── MOBILE "MORE" SHEET ───────────────────────────── -->
+<div class="mobile-menu-overlay" id="mm-overlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-menu-sheet" id="mm-sheet">
+  <div class="mm-sheet-hdr">All Tabs</div>
+  <button class="mm-sheet-btn" onclick="showTab('nfl',this);closeMobileMenu();mobileNavActivate(null)">🏈 NFL</button>
+  <button class="mm-sheet-btn" onclick="showTab('cfb',this);closeMobileMenu();mobileNavActivate(null)">🎓 College Football</button>
+  <button class="mm-sheet-btn" onclick="showTab('nba',this);closeMobileMenu();mobileNavActivate(null)">🏀 NBA</button>
+  <button class="mm-sheet-btn" onclick="showTab('cbb',this);closeMobileMenu();mobileNavActivate(null)">🏀 College Basketball</button>
+  <button class="mm-sheet-btn" onclick="showTab('nhl',this);closeMobileMenu();mobileNavActivate(null)">🏒 NHL</button>
+  <button class="mm-sheet-btn" onclick="showTab('mlb',this);closeMobileMenu();mobileNavActivate(null)">⚾ MLB</button>
+  <button class="mm-sheet-btn" onclick="showTab('events',this);closeMobileMenu();mobileNavActivate(null)">🏆 Major Events</button>
+  <button class="mm-sheet-btn" onclick="showTab('futures',this);closeMobileMenu();mobileNavActivate(null)">🔮 Futures</button>
+  <button class="mm-sheet-btn" onclick="showTab('mm2026',this);closeMobileMenu();mobileNavActivate(null)">🏆 Bracket</button>
+  <button class="mm-sheet-btn" onclick="showTab('props',this);closeMobileMenu();mobileNavActivate(null)">🎯 Player Sim</button>
+  <button class="mm-sheet-btn" onclick="showTab('angles',this);closeMobileMenu();mobileNavActivate(null)">🎯 Angles</button>
+  <button class="mm-sheet-btn" onclick="showTab('glossary',this);closeMobileMenu();mobileNavActivate(null)">📖 Glossary</button>
+</div>
+
 <!-- ── FLOATING BET SLIP ─────────────────────────────── -->
 <div class="bet-slip hide" id="bet-slip">
   <div class="bs-hdr">
@@ -1714,6 +1838,28 @@ function closeNavDropdowns(){
 document.addEventListener('click',function(e){
   if(!e.target.closest('.nav-dropdown'))closeNavDropdowns();
 });
+/* ── Mobile nav helpers ── */
+function openMobileMenu(){
+  document.getElementById('mm-overlay').classList.add('open');
+  document.getElementById('mm-sheet').classList.add('open');
+}
+function closeMobileMenu(){
+  document.getElementById('mm-overlay').classList.remove('open');
+  document.getElementById('mm-sheet').classList.remove('open');
+}
+function mobileNavActivate(tabId){
+  document.querySelectorAll('.mn-btn').forEach(b=>b.classList.remove('active'));
+  const map={overview:'mn-overview',hotbets:'mn-hotbets',analyzer:'mn-analyzer',tracker:'mn-tracker'};
+  if(tabId&&map[tabId]){
+    const el=document.getElementById(map[tabId]);
+    if(el)el.classList.add('active');
+  } else {
+    // "More" tab is active
+    const moreBtn=document.getElementById('mn-more');
+    if(moreBtn)moreBtn.classList.add('active');
+  }
+}
+
 function showTab(id,btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
@@ -1727,6 +1873,8 @@ function showTab(id,btn){
   } else {
     if(btn)btn.classList.add('active');
   }
+  // Sync mobile bottom nav highlight
+  mobileNavActivate(id);
   if(id==='tracker')renderTracker();
   if(id==='overview')renderOverview();
   if(id==='angles')renderAngles();
