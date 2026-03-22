@@ -5183,7 +5183,7 @@ function simExtractStats(athleteData, sport){
       // NHL — raw season totals (fallback; converted to per-game in caller)
       if(n==='gamesPlayed'||n==='games'||n==='GP'||abbr==='GP') s._gp=v;
       if(n==='goals'&&!s.goals)                         s._goalsTotal=v;
-      if(n==='shotsOnGoal'&&!s.sog)                    s._sogTotal=v;
+      if((n==='shotsOnGoal'||n==='shots'||abbr==='SOG'||abbr==='S')&&!s.sog) s._sogTotal=v;
       if(n==='assists'&&!s.assists)                     s._assistsTotal=v;
     }
   }
