@@ -2504,6 +2504,7 @@ const TEAM_NAME_CORRECTIONS={
   'Tennessee-Martin':           null,
   'Indiana State':              null,
   'Illinois State':             null,
+  'Illinois State Redbirds':    null,
   'Missouri State':             null,
   'Missouri State Bears':       null,
   'Arkansas State':             null,
@@ -4721,11 +4722,16 @@ function fuzzyTeam(sport,name){
   }
   if(cands.length){cands.sort((a,b)=>(b[ni]||'').length-(a[ni]||'').length);return cands[0];}
   // 4. First-word fallback — unambiguous only (silently fails if multiple teams share first word)
-  const first=lookup.split(' ')[0].toLowerCase();
-  const firstMatches=[];
-  for(const [key,row] of idx){if(key.split(' ')[0]===first)firstMatches.push(row);}
-  if(firstMatches.length===1)return firstMatches[0];
-  if(firstMatches.length>1)console.warn(`[BTF] fuzzyTeam: ambiguous "${name}" in ${sport} — add to TEAM_NAME_CORRECTIONS`);
+  //    Guard: skip if any non-first word is a school-differentiator (e.g. "Illinois State X" must NOT → "Illinois")
+  const lookupWords=lookup.toLowerCase().split(' ');
+  const first=lookupWords[0];
+  const hasSchoolDiffWord=lookupWords.slice(1).some(w=>_SCHOOL_DIFF_WORDS.has(w));
+  if(!hasSchoolDiffWord){
+    const firstMatches=[];
+    for(const [key,row] of idx){if(key.split(' ')[0]===first)firstMatches.push(row);}
+    if(firstMatches.length===1)return firstMatches[0];
+    if(firstMatches.length>1)console.warn(`[BTF] fuzzyTeam: ambiguous "${name}" in ${sport} — add to TEAM_NAME_CORRECTIONS`);
+  }
   return null;
 }
 
