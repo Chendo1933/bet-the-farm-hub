@@ -5166,6 +5166,7 @@ function simExtractStats(athleteData, sport){
   for(const cat of cats){
     for(const stat of (cat.stats||cat.statistics||[])){
       const n=stat.name||'', v=parseFloat(stat.displayValue||stat.value)||0;
+      const abbr=(stat.abbreviation||'').toUpperCase();
       if(n==='avgPoints'||n==='pointsPerGame')         s.ppg=v;
       if(n==='avgRebounds'||n==='reboundsPerGame')     s.rpg=v;
       if(n==='avgAssists'||n==='assistsPerGame')       s.apg=v;
@@ -5180,7 +5181,7 @@ function simExtractStats(athleteData, sport){
       if(n==='avgShotsOnGoal'||n==='shotsOnGoalPerGame') s.sog=v;
       if(n==='plusMinus')                               s.plusMinus=v;
       // NHL — raw season totals (fallback; converted to per-game in caller)
-      if(n==='gamesPlayed'||n==='games')               s._gp=v;
+      if(n==='gamesPlayed'||n==='games'||n==='GP'||abbr==='GP') s._gp=v;
       if(n==='goals'&&!s.goals)                         s._goalsTotal=v;
       if(n==='shotsOnGoal'&&!s.sog)                    s._sogTotal=v;
       if(n==='assists'&&!s.assists)                     s._assistsTotal=v;
@@ -5323,12 +5324,11 @@ async function simFetchNBA(){
     // Get leaders (pregame = season average leaders)
     const homeLeaders=simExtractLeaders(homeC);
     const awayLeaders=simExtractLeaders(awayC);
-    const allPlayers=[...homeLeaders.map(p=>({...p,side:'home'})),
-                      ...awayLeaders.map(p=>({...p,side:'away'}))];
     // Fetch full stats for each unique player in parallel (capped at 8 per side)
+    // IMPORTANT: map side here so enriched players carry side:'home'/'away'
     simSetStatus(`Fetching NBA player stats for ${homeName} vs ${awayName}…`);
-    const topHome=homeLeaders.slice(0,8);
-    const topAway=awayLeaders.slice(0,8);
+    const topHome=homeLeaders.slice(0,8).map(p=>({...p,side:'home'}));
+    const topAway=awayLeaders.slice(0,8).map(p=>({...p,side:'away'}));
     const statFetches=[...topHome,...topAway].map(async p=>{
       const data=await simFetchPlayerStats('nba',p.id);
       const extracted=data?simExtractStats(data,'nba'):{};
@@ -5414,20 +5414,21 @@ async function simFetchNHL(){
       const data=await simFetchPlayerStats('nhl',p.id);
       const extracted=data?simExtractStats(data,'nhl'):{};
       // Convert raw totals → per-game if ESPN didn't send per-game averages
-      if(!extracted.goals&&extracted._goalsTotal&&extracted._gp>0)
-        extracted.goals=parseFloat((extracted._goalsTotal/extracted._gp).toFixed(3));
-      if(!extracted.sog&&extracted._sogTotal&&extracted._gp>0)
-        extracted.sog=parseFloat((extracted._sogTotal/extracted._gp).toFixed(3));
-      if(!extracted.assists&&extracted._assistsTotal&&extracted._gp>0)
-        extracted.assists=parseFloat((extracted._assistsTotal/extracted._gp).toFixed(3));
+      const gp=extracted._gp>0?extracted._gp:65; // 65 = typical NHL games played ~mid-season
+      if(!extracted.goals&&extracted._goalsTotal)
+        extracted.goals=parseFloat((extracted._goalsTotal/gp).toFixed(3));
+      if(!extracted.sog&&extracted._sogTotal)
+        extracted.sog=parseFloat((extracted._sogTotal/gp).toFixed(3));
+      if(!extracted.assists&&extracted._assistsTotal)
+        extracted.assists=parseFloat((extracted._assistsTotal/gp).toFixed(3));
       // Only use knownStats for fields that are already per-game (plusMinus is fine; raw goal totals are not)
       const safeKnown={};
       if(p.knownStats.plusMinus)safeKnown.plusMinus=p.knownStats.plusMinus;
       return{...p, stats:{...extracted,...safeKnown}};
     });
     const enriched=await Promise.all(statFetches);
-    let homeRoster=enriched.filter(p=>p.side==='home').filter(p=>(p.stats?.goals||0)+(p.stats?.sog||0)>0||p.stats?.ppg>0);
-    let awayRoster=enriched.filter(p=>p.side==='away').filter(p=>(p.stats?.goals||0)+(p.stats?.sog||0)>0||p.stats?.ppg>0);
+    let homeRoster=enriched.filter(p=>p.side==='home').filter(p=>(p.stats?.goals||0)+(p.stats?.sog||0)>0||(p.stats?._goalsTotal||0)>0||p.stats?.ppg>0);
+    let awayRoster=enriched.filter(p=>p.side==='away').filter(p=>(p.stats?.goals||0)+(p.stats?.sog||0)>0||(p.stats?._goalsTotal||0)>0||p.stats?.ppg>0);
     // Supplement from rosters if sparse
     if(homeRoster.length<2||awayRoster.length<2){
       const homeTeamId=homeC.team?.id, awayTeamId=awayC.team?.id;
@@ -5444,13 +5445,14 @@ async function simFetchNHL(){
           const data=await simFetchPlayerStats('nhl',a.id);
           const stats=data?simExtractStats(data,'nhl'):{goals:0,assists:0,sog:0,ppg:0};
           // Convert raw totals → per-game if ESPN didn't send per-game averages
-          if(!stats.goals&&stats._goalsTotal&&stats._gp>0)
-            stats.goals=parseFloat((stats._goalsTotal/stats._gp).toFixed(3));
-          if(!stats.sog&&stats._sogTotal&&stats._gp>0)
-            stats.sog=parseFloat((stats._sogTotal/stats._gp).toFixed(3));
-          if(!stats.assists&&stats._assistsTotal&&stats._gp>0)
-            stats.assists=parseFloat((stats._assistsTotal/stats._gp).toFixed(3));
-          if(stats.goals>0.05||stats.sog>0.5){
+          const gp2=stats._gp>0?stats._gp:65;
+          if(!stats.goals&&stats._goalsTotal)
+            stats.goals=parseFloat((stats._goalsTotal/gp2).toFixed(3));
+          if(!stats.sog&&stats._sogTotal)
+            stats.sog=parseFloat((stats._sogTotal/gp2).toFixed(3));
+          if(!stats.assists&&stats._assistsTotal)
+            stats.assists=parseFloat((stats._assistsTotal/gp2).toFixed(3));
+          if(stats.goals>0.05||stats.sog>0.5||stats._goalsTotal>3){
             out.push({id:a.id,name:a.fullName||a.displayName||'',
               position:a.position?.abbreviation||'',jersey:a.jersey||'',
               knownStats:{},stats,side});
