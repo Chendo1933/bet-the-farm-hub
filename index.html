@@ -826,6 +826,14 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="hb-page-sub">Multi-factor scoring: ATS%, home/away splits, rest edge, projected totals, implied probability edge · Spread, Over/Under & Moneyline · Refresh Odds in Analyzer for tonight's picks</div>
     </div>
   </div>
+  <!-- ── Pick Performance Panel ─────────────────────────────────────────── -->
+  <div id="perf-panel" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <span style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.5px;text-transform:uppercase">📈 Pick Performance</span>
+      <span id="perf-updated" style="font-size:10px;color:var(--muted)"></span>
+    </div>
+    <div id="perf-tiers" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+  </div>
   <!-- Parlay Builder -->
   <div class="hb-parlay-builder" id="hb-parlay-builder" style="display:none">
     <div class="hb-pb-header">
@@ -6880,6 +6888,19 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
+  // ── Machine-readable export for automated pick tracker ───────────────────
+  // log_picks.py (GitHub Action) reads window.BTF_PICKS via Playwright to log
+  // today's Elite/Strong picks for performance grading after games finish.
+  window.BTF_PICKS=picks.map(p=>{
+    const s=p.score100||Math.round((p.score||0)*100);
+    return{sport:p.sport,betType:p.betType||'spread',
+      home:p.home,away:p.away,atsPick:p.atsPick||null,
+      spread:typeof p.spread==='number'?p.spread:null,
+      pickLabel:p.pickLabel,score100:s,
+      tier:s>=85?'elite':s>=72?'strong':s>=60?'good':'lean',
+      date:p.date||'',time:p.time||''};
+  });
+  window.BTF_PICKS_READY=true;
   if(_hbActiveSport!=='all')picks=picks.filter(p=>p.sport===_hbActiveSport);
   if(_hbActiveBetType!=='all')picks=picks.filter(p=>p.betType===_hbActiveBetType);
   if(_hbSoonOnly){
@@ -7610,6 +7631,44 @@ showTab=function(id,btn){
 window.addEventListener('btf-odds-refreshed',()=>{
   if(document.getElementById('tab-hotbets')?.classList.contains('active'))hbRender();
 });
+
+// ── Pick Performance Panel ─────────────────────────────────────────────────
+// Fetches data/performance.json from the repo and renders tier hit rates
+// in the Hot Bets header so you can see how Elite/Strong picks are tracking.
+(async function loadPerfPanel(){
+  const PERF_URL='https://raw.githubusercontent.com/Chendo1933/bet-the-farm-hub/main/data/performance.json';
+  const panel=document.getElementById('perf-panel');
+  const tiersEl=document.getElementById('perf-tiers');
+  const updEl=document.getElementById('perf-updated');
+  if(!panel||!tiersEl)return;
+  try{
+    const r=await fetch(PERF_URL);
+    if(!r.ok)return; // file doesn't exist yet — panel stays hidden
+    const d=await r.json();
+    const recs=d.records||{};
+    const tiers=[
+      {key:'elite',  label:'🔥 Elite',  color:'#ef4444'},
+      {key:'strong', label:'⚡ Strong', color:'var(--gold)'},
+      {key:'good',   label:'✅ Good',   color:'var(--green)'},
+    ];
+    const boxes=tiers.map(t=>{
+      const rec=recs[t.key]||{wins:0,losses:0,pushes:0};
+      const total=rec.wins+rec.losses;
+      if(total===0)return'';
+      const pct=total>0?Math.round(rec.wins/total*100):0;
+      const col=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+      return`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;min-width:100px;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:${t.color};margin-bottom:4px">${t.label}</div>
+        <div style="font-size:18px;font-weight:900;color:${col}">${pct}%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${rec.wins}-${rec.losses}${rec.pushes?` (${rec.pushes}P)`:''}</div>
+      </div>`;
+    }).filter(Boolean).join('');
+    if(!boxes)return;
+    tiersEl.innerHTML=boxes;
+    if(d.updated)updEl.textContent=`Updated ${d.updated}`;
+    panel.style.display='block';
+  }catch(e){/* silently skip if offline or file missing */}
+})();
 </script>
 </body>
 </html>

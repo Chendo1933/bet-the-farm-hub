@@ -1,0 +1,38 @@
+name: Nightly Pick Grader
+
+# Runs at 03:30 UTC (~11:30 PM ET) — after log-results.yml finishes at 03:00
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 03:30 UTC = ~11:30 PM ET
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  grade-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Grade yesterday's picks against results
+        run: python scripts/grade_picks.py
+
+      - name: Commit updated performance log
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/performance.json
+          if git diff --staged --quiet; then
+            echo "No grading changes to commit"
+          else
+            git commit -m "perf: grade picks $(date -d 'yesterday' +'%Y-%m-%d')"
+            git push
+            echo "✅ Performance log updated"
+          fi
