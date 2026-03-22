@@ -628,10 +628,18 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   /* Analyzer */
   .scmp{grid-template-columns:1fr 90px 1fr;}
   .sport-inputs.active{grid-template-columns:1fr 1fr;}
-  /* Schedule rows stack */
-  .gr-main{flex-direction:column;align-items:flex-start;gap:8px;}
-  .gr-bets{width:100%;}
-  .bet-btn{flex:1;min-width:0;}
+  /* Schedule / Analyzer game rows — full redesign for mobile */
+  .gr-main{flex-direction:column;align-items:flex-start;gap:10px;padding:12px 12px;}
+  .gr-teams{min-width:0;width:100%;}
+  .gr-away,.gr-home{font-size:15px;}
+  /* Bet buttons → 3-column grid, full width, easy to tap */
+  .gr-bets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;}
+  .bet-btn{min-width:0;flex:none;padding:10px 6px;border-radius:10px;}
+  .bb-lbl{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .bb-val{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  /* Breakdown button spans full width, shows label */
+  .breakdown-btn{grid-column:1 / -1;width:100%;font-size:12px;font-weight:700;padding:10px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .breakdown-btn::after{content:'Analyze Matchup';}
   /* Best Bets grid single col */
   .bb-grid{grid-template-columns:1fr;}
   /* Today's games grid single col */
