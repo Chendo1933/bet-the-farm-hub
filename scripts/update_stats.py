@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
 Bet The Farm Hub — Daily stats auto-updater
-Fetches current W/L + PPG/scoring data from ESPN's public API and patches
-the NBA and NHL arrays inside index.html.  Only commits if values changed.
+Fetches current W/L + scoring data from ESPN's public API and patches
+the NBA, NHL, MLB, and NFL arrays inside index.html.
 
 Array index reference (0-based):
   NBA:  0=name 1=conf 2=div 3=W 4=L  ... 15=ppg 16=papg
   NHL:  0=name 1=conf 2=div 3=W 4=L 5=OTL ... 16=gf 17=ga
+  MLB:  0=name 1=lg   2=div 3=W 4=L  ... 15=rs 16=ra 17=era 18=avg
+  NFL:  0=name 1=conf 2=div 3=W 4=L 5=T  ... 16=ppg 17=papg
 """
 
 import re
@@ -25,7 +27,11 @@ ESPN_NAME_MAP = {
     "Los Angeles Clippers": "LA Clippers",
     # NHL
     "Montréal Canadiens":   "Montreal Canadiens",
-    "St. Louis Blues":      "St. Louis Blues",   # already matches, just in case
+    # MLB
+    "Cleveland Guardians":  "Cleveland Guardians",   # exact, just in case
+    "Oakland Athletics":    "Oakland Athletics",
+    # NFL
+    "Washington Commanders":"Washington Commanders",
 }
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -41,8 +47,13 @@ def espn_get(url):
 
 
 def stat_map(stats_list):
-    """Convert ESPN stats list [{name, value}] to a plain dict."""
-    return {s.get("name", ""): s.get("value") for s in (stats_list or [])}
+    """Convert ESPN stats list [{name, value, abbreviation}] to {name: value} dict.
+    Also indexes by abbreviation so we catch both forms."""
+    out = {}
+    for s in (stats_list or []):
+        if s.get("name"):    out[s["name"]]         = s.get("value")
+        if s.get("abbreviation"): out[s["abbreviation"]] = s.get("value")
+    return out
 
 
 def _parse_js_row(line):
@@ -83,55 +94,61 @@ def patch_rows(html_lines, team_name, idx_vals):
         before = parts[:]
         for idx, val in idx_vals.items():
             if idx < len(parts):
-                parts[idx] = f"{val:.1f}" if isinstance(val, float) else str(int(val))
+                if isinstance(val, float):
+                    # Use 3 decimals for batting avg (.285), 2 for ERA (3.42), 1 for PPG
+                    if val < 1:
+                        parts[idx] = f"{val:.3f}"
+                    elif val < 10:
+                        parts[idx] = f"{val:.2f}"
+                    else:
+                        parts[idx] = f"{val:.1f}"
+                else:
+                    parts[idx] = str(int(val))
         if parts == before:
             return 0
         indent   = len(line) - len(line.lstrip())
         trailing = "," if s.endswith(",") else ""
-        html_lines[i] = " " * indent + "[" + ",".join(parts) + "]" + trailing
+        html_lines[i] = " " * indent + "[" + ",".join(parts) + "]" + trailing + "\n"
         return 1
     return 0   # team not found in hub
+
+
+def fetch_standings(urls, sport_label):
+    """Try each URL, return entries list or []."""
+    for url in urls:
+        d = espn_get(url)
+        if not d:
+            continue
+        entries = d.get("standings", {}).get("entries", [])
+        if not entries:
+            for child in d.get("children", []):
+                entries += child.get("standings", {}).get("entries", [])
+        if entries:
+            print(f"  ✓ {sport_label} standings: {len(entries)} teams")
+            return entries
+    print(f"  ✗ {sport_label} standings: no data")
+    return []
 
 
 # ── NBA ───────────────────────────────────────────────────────────────────────
 #   W=3  L=4  ppg=15  papg=16
 
-NBA_URLS = [
-    "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
-    "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/standings",
-]
-
-def fetch_nba_entries():
-    for url in NBA_URLS:
-        d = espn_get(url)
-        if not d:
-            continue
-        # Layout 1: flat entries list
-        entries = d.get("standings", {}).get("entries", [])
-        # Layout 2: entries nested under conference children
-        if not entries:
-            for child in d.get("children", []):
-                entries += child.get("standings", {}).get("entries", [])
-        if entries:
-            print(f"  ✓ NBA standings: {len(entries)} teams")
-            return entries
-    print("  ✗ NBA standings: no data")
-    return []
-
-
 def update_nba(html_lines):
     print("\n── NBA ──────────────────────────────────────────────────────────")
+    urls = [
+        "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+        "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/standings",
+    ]
     total = 0
-    for entry in fetch_nba_entries():
+    for entry in fetch_standings(urls, "NBA"):
         raw   = entry.get("team", {}).get("displayName", "")
         name  = ESPN_NAME_MAP.get(raw, raw)
         sm    = stat_map(entry.get("stats", []))
 
-        w  = sm.get("wins",   sm.get("OTWins",  0)) or 0
-        l  = sm.get("losses", sm.get("OTLosses",0)) or 0
+        w  = sm.get("wins",   sm.get("OTWins",   0)) or 0
+        l  = sm.get("losses", sm.get("OTLosses", 0)) or 0
         gp = sm.get("gamesPlayed") or (w + l) or 1
 
-        # ESPN may give total-points or per-game; handle both
         pf_total = sm.get("pointsFor",      0) or 0
         pa_total = sm.get("pointsAgainst",  0) or 0
         ppg  = round(pf_total / gp, 1) if pf_total else sm.get("avgPointsFor",  0) or 0
@@ -154,40 +171,23 @@ def update_nba(html_lines):
 # ── NHL ───────────────────────────────────────────────────────────────────────
 #   W=3  L=4  OTL=5  gf=16  ga=17
 
-NHL_URLS = [
-    "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings",
-    "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/standings",
-]
-
-def fetch_nhl_entries():
-    for url in NHL_URLS:
-        d = espn_get(url)
-        if not d:
-            continue
-        entries = d.get("standings", {}).get("entries", [])
-        if not entries:
-            for child in d.get("children", []):
-                entries += child.get("standings", {}).get("entries", [])
-        if entries:
-            print(f"  ✓ NHL standings: {len(entries)} teams")
-            return entries
-    print("  ✗ NHL standings: no data")
-    return []
-
-
 def update_nhl(html_lines):
     print("\n── NHL ──────────────────────────────────────────────────────────")
+    urls = [
+        "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings",
+        "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/standings",
+    ]
     total = 0
-    for entry in fetch_nhl_entries():
+    for entry in fetch_standings(urls, "NHL"):
         raw  = entry.get("team", {}).get("displayName", "")
         name = ESPN_NAME_MAP.get(raw, raw)
         sm   = stat_map(entry.get("stats", []))
 
-        w   = sm.get("wins",         0) or 0
-        l   = sm.get("losses",       0) or 0
-        otl = sm.get("otLosses",     sm.get("overtimeLosses", 0)) or 0
-        gf  = sm.get("pointsFor",    sm.get("goalsFor",   0)) or 0
-        ga  = sm.get("pointsAgainst",sm.get("goalsAgainst",0)) or 0
+        w   = sm.get("wins",     0) or 0
+        l   = sm.get("losses",   0) or 0
+        otl = sm.get("otLosses", sm.get("OT",   sm.get("overtimeLosses", 0))) or 0
+        gf  = sm.get("goalsFor",   sm.get("pointsFor",    0)) or 0
+        ga  = sm.get("goalsAgainst",sm.get("pointsAgainst",0)) or 0
 
         updates = {3: int(w), 4: int(l), 5: int(otl)}
         if gf:  updates[16] = int(gf)
@@ -203,15 +203,89 @@ def update_nhl(html_lines):
     return total
 
 
+# ── MLB ───────────────────────────────────────────────────────────────────────
+#   W=3  L=4  rs=15 (season total)  ra=16 (season total)
+#   era=17 and avg=18 intentionally NOT overwritten — those are pre-season priors
+
+def update_mlb(html_lines):
+    print("\n── MLB ──────────────────────────────────────────────────────────")
+    urls = [
+        "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings",
+        "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/standings",
+    ]
+    total = 0
+    for entry in fetch_standings(urls, "MLB"):
+        raw  = entry.get("team", {}).get("displayName", "")
+        name = ESPN_NAME_MAP.get(raw, raw)
+        sm   = stat_map(entry.get("stats", []))
+
+        w  = sm.get("wins",   0) or 0
+        l  = sm.get("losses", 0) or 0
+        # ESPN uses pointsFor/Against for runs in baseball standings
+        rs = int(sm.get("pointsFor",    sm.get("runsScored",   sm.get("RS", 0))) or 0)
+        ra = int(sm.get("pointsAgainst",sm.get("runsAllowed",  sm.get("RA", 0))) or 0)
+
+        updates = {3: int(w), 4: int(l)}
+        if rs: updates[15] = rs
+        if ra: updates[16] = ra
+
+        n = patch_rows(html_lines, name, updates)
+        if n:
+            total += n
+            print(f"  ✓ {name}: {int(w)}-{int(l)}"
+                  + (f" | RS/RA {rs}/{ra}" if rs else ""))
+        else:
+            print(f"  · {name}: not in hub DB (ESPN='{raw}')")
+    return total
+
+
+# ── NFL ───────────────────────────────────────────────────────────────────────
+#   W=3  L=4  T=5  ppg=16  papg=17
+
+def update_nfl(html_lines):
+    print("\n── NFL ──────────────────────────────────────────────────────────")
+    urls = [
+        "https://site.api.espn.com/apis/v2/sports/football/nfl/standings",
+        "https://site.api.espn.com/apis/site/v2/sports/football/nfl/standings",
+    ]
+    total = 0
+    for entry in fetch_standings(urls, "NFL"):
+        raw  = entry.get("team", {}).get("displayName", "")
+        name = ESPN_NAME_MAP.get(raw, raw)
+        sm   = stat_map(entry.get("stats", []))
+
+        w   = sm.get("wins",   0) or 0
+        l   = sm.get("losses", 0) or 0
+        t   = sm.get("ties",   sm.get("T", 0)) or 0
+        gp  = sm.get("gamesPlayed") or (w + l + t) or 1
+
+        pf_total = sm.get("pointsFor",     0) or 0
+        pa_total = sm.get("pointsAgainst", 0) or 0
+        ppg  = round(pf_total / gp, 1) if pf_total else sm.get("avgPointsFor",  0) or 0
+        papg = round(pa_total / gp, 1) if pa_total else sm.get("avgPointsAgainst", 0) or 0
+
+        updates = {3: int(w), 4: int(l), 5: int(t)}
+        if ppg:  updates[16] = float(ppg)
+        if papg: updates[17] = float(papg)
+
+        n = patch_rows(html_lines, name, updates)
+        if n:
+            total += n
+            print(f"  ✓ {name}: {int(w)}-{int(l)}-{int(t)}"
+                  + (f" | PPG {ppg}/{papg}" if ppg else ""))
+        else:
+            print(f"  · {name}: not in hub DB (ESPN='{raw}')")
+    return total
+
+
 # ── timestamp banner ──────────────────────────────────────────────────────────
 
 def update_timestamp(html_lines):
     """Update the hdr-note data-updated attribute so the hub shows today's date."""
     now  = datetime.now(timezone.utc)
-    date = now.strftime("%b %-d, %Y")   # e.g. Mar 22, 2026
+    date = now.strftime("%b %-d, %Y")
     for i, line in enumerate(html_lines):
         if "hdr-note" in line and "Updated:" in line:
-            # Replace everything between "Updated:" and "·" with fresh date
             html_lines[i] = re.sub(
                 r"(Updated:)\s*[^·]+",
                 f"\\1 {date} (auto) ",
@@ -235,6 +309,8 @@ def main():
     changed = 0
     changed += update_nba(html_lines)
     changed += update_nhl(html_lines)
+    changed += update_mlb(html_lines)
+    changed += update_nfl(html_lines)
 
     if changed:
         update_timestamp(html_lines)
