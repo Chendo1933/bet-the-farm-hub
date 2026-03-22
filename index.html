@@ -571,6 +571,14 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .mm-champ-conf{font-size:12px;color:var(--muted);}
 .mm-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:10px;color:var(--muted);}
 .mm-region-champion{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:8px 10px;margin-top:4px;font-size:12px;font-weight:800;color:var(--gold);text-align:center;}
+/* MM Live results bar */
+.mm-live-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:8px;margin-bottom:14px;flex-wrap:wrap;}
+.mm-refresh-btn{background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mm-refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
+.mm-refresh-btn:disabled{opacity:.5;cursor:not-allowed;}
+.mm-game.final{opacity:1;}
+.mm-game.final .mm-game-footer .mm-pick-label{color:#4ade80;}
+.mm-final-badge{font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.3);}
 /* ── MM Style badges ──────────────────────────── */
 .mm-style-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
 .mm-sbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.3px;}
@@ -1083,6 +1091,10 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     <button class="mm-pill" onclick="mmSetRegion('SOUTH',this)">🟢 South</button>
     <button class="mm-pill" onclick="mmSetRegion('MIDWEST',this)">🟡 Midwest</button>
     <button class="mm-pill" onclick="mmSetRegion('FF',this)">🏆 Final Four</button>
+  </div>
+  <div class="mm-live-bar">
+    <span id="mm-fetch-status" style="font-size:12px">⟳ Loading live results…</span>
+    <button class="mm-refresh-btn" id="mm-refresh-btn" onclick="fetchMMActualResults()">🔄 Refresh Results</button>
   </div>
   <div id="mm-content"></div>
 </div>
@@ -3264,6 +3276,101 @@ async function autoSyncOnLoad(){
     else if(r?.cached)lbl.textContent=`✅ Up to date · ${t}`;
     else lbl.textContent=`✅ ${r?.updated||0} new results · ${t}`;
   });
+}
+
+// ── ESPN INJURY AUTO-PULL ─────────────────────────────────────────────────────
+// Silently fetches live injury reports from ESPN on page load.
+// Updates the INJURIES global and re-renders the status bar.
+const ESPN_INJURY_SPORTS=[
+  {sport:'nba',   path:'basketball/nba'},
+  {sport:'nhl',   path:'hockey/nhl'},
+  {sport:'mlb',   path:'baseball/mlb'},
+];
+
+// Map common ESPN display name variations to how teams appear in INJURIES keys
+function espnNormTeamName(displayName, sport){
+  if(!displayName)return displayName;
+  // ESPN sometimes includes city+nickname; strip known suffixes if needed
+  const fixes={
+    // MLB ESPN display names → standard keys
+    'Arizona Diamondbacks':'Arizona Diamondbacks',
+    'D-backs':'Arizona Diamondbacks',
+    // NHL common variants
+    'Vegas Golden Knights':'Vegas Golden Knights',
+    'Montréal Canadiens':'Montreal Canadiens',
+    'Montreal Canadiens':'Montreal Canadiens',
+  };
+  return fixes[displayName]||displayName;
+}
+
+async function autoFetchInjuries(){
+  const mo=new Date().getMonth()+1; // 1=Jan…12=Dec
+  const OFF={nba:[7,8],nhl:[7,8,9],mlb:[11,12,1,2]};
+  const fresh={};
+  let fetchedAny=false;
+  for(const {sport,path} of ESPN_INJURY_SPORTS){
+    if((OFF[sport]||[]).includes(mo))continue; // skip off-season
+    try{
+      const url=`https://site.api.espn.com/apis/site/v2/sports/${path}/injuries`;
+      const d=await espnGet(url);
+      if(!d)continue;
+      // ESPN injuries response: {injuries:[{team:{displayName},injuries:[{athlete:{displayName},status,details:{type}}]}]}
+      const items=d.injuries||d.teams||[];
+      for(const item of items){
+        const rawName=item.team?.displayName||item.displayName||'';
+        const teamName=espnNormTeamName(rawName,sport);
+        if(!teamName)continue;
+        const injList=item.injuries||[];
+        if(!injList.length)continue;
+        const mapped=injList.map(inj=>{
+          const player=inj.athlete?.displayName||inj.athlete?.fullName||inj.fullName||'Unknown';
+          const rawStatus=inj.status||inj.type||'Unknown';
+          // Normalize to Day-To-Day / Out / Injured Reserve / Questionable
+          let status='Out';
+          const sl=rawStatus.toLowerCase();
+          if(sl.includes('day'))status='Day-To-Day';
+          else if(sl.includes('question'))status='Questionable';
+          else if(sl.includes('ir')||sl.includes('reserve'))status='Injured Reserve';
+          else if(sl.includes('out')||sl.includes('inactive'))status='Out';
+          const detail=inj.details?.type||inj.shortComment||inj.longComment||'';
+          return{player,status,detail};
+        });
+        if(mapped.length)fresh[teamName]=mapped;
+        fetchedAny=true;
+      }
+    }catch(e){
+      console.warn('[BTF injuries] fetch failed for',sport,e.message);
+    }
+  }
+  if(fetchedAny&&Object.keys(fresh).length>0){
+    // Merge: keep manual entries for sports not fetched, replace fetched sports
+    const fetchedSports=new Set(ESPN_INJURY_SPORTS
+      .filter(({sport})=>!(OFF[sport]||[]).includes(new Date().getMonth()+1))
+      .map(({sport})=>sport));
+    // Determine which teams belong to which sport (by checking our DB arrays)
+    const nbaNames=new Set((NBA||[]).map(t=>t[0]));
+    const nhlNames=new Set((NHL||[]).map(t=>t[0]));
+    const mlbNames=new Set((MLB||[]).map(t=>t[0]));
+    const sportOfTeam=name=>{
+      if(nbaNames.has(name))return'nba';
+      if(nhlNames.has(name))return'nhl';
+      if(mlbNames.has(name))return'mlb';
+      return null;
+    };
+    const merged={};
+    // Carry over any entries whose sport was NOT fetched this run
+    for(const [name,list] of Object.entries(INJURIES||{})){
+      const sp=sportOfTeam(name);
+      if(!sp||!fetchedSports.has(sp))merged[name]=list;
+    }
+    // Add fresh fetched entries
+    for(const [name,list] of Object.entries(fresh)){
+      merged[name]=list;
+    }
+    INJURIES=merged;
+    updateHdrNote();
+    console.log(`[BTF injuries] Updated — ${Object.keys(fresh).length} teams fetched`);
+  }
 }
 
 function fmtJuice(o){
@@ -5682,6 +5789,8 @@ function init(){
   document.getElementById('t-date').value=`${mo}/${dy}/${yr}`;
   // Auto-sync W-L records via The Odds API scores endpoint (non-blocking background task)
   setTimeout(()=>autoSyncOnLoad(),800);
+  // Auto-pull live injury reports from ESPN (non-blocking, ~2s delay to let page render first)
+  setTimeout(()=>autoFetchInjuries(),2000);
 }
 window.addEventListener('DOMContentLoaded',init);
 
@@ -6719,6 +6828,89 @@ function hbGoAnalyze(home,away,sport){
 
 // 2026 Tournament bracket — order per region: 1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15
 // First Four winners slotted: West 11=Texas, Midwest 11=SMU, Midwest 16=Howard, South 16=Lehigh
+// ── MM Live Results from ESPN ──────────────────────────────────────────────
+let MM_ACTUAL_RESULTS={};
+let _mmFetchStatus='idle';
+let _mmFetchTime=null;
+let _mmFetchCount=0;
+
+function mmNorm(espnName){
+  if(!espnName)return'';
+  const all=Object.values(MM_BRACKET).flat().map(t=>t[1]);
+  const low=espnName.toLowerCase();
+  for(const t of all){if(low.includes(t.toLowerCase()))return t;}
+  for(const t of all){if(t.toLowerCase().includes(low))return t;}
+  return'';
+}
+
+async function fetchMMActualResults(){
+  const btn=document.getElementById('mm-refresh-btn');
+  if(btn)btn.disabled=true;
+  _mmFetchStatus='loading';
+  updateMMStatus();
+  try{
+    const today=new Date().toISOString().slice(0,10).replace(/-/g,'');
+    let events=[];
+    const urls=[
+      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?groups=100&limit=300&dates=20260318-${today}`,
+      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?limit=300&dates=20260318-${today}`
+    ];
+    for(const url of urls){
+      const d=await espnGet(url);
+      if(d?.events?.length){events=d.events;break;}
+    }
+    const bracketSet=new Set(Object.values(MM_BRACKET).flat().map(t=>t[1]));
+    const results={};
+    let count=0;
+    for(const ev of events){
+      if(!ev.status?.type?.completed)continue;
+      const comp=ev.competitions?.[0];
+      if(!comp)continue;
+      let winner=null,loser=null;
+      for(const c of(comp.competitors||[])){
+        const bn=mmNorm(c.team?.displayName||c.team?.shortDisplayName||c.team?.name||'');
+        if(!bn||!bracketSet.has(bn))continue;
+        if(c.winner)winner=bn; else loser=bn;
+      }
+      if(winner&&loser){
+        const key=[winner,loser].sort().join('|');
+        results[key]=winner;
+        count++;
+      }
+    }
+    MM_ACTUAL_RESULTS=results;
+    _mmFetchCount=count;
+    _mmFetchStatus=count>0?'done':'empty';
+    _mmFetchTime=new Date();
+    _mmSimCache={};
+    updateMMStatus();
+    const el=document.getElementById('mm-content');
+    if(el)el.innerHTML=_mmActiveRegion==='FF'?mmRenderFF():mmRenderRegion(_mmActiveRegion);
+  }catch(e){
+    console.warn('[MM fetch]',e);
+    _mmFetchStatus='error';
+    updateMMStatus();
+  }
+  if(btn)btn.disabled=false;
+}
+
+function updateMMStatus(){
+  const el=document.getElementById('mm-fetch-status');
+  if(!el)return;
+  if(_mmFetchStatus==='loading'){
+    el.innerHTML='<span style="color:var(--muted)">⟳ Fetching live results…</span>';
+  } else if(_mmFetchStatus==='done'){
+    const t=_mmFetchTime?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    el.innerHTML=`<span style="color:#4ade80">✓ ${_mmFetchCount} result${_mmFetchCount!==1?'s':''} loaded · Updated ${t}</span>`;
+  } else if(_mmFetchStatus==='empty'){
+    el.innerHTML='<span style="color:var(--muted)">No completed games found — showing model predictions</span>';
+  } else if(_mmFetchStatus==='error'){
+    el.innerHTML='<span style="color:#f87171">⚠ Could not load live results — showing predictions</span>';
+  } else {
+    el.innerHTML='<span style="color:var(--muted)">Tap Refresh to load live results</span>';
+  }
+}
+
 const MM_BRACKET={
   EAST:[[1,'Duke'],[16,'Siena'],[8,'Ohio State'],[9,'TCU'],[5,"St. John's"],[12,'Northern Iowa'],
         [4,'Kansas'],[13,'CA Baptist'],[6,'Louisville'],[11,'South Florida'],[3,'Michigan State'],[14,'N Dakota State'],
@@ -6881,6 +7073,19 @@ function mmTeamData(name){
 }
 
 function mmPredict(name1,seed1,name2,seed2){
+  // ── Use actual ESPN result if available ───────────────────────────────────
+  const _ak=[name1,name2].sort().join('|');
+  if(MM_ACTUAL_RESULTS[_ak]){
+    const _aw=MM_ACTUAL_RESULTS[_ak];
+    const _t1w=_aw===name1;
+    const _d1=mmTeamData(name1),_d2=mmTeamData(name2);
+    const _sty=mmStyleAdj(name1,name2);
+    return{winner:_aw,winnerSeed:_t1w?seed1:seed2,prob:1.0,
+      isUpset:(_t1w?seed1:seed2)>Math.min(seed1,seed2),isActual:true,
+      t1:{name:name1,seed:seed1,data:_d1,style:MM_STYLE[name1]||null},
+      t2:{name:name2,seed:seed2,data:_d2,style:MM_STYLE[name2]||null},
+      bothInDB:!!(_d1&&_d2),styleNotes:_sty.notes,styleAdj:_sty.adj};
+  }
   const d1=mmTeamData(name1), d2=mmTeamData(name2);
   // Seed-based base rate: always from perspective of the lower (better) seed
   const betterSeed=Math.min(seed1,seed2);
@@ -6935,9 +7140,9 @@ function mmSimRegion(regionKey){
 }
 
 function mmGameCard(game,showEff){
-  const{t1,t2,winner,winnerSeed,prob,isUpset,bothInDB,styleNotes,styleAdj}=game;
+  const{t1,t2,winner,winnerSeed,prob,isUpset,isActual,bothInDB,styleNotes,styleAdj}=game;
   const conf=prob>=0.80?'high':prob>=0.65?'med':'low';
-  const confLabel=`${(prob*100).toFixed(0)}%`;
+  const confLabel=isActual?'Final':`${(prob*100).toFixed(0)}%`;
   const t1win=winner===t1.name;
 
   // Build style badges for one team
@@ -7089,7 +7294,7 @@ const _origShowTab=showTab;
 showTab=function(id,btn){
   _origShowTab(id,btn);
   if(id==='hotbets')hbRender();
-  if(id==='mm2026'){_mmSimCache={};mmSetRegion(_mmActiveRegion,document.querySelector('.mm-pill.active'));}
+  if(id==='mm2026'){_mmSimCache={};mmSetRegion(_mmActiveRegion,document.querySelector('.mm-pill.active'));fetchMMActualResults();}
 };
 // Re-render Hot Bets when odds refresh completes
 window.addEventListener('btf-odds-refreshed',()=>{
