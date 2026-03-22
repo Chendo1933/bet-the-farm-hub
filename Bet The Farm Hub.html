@@ -5229,6 +5229,31 @@ function simMonteCarlo(mean,std,n=1000){
     mean:results.reduce((a,b)=>a+b,0)/n
   };
 }
+// ── Poisson integer sampler (for count stats: goals, SOG, hits, HR, K, ER) ───
+// Goals/SOG/hits are discrete events — Gaussian gives fractional nonsense.
+// Poisson(λ) correctly produces integer outcomes (0, 1, 2, …) from a rate λ.
+function simSamplePoisson(lambda){
+  if(lambda<=0)return 0;
+  // Knuth algorithm — exact for lambda < ~700
+  const L=Math.exp(-lambda);
+  let k=0,p=1;
+  do{k++;p*=Math.random();}while(p>L&&k<100);
+  return k-1;
+}
+function simMonteCarloInt(lambda,n=1000){
+  // Returns integer percentiles from Poisson(lambda) — whole-number game projections
+  if(!lambda||lambda<=0)return{p10:0,p50:0,p90:0,mean:0,lambda:0};
+  const results=[];
+  for(let i=0;i<n;i++)results.push(simSamplePoisson(lambda));
+  results.sort((a,b)=>a-b);
+  return{
+    p10:results[Math.floor(n*0.10)],
+    p50:results[Math.floor(n*0.50)],
+    p90:results[Math.floor(n*0.90)],
+    mean:results.reduce((a,b)=>a+b,0)/n,
+    lambda
+  };
+}
 
 // ── Matchup adjustment (NBA) ──────────────────────────────────────────────────
 function simNbaAdjFactor(oppTeamRow){
@@ -5327,10 +5352,12 @@ function simPlayer_NBA(player, oppRow){
 // ── Simulate one NHL player ───────────────────────────────────────────────────
 function simPlayer_NHL(player){
   const s=player.stats;
-  const MCgoals=simMonteCarlo(s.goals, Math.max(s.goals*0.6,0.15));
-  const MCsog  =simMonteCarlo(s.sog,   s.sog*0.35);
+  // Poisson: goals/SOG/pts are discrete counts — Gaussian produces fractional nonsense
+  // e.g. 0.35 goals/gm → Poisson gives "0" (70%) or "1" (25%), not "0.4"
+  const MCgoals=simMonteCarloInt(s.goals);
+  const MCsog  =simMonteCarloInt(s.sog);
   const ptsPg  =s.ppg||((s.goals||0)+(s.assists||0));
-  const MCpts  =simMonteCarlo(ptsPg, ptsPg*0.5);
+  const MCpts  =simMonteCarloInt(ptsPg);
   return{
     goals:{proj:s.goals,  mc:MCgoals, avg:s.goals},
     sog:  {proj:s.sog,    mc:MCsog,   avg:s.sog},
@@ -5520,17 +5547,17 @@ function simPlayer_MLB(player){
   if(isPitcher){
     const k9=s.k9||0;
     const era=s.era||0;
-    const kProj=(k9/9)*6;           // K projected over 6 innings
-    const erProj=(era/9)*6;         // ER projected over 6 innings
-    const MCK=simMonteCarlo(kProj,  Math.max(kProj*0.40,0.5));
-    const MCER=simMonteCarlo(erProj,Math.max(erProj*0.55,0.3));
+    const kProj=(k9/9)*6;    // expected K over 6 innings (Poisson count)
+    const erProj=(era/9)*6;  // expected ER over 6 innings (Poisson count)
+    const MCK =simMonteCarloInt(kProj);
+    const MCER=simMonteCarloInt(erProj);
     return{type:'pitcher',k:{proj:kProj,mc:MCK,avg:k9},er:{proj:erProj,mc:MCER,avg:era}};
   } else {
     const avg=s.avg||0;
-    const hr=s.hr||0;   // per-game HR rate (season total / GP, computed in caller)
-    const hitsProj=avg*4; // ~4 AB per game → expected hits
-    const MCH =simMonteCarlo(hitsProj,Math.max(hitsProj*0.65,0.15));
-    const MCHR=simMonteCarlo(hr,      Math.max(hr*0.80,0.02));
+    const hr=s.hr||0;         // per-game HR rate
+    const hitsProj=avg*4;     // ~4 AB per game → expected hit count (Poisson)
+    const MCH =simMonteCarloInt(hitsProj);
+    const MCHR=simMonteCarloInt(hr);
     return{type:'hitter',hits:{proj:hitsProj,mc:MCH,avg:avg},hr:{proj:hr,mc:MCHR,avg:hr}};
   }
 }
@@ -5681,6 +5708,17 @@ function simFmtRange(mc){
   if(!mc||mc.p50<=0)return '—';
   return `${mc.p10.toFixed(1)}–${mc.p90.toFixed(1)}`;
 }
+// Integer formatters for Poisson-based count stats (goals, SOG, hits, HR, K, ER)
+function simFmtInt(val){return val!=null?String(Math.round(val)):'—';}
+function simFmtIntRange(mc){
+  if(!mc)return'—';
+  return`${Math.round(mc.p10)}–${Math.round(mc.p90)}`;
+}
+// "X% chance" label for sparse events (goals, HR) — 1 - P(0) = 1 - e^(-lambda)
+function simScoreChance(lambda){
+  if(!lambda||lambda<=0)return'';
+  return`${Math.round((1-Math.exp(-lambda))*100)}% chance`;
+}
 
 function simRenderNBAPlayer(player){
   if(!player.sim)return'';
@@ -5734,21 +5772,21 @@ function simRenderNHLPlayer(player){
     <div class="sim-stats-grid">
       <div class="sim-stat-box goals-box">
         <div class="sim-stat-label">GOALS</div>
-        <div class="sim-stat-proj">${simFmtStat(goals.mc.p50)}</div>
-        <div class="sim-stat-range">${simFmtRange(goals.mc)}</div>
-        <div class="sim-stat-avg">avg ${simFmtStat(goals.avg)}</div>
+        <div class="sim-stat-proj">${simFmtInt(goals.mc.p50)}</div>
+        <div class="sim-stat-range">${simFmtIntRange(goals.mc)}</div>
+        <div class="sim-stat-avg">${simScoreChance(goals.avg)||'—'}</div>
       </div>
       <div class="sim-stat-box ast-box">
         <div class="sim-stat-label">PTS</div>
-        <div class="sim-stat-proj">${simFmtStat(pts.mc.p50)}</div>
-        <div class="sim-stat-range">${simFmtRange(pts.mc)}</div>
-        <div class="sim-stat-avg">avg ${simFmtStat(pts.avg)}</div>
+        <div class="sim-stat-proj">${simFmtInt(pts.mc.p50)}</div>
+        <div class="sim-stat-range">${simFmtIntRange(pts.mc)}</div>
+        <div class="sim-stat-avg">${pts.avg>0?pts.avg.toFixed(2)+'/gm':'—'}</div>
       </div>
       <div class="sim-stat-box sog-box">
         <div class="sim-stat-label">SOG</div>
-        <div class="sim-stat-proj">${simFmtStat(sog.mc.p50)}</div>
-        <div class="sim-stat-range">${simFmtRange(sog.mc)}</div>
-        <div class="sim-stat-avg">avg ${simFmtStat(sog.avg)}</div>
+        <div class="sim-stat-proj">${simFmtInt(sog.mc.p50)}</div>
+        <div class="sim-stat-range">${simFmtIntRange(sog.mc)}</div>
+        <div class="sim-stat-avg">${sog.avg>0?sog.avg.toFixed(1)+'/gm':'—'}</div>
       </div>
     </div>
   </div>`;
@@ -5771,15 +5809,15 @@ function simRenderMLBPlayer(player){
       <div class="sim-stats-grid">
         <div class="sim-stat-box goals-box">
           <div class="sim-stat-label">K (6 inn)</div>
-          <div class="sim-stat-proj">${simFmtStat(k.mc.p50)}</div>
-          <div class="sim-stat-range">${simFmtRange(k.mc)}</div>
-          <div class="sim-stat-avg">K/9 ${k.avg>0?k.avg.toFixed(1):'—'}</div>
+          <div class="sim-stat-proj">${simFmtInt(k.mc.p50)}</div>
+          <div class="sim-stat-range">${simFmtIntRange(k.mc)}</div>
+          <div class="sim-stat-avg">${k.avg>0?k.avg.toFixed(1)+' K/9':'—'}</div>
         </div>
         <div class="sim-stat-box sog-box">
           <div class="sim-stat-label">ER (6 inn)</div>
-          <div class="sim-stat-proj">${simFmtStat(er.mc.p50)}</div>
-          <div class="sim-stat-range">${simFmtRange(er.mc)}</div>
-          <div class="sim-stat-avg">ERA ${er.avg>0?er.avg.toFixed(2):'—'}</div>
+          <div class="sim-stat-proj">${simFmtInt(er.mc.p50)}</div>
+          <div class="sim-stat-range">${simFmtIntRange(er.mc)}</div>
+          <div class="sim-stat-avg">${er.avg>0?er.avg.toFixed(2)+' ERA':'—'}</div>
         </div>
       </div>
     </div>`;
@@ -5796,15 +5834,15 @@ function simRenderMLBPlayer(player){
       <div class="sim-stats-grid">
         <div class="sim-stat-box pts-box">
           <div class="sim-stat-label">HITS</div>
-          <div class="sim-stat-proj">${simFmtStat(hits.mc.p50)}</div>
-          <div class="sim-stat-range">${simFmtRange(hits.mc)}</div>
+          <div class="sim-stat-proj">${simFmtInt(hits.mc.p50)}</div>
+          <div class="sim-stat-range">${simFmtIntRange(hits.mc)}</div>
           <div class="sim-stat-avg">avg ${avgFmt}</div>
         </div>
         <div class="sim-stat-box ast-box">
-          <div class="sim-stat-label">HR/G</div>
-          <div class="sim-stat-proj">${simFmtStat(hr.mc.p50)}</div>
-          <div class="sim-stat-range">${simFmtRange(hr.mc)}</div>
-          <div class="sim-stat-avg">avg ${hr.avg>0?hr.avg.toFixed(3):'—'}</div>
+          <div class="sim-stat-label">HR</div>
+          <div class="sim-stat-proj">${simFmtInt(hr.mc.p50)}</div>
+          <div class="sim-stat-range">${simFmtIntRange(hr.mc)}</div>
+          <div class="sim-stat-avg">${simScoreChance(hr.avg)||'—'}</div>
         </div>
       </div>
     </div>`;
