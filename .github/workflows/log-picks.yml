@@ -1,9 +1,9 @@
 name: Daily Pick Logger
 
-# Runs at noon ET (when most lines are posted) + manual trigger
+# Runs at 11:50 AM ET (10 min before noon games) + manual trigger
 on:
   schedule:
-    - cron: "0 17 * * *"   # 17:00 UTC = 1:00 PM ET
+    - cron: "50 15 * * *"   # 15:50 UTC = 11:50 AM ET
   workflow_dispatch:
 
 permissions:
