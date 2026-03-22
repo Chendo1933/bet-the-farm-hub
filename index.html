@@ -5156,7 +5156,8 @@ let _simRunning=false;
 // ── Stat extraction helpers ───────────────────────────────────────────────────
 function simExtractStats(athleteData, sport){
   const s={ppg:0,rpg:0,apg:0,spg:0,bpg:0,minpg:0,fgPct:0,threePM:0,
-            goals:0,assists:0,sog:0,plusMinus:0};
+            goals:0,assists:0,sog:0,plusMinus:0,
+            _gp:0,_goalsTotal:0,_sogTotal:0,_assistsTotal:0};
   // Walk the ESPN splits/categories/stats tree
   const cats=athleteData?.splits?.categories
           || athleteData?.statistics?.splits?.categories
@@ -5173,11 +5174,16 @@ function simExtractStats(athleteData, sport){
       if(n==='avgMinutes'||n==='minutesPerGame')       s.minpg=v;
       if(n==='fieldGoalPct')                            s.fgPct=v;
       if(n==='avgThreePointFieldGoalsMade')             s.threePM=v;
-      // NHL
+      // NHL — per-game averages (preferred)
       if(n==='avgGoals'||n==='goalsPerGame')           s.goals=v;
       if(n==='avgAssists'||n==='assistsPerGame')       s.assists=v;
       if(n==='avgShotsOnGoal'||n==='shotsOnGoalPerGame') s.sog=v;
       if(n==='plusMinus')                               s.plusMinus=v;
+      // NHL — raw season totals (fallback; converted to per-game in caller)
+      if(n==='gamesPlayed'||n==='games')               s._gp=v;
+      if(n==='goals'&&!s.goals)                         s._goalsTotal=v;
+      if(n==='shotsOnGoal'&&!s.sog)                    s._sogTotal=v;
+      if(n==='assists'&&!s.assists)                     s._assistsTotal=v;
     }
   }
   return s;
@@ -5402,12 +5408,22 @@ async function simFetchNHL(){
     const homeName=homeC.team?.displayName||'';
     const awayName=awayC.team?.displayName||'';
     simSetStatus(`Fetching NHL player stats for ${homeName} vs ${awayName}…`);
-    const homeLeaders=simExtractLeaders(homeC);
-    const awayLeaders=simExtractLeaders(awayC);
+    const homeLeaders=simExtractLeaders(homeC).map(p=>({...p,side:'home'}));
+    const awayLeaders=simExtractLeaders(awayC).map(p=>({...p,side:'away'}));
     const statFetches=[...homeLeaders.slice(0,6),...awayLeaders.slice(0,6)].map(async p=>{
       const data=await simFetchPlayerStats('nhl',p.id);
       const extracted=data?simExtractStats(data,'nhl'):{};
-      return{...p, stats:{...extracted,...p.knownStats}};
+      // Convert raw totals → per-game if ESPN didn't send per-game averages
+      if(!extracted.goals&&extracted._goalsTotal&&extracted._gp>0)
+        extracted.goals=parseFloat((extracted._goalsTotal/extracted._gp).toFixed(3));
+      if(!extracted.sog&&extracted._sogTotal&&extracted._gp>0)
+        extracted.sog=parseFloat((extracted._sogTotal/extracted._gp).toFixed(3));
+      if(!extracted.assists&&extracted._assistsTotal&&extracted._gp>0)
+        extracted.assists=parseFloat((extracted._assistsTotal/extracted._gp).toFixed(3));
+      // Only use knownStats for fields that are already per-game (plusMinus is fine; raw goal totals are not)
+      const safeKnown={};
+      if(p.knownStats.plusMinus)safeKnown.plusMinus=p.knownStats.plusMinus;
+      return{...p, stats:{...extracted,...safeKnown}};
     });
     const enriched=await Promise.all(statFetches);
     let homeRoster=enriched.filter(p=>p.side==='home').filter(p=>(p.stats?.goals||0)+(p.stats?.sog||0)>0||p.stats?.ppg>0);
@@ -5427,6 +5443,13 @@ async function simFetchNHL(){
         for(const a of newAths){
           const data=await simFetchPlayerStats('nhl',a.id);
           const stats=data?simExtractStats(data,'nhl'):{goals:0,assists:0,sog:0,ppg:0};
+          // Convert raw totals → per-game if ESPN didn't send per-game averages
+          if(!stats.goals&&stats._goalsTotal&&stats._gp>0)
+            stats.goals=parseFloat((stats._goalsTotal/stats._gp).toFixed(3));
+          if(!stats.sog&&stats._sogTotal&&stats._gp>0)
+            stats.sog=parseFloat((stats._sogTotal/stats._gp).toFixed(3));
+          if(!stats.assists&&stats._assistsTotal&&stats._gp>0)
+            stats.assists=parseFloat((stats._assistsTotal/stats._gp).toFixed(3));
           if(stats.goals>0.05||stats.sog>0.5){
             out.push({id:a.id,name:a.fullName||a.displayName||'',
               position:a.position?.abbreviation||'',jersey:a.jersey||'',
