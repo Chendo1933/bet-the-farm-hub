@@ -760,8 +760,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <div class="nav-dropdown" id="nav-more-dd">
     <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
     <div class="nav-dd-menu" id="nav-more-menu">
-      <button onclick="showTab('events',this);closeNavDropdowns()">🏆 Major Events</button>
-      <button onclick="showTab('futures',this);closeNavDropdowns()">🔮 Futures</button>
       <button onclick="showTab('mm2026',this);closeNavDropdowns()" style="position:relative">🏆 Bracket<span style="position:absolute;top:6px;right:12px;background:#f59e0b;color:#000;font-size:8px;font-weight:900;padding:1px 4px;border-radius:99px;line-height:1.4">NEW</span></button>
       <button onclick="showTab('angles',this);closeNavDropdowns()">🎯 Angles</button>
       <button onclick="showTab('glossary',this);closeNavDropdowns()">📖 Glossary</button>
@@ -799,8 +797,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button class="mm-sheet-btn" onclick="showTab('cbb',this);closeMobileMenu();mobileNavActivate(null)">🏀 College Basketball</button>
   <button class="mm-sheet-btn" onclick="showTab('nhl',this);closeMobileMenu();mobileNavActivate(null)">🏒 NHL</button>
   <button class="mm-sheet-btn" onclick="showTab('mlb',this);closeMobileMenu();mobileNavActivate(null)">⚾ MLB</button>
-  <button class="mm-sheet-btn" onclick="showTab('events',this);closeMobileMenu();mobileNavActivate(null)">🏆 Major Events</button>
-  <button class="mm-sheet-btn" onclick="showTab('futures',this);closeMobileMenu();mobileNavActivate(null)">🔮 Futures</button>
   <button class="mm-sheet-btn" onclick="showTab('mm2026',this);closeMobileMenu();mobileNavActivate(null)">🏆 Bracket</button>
   <button class="mm-sheet-btn" onclick="showTab('props',this);closeMobileMenu();mobileNavActivate(null)">🎯 Player Sim</button>
   <button class="mm-sheet-btn" onclick="showTab('angles',this);closeMobileMenu();mobileNavActivate(null)">🎯 Angles</button>
@@ -1072,19 +1068,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   </table></div>
 </div>
 <!-- ── MAJOR EVENTS ──────────────────────────────────── -->
-<div id="tab-events" class="tab-content">
-  <div class="page-title">Major Events</div>
-  <div class="page-sub">High-stakes matchups · Conference Tournaments · Playoffs · Marquee Games</div>
-  <div class="data-note">⚠ Sample data — update lines manually or via Odds API refresh</div>
-  <div id="events-wrap"></div>
-</div>
-<!-- ── FUTURES ───────────────────────────────────────── -->
-<div id="tab-futures" class="tab-content">
-  <div class="page-title">Futures Bets</div>
-  <div class="page-sub">Championship odds · MVP · Draft · Season awards</div>
-  <div class="data-note">⚠ Sample data — update odds from DraftKings or FanDuel</div>
-  <div id="futures-wrap"></div>
-</div>
 <!-- ── MARCH MADNESS 2026 ─────────────────────────────── -->
 <div id="tab-mm2026" class="tab-content">
   <div class="page-title">🏆 March Madness 2026</div>
@@ -1304,6 +1287,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     <div class="gl-pill" onclick="glSetSection('nba',this)">🏀 NBA / CBB</div>
     <div class="gl-pill" onclick="glSetSection('nhl',this)">🏒 NHL</div>
     <div class="gl-pill" onclick="glSetSection('mlb',this)">⚾ MLB</div>
+    <div class="gl-pill" onclick="glSetSection('scoring',this)">📊 Scoring System</div>
   </div>
 
   <!-- GENERAL -->
@@ -1377,6 +1361,24 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="gl-card"><div class="gl-term">Wind (Ballpark Factor) <span class="gl-tag">MLB</span></div><div class="gl-def">Wind direction and speed at the ballpark is one of the most reliable MLB totals edges. Wind blowing OUT (toward the outfield) 15+ mph = lean Over 3-4 pts. Wind blowing IN = lean Under 3-4 pts. Use Weather.com and check the specific stadium direction.</div><div class="gl-tip">💡 Wrigley Field (Cubs) is the most wind-sensitive park in baseball. Always check wind before betting a Cubs total.</div></div>
       <div class="gl-card"><div class="gl-term">Bullpen <span class="gl-tag">MLB</span></div><div class="gl-def">The relief pitchers who take over after the starter exits. A rested, fresh bullpen can lock down a game; a tired one (4+ relievers used in last 3 days) is a liability, especially for teams favored to protect leads late.</div><div class="gl-tip">💡 Check bullpen usage before betting a team to win late. An overworked bullpen is one of the best fade spots in MLB.</div></div>
       <div class="gl-card"><div class="gl-term">Home / Away ATS <span class="gl-tag">MLB</span></div><div class="gl-def">A team's run line record split by home vs. away games. In baseball, home field matters less than in football, but teams playing in their home park know the quirks (wall distances, foul territory, wind patterns) better than visitors.</div><div class="gl-example">Example: A team is 12-6 ATS at home but 5-13 away — only back them in their park.</div></div>
+    </div>
+  </div>
+
+  <!-- SCORING SYSTEM -->
+  <div id="gl-scoring" class="gl-section">
+    <div class="gl-grid">
+      <div class="gl-card"><div class="gl-term">Confidence Tiers <span class="gl-tag">How It Works</span></div><div class="gl-def">Every pick is scored 0–100. That score maps to one of four tiers: 🔥 Elite (85–99), ⚡ Strong (72–84), ✅ Good (60–71), 📊 Lean (&lt;60). The higher the score, the more factors are aligned in one direction. Only Elite and Strong picks are logged for performance tracking.</div><div class="gl-tip">💡 A score of 85+ means nearly every measurable edge points the same way — ATS record, efficiency gap, rest, and market data all agree.</div></div>
+      <div class="gl-card"><div class="gl-term">F1 — ATS Record Split (32%) <span class="gl-tag">Factor</span></div><div class="gl-def">The single heaviest factor. Uses the team's home ATS record when they're at home, away ATS when they're on the road. For CBB (neutral site), the overall season ATS record is used instead. All ATS signals are Bayesian-shrunk — small sample sizes are pulled toward 50% to prevent hot streaks from dominating early in a season.</div><div class="gl-example">Example: A team is 8-2 ATS at home (80%) with n=10 games. Shrunk to ~65% — still strong, but tempered.</div></div>
+      <div class="gl-card"><div class="gl-term">F2 — Implied Probability Edge (20%) <span class="gl-tag">Factor</span></div><div class="gl-def">Compares the team's shrunk ATS win rate to the no-vig implied probability from the market spread. A positive edge means the team covers more often than the market expects. Uses the same Bayesian-shrunk rate as F1 — raw percentages would double-count hot small-sample records.</div><div class="gl-example">Example: Market implies 52% cover probability. Team's shrunk ATS rate is 62%. That's a +10 point edge — meaningful signal.</div></div>
+      <div class="gl-card"><div class="gl-term">F3 — Rest Edge (12%) <span class="gl-tag">Factor</span></div><div class="gl-def">Measures the days-of-rest difference between both teams. A team with 10+ days off vs. a team on a short week has a meaningful physical and preparation edge. In the NBA, this factor is replaced by F8b when a back-to-back situation is detected — they can't both fire on the same game.</div><div class="gl-example">Example: Team A has 4 days rest, Team B played last night. +3 day edge for Team A → F3 boosts their score.</div></div>
+      <div class="gl-card"><div class="gl-term">F5 — Season ATS Overall (15%) <span class="gl-tag">Factor</span></div><div class="gl-def">The team's full-season ATS record regardless of home/away. Acts as a second ATS signal that smooths out home/away variance with a larger sample size. Skipped entirely for CBB — it would double-count F1, which already uses the overall record for neutral-site games.</div><div class="gl-tip">💡 F1 and F5 together give a home-split signal and a full-season signal. When they agree, the combined weight approaches 47% of the final score.</div></div>
+      <div class="gl-card"><div class="gl-term">F6 — Efficiency Differential (20%) <span class="gl-tag">Factor</span></div><div class="gl-def">Measures how much better one team is than the other on both sides of the ball. NBA uses Net Rating (OffRtg − DefRtg). CBB uses KenPom AdjEM (AdjOE − AdjDE). MLB uses runs scored/allowed per game from the season totals (with a 162-game fallback at season start so Opening Day still works). A big efficiency gap means the spread likely underestimates the true talent gap.</div><div class="gl-example">Example: Team A Net Rating +9.2, Team B Net Rating −1.4. F6 gap = 10.6 → strong lean toward Team A.</div></div>
+      <div class="gl-card"><div class="gl-term">F7 — Injury Signal (10%) <span class="gl-tag">Factor</span></div><div class="gl-def">Penalizes the picked team when key players are listed as out, and rewards them when the opposing team has significant injuries. The signal is based on the count and impact of active injury reports pulled from ESPN's injury data. A team's pick score drops when their own stars are out and rises when their opponent is shorthanded.</div><div class="gl-tip">💡 This factor fires automatically — injuries are fetched live. No manual input needed.</div></div>
+      <div class="gl-card"><div class="gl-term">F8a — Home Dog Angle (6%) <span class="gl-tag">Factor</span></div><div class="gl-def">A situational boost applied when a home team is an underdog and we're picking them to cover. Historically, home underdogs cover at ~53–54% in NFL, CFB, and NBA — the crowd and comfort factor is underpriced by the market. Disabled for CBB (neutral site games remove the home advantage entirely).</div><div class="gl-example">Example: Chiefs are -7 road favorites. We pick the home dog. F8a fires, adding ~6% weight to that side.</div></div>
+      <div class="gl-card"><div class="gl-term">F8b — Back-to-Back Road Fade (9%) <span class="gl-tag">Factor</span></div><div class="gl-def">NBA-only. Fires when a team is playing their second game in two nights on the road as a favorite. This is one of the most reliable fade spots in sports — B2B road favorites cover at only ~44%. When F8b fires, F3 (rest edge) is suppressed to avoid counting the same fatigue signal twice.</div><div class="gl-example">Example: Lakers played last night in Denver. Tonight they're in Portland as -4 favorites. F8b fires → strong lean to Portland.</div></div>
+      <div class="gl-card"><div class="gl-term">F9 — ML Underdog Floor (12%) <span class="gl-tag">Factor</span></div><div class="gl-def">If the moneyline model rates the underdog with 60%+ confidence, and ATS records are close (within 7%), the spread pick is overridden to the ML side. Rationale: if an underdog wins outright, they always cover the spread. ML confidence acts as a floor for spread picks when the outright upset looks likely.</div><div class="gl-tip">💡 F9 only fires when the underdog is rated highly. It's a relatively rare override but prevents the model from picking a spread side while the ML model is screaming the other way.</div></div>
+      <div class="gl-card"><div class="gl-term">Bayesian Shrinkage <span class="gl-tag">How It Works</span></div><div class="gl-def">A statistical technique applied to all ATS records before they enter the model. Small sample sizes are shrunk toward 50% (coin flip) because early-season records are unreliable. As the season progresses and sample sizes grow, the shrinkage fades. At 20+ games, the full ATS rate is used.</div><div class="gl-example">Example: 3-1 ATS (75%) in 4 games → shrunk to 56%. Same 75% after 25 games → trusted at ~73%. The model doesn't overreact to a hot start.</div></div>
+      <div class="gl-card"><div class="gl-term">Score Extremizer (1.6×) <span class="gl-tag">How It Works</span></div><div class="gl-def">After all factors are weighted and averaged, the raw score (typically 0.48–0.72) is pushed away from 50% by 1.6× before being converted to the 0–100 display scale. This is necessary because individual factors are capped below 1.0 — without the extremizer, strong picks would only score ~68 even when everything aligns. The 1.6× multiplier unlocks the full Elite tier range.</div><div class="gl-example">Example: Raw score 0.65 → extremized: 0.5 + (0.15 × 1.6) = 0.74 → displayed as 74 (Strong tier).</div></div>
     </div>
   </div>
 </div>
