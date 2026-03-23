@@ -733,6 +733,45 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .az-team-search{display:block;width:100%;padding:8px 12px;background:var(--card2);border:1.5px solid var(--gold);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;}
 .az-team-search::placeholder{color:var(--muted);}
 .az-team-search:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 2px rgba(212,175,55,.18);}
+/* ── Viewing Room ── */
+.vr-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.vr-refresh-info{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.vr-refresh-btn{background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;transition:all .15s;}
+.vr-refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
+.vr-sport-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.vr-pill{padding:5px 12px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.3px;}
+.vr-pill:hover{border-color:var(--gold);color:var(--gold);}
+.vr-pill.active{background:var(--gold);border-color:var(--gold);color:#000;}
+.vr-pill.live-pill.active{background:#ef4444;border-color:#ef4444;color:#fff;}
+.vr-section-label{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;display:flex;align-items:center;gap:8px;}
+.vr-section-label span{flex:1;height:1px;background:var(--border);}
+.vr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-bottom:8px;}
+.vr-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:border-color .15s;position:relative;}
+.vr-card.live{border-color:rgba(239,68,68,.45);}
+.vr-card.pinned-card{border-color:rgba(201,168,55,.4);background:rgba(201,168,55,.04);}
+.vr-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.vr-sport-tag{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);}
+.vr-status-live{font-size:11px;font-weight:800;color:#ef4444;display:flex;align-items:center;gap:4px;}
+.vr-status-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;animation:vrPulse 1.4s infinite;}
+@keyframes vrPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.vr-status-pre{font-size:11px;font-weight:700;color:var(--gold);}
+.vr-status-final{font-size:11px;font-weight:700;color:var(--muted);}
+.vr-score-row{display:flex;align-items:center;gap:6px;margin:6px 0 10px;}
+.vr-team{flex:1;text-align:center;}
+.vr-team-name{font-size:12px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vr-team-score{font-size:30px;font-weight:900;color:var(--text);line-height:1;}
+.vr-team-score.winning{color:var(--gold);}
+.vr-score-sep{font-size:16px;color:var(--muted);margin:0 4px;padding-bottom:14px;}
+.vr-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.vr-bet-bar{background:rgba(201,168,55,.08);border:1px solid rgba(201,168,55,.18);border-radius:7px;padding:6px 10px;font-size:11px;flex:1;margin-right:8px;}
+.vr-bet-pick{color:var(--text2);font-weight:600;}
+.vr-cover-yes{color:#22c55e;font-weight:800;}
+.vr-cover-no{color:#ef4444;font-weight:800;}
+.vr-cover-pre{color:var(--gold);font-weight:700;}
+.vr-pin-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:4px;line-height:1;opacity:.35;transition:all .15s;flex-shrink:0;}
+.vr-pin-btn:hover{opacity:.7;}
+.vr-pin-btn.active{opacity:1;filter:drop-shadow(0 0 4px rgba(201,168,55,.6));}
+.vr-empty{text-align:center;color:var(--muted);font-size:13px;padding:32px 0;}
 </style>
 </head>
 <body>
@@ -757,6 +796,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button onclick="showTab('analyzer',this)">⚡ Analyzer</button>
   <button onclick="showTab('props',this)">🎯 Player Sim</button>
   <button onclick="showTab('tracker',this)">📓 Bet Tracker</button>
+  <button onclick="showTab('viewingroom',this)">📺 Viewing Room</button>
   <div class="nav-dropdown" id="nav-more-dd">
     <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
     <div class="nav-dd-menu" id="nav-more-menu">
@@ -799,6 +839,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button class="mm-sheet-btn" onclick="showTab('mlb',this);closeMobileMenu();mobileNavActivate(null)">⚾ MLB</button>
   <button class="mm-sheet-btn" onclick="showTab('mm2026',this);closeMobileMenu();mobileNavActivate(null)">🏆 Bracket</button>
   <button class="mm-sheet-btn" onclick="showTab('props',this);closeMobileMenu();mobileNavActivate(null)">🎯 Player Sim</button>
+  <button class="mm-sheet-btn" onclick="showTab('viewingroom',this);closeMobileMenu();mobileNavActivate(null)">📺 Viewing Room</button>
   <button class="mm-sheet-btn" onclick="showTab('angles',this);closeMobileMenu();mobileNavActivate(null)">🎯 Angles</button>
   <button class="mm-sheet-btn" onclick="showTab('glossary',this);closeMobileMenu();mobileNavActivate(null)">📖 Glossary</button>
 </div>
@@ -1222,6 +1263,30 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="mresults hide" id="az-results" style="margin-top:14px"></div>
     </div>
   </details>
+</div>
+<!-- ── VIEWING ROOM ──────────────────────────────────── -->
+<div id="tab-viewingroom" class="tab-content">
+  <div class="page-title">📺 Viewing Room</div>
+  <div class="page-sub">Live scores · Auto-pins your active bets · Updates every 60 seconds</div>
+  <div class="vr-toolbar">
+    <div class="vr-sport-pills" id="vr-sport-pills">
+      <button class="vr-pill active" onclick="vrSetFilter('all',this)">All Sports</button>
+      <button class="vr-pill" onclick="vrSetFilter('nba',this)">🏀 NBA</button>
+      <button class="vr-pill" onclick="vrSetFilter('nhl',this)">🏒 NHL</button>
+      <button class="vr-pill" onclick="vrSetFilter('mlb',this)">⚾ MLB</button>
+      <button class="vr-pill" onclick="vrSetFilter('nfl',this)">🏈 NFL</button>
+      <button class="vr-pill" onclick="vrSetFilter('cfb',this)">🎓 CFB</button>
+      <button class="vr-pill" onclick="vrSetFilter('cbb',this)">🏀 CBB</button>
+      <button class="vr-pill live-pill" onclick="vrSetFilter('live',this)">🔴 Live Only</button>
+    </div>
+    <div class="vr-refresh-info">
+      <span id="vr-timer">—</span>
+      <button class="vr-refresh-btn" onclick="vrRefresh()">↺ Refresh</button>
+    </div>
+  </div>
+  <div id="vr-content">
+    <div class="vr-empty">Loading scores…</div>
+  </div>
 </div>
 <!-- ── TRACKER ─────────────────────────────────────── -->
 <div id="tab-tracker" class="tab-content">
@@ -7676,6 +7741,336 @@ window.addEventListener('btf-odds-refreshed',()=>{
     panel.style.display='block';
   }catch(e){/* silently skip if offline or file missing */}
 })();
+
+// ── VIEWING ROOM ──────────────────────────────────────────────────────────────
+const VR_ESPN = {
+  nba: 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',
+  nhl: 'https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard',
+  mlb: 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard',
+  nfl: 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard',
+  cbb: 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard',
+  cfb: 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard',
+};
+const VR_SPORT_ICON = {nba:'🏀',nhl:'🏒',mlb:'⚾',nfl:'🏈',cbb:'🏀',cfb:'🎓'};
+const VR_SPORT_LABEL = {nba:'NBA',nhl:'NHL',mlb:'MLB',nfl:'NFL',cbb:'College Basketball',cfb:'College Football'};
+
+let vrGames = [];          // all fetched games
+let vrFilter = 'all';      // active sport/live filter
+let vrLastFetch = null;    // Date of last successful fetch
+let vrTimerInterval = null;
+let vrRefreshInterval = null;
+let vrTabActive = false;
+
+function vrGetPinned(){
+  try{return JSON.parse(localStorage.getItem('btf-vr-pinned')||'[]');}catch(e){return[];}
+}
+function vrSetPinned(ids){
+  localStorage.setItem('btf-vr-pinned', JSON.stringify(ids));
+}
+function vrTogglePin(gameId){
+  const pins = vrGetPinned();
+  const idx = pins.indexOf(gameId);
+  if(idx>=0) pins.splice(idx,1); else pins.push(gameId);
+  vrSetPinned(pins);
+  vrRender();
+}
+
+// Get today's pending bets from Bet Tracker
+function vrGetTodayBets(){
+  try{
+    const today = new Date().toISOString().slice(0,10);
+    const bets = JSON.parse(localStorage.getItem('btf-bets')||'[]');
+    return bets.filter(b => b.result==='Pending' && b.date===today);
+  }catch(e){return[];}
+}
+
+// Check if a bet matches a game (by team name inclusion)
+function vrMatchBet(bet, game){
+  if(!bet.matchup) return false;
+  const mu = bet.matchup.toLowerCase();
+  const h = game.home.toLowerCase();
+  const a = game.away.toLowerCase();
+  // Extract last word of team name for fuzzy match (e.g. "Celtics", "Heat")
+  const hLast = h.split(' ').pop();
+  const aLast = a.split(' ').pop();
+  return mu.includes(hLast) || mu.includes(aLast) ||
+         mu.includes(h.split(' ')[0]) || mu.includes(a.split(' ')[0]);
+}
+
+// Parse ESPN event into normalized game object
+function vrParseEvent(ev, sport){
+  const comp = ev.competitions && ev.competitions[0];
+  if(!comp) return null;
+  const comps = comp.competitors||[];
+  const home = comps.find(c=>c.homeAway==='home');
+  const away = comps.find(c=>c.homeAway==='away');
+  if(!home||!away) return null;
+
+  const st = ev.status||{};
+  const stType = (st.type&&st.type.name)||'';
+  const isLive = stType==='STATUS_IN_PROGRESS' || stType==='STATUS_HALFTIME';
+  const isFinal = st.type&&st.type.completed;
+  const detail = (st.type&&st.type.shortDetail)||'';
+
+  // Spread from ESPN odds if available
+  let espnSpread = null;
+  if(comp.odds&&comp.odds[0]){
+    const odd = comp.odds[0];
+    espnSpread = odd.spread!=null ? odd.spread : null; // positive = home favored by X
+  }
+
+  return {
+    id: ev.id,
+    sport,
+    home: home.team.displayName||home.team.shortDisplayName||'Home',
+    away: away.team.displayName||away.team.shortDisplayName||'Away',
+    homeScore: isLive||isFinal ? (parseInt(home.score)||0) : null,
+    awayScore: isLive||isFinal ? (parseInt(away.score)||0) : null,
+    homeWinning: isLive && parseInt(home.score||0) > parseInt(away.score||0),
+    awayWinning: isLive && parseInt(away.score||0) > parseInt(home.score||0),
+    isLive, isFinal,
+    detail,      // "Q4 2:14", "Bot 7th", "Final", "7:30 PM ET"
+    espnSpread,
+    date: (ev.date||'').slice(0,10),
+  };
+}
+
+async function vrFetchAll(){
+  const results = [];
+  await Promise.allSettled(
+    Object.entries(VR_ESPN).map(async ([sport, url])=>{
+      try{
+        const r = await fetch(url);
+        const d = await r.json();
+        (d.events||[]).forEach(ev=>{
+          const g = vrParseEvent(ev, sport);
+          if(g) results.push(g);
+        });
+      }catch(e){/* skip failed sport */}
+    })
+  );
+  return results;
+}
+
+async function vrRefresh(){
+  const btn = document.querySelector('.vr-refresh-btn');
+  if(btn) btn.textContent = '↺ Loading…';
+  vrGames = await vrFetchAll();
+  vrLastFetch = new Date();
+  vrRender();
+  if(btn) btn.textContent = '↺ Refresh';
+}
+
+function vrCoverStatus(homeScore, awayScore, pick, spread){
+  // spread is ESPN's value: positive means home is favored by that many
+  // ATS margin from home perspective: (homeScore - awayScore) - spread
+  // if margin > 0 → home covering; if < 0 → away covering
+  if(spread==null||!pick) return null;
+  const margin = (homeScore - awayScore) - spread;
+  const homeCovering = margin > 0;
+  const picking = pick==='home' ? homeCovering : !homeCovering;
+  const diff = pick==='home' ? margin : -margin;
+  return {covering: picking, diff};
+}
+
+function vrFormatDiff(diff){
+  if(diff==null) return '';
+  const abs = Math.abs(diff).toFixed(1);
+  return diff > 0 ? `+${abs}` : `-${abs}`;
+}
+
+function vrRenderCard(game, isPinned, bet){
+  const pins = vrGetPinned();
+  const isManPinned = pins.includes(game.id);
+  const isAutoPinned = isPinned && !isManPinned;
+
+  // Status display
+  let statusHtml;
+  if(game.isLive){
+    statusHtml = `<span class="vr-status-live">${game.detail}</span>`;
+  } else if(game.isFinal){
+    statusHtml = `<span class="vr-status-final">FINAL</span>`;
+  } else {
+    statusHtml = `<span class="vr-status-pre">${game.detail}</span>`;
+  }
+
+  // Score display
+  const showScores = game.isLive || game.isFinal;
+  const hScore = showScores ? game.homeScore : '—';
+  const aScore = showScores ? game.awayScore : '—';
+  const hClass = game.homeWinning ? 'vr-team-score winning' : 'vr-team-score';
+  const aClass = game.awayWinning ? 'vr-team-score winning' : 'vr-team-score';
+
+  // Bet / cover bar
+  let betBarHtml = '';
+  if(bet){
+    let coverHtml = '';
+    if(game.isLive && bet.pick){
+      // Try to detect which side they picked from pick text
+      const pickLower = bet.pick.toLowerCase();
+      const homeLower = game.home.toLowerCase();
+      const awayLower = game.away.toLowerCase();
+      const hLast = homeLower.split(' ').pop();
+      const aLast = awayLower.split(' ').pop();
+      const pickedSide = (pickLower.includes(hLast)||pickLower.includes(homeLower.split(' ')[0])) ? 'home' :
+                         (pickLower.includes(aLast)||pickLower.includes(awayLower.split(' ')[0])) ? 'away' : null;
+      const sprd = game.espnSpread;
+      if(pickedSide && sprd!=null){
+        const cs = vrCoverStatus(game.homeScore, game.awayScore, pickedSide, sprd);
+        if(cs){
+          const diff = vrFormatDiff(cs.diff);
+          coverHtml = cs.covering
+            ? ` · <span class="vr-cover-yes">✅ Covering ${diff}</span>`
+            : ` · <span class="vr-cover-no">❌ Down ${diff}</span>`;
+        }
+      } else if(!game.isFinal) {
+        coverHtml = ` · <span class="vr-cover-pre">In Progress</span>`;
+      }
+    } else if(!game.isLive && !game.isFinal){
+      coverHtml = ` · <span class="vr-cover-pre">⏳ Upcoming</span>`;
+    }
+    const autoBadge = isAutoPinned ? ' <span style="font-size:9px;background:rgba(201,168,55,.2);color:var(--gold);padding:1px 5px;border-radius:4px;font-weight:800;letter-spacing:.5px">BET</span>' : '';
+    betBarHtml = `<div class="vr-bet-bar"><span class="vr-bet-pick">📋 ${bet.pick}${autoBadge}</span>${coverHtml}</div>`;
+  }
+
+  const pinIcon = (isPinned||isManPinned) ? '📌' : '📌';
+  const pinActive = (isPinned||isManPinned) ? 'active' : '';
+  const cardClass = `vr-card${game.isLive?' live':''}${isPinned?' pinned-card':''}`;
+
+  return `<div class="${cardClass}" id="vr-card-${game.id}">
+    <div class="vr-card-top">
+      <span class="vr-sport-tag">${VR_SPORT_ICON[game.sport]||''} ${VR_SPORT_LABEL[game.sport]||game.sport.toUpperCase()}</span>
+      ${statusHtml}
+    </div>
+    <div class="vr-score-row">
+      <div class="vr-team">
+        <div class="vr-team-name">${game.away}</div>
+        <div class="${aClass}">${aScore}</div>
+      </div>
+      <div class="vr-score-sep">·</div>
+      <div class="vr-team">
+        <div class="vr-team-name">${game.home}</div>
+        <div class="${hClass}">${hScore}</div>
+      </div>
+    </div>
+    <div class="vr-card-footer">
+      ${betBarHtml || '<div style="flex:1"></div>'}
+      <button class="vr-pin-btn ${pinActive}" onclick="vrTogglePin('${game.id}')" title="${isManPinned?'Unpin':'Pin game'}">${pinIcon}</button>
+    </div>
+  </div>`;
+}
+
+function vrRender(){
+  const container = document.getElementById('vr-content');
+  if(!container) return;
+
+  const manPins = vrGetPinned();
+  const todayBets = vrGetTodayBets();
+  const today = new Date().toISOString().slice(0,10);
+
+  // Filter games
+  let filtered = vrGames.filter(g => g.date===today || g.isLive);
+  if(vrFilter==='live') filtered = filtered.filter(g=>g.isLive);
+  else if(vrFilter!=='all') filtered = filtered.filter(g=>g.sport===vrFilter);
+
+  // Sort: live first, then pre-game by time, then final
+  filtered.sort((a,b)=>{
+    const rank = g => g.isLive?0:g.isFinal?2:1;
+    return rank(a)-rank(b);
+  });
+
+  // Determine pinned games (auto from bets + manual)
+  const autoPinnedIds = new Set();
+  filtered.forEach(g=>{
+    const bet = todayBets.find(b=>vrMatchBet(b,g));
+    if(bet) autoPinnedIds.add(g.id);
+  });
+  const allPinnedIds = new Set([...autoPinnedIds, ...manPins]);
+
+  const pinnedGames = filtered.filter(g=>allPinnedIds.has(g.id));
+  const unpinnedGames = filtered.filter(g=>!allPinnedIds.has(g.id));
+
+  let html = '';
+
+  // Pinned section
+  if(pinnedGames.length>0){
+    html += `<div class="vr-section-label">📌 Your Games <span></span></div>`;
+    html += `<div class="vr-grid">`;
+    pinnedGames.forEach(g=>{
+      const bet = todayBets.find(b=>vrMatchBet(b,g));
+      html += vrRenderCard(g, true, bet||null);
+    });
+    html += `</div>`;
+  }
+
+  // All other games
+  if(unpinnedGames.length>0){
+    const lbl = pinnedGames.length>0 ? 'All Other Games' : 'Today\'s Games';
+    html += `<div class="vr-section-label">📺 ${lbl} <span></span></div>`;
+
+    // Sub-group by live/upcoming/final
+    const live = unpinnedGames.filter(g=>g.isLive);
+    const upcoming = unpinnedGames.filter(g=>!g.isLive&&!g.isFinal);
+    const final = unpinnedGames.filter(g=>g.isFinal);
+
+    const renderGroup = (games) => {
+      if(!games.length) return '';
+      let s = '<div class="vr-grid">';
+      games.forEach(g=>{
+        const bet = todayBets.find(b=>vrMatchBet(b,g));
+        s += vrRenderCard(g, false, bet||null);
+      });
+      s += '</div>';
+      return s;
+    };
+
+    if(live.length) html += `<div class="vr-section-label" style="font-size:10px;margin-top:12px;color:#ef4444">🔴 Live <span></span></div>${renderGroup(live)}`;
+    if(upcoming.length) html += `<div class="vr-section-label" style="font-size:10px;margin-top:12px">⏳ Upcoming <span></span></div>${renderGroup(upcoming)}`;
+    if(final.length) html += `<div class="vr-section-label" style="font-size:10px;margin-top:12px">⚫ Final <span></span></div>${renderGroup(final)}`;
+  }
+
+  if(!filtered.length){
+    html = `<div class="vr-empty">No games found${vrFilter!=='all'?' for this filter' : ' today'}.<br><span style="font-size:11px">Try a different sport filter or check back later.</span></div>`;
+  }
+
+  container.innerHTML = html;
+  vrUpdateTimer();
+}
+
+function vrUpdateTimer(){
+  const el = document.getElementById('vr-timer');
+  if(!el) return;
+  if(!vrLastFetch){ el.textContent='Not yet loaded'; return; }
+  const secs = Math.round((Date.now()-vrLastFetch.getTime())/1000);
+  el.textContent = secs < 60 ? `Updated ${secs}s ago` : `Updated ${Math.round(secs/60)}m ago`;
+}
+
+function vrSetFilter(filter, btn){
+  vrFilter = filter;
+  document.querySelectorAll('.vr-pill').forEach(p=>p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  vrRender();
+}
+
+// Hook into showTab to load viewing room on first visit
+const _vrOrigShowTab = showTab;
+function showTab(id, btn){
+  _vrOrigShowTab(id, btn);
+  if(id==='viewingroom'){
+    vrTabActive = true;
+    if(!vrLastFetch){ vrRefresh(); }
+    // Start auto-refresh interval
+    if(!vrRefreshInterval){
+      vrRefreshInterval = setInterval(()=>{ if(vrTabActive) vrRefresh(); }, 60000);
+    }
+    // Timer tick
+    if(!vrTimerInterval){
+      vrTimerInterval = setInterval(vrUpdateTimer, 5000);
+    }
+  } else {
+    vrTabActive = false;
+  }
+}
 </script>
 </body>
 </html>
