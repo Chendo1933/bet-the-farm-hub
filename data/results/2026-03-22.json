@@ -1,6 +1,6 @@
 {
   "date": "2026-03-22",
-  "logged": "2026-03-23T04:04:10.037546+00:00",
+  "logged": "2026-03-23T06:53:08.488179+00:00",
   "sports": {
     "nba": [
       {
@@ -258,6 +258,16 @@
         "status": "Final"
       },
       {
+        "game_id": "401833312",
+        "name": "Los Angeles Dodgers at Los Angeles Angels",
+        "home": "Los Angeles Angels",
+        "away": "Los Angeles Dodgers",
+        "home_score": 5,
+        "away_score": 13,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
         "game_id": "401833316",
         "name": "Arizona Diamondbacks at San Diego Padres",
         "home": "San Diego Padres",
@@ -337,6 +347,16 @@
         "home_score": 65,
         "away_score": 67,
         "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401856560",
+        "name": "Texas Tech Red Raiders at Alabama Crimson Tide",
+        "home": "Alabama Crimson Tide",
+        "away": "Texas Tech Red Raiders",
+        "home_score": 90,
+        "away_score": 65,
+        "winner": "home",
         "status": "Final"
       }
     ]
