@@ -1983,6 +1983,7 @@ function showTab(id,btn){
   if(id==='angles')renderAngles();
   if(id==='events')renderEvents();
   if(id==='futures')renderFutures();
+  if(id==='viewingroom')vrOnTabOpen();
   if(id==='props'){
     // Show cached results if already loaded today; otherwise prompt to run
     if(_simCache.date){simRender();}
@@ -8052,23 +8053,14 @@ function vrSetFilter(filter, btn){
   vrRender();
 }
 
-// Hook into showTab to load viewing room on first visit
-const _vrOrigShowTab = showTab;
-function showTab(id, btn){
-  _vrOrigShowTab(id, btn);
-  if(id==='viewingroom'){
-    vrTabActive = true;
-    if(!vrLastFetch){ vrRefresh(); }
-    // Start auto-refresh interval
-    if(!vrRefreshInterval){
-      vrRefreshInterval = setInterval(()=>{ if(vrTabActive) vrRefresh(); }, 60000);
-    }
-    // Timer tick
-    if(!vrTimerInterval){
-      vrTimerInterval = setInterval(vrUpdateTimer, 5000);
-    }
-  } else {
-    vrTabActive = false;
+function vrOnTabOpen(){
+  vrTabActive = true;
+  if(!vrLastFetch){ vrRefresh(); }
+  if(!vrRefreshInterval){
+    vrRefreshInterval = setInterval(()=>{ if(vrTabActive) vrRefresh(); }, 60000);
+  }
+  if(!vrTimerInterval){
+    vrTimerInterval = setInterval(vrUpdateTimer, 5000);
   }
 }
 </script>
