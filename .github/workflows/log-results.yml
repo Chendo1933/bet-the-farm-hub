@@ -36,6 +36,7 @@ jobs:
             echo "No new results to commit"
           else
             git commit -m "results: $(date -d 'yesterday' +'%Y-%m-%d') game log"
+            git pull --rebase
             git push
             echo "✅ Results committed"
           fi

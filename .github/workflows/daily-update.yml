@@ -36,6 +36,7 @@ jobs:
             echo "Nothing changed — hub already up to date"
           else
             git commit -m "auto: update NBA/NHL/MLB/NFL records $(date +'%Y-%m-%d')"
+            git pull --rebase
             git push
             echo "✅ Pushed updated stats"
           fi

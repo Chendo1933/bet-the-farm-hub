@@ -40,6 +40,7 @@ jobs:
             echo "No new picks to commit"
           else
             git commit -m "picks: $(date +'%Y-%m-%d') Elite/Strong logged"
+            git pull --rebase
             git push
             echo "✅ Picks committed"
           fi
