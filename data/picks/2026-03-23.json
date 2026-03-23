@@ -1,6 +1,6 @@
 {
   "date": "2026-03-23",
-  "logged": "2026-03-23T04:05:29.292011+00:00",
+  "logged": "2026-03-23T18:09:16.870309+00:00",
   "has_live_odds": true,
   "picks": [
     {
@@ -89,37 +89,11 @@
       "atsPick": null,
       "spread": null,
       "pickLabel": "Denver Broncos (Home ATS 75%)",
-      "score100": 74,
-      "tier": "strong",
-      "date": "",
-      "time": ""
-    },
-    {
-      "sport": "NFL",
-      "betType": "spread",
-      "home": "Seattle Seahawks",
-      "away": "",
-      "atsPick": null,
-      "spread": null,
-      "pickLabel": "Seattle Seahawks (Home ATS 75%)",
-      "score100": 73,
-      "tier": "strong",
-      "date": "",
-      "time": ""
-    },
-    {
-      "sport": "NFL",
-      "betType": "spread",
-      "home": "Jacksonville Jaguars",
-      "away": "",
-      "atsPick": null,
-      "spread": null,
-      "pickLabel": "Jacksonville Jaguars (Home ATS 75%)",
-      "score100": 73,
+      "score100": 75,
       "tier": "strong",
       "date": "",
       "time": ""
     }
   ],
-  "all_picks_count": 15
+  "all_picks_count": 13
 }
