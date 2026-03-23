@@ -1,7 +1,8 @@
 #!/bin/bash
 cd "/Users/colehenderson/Bet The Farm"
 git add -A
-git commit -m "update hub - $(date '+%Y-%m-%d %H:%M')"
+git diff --staged --quiet || git commit -m "update hub - $(date '+%Y-%m-%d %H:%M')"
+git pull --rebase
 git push
 echo ""
 echo "✅ Hub updated! Changes are live at:"
