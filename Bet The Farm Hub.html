@@ -754,14 +754,19 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <button onclick="showTab('mlb',this)">⚾ MLB</button>
     </div>
   </div>
-  <button onclick="showTab('analyzer',this)">⚡ Matchup Analyzer</button>
-  <button onclick="showTab('events',this)">🏆 Major Events</button>
-  <button onclick="showTab('futures',this)">🔮 Futures</button>
-  <button onclick="showTab('mm2026',this)" style="position:relative">🏆 Bracket<span style="position:absolute;top:4px;right:4px;background:#f59e0b;color:#000;font-size:8px;font-weight:900;padding:1px 4px;border-radius:99px;line-height:1.4">NEW</span></button>
+  <button onclick="showTab('analyzer',this)">⚡ Analyzer</button>
   <button onclick="showTab('props',this)">🎯 Player Sim</button>
   <button onclick="showTab('tracker',this)">📓 Bet Tracker</button>
-  <button onclick="showTab('angles',this)">🎯 Angles</button>
-  <button onclick="showTab('glossary',this)">📖 Glossary</button>
+  <div class="nav-dropdown" id="nav-more-dd">
+    <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
+    <div class="nav-dd-menu" id="nav-more-menu">
+      <button onclick="showTab('events',this);closeNavDropdowns()">🏆 Major Events</button>
+      <button onclick="showTab('futures',this);closeNavDropdowns()">🔮 Futures</button>
+      <button onclick="showTab('mm2026',this);closeNavDropdowns()" style="position:relative">🏆 Bracket<span style="position:absolute;top:6px;right:12px;background:#f59e0b;color:#000;font-size:8px;font-weight:900;padding:1px 4px;border-radius:99px;line-height:1.4">NEW</span></button>
+      <button onclick="showTab('angles',this);closeNavDropdowns()">🎯 Angles</button>
+      <button onclick="showTab('glossary',this);closeNavDropdowns()">📖 Glossary</button>
+    </div>
+  </div>
   <button onclick="showTab('dataedit',this)" style="display:none">✏️ Update Data</button>
 </nav>
 
