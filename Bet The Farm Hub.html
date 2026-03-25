@@ -495,6 +495,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-top-good{background:linear-gradient(90deg,#22c55e,#4ade80);}
 .hb-top-lean{background:var(--border);}
 .hb-card-body{padding:14px 16px 16px;}
+.hb-pitchers{font-size:11px;color:var(--text2);margin:4px 0 2px;letter-spacing:.01em;}
 .hb-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .hb-sport-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;letter-spacing:.5px;text-transform:uppercase;}
 .hb-sport-nfl{background:rgba(59,130,246,.2);color:#93c5fd;}
@@ -1486,6 +1487,9 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 // ── LIVE DATA (populated by scheduled task at 8am/8pm) ────────────────────
 // TODAY_GAMES format: [{sport,home,away,time,spread,total,spreadLabel}]
 const TODAY_DATE_STR=(()=>{const d=new Date();return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});})();
+// MLB_PITCHERS: keyed by team name (normalized), populated by fetchMLBProbablePitchers()
+// Format: { "New York Yankees": { name, era, whip, wins, losses, ip }, ... }
+let MLB_PITCHERS={};
 let TODAY_GAMES=[
   // All games auto-populate from the Odds API on Refresh.
   // NBA, NHL, and CBB games are fetched live — no hardcoded fallbacks needed.
@@ -3056,6 +3060,63 @@ function updateHdrNote(gamesCount){
   const gamePart=gamesCount!=null?` · ${gamesCount} game${gamesCount!==1?'s':''} w/ live odds`:'';
   el.textContent=`✅ Updated: ${dateStr}, ${timeStr} · ${totalTeams} team records${gamePart} · ${injTeams} teams w/ injuries`;
 }
+// ── MLB Probable Pitcher Fetcher ───────────────────────────────────────────
+// Calls the free MLB Stats API to get today's scheduled starters + season ERA/WHIP.
+// No API key needed. Runs alongside refreshAllOdds when MLB is in season.
+async function fetchMLBProbablePitchers(){
+  try{
+    const d=new Date();
+    const dateStr=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const url=`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${dateStr}&hydrate=probablePitcher(note,stats[type=[season]])`;
+    const resp=await fetch(url);
+    if(!resp.ok)return;
+    const data=await resp.json();
+    const newPitchers={};
+    for(const dateObj of(data.dates||[])){
+      for(const game of(dateObj.games||[])){
+        const sides=['home','away'];
+        for(const side of sides){
+          const teamObj=game.teams?.[side];
+          if(!teamObj)continue;
+          const teamName=teamObj.team?.name;
+          const pp=teamObj.probablePitcher;
+          if(!teamName||!pp)continue;
+          const seasonStats=(pp.stats||[]).find(s=>s.type?.displayName==='statsSingleSeason')?.stat||{};
+          const era=parseFloat(seasonStats.era);
+          const whip=parseFloat(seasonStats.whip);
+          newPitchers[teamName]={
+            name:pp.fullName||pp.lastName||'TBD',
+            era:isNaN(era)?null:era,
+            whip:isNaN(whip)?null:whip,
+            wins:seasonStats.wins||0,
+            losses:seasonStats.losses||0,
+            ip:seasonStats.inningsPitched||'0.0'
+          };
+        }
+      }
+    }
+    if(Object.keys(newPitchers).length>0)MLB_PITCHERS=newPitchers;
+    console.log(`[BTF] MLB pitchers loaded: ${Object.keys(MLB_PITCHERS).length} starters`);
+  }catch(e){
+    console.warn('[BTF] MLB pitcher fetch failed:',e.message);
+  }
+}
+
+// Lookup helper — tries hub DB name + raw API name + normalized fuzzy match.
+// Call as: getMLBPitcher(g.home, g.rawHome)
+function getMLBPitcher(name, rawName){
+  if(!name&&!rawName)return null;
+  if(name&&MLB_PITCHERS[name])return MLB_PITCHERS[name];
+  if(rawName&&MLB_PITCHERS[rawName])return MLB_PITCHERS[rawName];
+  const norm=n=>(n||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const t1=norm(name), t2=norm(rawName);
+  for(const k in MLB_PITCHERS){
+    const kn=norm(k);
+    if((t1&&kn===t1)||(t2&&kn===t2))return MLB_PITCHERS[k];
+  }
+  return null;
+}
+
 async function refreshAllOdds(){
   if(_isRefreshing)return; // already in progress — don't stack calls
   const apiKey=getApiKey();
@@ -3166,6 +3227,8 @@ async function refreshAllOdds(){
   } else {
     setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated with live odds${_useCorsProxy?' (via proxy)':''}${futNote}${usageNote}`);
   }
+  // Fetch MLB probable pitchers when MLB is in season (Mar–Oct)
+  if(![11,12,1,2].includes(_mo))fetchMLBProbablePitchers();
   renderSchedule();
   // Show the Data Health bar after odds load (gives match status feedback)
   const dhBar=document.getElementById('dh-bar');
@@ -6362,16 +6425,44 @@ function hbScoreOU(g, ht, at, ix){
     }
   }
 
+  // ── MLB starter ERA signal (affects O/U direction) ──
+  // Computed before the signal gate so it can be counted as a qualifying signal
+  // alongside histSignal/projSignal. Both aces lean Under; both bad starters lean Over.
+  let pitcherOUSignal=null;
+  if(sport==='mlb'){
+    const hPit=getMLBPitcher(g.home,g.rawHome);
+    const aPit=getMLBPitcher(g.away,g.rawAway);
+    if(hPit?.era!=null&&aPit?.era!=null){
+      const avgERA=(hPit.era+aPit.era)/2;
+      const hN=hPit.name.split(' ').slice(-1)[0];
+      const aN=aPit.name.split(' ').slice(-1)[0];
+      if(avgERA<=3.25){
+        pitcherOUSignal=0.28; // strong Under lean — two aces
+        factors.push({t:'pos',l:`🔒 Elite starters: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → Under lean`});
+      } else if(avgERA<=3.75){
+        pitcherOUSignal=0.38; // mild Under lean
+        factors.push({t:'pos',l:`🎯 Good starters: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → slight Under`});
+      } else if(avgERA>=4.75){
+        pitcherOUSignal=0.72; // strong Over lean — both struggled
+        factors.push({t:'pos',l:`📈 Weak starters: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → Over lean`});
+      } else if(avgERA>=4.25){
+        pitcherOUSignal=0.62; // mild Over lean
+        factors.push({t:'pos',l:`📈 Below-avg starters: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → slight Over`});
+      }
+    }
+  }
+
   // ── Signal gate ──
   // Need at least one signal. If both are present, they must agree in direction —
   // conflicting signals mean no clear edge; skip rather than average to noise.
-  if(histSignal===null&&projSignal===null)return null;
+  if(histSignal===null&&projSignal===null&&pitcherOUSignal===null)return null;
   if(histSignal!==null&&projSignal!==null&&(histSignal>0.5)!==(projSignal>0.5))return null;
 
   // Blend: history carries more weight (it's less noisy than season-avg projection).
   let overSum=0, wt=0;
   if(histSignal!==null){overSum+=histSignal*0.55; wt+=0.55;}
   if(projSignal!==null){overSum+=projSignal*0.25; wt+=0.25;}
+  if(pitcherOUSignal!==null){overSum+=pitcherOUSignal*0.20; wt+=0.20;}
 
   const rawOverProb=overSum/wt;
   const pickOver=rawOverProb>=0.5;
@@ -6641,6 +6732,32 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null){
       if(effEdge>0.8)factors.push({t:'pos',l:`⚾ Run diff edge +${effEdge.toFixed(2)}/g`});
       else if(effEdge<-0.8)factors.push({t:'neg',l:`⚾ Run diff gap ${effEdge.toFixed(2)}/g`});
       score+=effScore*0.20; weight+=0.20;
+    }
+  }
+
+  // ── 10. Starting pitcher matchup (MLB only) ──
+  // ERA differential between today's scheduled starters from the MLB Stats API.
+  // Lower ERA = better pitcher. A 1.0 ERA gap is very meaningful in baseball.
+  // Weight: 0.20 — as impactful as run differential for a single game.
+  if(sport==='mlb'){
+    const hPit=getMLBPitcher(g.home,g.rawHome);
+    const aPit=getMLBPitcher(g.away,g.rawAway);
+    if(hPit?.era!=null&&aPit?.era!=null){
+      const pickedERA=atsPick==='home'?hPit.era:aPit.era;
+      const oppERA=atsPick==='home'?aPit.era:hPit.era;
+      const eraDiff=oppERA-pickedERA; // positive = picked team's starter is better
+      const pitScore=eraDiff>1.5?0.72:eraDiff>0.75?0.64:eraDiff>0?0.56:eraDiff>-0.75?0.44:eraDiff>-1.5?0.36:0.28;
+      const pickedPit=atsPick==='home'?hPit:aPit;
+      const oppPit=atsPick==='home'?aPit:hPit;
+      const pName=pickedPit.name.split(' ').slice(-1)[0];
+      const oName=oppPit.name.split(' ').slice(-1)[0];
+      if(eraDiff>0.75)
+        factors.push({t:'pos',l:`🎯 ${pName} (${pickedERA.toFixed(2)} ERA) vs ${oName} (${oppERA.toFixed(2)} ERA)`});
+      else if(eraDiff<-0.75)
+        factors.push({t:'neg',l:`🎯 ${oName} (${oppERA.toFixed(2)} ERA) outmatches ${pName} (${pickedERA.toFixed(2)} ERA)`});
+      else
+        factors.push({t:'neu',l:`🎯 Even SP matchup: ${pName} ${pickedERA.toFixed(2)} vs ${oName} ${oppERA.toFixed(2)}`});
+      score+=pitScore*0.20; weight+=0.20;
     }
   }
 
@@ -7037,6 +7154,14 @@ function hbRender(){
           return `${aHtml} <span style="color:var(--muted)">@</span> ${hHtml}`;
         })()}</div>
         <div class="hb-time">${p.date?p.date+' · ':''}${p.time||'Time TBD'} · ${p.pickType}</div>
+        ${(()=>{
+          if(p.sport!=='MLB')return '';
+          const hPit=getMLBPitcher(p.home,p.rawHome);
+          const aPit=getMLBPitcher(p.away,p.rawAway);
+          if(!hPit&&!aPit)return '';
+          const fmt=pit=>pit?`${pit.name}${pit.era!=null?' ('+pit.era.toFixed(2)+' ERA)':''}`:'TBD';
+          return `<div class="hb-pitchers">⚾ ${fmt(aPit)} @ ${fmt(hPit)}</div>`;
+        })()}
         ${(()=>{
           const s=p.sim; if(!s)return '';
           const parts=[];
