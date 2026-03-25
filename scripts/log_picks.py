@@ -99,8 +99,14 @@ def main():
     finally:
         server.terminate()
 
-    # Filter to Elite + Strong only (the tiers worth tracking)
-    tracked = [p for p in picks if p.get("tier") in ("elite", "strong")]
+    # Filter to Elite + Strong only WITH actual game data (atsPick set, opponent known)
+    # Picks with atsPick=null are ATS-trend picks (no live matchup) — ungradeable
+    tracked = [
+        p for p in picks
+        if p.get("tier") in ("elite", "strong")
+        and p.get("atsPick") is not None
+        and p.get("away", "").strip() != ""
+    ]
     print(f"\n  📊 {len(tracked)} Elite/Strong pick(s) to track:")
     for p in tracked:
         print(f"     [{p['tier'].upper():6}] {p['sport']} · {p['pickLabel']} "
