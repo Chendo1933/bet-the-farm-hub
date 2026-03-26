@@ -1,0 +1,162 @@
+{
+  "date": "2026-03-25",
+  "logged": "2026-03-26T06:49:17.990472+00:00",
+  "sports": {
+    "nba": [
+      {
+        "game_id": "401810906",
+        "name": "Atlanta Hawks at Detroit Pistons",
+        "home": "Detroit Pistons",
+        "away": "Atlanta Hawks",
+        "home_score": 129,
+        "away_score": 130,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810907",
+        "name": "Los Angeles Lakers at Indiana Pacers",
+        "home": "Indiana Pacers",
+        "away": "Los Angeles Lakers",
+        "home_score": 130,
+        "away_score": 137,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810908",
+        "name": "Chicago Bulls at Philadelphia 76ers",
+        "home": "Philadelphia 76ers",
+        "away": "Chicago Bulls",
+        "home_score": 157,
+        "away_score": 137,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810909",
+        "name": "Oklahoma City Thunder at Boston Celtics",
+        "home": "Boston Celtics",
+        "away": "Oklahoma City Thunder",
+        "home_score": 119,
+        "away_score": 109,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810910",
+        "name": "Miami Heat at Cleveland Cavaliers",
+        "home": "Cleveland Cavaliers",
+        "away": "Miami Heat",
+        "home_score": 103,
+        "away_score": 120,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810911",
+        "name": "San Antonio Spurs at Memphis Grizzlies",
+        "home": "Memphis Grizzlies",
+        "away": "San Antonio Spurs",
+        "home_score": 98,
+        "away_score": 123,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810912",
+        "name": "Washington Wizards at Utah Jazz",
+        "home": "Utah Jazz",
+        "away": "Washington Wizards",
+        "home_score": 110,
+        "away_score": 133,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810913",
+        "name": "Houston Rockets at Minnesota Timberwolves",
+        "home": "Minnesota Timberwolves",
+        "away": "Houston Rockets",
+        "home_score": 110,
+        "away_score": 108,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810914",
+        "name": "Dallas Mavericks at Denver Nuggets",
+        "home": "Denver Nuggets",
+        "away": "Dallas Mavericks",
+        "home_score": 142,
+        "away_score": 135,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810915",
+        "name": "Brooklyn Nets at Golden State Warriors",
+        "home": "Golden State Warriors",
+        "away": "Brooklyn Nets",
+        "home_score": 109,
+        "away_score": 106,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810916",
+        "name": "Milwaukee Bucks at Portland Trail Blazers",
+        "home": "Portland Trail Blazers",
+        "away": "Milwaukee Bucks",
+        "home_score": 130,
+        "away_score": 99,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810917",
+        "name": "Toronto Raptors at LA Clippers",
+        "home": "LA Clippers",
+        "away": "Toronto Raptors",
+        "home_score": 119,
+        "away_score": 94,
+        "winner": "home",
+        "status": "Final"
+      }
+    ],
+    "nhl": [
+      {
+        "game_id": "401803486",
+        "name": "Boston Bruins at Buffalo Sabres",
+        "home": "Buffalo Sabres",
+        "away": "Boston Bruins",
+        "home_score": 3,
+        "away_score": 4,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401803487",
+        "name": "New York Rangers at Toronto Maple Leafs",
+        "home": "Toronto Maple Leafs",
+        "away": "New York Rangers",
+        "home_score": 4,
+        "away_score": 3,
+        "winner": "home",
+        "status": "Final"
+      }
+    ],
+    "mlb": [
+      {
+        "game_id": "401814702",
+        "name": "New York Yankees at San Francisco Giants",
+        "home": "San Francisco Giants",
+        "away": "New York Yankees",
+        "home_score": 0,
+        "away_score": 7,
+        "winner": "away",
+        "status": "Final"
+      }
+    ]
+  }
+}
