@@ -7191,12 +7191,35 @@ function hbRender(){
               parts.push(`<span class="hb-sim-item sim-cover">📏 ${shortName} ${pickedCoverSpread||''} covers ${(pickedCoverProb*100).toFixed(0)}%</span>`);
           }
 
+          // Model conflict warning: flag when projection and sim disagree strongly.
+          // e.g. projection says team covers but win% < 50% — two models pulling opposite ways.
+          if(side!=null&&s.projMargin!=null&&pickedWinProb!=null){
+            const projFavorsPick=side==='home'?(s.projMargin>0):(s.projMargin<0);
+            const simFavorsOpp=pickedWinProb<0.46;
+            if(projFavorsPick && simFavorsOpp){
+              // Projection says covers but win% < 46% — clear conflict
+              parts.push(`<span class="hb-sim-item" style="color:#fbbf24;font-size:10px">⚠️ Models split: stats proj covers, market/history says underdog</span>`);
+            }
+          }
+
           // Projected scoreline + cushion vs spread
           // Shows the model's projected final score and how much margin vs the spread line.
           // cushion = projMargin + sp (home perspective): positive means the pick covers with room,
           // negative means the projected margin doesn't reach the spread (and by how much).
           if(s.projHomeScore!=null&&s.projMargin!=null&&side!=null){
-            const hScore=s.projHomeScore.toFixed(0), aScore=s.projAwayScore.toFixed(0);
+            // For no-tie sports, prevent rounding from producing a false 118-118 display.
+            // The cushion calc uses the raw float margin (correct); only the display needs fixing.
+            let hScore,aScore;
+            const noTieSports=['nba','cbb','nfl','cfb','mlb'];
+            if(noTieSports.includes((p.sport||'').toLowerCase())&&
+               Math.round(s.projHomeScore)===Math.round(s.projAwayScore)&&
+               Math.abs(s.projMargin)>0.01){
+              if(s.projMargin>0){hScore=String(Math.round(s.projHomeScore));aScore=String(Math.round(s.projHomeScore)-1);}
+              else{aScore=String(Math.round(s.projAwayScore));hScore=String(Math.round(s.projAwayScore)-1);}
+            } else {
+              hScore=s.projHomeScore.toFixed(0);
+              aScore=s.projAwayScore.toFixed(0);
+            }
             const oppShort=(side==='home'?p.away:p.home).split(' ').slice(-1)[0];
             const pickedScore=side==='home'?hScore:aScore;
             const oppScore=side==='home'?aScore:hScore;
