@@ -918,7 +918,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     <button class="hb-sort-btn" id="hb-sort-edge" onclick="hbSetSort('edge',this)">ATS Edge</button>
     <button class="hb-sort-btn" id="hb-sort-time" onclick="hbSetSort('time',this)">Game Time</button>
     <div class="hb-tier-legend">
-      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#ef4444"></div>Elite (85+)</div>
+      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#ef4444"></div>Elite (87+)</div>
       <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#c9a84c"></div>Strong (72-84)</div>
       <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#22c55e"></div>Good (60-71)</div>
       <div class="hb-legend-item"><div class="hb-legend-dot" style="background:var(--muted)"></div>Lean (&lt;60)</div>
@@ -1433,7 +1433,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <!-- SCORING SYSTEM -->
   <div id="gl-scoring" class="gl-section">
     <div class="gl-grid">
-      <div class="gl-card"><div class="gl-term">Confidence Tiers <span class="gl-tag">How It Works</span></div><div class="gl-def">Every pick is scored 0–100. That score maps to one of four tiers: 🔥 Elite (85–99), ⚡ Strong (72–84), ✅ Good (60–71), 📊 Lean (&lt;60). The higher the score, the more factors are aligned in one direction. Only Elite and Strong picks are logged for performance tracking.</div><div class="gl-tip">💡 A score of 85+ means nearly every measurable edge points the same way — ATS record, efficiency gap, rest, and market data all agree.</div></div>
+      <div class="gl-card"><div class="gl-term">Confidence Tiers <span class="gl-tag">How It Works</span></div><div class="gl-def">Every pick is scored 0–100. That score maps to one of four tiers: 🔥 Elite (87–99), ⚡ Strong (72–86), ✅ Good (60–71), 📊 Lean (&lt;60). The higher the score, the more factors are aligned in one direction. Only Elite and Strong picks are logged for performance tracking.</div><div class="gl-tip">💡 A score of 87+ means nearly every measurable edge points the same way — ATS record, efficiency gap, rest, and market data all agree.</div></div>
       <div class="gl-card"><div class="gl-term">F1 — ATS Record Split (32%) <span class="gl-tag">Factor</span></div><div class="gl-def">The single heaviest factor. Uses the team's home ATS record when they're at home, away ATS when they're on the road. For CBB (neutral site), the overall season ATS record is used instead. All ATS signals are Bayesian-shrunk — small sample sizes are pulled toward 50% to prevent hot streaks from dominating early in a season.</div><div class="gl-example">Example: A team is 8-2 ATS at home (80%) with n=10 games. Shrunk to ~65% — still strong, but tempered.</div></div>
       <div class="gl-card"><div class="gl-term">F2 — Implied Probability Edge (20%) <span class="gl-tag">Factor</span></div><div class="gl-def">Compares the team's shrunk ATS win rate to the no-vig implied probability from the market spread. A positive edge means the team covers more often than the market expects. Uses the same Bayesian-shrunk rate as F1 — raw percentages would double-count hot small-sample records.</div><div class="gl-example">Example: Market implies 52% cover probability. Team's shrunk ATS rate is 62%. That's a +10 point edge — meaningful signal.</div></div>
       <div class="gl-card"><div class="gl-term">F3 — Rest Edge (12%) <span class="gl-tag">Factor</span></div><div class="gl-def">Measures the days-of-rest difference between both teams. A team with 10+ days off vs. a team on a short week has a meaningful physical and preparation edge. In the NBA, this factor is replaced by F8b when a back-to-back situation is detected — they can't both fire on the same game.</div><div class="gl-example">Example: Team A has 4 days rest, Team B played last night. +3 day edge for Team A → F3 boosts their score.</div></div>
@@ -4754,8 +4754,8 @@ function renderParlayOfDay(allPicks){
   const amOdds=decOdds>=2?Math.round((decOdds-1)*100):Math.round(-100/(decOdds-1));
   const amFmt=amOdds>=0?'+'+amOdds:''+amOdds;
   const legHTML=legs.map((l,i)=>{
-    const tier=l.score>=.85?'elite':l.score>=.72?'strong':l.score>=.60?'good':'lean';
-    const conf=l.score>=.85?'🔥 Elite':l.score>=.72?'⚡ Strong':l.score>=.60?'✅ Good':'📊 Lean';
+    const tier=l.score>=.87?'elite':l.score>=.72?'strong':l.score>=.60?'good':'lean';
+    const conf=l.score>=.87?'🔥 Elite':l.score>=.72?'⚡ Strong':l.score>=.60?'✅ Good':'📊 Lean';
     const legOdds=l.odds??-110;
     const legOddsDisp=legOdds>0?'+'+legOdds:''+legOdds;
     return `<div class="pod-leg">
@@ -4959,8 +4959,8 @@ function renderOverview(){
         <button onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:7px 20px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.3px">🔥 See all ${totalPicks} ranked picks in Hot Bets →</button>
       </div>`;
       bbEl.innerHTML='<div class="bb-grid">'+top.map((c,i)=>{
-        const tier=c.score>=.85?'elite':c.score>=.72?'strong':c.score>=.60?'good':'lean';
-        const confLbl=c.score>=.85?'🔥 Elite':c.score>=.72?'⚡ Strong':c.score>=.60?'✅ Good':'📊 Lean';
+        const tier=c.score>=.87?'elite':c.score>=.72?'strong':c.score>=.60?'good':'lean';
+        const confLbl=c.score>=.87?'🔥 Elite':c.score>=.72?'⚡ Strong':c.score>=.60?'✅ Good':'📊 Lean';
         return `<div class="bb-card ${tier}" style="cursor:pointer" onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()">
           <div class="bb-top"><span class="bb-sport">${c.sport}</span><span class="bb-conf ${tier}">${confLbl} · ${(c.score*100).toFixed(0)}%</span></div>
           <div class="bb-pick">${c.pick}</div>
@@ -6664,20 +6664,41 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null){
     } else { score+=0.5*0.12; weight+=0.12; }
   }
 
-  // ── 4. Projected total vs posted line ──
+  // ── 4. Projection alignment — does the stats model agree with the pick direction? ──
+  // Revived as a penalty-only factor: no boost when the projection agrees (it's expected),
+  // but a soft penalty when the projected margin strongly favors the opponent.
+  // Logic: if our pick is on Team A but the PPG model projects Team B to win by 4+,
+  // the stats are working AGAINST the pick — that's meaningful caution.
+  // The signal is intentionally asymmetric: good picks shouldn't need stats to confirm them;
+  // bad ones should be discounted when two independent models disagree.
   let projNote='';
-  const tot=g.total??null;
-  if(tot!==null && ix.ppg!=null && ix.papg!=null){
+  if(ix.ppg!=null && ix.papg!=null){
     const hPPG=ht[ix.ppg]||0, hPAPG=ht[ix.papg]||0;
     const aPPG=at[ix.ppg]||0, aPAPG=at[ix.papg]||0;
     if(hPPG>0&&aPPG>0){
-      const projTot=((hPPG+aPAPG)/2)+((aPPG+hPAPG)/2);
-      const gap=tot-projTot;
-      const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[sport]||7;
-      if(gap>norm*0.4){ projNote=`📉 Line ${tot} is ${gap.toFixed(1)} pts above proj ${projTot.toFixed(1)}`; factors.push({t:'neu',l:'📉 Line above projection'}); }
-      else if(gap<-norm*0.4){ projNote=`📈 Line ${tot} is ${Math.abs(gap).toFixed(1)} pts below proj ${projTot.toFixed(1)}`; factors.push({t:'neu',l:'📈 Line below projection'}); }
-      // Factor 4 scoring removed: gap vs projection always contributed 0.5*0.10 (zero signal,
-      // pure dead weight). Display note is still shown via projNote in the why string.
+      const projHome=(hPPG+aPAPG)/2;
+      const projAway=(aPPG+hPAPG)/2;
+      const projMarginForPick=atsPick==='home'?(projHome-projAway):(projAway-projHome);
+      // Disagreement thresholds by sport (meaningful margins differ by sport)
+      const strongDisagree={nfl:7,cfb:7,nba:5,cbb:5,nhl:0.8,mlb:1.0}[sport]||5;
+      const mildDisagree={nfl:3,cfb:3,nba:2,cbb:2,nhl:0.4,mlb:0.5}[sport]||2;
+      if(projMarginForPick < -strongDisagree){
+        // Stats strongly favor the opponent — meaningful penalty
+        factors.push({t:'neg',l:`📉 Stats proj favors opp by ${Math.abs(projMarginForPick).toFixed(1)}`});
+        score+=0.36*0.10; weight+=0.10;
+      } else if(projMarginForPick < -mildDisagree){
+        // Mild disagreement — soft warning, small penalty
+        factors.push({t:'neg',l:`📉 Proj margin slightly against pick (${projMarginForPick.toFixed(1)})`});
+        score+=0.43*0.10; weight+=0.10;
+      }
+      // If projection agrees or is neutral, no scoring — only note for display
+      if(g.total!=null){
+        const projTot=projHome+projAway;
+        const gap=g.total-projTot;
+        const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[sport]||7;
+        if(gap>norm*0.4) projNote=`📉 Line ${g.total} is ${gap.toFixed(1)} pts above proj ${projTot.toFixed(1)}`;
+        else if(gap<-norm*0.4) projNote=`📈 Line ${g.total} is ${Math.abs(gap).toFixed(1)} pts below proj ${projTot.toFixed(1)}`;
+      }
     }
   }
 
@@ -6836,7 +6857,12 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null){
       const rawImpl=impliedProb(pickedML)??0.5;
       const rawOpp=impliedProb(oppML)??0.5;
       const noVigImpl=rawImpl/(rawImpl+rawOpp);
-      const mlEdge=winPct-noVigImpl;
+      // Cap edge at 10% before scoring — raw season W% vs market can show 20-25%
+      // "edge" simply because a good-record team is a slight road underdog. Real
+      // betting edges are 5-8% max; anything above that is noise from the season record
+      // not accounting for context (home/away, schedule, opponent quality).
+      const rawEdge=winPct-noVigImpl;
+      const mlEdge=Math.min(rawEdge,0.10); // cap at 10%
       const mlOddsDisp=pickedML>0?'+'+pickedML:''+pickedML;
       if(mlEdge>=0.08){
         factors.push({t:'pos',l:`💰 Dog wins ${(winPct*100).toFixed(0)}% vs ${(noVigImpl*100).toFixed(0)}% implied (${mlOddsDisp}) — strong ML value`});
@@ -6853,6 +6879,30 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null){
         score+=0.35*0.12; weight+=0.12;
       }
     }
+  }
+
+  // ── Market disagreement penalty ──
+  // When sharp money (no-vig ML) gives our picked team ≤42% win probability,
+  // the market is pricing in something our season stats don't see — travel, matchup,
+  // injury context, recent form, motivation. Apply a soft score penalty proportional
+  // to how heavily the market disagrees. This doesn't override the other factors,
+  // it just prevents stats-driven picks from ignoring a clear market signal.
+  // Not applied when no ML odds are available (can't penalize what we can't measure).
+  if(g.mlHome!=null&&g.mlAway!=null){
+    const rawH=impliedProb(g.mlHome)??0.5, rawA=impliedProb(g.mlAway)??0.5;
+    const mktSum=rawH+rawA;
+    const mktForPick=atsPick==='home'?(rawH/mktSum):(rawA/mktSum);
+    if(mktForPick<=0.35){
+      // Market gives our team ≤35% chance — heavy disagreement, strong penalty
+      factors.push({t:'neg',l:`📊 Market only gives pick ${(mktForPick*100).toFixed(0)}% win chance`});
+      score+=0.30*0.12; weight+=0.12;
+    } else if(mktForPick<=0.42){
+      // 36-42%: clear underdog — moderate penalty
+      factors.push({t:'neg',l:`📊 Market prices pick as ${(mktForPick*100).toFixed(0)}% win probability`});
+      score+=0.40*0.12; weight+=0.12;
+    }
+    // 43-50%: slight underdog — no penalty (normal spread betting territory)
+    // >50%: market favors our pick — no boost (already captured in F1/F2)
   }
 
   const rawScore=weight>0?(score/weight):0.5;
@@ -7014,7 +7064,7 @@ function hbGeneratePicks(){
 }
 
 function hbGetTier(score100){
-  if(score100>=85)return 'elite';
+  if(score100>=87)return 'elite';
   if(score100>=72)return 'strong';
   if(score100>=60)return 'good';
   return 'lean';
@@ -7087,7 +7137,7 @@ function hbRender(){
       home:p.home,away:p.away,atsPick:p.atsPick||null,
       spread:typeof p.spread==='number'?p.spread:null,
       pickLabel:p.pickLabel,score100:s,
-      tier:s>=85?'elite':s>=72?'strong':s>=60?'good':'lean',
+      tier:s>=87?'elite':s>=72?'strong':s>=60?'good':'lean',
       date:p.date||'',time:p.time||''};
   });
   window.BTF_PICKS_READY=true;
