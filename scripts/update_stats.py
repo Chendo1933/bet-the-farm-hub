@@ -3,18 +3,23 @@
 Bet The Farm Hub — Daily stats auto-updater
 Fetches current W/L + scoring data from ESPN's public API and patches
 the NBA, NHL, MLB, and NFL arrays inside index.html.
+Also computes ATS/O/U records from accumulated enriched results files
+(data/results/*.json that have 'spread' data from the schedule snapshots).
 
-Array index reference (0-based):
-  NBA:  0=name 1=conf 2=div 3=W 4=L  ... 15=ppg 16=papg
-  NHL:  0=name 1=conf 2=div 3=W 4=L 5=OTL ... 16=gf 17=ga
-  MLB:  0=name 1=lg   2=div 3=W 4=L  ... 15=rs 16=ra 17=era 18=avg
-  NFL:  0=name 1=conf 2=div 3=W 4=L 5=T  ... 16=ppg 17=papg
+Array index reference (0-based, from const SIDX in hub):
+  NBA:  0=name 1=conf 2=div 3=W 4=L  5=aw 6=al  8=haw 9=hal  10=aaw 11=aal  12=ov 13=un  15=ppg 16=papg
+  NHL:  0=name 1=conf 2=div 3=W 4=L 5=OTL  6=plw 7=pll(haw/hal/aaw/aal alias plw/pll) 13=ov 14=un  16=gf 17=ga
+  MLB:  0=name 1=lg   2=div 3=W 4=L  5=aw 6=al  8=haw 9=hal  10=aaw 11=aal  12=ov 13=un  15=rs 16=ra 17=era 18=avg
+  NFL:  0=name 1=conf 2=div 3=W 4=L  5=aw 6=al  8=haw 9=hal  10=aaw 11=aal  12=ov 13=un  15=ppg 16=papg
 """
 
 import re
 import sys
 import json
+import os
+import glob
 import requests
+from collections import defaultdict
 from datetime import datetime, timezone
 
 HUB_FILE = "index.html"
@@ -278,6 +283,153 @@ def update_nfl(html_lines):
     return total
 
 
+# ── ATS / O-U from accumulated results ───────────────────────────────────────
+#
+# ATS indices per sport (0-based, matches SIDX in hub):
+#   NBA:  aw=5  al=6  haw=8  hal=9  aaw=10 aal=11  ov=12 un=13
+#   NHL:  plw=6 pll=7  (puck-line proxy; no O/U columns in schema)
+#   MLB:  aw=6  al=7  haw=9  hal=10 aaw=11 aal=12  (no O/U in schema)
+#   NFL:  aw=6  al=7  haw=9  hal=10 aaw=11 aal=12  ov=13 un=14
+#
+# grade_ats(home_score, away_score, spread):
+#   spread  = home team spread (negative = home favored, e.g. -5.5)
+#   margin  = (home_score - away_score) + spread
+#   >0 → home covered   <0 → away covered   ==0 → push (skip)
+#
+# grade_ou(home_score, away_score, total):
+#   combined = home_score + away_score
+#   > total → over   < total → under   == total → push (skip)
+
+RESULTS_DIR = "data/results"
+
+ATS_INDICES = {
+    # Sourced from const SIDX in Bet The Farm Hub.html (0-based)
+    # nba: aw=5,al=6,haw=8,hal=9,aaw=10,aal=11,ov=12,un=13
+    # nhl: aw=6,al=7,haw=6,hal=7,aaw=6,aal=7,ov=13,un=14  (haw/hal/aaw/aal alias plw/pll)
+    # mlb: aw=5,al=6,haw=8,hal=9,aaw=10,aal=11,ov=12,un=13
+    # nfl: aw=5,al=6,haw=8,hal=9,aaw=10,aal=11,ov=12,un=13
+    "nba": dict(aw=5,  al=6,  haw=8,  hal=9,  aaw=10, aal=11, ov=12, un=13),
+    "nhl": dict(aw=6,  al=7,  haw=6,  hal=7,  aaw=6,  aal=7,  ov=13, un=14),
+    "mlb": dict(aw=5,  al=6,  haw=8,  hal=9,  aaw=10, aal=11, ov=12, un=13),
+    "nfl": dict(aw=5,  al=6,  haw=8,  hal=9,  aaw=10, aal=11, ov=12, un=13),
+}
+
+
+def compute_ats_records():
+    """
+    Scan all data/results/*.json files that have 'spread' attached.
+    Returns {sport: {db_team_name: {aw,al,haw,hal,aaw,aal,ov,un}}} counts.
+    Only counts games where spread is not None.
+    """
+    records = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
+    # records[sport][team_db_name][stat_key] = count
+
+    pattern = os.path.join(RESULTS_DIR, "*.json")
+    result_files = sorted(glob.glob(pattern))
+
+    if not result_files:
+        print("  · No results files found in data/results/")
+        return records
+
+    total_with_spread = 0
+    for fpath in result_files:
+        try:
+            with open(fpath) as f:
+                data = json.load(f)
+        except Exception:
+            continue
+
+        for sport, games in data.get("sports", {}).items():
+            if sport not in ATS_INDICES:
+                continue   # skip CFB/CBB — not in update pipeline
+
+            for g in games:
+                spread = g.get("spread")
+                total  = g.get("total")
+                h_score = g.get("home_score")
+                a_score = g.get("away_score")
+                # Use DB-normalized names if available, fall back to ESPN names
+                home_db = g.get("home_db") or g.get("home", "")
+                away_db = g.get("away_db") or g.get("away", "")
+
+                if spread is None or h_score is None or a_score is None:
+                    continue   # no spread data — can't grade ATS
+
+                total_with_spread += 1
+
+                # ── ATS grade ────────────────────────────────────────────────
+                margin = (h_score - a_score) + spread
+                if margin > 0:
+                    # Home covered
+                    records[sport][home_db]["aw"] += 1
+                    records[sport][home_db]["haw"] += 1   # home team covered at home
+                    records[sport][away_db]["al"] += 1
+                    records[sport][away_db]["aal"] += 1   # away team failed to cover away
+                elif margin < 0:
+                    # Away covered
+                    records[sport][away_db]["aw"] += 1
+                    records[sport][away_db]["aaw"] += 1   # away team covered away
+                    records[sport][home_db]["al"] += 1
+                    records[sport][home_db]["hal"] += 1   # home team failed at home
+                # margin == 0 → push, skip
+
+                # ── O/U grade ────────────────────────────────────────────────
+                if total is None:
+                    continue
+                combined = h_score + a_score
+                if combined > total:
+                    records[sport][home_db]["ov"] += 1
+                    records[sport][away_db]["ov"] += 1
+                elif combined < total:
+                    records[sport][home_db]["un"] += 1
+                    records[sport][away_db]["un"] += 1
+                # combined == total → push, skip
+
+    print(f"  ✓ ATS computation: {total_with_spread} graded game(s) across {len(result_files)} result file(s)")
+    return records
+
+
+def update_ats_ou(html_lines):
+    """Compute ATS/O/U from stored results files and patch the hub HTML."""
+    print("\n── ATS / O-U (from results archive) ────────────────────────────")
+
+    records = compute_ats_records()
+    if not any(records.values()):
+        print("  · No games with spread data found — ATS/O/U not updated")
+        print("    (This is expected until log_picks.py has run with the new schedule snapshot feature)")
+        return 0
+
+    total = 0
+    for sport, teams in records.items():
+        idx = ATS_INDICES[sport]
+        sport_total = 0
+        for team_name, stats in teams.items():
+            updates = {}
+            updates[idx["aw"]]  = stats.get("aw",  0)
+            updates[idx["al"]]  = stats.get("al",  0)
+            # For NHL, haw/hal/aaw/aal all alias to plw/pll — only set once
+            if idx["haw"] != idx["aw"]:
+                updates[idx["haw"]] = stats.get("haw", 0)
+                updates[idx["hal"]] = stats.get("hal", 0)
+                updates[idx["aaw"]] = stats.get("aaw", 0)
+                updates[idx["aal"]] = stats.get("aal", 0)
+            if idx.get("ov") is not None:
+                updates[idx["ov"]] = stats.get("ov", 0)
+            if idx.get("un") is not None:
+                updates[idx["un"]] = stats.get("un", 0)
+
+            n = patch_rows(html_lines, team_name, updates)
+            sport_total += n
+
+        if sport_total:
+            print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with ATS/O/U")
+        else:
+            print(f"  · {sport.upper()}: no matching rows found in hub DB")
+        total += sport_total
+
+    return total
+
+
 # ── timestamp banner ──────────────────────────────────────────────────────────
 
 def update_timestamp(html_lines):
@@ -311,6 +463,7 @@ def main():
     changed += update_nhl(html_lines)
     changed += update_mlb(html_lines)
     changed += update_nfl(html_lines)
+    changed += update_ats_ou(html_lines)
 
     if changed:
         update_timestamp(html_lines)

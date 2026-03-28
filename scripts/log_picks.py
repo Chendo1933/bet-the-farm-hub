@@ -19,13 +19,14 @@ import sys
 import time
 from datetime import datetime, timezone
 
-DATA_DIR  = "data/picks"
-HUB_FILE  = "index.html"
-PORT      = 8181
-TIMEOUT   = 45_000   # 45s — allow time for ESPN + Odds API calls
+DATA_DIR   = "data/picks"
+SCHED_DIR  = "data/schedules"
+HUB_FILE   = "index.html"
+PORT       = 8181
+TIMEOUT    = 45_000   # 45s — allow time for ESPN + Odds API calls
 
 
-async def scrape_picks(api_key: str | None) -> list[dict]:
+async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
     from playwright.async_api import async_playwright
 
     async with async_playwright() as p:
@@ -79,8 +80,17 @@ async def scrape_picks(api_key: str | None) -> list[dict]:
         picks = await page.evaluate("window.BTF_PICKS")
         print(f"  ✓ {len(picks)} total picks generated")
 
+        # Capture schedule snapshot — ALL today's games with spread/total
+        # TODAY_GAMES format: [{sport,home,away,date,time,spread,total,...}]
+        # 'home'/'away' are already DB-normalized names (resolved by the hub)
+        today_games = await page.evaluate(
+            "window.TODAY_GAMES.map(g => ({sport:g.sport, home:g.home, away:g.away,"
+            " date:g.date, time:g.time, spread:g.spread, total:g.total}))"
+        )
+        print(f"  ✓ {len(today_games)} game(s) in today's schedule snapshot")
+
         await browser.close()
-        return picks
+        return picks, today_games
 
 
 def main():
@@ -100,9 +110,26 @@ def main():
     time.sleep(1.5)
 
     try:
-        picks = asyncio.run(scrape_picks(api_key))
+        picks, today_games = asyncio.run(scrape_picks(api_key))
     finally:
         server.terminate()
+
+    # Save schedule snapshot so log_results.py can pair scores with spreads later
+    if today_games:
+        os.makedirs(SCHED_DIR, exist_ok=True)
+        sched_path = os.path.join(SCHED_DIR, f"{date_key}.json")
+        with open(sched_path, "w") as f:
+            json.dump({
+                "date":      date_key,
+                "logged":    now_utc.isoformat(),
+                "has_odds":  api_key is not None,
+                "games":     today_games,
+            }, f, indent=2)
+        spread_count = sum(1 for g in today_games if g.get("spread") is not None)
+        print(f"✅ Schedule snapshot: {len(today_games)} game(s), "
+              f"{spread_count} with spread data → {sched_path}")
+    else:
+        print("⚠  No TODAY_GAMES captured — schedule snapshot skipped")
 
     # Filter to Elite + Strong only WITH actual game data (atsPick set, opponent known)
     # Picks with atsPick=null are ATS-trend picks (no live matchup) — ungradeable
