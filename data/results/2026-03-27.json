@@ -1,0 +1,254 @@
+{
+  "date": "2026-03-27",
+  "logged": "2026-03-28T06:12:48.185976+00:00",
+  "sports": {
+    "nba": [
+      {
+        "game_id": "401810921",
+        "name": "LA Clippers at Indiana Pacers",
+        "home": "Indiana Pacers",
+        "away": "LA Clippers",
+        "home_score": 113,
+        "away_score": 114,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810922",
+        "name": "Atlanta Hawks at Boston Celtics",
+        "home": "Boston Celtics",
+        "away": "Atlanta Hawks",
+        "home_score": 109,
+        "away_score": 102,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810923",
+        "name": "Miami Heat at Cleveland Cavaliers",
+        "home": "Cleveland Cavaliers",
+        "away": "Miami Heat",
+        "home_score": 149,
+        "away_score": 128,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810924",
+        "name": "Houston Rockets at Memphis Grizzlies",
+        "home": "Memphis Grizzlies",
+        "away": "Houston Rockets",
+        "home_score": 109,
+        "away_score": 119,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810925",
+        "name": "Chicago Bulls at Oklahoma City Thunder",
+        "home": "Oklahoma City Thunder",
+        "away": "Chicago Bulls",
+        "home_score": 131,
+        "away_score": 113,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810926",
+        "name": "New Orleans Pelicans at Toronto Raptors",
+        "home": "Toronto Raptors",
+        "away": "New Orleans Pelicans",
+        "home_score": 119,
+        "away_score": 106,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810927",
+        "name": "Utah Jazz at Denver Nuggets",
+        "home": "Denver Nuggets",
+        "away": "Utah Jazz",
+        "home_score": 135,
+        "away_score": 129,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810928",
+        "name": "Washington Wizards at Golden State Warriors",
+        "home": "Golden State Warriors",
+        "away": "Washington Wizards",
+        "home_score": 131,
+        "away_score": 126,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810929",
+        "name": "Dallas Mavericks at Portland Trail Blazers",
+        "home": "Portland Trail Blazers",
+        "away": "Dallas Mavericks",
+        "home_score": 93,
+        "away_score": 100,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401810930",
+        "name": "Brooklyn Nets at Los Angeles Lakers",
+        "home": "Los Angeles Lakers",
+        "away": "Brooklyn Nets",
+        "home_score": 116,
+        "away_score": 99,
+        "winner": "home",
+        "status": "Final"
+      }
+    ],
+    "nhl": [
+      {
+        "game_id": "401803501",
+        "name": "Detroit Red Wings at Buffalo Sabres",
+        "home": "Buffalo Sabres",
+        "away": "Detroit Red Wings",
+        "home_score": 2,
+        "away_score": 5,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401803502",
+        "name": "Chicago Blackhawks at New York Rangers",
+        "home": "New York Rangers",
+        "away": "Chicago Blackhawks",
+        "home_score": 6,
+        "away_score": 1,
+        "winner": "home",
+        "status": "Final"
+      }
+    ],
+    "mlb": [
+      {
+        "game_id": "401814721",
+        "name": "New York Yankees at San Francisco Giants",
+        "home": "San Francisco Giants",
+        "away": "New York Yankees",
+        "home_score": 0,
+        "away_score": 3,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814688",
+        "name": "Athletics Athletics at Toronto Blue Jays",
+        "home": "Toronto Blue Jays",
+        "away": "Athletics",
+        "home_score": 3,
+        "away_score": 2,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814690",
+        "name": "Colorado Rockies at Miami Marlins",
+        "home": "Miami Marlins",
+        "away": "Colorado Rockies",
+        "home_score": 2,
+        "away_score": 1,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814691",
+        "name": "Kansas City Royals at Atlanta Braves",
+        "home": "Atlanta Braves",
+        "away": "Kansas City Royals",
+        "home_score": 6,
+        "away_score": 0,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814703",
+        "name": "Los Angeles Angels at Houston Astros",
+        "home": "Houston Astros",
+        "away": "Los Angeles Angels",
+        "home_score": 2,
+        "away_score": 6,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814705",
+        "name": "Cleveland Guardians at Seattle Mariners",
+        "home": "Seattle Mariners",
+        "away": "Cleveland Guardians",
+        "home_score": 5,
+        "away_score": 1,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814706",
+        "name": "Detroit Tigers at San Diego Padres",
+        "home": "San Diego Padres",
+        "away": "Detroit Tigers",
+        "home_score": 2,
+        "away_score": 5,
+        "winner": "away",
+        "status": "Final"
+      },
+      {
+        "game_id": "401814704",
+        "name": "Arizona Diamondbacks at Los Angeles Dodgers",
+        "home": "Los Angeles Dodgers",
+        "away": "Arizona Diamondbacks",
+        "home_score": 5,
+        "away_score": 4,
+        "winner": "home",
+        "status": "Final"
+      }
+    ],
+    "cbb": [
+      {
+        "game_id": "401856570",
+        "name": "St. John's Red Storm at Duke Blue Devils",
+        "home": "Duke Blue Devils",
+        "away": "St. John's Red Storm",
+        "home_score": 80,
+        "away_score": 75,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401856572",
+        "name": "Alabama Crimson Tide at Michigan Wolverines",
+        "home": "Michigan Wolverines",
+        "away": "Alabama Crimson Tide",
+        "home_score": 90,
+        "away_score": 77,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401856571",
+        "name": "Michigan State Spartans at UConn Huskies",
+        "home": "UConn Huskies",
+        "away": "Michigan State Spartans",
+        "home_score": 67,
+        "away_score": 63,
+        "winner": "home",
+        "status": "Final"
+      },
+      {
+        "game_id": "401856573",
+        "name": "Tennessee Volunteers at Iowa State Cyclones",
+        "home": "Iowa State Cyclones",
+        "away": "Tennessee Volunteers",
+        "home_score": 62,
+        "away_score": 76,
+        "winner": "away",
+        "status": "Final"
+      }
+    ]
+  }
+}
