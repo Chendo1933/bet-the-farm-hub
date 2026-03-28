@@ -1,0 +1,44 @@
+name: Weekly ATS Refresh
+
+# Runs every Monday at 6 AM ET (start of week) + manual trigger
+on:
+  schedule:
+    - cron: "0 11 * * 1"   # 11:00 UTC = 7:00 AM ET (Mondays)
+  workflow_dispatch:        # manual trigger from Actions tab anytime
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-ats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+
+      - name: Scrape ATS/O-U from BettingPros
+        run: python scripts/scrape_ats.py
+
+      - name: Commit refreshed hub data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Bet The Farm Hub.html" index.html data/ats_refresh.json
+          if git diff --staged --quiet; then
+            echo "No ATS data changes to commit"
+          else
+            git commit -m "data: auto ATS/O-U refresh — NBA + NHL ($(date +'%Y-%m-%d'))"
+            git pull --rebase
+            git push
+            echo "✅ ATS data refreshed and pushed"
+          fi
