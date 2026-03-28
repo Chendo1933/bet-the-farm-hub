@@ -1837,7 +1837,7 @@ const MLB=[
 ["Washington Nationals","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,672,774,4.56,0.236],
 ["Cincinnati Reds","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,686,782,4.62,0.244],
 ["Kansas City Royals","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,674,784,4.66,0.240],
-["Oakland Athletics","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,648,798,4.78,0.232],
+["Athletics","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,648,798,4.78,0.232],
 ["Colorado Rockies","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,682,842,5.24,0.252],
 ["Chicago White Sox","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,618,852,5.38,0.228],
 ["St. Louis Cardinals","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,712,734,4.26,0.246],
@@ -2710,7 +2710,8 @@ const TEAM_NAME_CORRECTIONS={
   'Memphis Tigers':             'Memphis',      // already there — explicit for safety
 
   // ── MLB: Athletics relocated from Oakland → Sacramento (2025); API sends bare "Athletics" ──
-  'Athletics':                  'Oakland Athletics',
+  'Oakland Athletics':          'Athletics',   // team relocated; API now sends bare "Athletics"
+  'Oakland A\'s':               'Athletics',   // legacy shorthand
 
   // ── NHL: API sends "St Louis Blues" without period; DB has "St. Louis Blues" ─────────────
   'St Louis Blues':             'St. Louis Blues',
