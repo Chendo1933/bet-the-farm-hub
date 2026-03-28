@@ -52,8 +52,13 @@ async def scrape_picks(api_key: str | None) -> list[dict]:
         print(f"  ✓ Hub loaded at localhost:{PORT}")
 
         if api_key:
-            # Wait for TODAY_GAMES to populate (odds refresh fires automatically)
-            print("  ⏳ Waiting for live odds to load…")
+            # The hub's auto-refresh only fires when the Analyzer tab is opened.
+            # In headless mode we never open that tab, so we must call refreshAllOdds()
+            # explicitly via JS. Wait for init() to finish first (key loaded into DOM),
+            # then trigger the fetch and wait up to 45s for TODAY_GAMES to populate.
+            await page.wait_for_function("typeof refreshAllOdds === 'function'", timeout=10_000)
+            print("  ⏳ Triggering live odds fetch…")
+            await page.evaluate("refreshAllOdds()")
             try:
                 await page.wait_for_function(
                     "Array.isArray(window.TODAY_GAMES) && window.TODAY_GAMES.length > 0",
