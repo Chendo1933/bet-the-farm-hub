@@ -6290,6 +6290,27 @@ function hbSimulateGame(g, ht, at, ix){
     if(histOk&&projTot!=null) sim.overProb=histOver*0.55+projOver*0.45;
     else if(histOk) sim.overProb=histOver;
     else if(projTot!=null) sim.overProb=projOver;
+    // ── MLB: incorporate pitcher ERA signal into sim.overProb ──
+    // hbScoreOU includes pitcher ERA in its O/U call. Without the same signal here,
+    // the "Game Simulation" widget can show the OPPOSITE direction (e.g. sim says Under
+    // but the pick is Over because both starters have 5.00+ ERA). This causes a visible
+    // contradiction on the same card. Apply the identical ERA thresholds as hbScoreOU.
+    if(g.sport==='mlb'){
+      const hPit=getMLBPitcher(g.home,g.rawHome);
+      const aPit=getMLBPitcher(g.away,g.rawAway);
+      if(hPit?.era!=null&&aPit?.era!=null){
+        const avgERA=(hPit.era+aPit.era)/2;
+        let pitchSig=null;
+        if(avgERA<=3.25)      pitchSig=0.28; // two aces → strong Under lean
+        else if(avgERA<=3.75) pitchSig=0.38; // good starters → mild Under
+        else if(avgERA>=4.75) pitchSig=0.72; // weak starters → strong Over lean
+        else if(avgERA>=4.25) pitchSig=0.62; // below-avg → mild Over
+        if(pitchSig!=null){
+          if(sim.overProb!=null) sim.overProb=sim.overProb*0.80+pitchSig*0.20;
+          else sim.overProb=pitchSig;
+        }
+      }
+    }
   }
 
   // ── Projected score & margin ───────────────────────────────────────────────
@@ -6828,6 +6849,19 @@ function hbGeneratePicks(){
 
     // ── Moneyline first — its result informs the spread scorer's direction ──
     const mlResult=(g.mlHome!=null&&g.mlAway!=null)?hbScoreML(g,ht,at,ix):null;
+    // ── Anchor ML score to simulation win probability ──
+    // hbScoreML is signal-based (win-rate edge, efficiency, odds value) and produces
+    // a confidence score that may not match the actual win probability shown on the card.
+    // Example: historical W% 50% vs market-implied 45% → ML fires "Strong" but sim shows
+    // "wins 48%" because sim blends historical + market. Apply the same 60/40 anchoring
+    // used for spread picks so ML confidence and win% always tell the same story.
+    if(mlResult&&sim){
+      const mlWinProb=mlResult.atsPick==='home'?(sim.homeWinProb??0.5):(sim.awayWinProb??0.5);
+      const mlRawScore=0.5+(mlResult.score-0.5)/1.6; // de-extremize to get pre-extremizer prob
+      const mlAnchored=mlRawScore*0.60+mlWinProb*0.40;
+      mlResult.score=Math.max(0.01,Math.min(0.99,0.5+(mlAnchored-0.5)*1.6));
+      mlResult.score100=Math.round(mlResult.score*100);
+    }
     if(mlResult)picks.push({...mlResult,...base,betType:'ml',sim});
 
     // ── Spread — pass ML hint so direction aligns when ATS records are close ──
@@ -7195,7 +7229,12 @@ function hbRenderParlay(){
   const am=dec>=2?Math.round((dec-1)*100):Math.round(-100/(dec-1));
   const profit=(100*dec-100).toFixed(0);
   // Independent-leg hit probability
-  const rawHitProb=_hbParlay.reduce((acc,p)=>acc*(p.score100/100),1);
+  // IMPORTANT: score100 is an EXTREMIZED confidence score, not a raw probability.
+  // Formula: finalScore = 0.5 + (rawScore - 0.5) * 1.6
+  // Reverse: rawScore = 0.5 + (finalScore - 0.5) / 1.6
+  // Using score100/100 directly overstates a 3-leg parlay by ~15–20 percentage points.
+  // Example: 80/75/72 scores → 43% displayed vs ~25% actual (a massive overstatement).
+  const rawHitProb=_hbParlay.reduce((acc,p)=>acc*(0.5+(p.score100/100-0.5)/1.6),1);
   // Parlay correlation penalty: legs from the same sport share environmental factors
   // (weather, refs, pace), so they're not truly independent — winning one makes
   // winning another slightly more correlated.  Apply a gentle 5% penalty per
