@@ -192,8 +192,10 @@ async def scrape_sport(page, sport: str) -> dict:
     teams = {}
 
     # ── ATS All Games ──
-    await page.goto(f"{base}/against-the-spread-standings/", wait_until="networkidle", timeout=30000)
-    await page.wait_for_selector("tr", timeout=15000)
+    # Use "load" instead of "networkidle" — bettingpros has persistent ad traffic
+    # that prevents networkidle from ever firing. Table data is in the initial HTML.
+    await page.goto(f"{base}/against-the-spread-standings/", wait_until="load", timeout=45000)
+    await page.wait_for_selector("tr td", timeout=20000)
     rows = await page.evaluate(EXTRACT_JS)
     ats_all = rows_to_dict(rows, sport, "ATS-All")
     print(f"  {sport.upper()} ATS All:  {len(ats_all)} teams")
@@ -211,8 +213,8 @@ async def scrape_sport(page, sport: str) -> dict:
     print(f"  {sport.upper()} ATS Away: {len(ats_away)} teams")
 
     # ── O/U All Games ──
-    await page.goto(f"{base}/over-under-standings/", wait_until="networkidle", timeout=30000)
-    await page.wait_for_selector("tr", timeout=15000)
+    await page.goto(f"{base}/over-under-standings/", wait_until="load", timeout=45000)
+    await page.wait_for_selector("tr td", timeout=20000)
     rows = await page.evaluate(EXTRACT_JS)
     ou_all = rows_to_dict(rows, sport, "O/U-All")
     print(f"  {sport.upper()} O/U  All:  {len(ou_all)} teams")
