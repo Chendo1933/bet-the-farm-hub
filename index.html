@@ -6482,7 +6482,7 @@ function hbScoreML(g, ht, at, ix){
 // Core scoring function — returns {score0to1, factors[], why, projTotNote}
 // mlHint: optional result from hbScoreML — used to align direction when ML is
 // confident on an underdog and ATS records are close (winning outright always covers).
-function hbScoreMatchup(g, ht, at, ix, mlHint=null){
+function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
   let score=0, weight=0;
   const factors=[];
   const sport=g.sport;
@@ -6739,11 +6739,28 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null){
   }
 
   const rawScore=weight>0?(score/weight):0.5;
+
+  // ── Anchor to simulation cover probability ──────────────────────────────────
+  // Factor signals measure "how many things agree" but are disconnected from the
+  // actual historical cover rate. This creates the core contradiction: a high score
+  // (e.g. 88) alongside a low cover probability (e.g. 42%) displayed on the same card.
+  // Fix: blend rawScore (60%) with the simulation's Bayesian cover probability (40%)
+  // so the confidence score is always grounded in the actual historical cover rate.
+  // Result: hitting Elite (≥87) now requires BOTH strong signal agreement AND a
+  // meaningful cover edge in the ATS record — not just one or the other.
+  const pickedCoverProb = simHint
+    ? (atsPick==='home' ? (simHint.homeCoverProb ?? 0.5) : (simHint.awayCoverProb ?? 0.5))
+    : null;
+  const anchoredScore = pickedCoverProb != null
+    ? rawScore * 0.60 + pickedCoverProb * 0.40
+    : rawScore;
+
   // Extremize: push confident signals further from 50% (1.6× stretch from center).
   // Aggregated models are systematically over-cautious; 1.6× sharpens calibration
   // and unlocks the full score range — previously everything topped out ~82 due to
-  // factor values being bounded at 0.72. Now strong picks can reach 88-92.
-  const extremized=0.5+(rawScore-0.5)*1.6;
+  // factor values being bounded at 0.72. Now strong picks can reach 88-92 only when
+  // the anchored score (factor signals + cover rate) both justify it.
+  const extremized=0.5+(anchoredScore-0.5)*1.6;
   const finalScore=Math.max(0.01,Math.min(0.99,extremized));
 
   const slbl=SLBL[sport]||'Spread';
@@ -6816,7 +6833,7 @@ function hbGeneratePicks(){
     // ── Spread — pass ML hint so direction aligns when ATS records are close ──
     let spreadPickSide=null; // track which side got the spread pick for this game
     if(g.spread!=null){
-      const r=hbScoreMatchup(g,ht,at,ix,mlResult);
+      const r=hbScoreMatchup(g,ht,at,ix,mlResult,sim);
       if(r.score>=0.50){
         spreadPickSide=r.atsPick;
         picks.push({...r,...base,betType:'spread',spread:g.spread,
