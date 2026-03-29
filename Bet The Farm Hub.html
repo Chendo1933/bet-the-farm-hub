@@ -7006,11 +7006,13 @@ function hbGeneratePicks(){
     return guaranteed.map(p=>({...p,betType:'spread',home:p.pickedTeam,away:'',rawHome:p.pickedTeam,rawAway:''}));
   }
 
+  let _dbg_noIx=0,_dbg_noTeam=0,_dbg_ok=0;
   TODAY_GAMES.forEach(g=>{
-    const ix=SIDX[g.sport]; if(!ix)return;
+    const ix=SIDX[g.sport]; if(!ix){_dbg_noIx++;return;}
     const ht=fuzzyTeam(g.sport,g.home);
     const at=fuzzyTeam(g.sport,g.away);
-    if(!ht||!at)return;
+    if(!ht||!at){_dbg_noTeam++;console.warn('[BTF] fuzzyTeam miss:',g.sport,g.home,!!ht,g.away,!!at);return;}
+    _dbg_ok++;
     const base={sport:g.sport.toUpperCase(),game:`${g.away} @ ${g.home}`,
       home:g.home,away:g.away,rawHome:g.rawHome||g.home,rawAway:g.rawAway||g.away,
       time:g.time||'',date:g.date||'',gObj:g};
@@ -7115,6 +7117,7 @@ function hbGeneratePicks(){
       if(r)picks.push({...r,...base,betType:'ou',total:g.total,sim});
     }
   });
+  console.log(`[BTF] hbGeneratePicks: ${TODAY_GAMES.length} games → ${_dbg_ok} matched, ${_dbg_noTeam} team-miss, ${_dbg_noIx} no-sport-ix → ${picks.length} picks`);
   return picks;
 }
 
@@ -7219,8 +7222,22 @@ function hbRender(){
   }
 
   if(!picks.length){
-    wrap.innerHTML=topHtml+'<div class="hb-empty">'+(hasOdds?'No picks found for selected filter — try "All Sports" or check back once lines are posted.':'📡 Refresh Odds in the Analyzer for tonight\'s ranked picks<br>Showing season-long ATS trends below in the meantime')+'</div>';
-    if(!hasOdds){const fb=hbGeneratePicks();if(fb.length)picks=fb.slice(0,12);}
+    if(hasOdds){
+      // Live odds loaded but no picks survive filtering — show message and stop.
+      // Without this early return the empty grid overwrite below would erase the message.
+      wrap.innerHTML='<div class="hb-empty">No picks found for selected filter — try "All Sports" or check back once lines are posted.</div>';
+      hbRenderParlay();
+      return;
+    }
+    // No odds — try fallback season-trend picks
+    const fb=hbGeneratePicks();
+    if(fb.length){
+      picks=fb.slice(0,12);
+    } else {
+      wrap.innerHTML=topHtml+'<div class="hb-empty">📡 Refresh Odds in the Analyzer for tonight\'s ranked picks<br>Showing season-long ATS trends below in the meantime</div>';
+      hbRenderParlay();
+      return;
+    }
   }
 
   const counts={elite:0,strong:0,good:0,lean:0};
