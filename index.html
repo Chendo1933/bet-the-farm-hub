@@ -2802,6 +2802,16 @@ const TEAM_NAME_CORRECTIONS={
   'Morehead State Eagles':      null,  // after expansion
   'Tennessee State Tigers':     null,  // after expansion
   'Air Force Falcons CBB':      null,  // catch-all
+  // Atlantic 10 (non-tracked)
+  "Saint Joseph's Hawks":       null,  "Saint Joseph's":             null,
+  "St. Joseph's Hawks":         null,  "St. Joseph's":               null,
+  'La Salle Explorers':         null,  'La Salle':                   null,
+  'Fordham Rams':               null,  'Fordham':                    null,
+  'George Washington Colonials':null,  'George Washington':          null,
+  'Richmond Spiders':           null,  'Richmond':                   null,
+  'Saint Bonaventure Bonnies':  null,  'Saint Bonaventure':          null,
+  'Duquesne Dukes':             null,  'Duquesne':                   null,
+  'UMass Minutemen':            null,  // alt form of 'UMass'
 };
 function normalizeTeamName(name,sport){
   const _orig=name;
@@ -3040,7 +3050,7 @@ async function fetchFuturesOdds(apiKey){
       if(lines.length){_liveFutures[id]=lines;fetched++;}
     }catch(e){/* silently skip failed futures markets */}
   }
-  if(fetched>0)_futuresFetchTime=Date.now(); // stamp cache time on success
+  _futuresFetchTime=Date.now(); // stamp even on all-404 to avoid hammering API
   return fetched;
 }
 function updateHdrNote(gamesCount){
