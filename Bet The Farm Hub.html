@@ -4720,7 +4720,7 @@ const SIDX={
   nfl:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:0, w:3,l:4,ppg:15,papg:16},
   cfb:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:1, w:3,l:4,ppg:17,papg:18},
   nba:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:0, w:3,l:4,ppg:15,papg:16,ortg:18,drtg:19},
-  cbb:{aw:4,al:5,haw:7,hal:8,aaw:9,aal:10,ov:11,un:12,ni:0,  w:2,l:3,ppg:17,papg:18,adjoe:14,adjde:15},
+  cbb:{aw:4,al:5,haw:7,hal:8,aaw:9,aal:10,ov:11,un:12,ni:0,  w:2,l:3,ppg:17,papg:18,adjoe:14,adjde:15,tempo:16},
   nhl:{aw:6,al:7,haw:6,hal:7,aaw:6,aal:7,ov:13,un:14,ni:0,   w:3,l:4,otl:5,gf:16,ga:17},
   mlb:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:0, w:3,l:4,rs:15,ra:16,era:17,avg:18}
 };
@@ -6127,6 +6127,75 @@ function hbScoreRing(score100,tier){
 
 // ── Over/Under scorer ─────────────────────────────────────────────────────────
 // Blends: historical O/U records (35% weight) + projected total vs posted line (45%)
+
+// ── MLB ballpark run factors (5-year park averages) ───────────────────────────
+// Values >1.0 = hitter-friendly (Coors=1.28); <1.0 = pitcher-friendly (Petco=0.93).
+// Applied to the projected run total in hbProjectScores so alt line suggestions
+// reflect the actual run environment, not just team season averages.
+const MLB_PARK_FACTORS={
+  // AL East
+  'Baltimore Orioles':1.00,'Boston Red Sox':1.08,'New York Yankees':1.03,
+  'Tampa Bay Rays':0.96,'Toronto Blue Jays':1.02,
+  // AL Central
+  'Chicago White Sox':1.01,'Cleveland Guardians':0.95,'Detroit Tigers':0.97,
+  'Kansas City Royals':0.98,'Minnesota Twins':1.03,
+  // AL West
+  'Houston Astros':0.97,'Los Angeles Angels':1.01,'Athletics':0.99,
+  'Seattle Mariners':0.93,'Texas Rangers':1.05,
+  // NL East
+  'Atlanta Braves':1.01,'Miami Marlins':0.95,'New York Mets':0.97,
+  'Philadelphia Phillies':1.02,'Washington Nationals':1.01,
+  // NL Central
+  'Chicago Cubs':1.04,'Cincinnati Reds':1.05,'Milwaukee Brewers':0.97,
+  'Pittsburgh Pirates':0.98,'St. Louis Cardinals':0.99,
+  // NL West
+  'Arizona Diamondbacks':1.02,'Colorado Rockies':1.28,'Los Angeles Dodgers':0.98,
+  'San Diego Padres':0.93,'San Francisco Giants':0.92,
+};
+
+// ── Unified projection helper ─────────────────────────────────────────────────
+// Returns {homeScore, awayScore, total} using the best available model per sport:
+//   CBB  → KenPom AdjOE × oppAdjDE × avgTempo (pace-neutral; beats raw PPG)
+//   MLB  → venue-adjusted PPG × home park run factor
+//   NFL/NBA/NHL → venue-adjusted PPG blend (home +2-3%, away -2-3%)
+// CBB uses overall efficiency (neutral-site format; no home/away modifier).
+// Returns null when team data is insufficient.
+function hbProjectScores(g,ht,at,ix){
+  const hsc=getScorePerGame(ht,ix,g.sport);
+  const asc=getScorePerGame(at,ix,g.sport);
+  if(!hsc||!asc||!(hsc.ppg>0)||!(asc.ppg>0))return null;
+  let homeScore=null,awayScore=null;
+  // ── CBB: KenPom efficiency model ──────────────────────────────────────────
+  // projPts = teamAdjOE × (oppAdjDE/100) × (avgTempo/100)
+  // AdjOE/AdjDE are pts per 100 possessions; tempo is possessions per 40 min.
+  // Handles slow-vs-fast pace mismatches that raw PPG can't capture.
+  if(g.sport==='cbb'&&ix.tempo!=null&&ix.adjoe!=null&&ix.adjde!=null){
+    const hOE=ht[ix.adjoe]||0,hDE=ht[ix.adjde]||0,hTpo=ht[ix.tempo]||0;
+    const aOE=at[ix.adjoe]||0,aDE=at[ix.adjde]||0,aTpo=at[ix.tempo]||0;
+    if(hOE>60&&aOE>60&&hTpo>55&&aTpo>55){
+      const expPoss=(hTpo+aTpo)/2;
+      homeScore=hOE*(aDE/100)*(expPoss/100);
+      awayScore=aOE*(hDE/100)*(expPoss/100);
+    }
+  }
+  // ── Venue-adjusted PPG blend (fallback + all non-CBB sports) ─────────────
+  // Home teams score ~2-3% more at home, away teams ~2-3% less.
+  // Skipped for CBB when KenPom model fires (neutral-site format).
+  if(homeScore==null){
+    const vB=g.sport!=='cbb'?({nfl:1.025,nba:1.020,nhl:1.020,mlb:1.025}[g.sport]??1.0):1.0;
+    const vD=2-vB; // symmetric: vB=1.025 → vD=0.975
+    homeScore=(hsc.ppg*vB+asc.papg*vB)/2;
+    awayScore=(asc.ppg*vD+hsc.papg*vD)/2;
+  }
+  let total=homeScore+awayScore;
+  // ── MLB: apply home ballpark run factor ───────────────────────────────────
+  if(g.sport==='mlb'&&g.home){
+    const pf=MLB_PARK_FACTORS[g.home]??1.0;
+    if(pf!==1.0){total*=pf;homeScore*=pf;awayScore*=pf;}
+  }
+  return{homeScore,awayScore,total};
+}
+
 // ── Game simulator ──────────────────────────────────────────────────────────────
 // Computes projected probabilities for all three bet types independently.
 // These are RAW (not extremized) estimates meant for display — more calibrated than
@@ -6205,12 +6274,11 @@ function hbSimulateGame(g, ht, at, ix){
       const hConf=Math.min(1,(hov+hun)/20),aConf=Math.min(1,(aov+aun)/20);
       histOver=((hov/(hov+hun))*hConf+0.5*(1-hConf)+((aov/(aov+aun))*aConf+0.5*(1-aConf)))/2;
     }
-    // Projected total signal
+    // Projected total signal — uses hbProjectScores (CBB KenPom, MLB park factor, venue adj)
     let projOver=0.5; let projTot=null;
-    const hsc=getScorePerGame(ht,ix,g.sport);
-    const asc=getScorePerGame(at,ix,g.sport);
-    if(hsc&&asc&&hsc.ppg>0&&asc.ppg>0){
-      projTot=((hsc.ppg+asc.papg)/2)+((asc.ppg+hsc.papg)/2);
+    const _projOU=hbProjectScores(g,ht,at,ix);
+    if(_projOU){
+      projTot=_projOU.total;
       sim.projTotal=projTot;
       const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[g.sport]||7;
       const gap=g.total-projTot;
@@ -6244,19 +6312,18 @@ function hbSimulateGame(g, ht, at, ix){
   }
 
   // ── Projected score & margin ───────────────────────────────────────────────
-  // Home projected score = blend of home offense vs away defense: (hPPG + aPAPG) / 2
-  // Away projected score = blend of away offense vs home defense: (aPPG + hPAPG) / 2
+  // Uses hbProjectScores for park-adjusted (MLB), tempo-adjusted (CBB), and
+  // venue-adjusted (all others) home/away score splits.
   // projMargin = home − away (positive → home wins; negative → away wins)
-  // This is independent of the O/U section — fires even when no total is posted.
+  // Independent of O/U section — fires even when no total is posted.
   {
-    const hsc=getScorePerGame(ht,ix,g.sport);
-    const asc=getScorePerGame(at,ix,g.sport);
-    if(hsc&&asc&&hsc.ppg>0&&asc.ppg>0){
-      sim.projHomeScore=(hsc.ppg+asc.papg)/2;
-      sim.projAwayScore=(asc.ppg+hsc.papg)/2;
+    const _projScores=hbProjectScores(g,ht,at,ix);
+    if(_projScores){
+      sim.projHomeScore=_projScores.homeScore;
+      sim.projAwayScore=_projScores.awayScore;
       sim.projMargin=sim.projHomeScore-sim.projAwayScore;
       // Back-fill projTotal if O/U section didn't run (no total posted)
-      if(sim.projTotal==null) sim.projTotal=sim.projHomeScore+sim.projAwayScore;
+      if(sim.projTotal==null) sim.projTotal=_projScores.total;
     }
   }
 
@@ -6295,17 +6362,15 @@ function hbScoreOU(g, ht, at, ix){
   }
 
   // ── 2. Projected total vs posted line ──
-  // SECONDARY signal only — season PPG ≠ live line. Books adjust for pace, rest,
-  // injuries, recent form. Only fire this signal when the gap is large enough
-  // to be book-beating (>0.80× the sport-specific norm unit), not just noise.
-  if(ix.ppg!=null&&ix.papg!=null){
-    const hppg=ht[ix.ppg]||0, hpapg=ht[ix.papg]||0;
-    const appg=at[ix.ppg]||0, apapg=at[ix.papg]||0;
-    if(hppg>0&&appg>0){
-      const proj=((hppg+apapg)/2)+((appg+hpapg)/2);
+  // Uses hbProjectScores: CBB KenPom tempo model, MLB park factors, venue adjustment.
+  // SECONDARY signal — require a meaningful gap (>0.80× norm) before firing.
+  {
+    const _pOU=hbProjectScores(g,ht,at,ix);
+    if(_pOU){
+      const proj=_pOU.total;
       const gap=g.total-proj; // positive = line above proj = Under edge
       const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[sport]||7;
-      if(Math.abs(gap)>norm*0.80){ // require a meaningful gap — below this it's book noise
+      if(Math.abs(gap)>norm*0.80){
         projSignal=0.5-Math.max(-0.40,Math.min(0.40,gap/(norm*2)));
         if(gap<0)factors.push({t:'pos',l:`📈 Proj ${proj.toFixed(1)} > line ${g.total} (+${Math.abs(gap).toFixed(1)} Over edge)`});
         else factors.push({t:'pos',l:`📉 Proj ${proj.toFixed(1)} < line ${g.total} (+${gap.toFixed(1)} Under edge)`});
