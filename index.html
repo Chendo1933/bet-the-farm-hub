@@ -409,16 +409,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .ev-teams{font-size:14px;font-weight:700;flex:1;}
 .ev-time{font-size:11px;color:var(--muted);}
 .ev-bets{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
-/* ── FUTURES ────────────────────────────────────────── */
-.fut-section{margin-bottom:26px;}
-.fut-hdr{font-size:15px;font-weight:800;color:var(--gold2);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
-.fut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:7px;}
-.fut-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;}
-.fut-name{font-size:13px;font-weight:700;color:var(--text);flex:1;}
-.fut-odds-val{font-size:14px;font-weight:900;color:var(--gold);min-width:54px;text-align:right;}
-.fut-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);transition:all .15s;white-space:nowrap;}
-.fut-btn:hover{border-color:var(--gold);color:var(--gold);}
-.fut-btn.selected{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold);}
 /* ── PLAYER SIM ─────────────────────────────────────── */
 .sim-sport-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
 .sim-load-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
@@ -1982,7 +1972,6 @@ function showTab(id,btn){
   if(id==='overview')renderOverview();
   if(id==='angles')renderAngles();
   if(id==='events')renderEvents();
-  if(id==='futures')renderFutures();
   if(id==='viewingroom')vrOnTabOpen();
   if(id==='props'){
     // Show cached results if already loaded today; otherwise prompt to run
@@ -2154,22 +2143,6 @@ let _oddsAttemptTime={}; // sport -> timestamp of last ATTEMPT (success or fail)
 const ODDS_TTL=15*60*1000;       // 15 min cache for successful fetches
 const ODDS_RETRY_TTL=3*60*1000;  // 3 min cooldown before retrying a failed sport
 let _isRefreshing=false; // prevent concurrent overlapping refreshes
-// Futures: API sport keys for championship outright markets.
-// activeMonths: calendar months (1=Jan) when the API actually serves this market.
-// Fetching outside these windows returns 404 — suppress the call entirely to keep
-// the browser console clean. NBA/NHL finals markets open ~Feb; NCAAB opens ~Feb for
-// the tournament; NFL/CFB open in pre-season; MLB opens ~Mar.
-const FUTURES_API_MAP={
-  'nba-champ': {key:'basketball_nba_championship',       active:[2,3,4,5,6]},
-  'nhl-cup':   {key:'icehockey_nhl_championship',        active:[2,3,4,5,6]},
-  'nfl-sb':    {key:'americanfootball_nfl_super_bowl_winner', active:[8,9,10,11,12,1,2]},
-  'cfb-natty': {key:'americanfootball_ncaaf_championship_winner', active:[8,9,10,11,12,1]},
-  'mlb-ws':    {key:'baseball_mlb_world_series_winner',  active:[3,4,5,6,7,8,9,10]},
-  'cbb-champ': {key:'basketball_ncaab_championship',     active:[2,3,4]},
-};
-let _liveFutures={};       // futuresId -> [{name,odds}] — populated on API refresh
-let _futuresFetchTime=0;  // timestamp of last successful futures fetch
-const FUTURES_TTL=6*60*60*1000; // re-fetch futures at most once every 6 hours
 function getApiKey(){
   try{return localStorage.getItem('btf_odds_key')||'';}catch(e){return '';}
 }
@@ -3004,57 +2977,6 @@ async function fetchOddsForSport(sport,apiKey){
   }
   return resp.json();
 }
-// Fetch championship futures/outrights from the API and store in _liveFutures.
-// Uses implied-probability averaging across all returned bookmakers so the
-// displayed odds represent a consensus line rather than any single book.
-async function fetchFuturesOdds(apiKey){
-  // Skip re-fetch if cache is still fresh (within FUTURES_TTL window).
-  // Note: do NOT gate on _liveFutures being non-empty — if all markets 404'd,
-  // we still want to honour the TTL and not hammer the API every refresh.
-  if(_futuresFetchTime&&Date.now()-_futuresFetchTime<FUTURES_TTL){
-    return -1; // -1 signals "used cache" so caller can show cached note
-  }
-  const toProb=p=>p<0?(-p)/(-p+100):100/(p+100);
-  const toAmerican=p=>p>=0.5?Math.round(-p/(1-p)*100):Math.round((1-p)/p*100);
-  let fetched=0;
-  const _curMonth=new Date().getMonth()+1; // 1=Jan … 12=Dec
-  for(const [id,{key:sportKey,active}] of Object.entries(FUTURES_API_MAP)){
-    // Skip markets that aren't active this month — avoids console 404 noise
-    if(active&&!active.includes(_curMonth))continue;
-    try{
-      const url=`https://api.the-odds-api.com/v4/sports/${sportKey}/odds?apiKey=${apiKey}&regions=us&markets=outrights&oddsFormat=american&dateFormat=iso`;
-      const resp=await _doFetch(url);
-      if(!resp.ok)continue;
-      const data=await resp.json();
-      if(!Array.isArray(data)||!data.length)continue;
-      // Collect all outcome prices from every bookmaker across all events
-      const outcomeMap={};
-      data.forEach(event=>{
-        (event.bookmakers||[]).forEach(book=>{
-          (book.markets||[]).forEach(mkt=>{
-            if(mkt.key==='outrights'){
-              (mkt.outcomes||[]).forEach(o=>{
-                if(!outcomeMap[o.name])outcomeMap[o.name]=[];
-                outcomeMap[o.name].push(o.price);
-              });
-            }
-          });
-        });
-      });
-      if(!Object.keys(outcomeMap).length)continue;
-      // Average implied probability across books → convert back to American odds
-      const lines=Object.entries(outcomeMap)
-        .map(([name,prices])=>{
-          const avgProb=prices.reduce((s,p)=>s+toProb(p),0)/prices.length;
-          return{name,odds:toAmerican(avgProb)};
-        })
-        .sort((a,b)=>toProb(b.odds)-toProb(a.odds)); // favorites first
-      if(lines.length){_liveFutures[id]=lines;fetched++;}
-    }catch(e){/* silently skip failed futures markets */}
-  }
-  _futuresFetchTime=Date.now(); // stamp even on all-404 to avoid hammering API
-  return fetched;
-}
 function updateHdrNote(gamesCount){
   const el=document.querySelector('.hdr-note');
   if(!el)return;
@@ -3206,16 +3128,10 @@ async function refreshAllOdds(){
     totalMatched+=m;
     if(m===0)skipped++;
   }
-  // Also fetch futures/outrights (championship odds) — runs in parallel with status update
-  const futFetched=await fetchFuturesOdds(apiKey);
   if(btn){btn.disabled=false;btn.textContent='🔄 Refresh Odds';}
-  // futFetched: >0 = freshly fetched N markets, -1 = served from cache, 0 = failed
-  const futNote=futFetched>0?` · 📡 ${futFetched} futures live`:
-                futFetched===-1?` · 📡 futures cached`:'';
   // Estimate API calls used this refresh (3 units/sport for spreads+totals+h2h)
   const sportsCount=sports.length;
-  const futuresCalls=futFetched>0?Object.keys(FUTURES_API_MAP).length:0;
-  const callsUsed=sportsCount+futuresCalls;
+  const callsUsed=sportsCount;
   const usageNote=` · ~${callsUsed} call${callsUsed!==1?'s':''} used`;
   if(errors.length&&totalMatched===0){
     const firstErr=errors[0];
@@ -3231,11 +3147,11 @@ async function refreshAllOdds(){
     const errDetail=errors.length===1
       ?errors[0]  // show full "CBB: HTTP 422 – ..." when just one fails
       :errors.map(e=>e.split(':')[0]).join(', '); // just names when multiple fail
-    setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated · ⚠ failed: ${errDetail}${futNote}${usageNote}`);
+    setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated · ⚠ failed: ${errDetail}${usageNote}`);
   } else if(totalMatched===0){
-    setOabStatus('ok',`✅ Connected — no games found for today (lines may not be posted yet)${futNote}${usageNote}`);
+    setOabStatus('ok',`✅ Connected — no games found for today (lines may not be posted yet)${usageNote}`);
   } else {
-    setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated with live odds${_useCorsProxy?' (via proxy)':''}${futNote}${usageNote}`);
+    setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated with live odds${_useCorsProxy?' (via proxy)':''}${usageNote}`);
   }
   // Fetch MLB probable pitchers when MLB is in season (Mar–Oct); _mo already declared above
   if(![11,12,1,2].includes(_mo))fetchMLBProbablePitchers();
@@ -3252,7 +3168,6 @@ async function refreshAllOdds(){
       else badge.innerHTML=`<span style="color:#4caf50">✅ All teams matched to DB</span>`;
     }
   }
-  if(futFetched>0)renderFutures();
   updateHdrNote(totalMatched);
   _isRefreshing=false; // always clear the lock when done, even if errors occurred
 }
@@ -5277,50 +5192,6 @@ const EVENT_GAMES=[
   {event:'NHL Playoff Race',round:'Western Leaders',sport:'nhl',away:'Edmonton Oilers',home:'Colorado Avalanche',time:'Mar 4 · 9:00 PM ET',spread:1.5,total:6.5,mlHome:-115,mlAway:-105},
   {event:'NHL Playoff Race',round:'Atlantic Division',sport:'nhl',away:'Toronto Maple Leafs',home:'Florida Panthers',time:'Mar 6 · 7:00 PM ET',spread:1.5,total:6,mlHome:145,mlAway:-170},
 ];
-// ── FUTURES DATA ──────────────────────────────────────────────────────────────
-const FUTURES_DATA=[
-  {id:'nba-champ',title:'NBA Championship 2026',sport:'NBA',icon:'🏆',lines:[
-    {name:'Oklahoma City Thunder',odds:+280},{name:'Cleveland Cavaliers',odds:+320},
-    {name:'Boston Celtics',odds:+380},{name:'Minnesota Timberwolves',odds:+650},
-    {name:'Indiana Pacers',odds:+800},{name:'Houston Rockets',odds:+900},
-    {name:'Golden State Warriors',odds:+1100},{name:'New York Knicks',odds:+1200},
-  ]},
-  {id:'nba-mvp',title:'NBA MVP 2025-26',sport:'NBA',icon:'⭐',lines:[
-    {name:'Shai Gilgeous-Alexander',odds:-140},{name:'Nikola Jokic',odds:+280},
-    {name:'Karl-Anthony Towns',odds:+650},{name:'LeBron James',odds:+900},
-    {name:'Cade Cunningham',odds:+1200},{name:'Victor Wembanyama',odds:+1400},
-  ]},
-  {id:'nba-draft',title:'2026 NBA Draft – #1 Overall Pick',sport:'DRAFT',icon:'🎓',lines:[
-    {name:'Ace Bailey (Rutgers)',odds:+140},{name:'Dylan Harper (Rutgers)',odds:+200},
-    {name:'VJ Edgecombe (Baylor)',odds:+380},{name:'Tre Johnson (Texas)',odds:+500},
-    {name:'Noa Essengue (Overtime Elite)',odds:+700},
-  ]},
-  {id:'nba-roty',title:'NBA Rookie of the Year 2025-26',sport:'NBA',icon:'🌱',lines:[
-    {name:'Zaccharie Risacher',odds:+220},{name:'Alexandre Sarr',odds:+280},
-    {name:'Stephon Castle',odds:+380},{name:'Reed Sheppard',odds:+500},
-    {name:'Rob Dillingham',odds:+650},
-  ]},
-  {id:'nhl-cup',title:'Stanley Cup 2026',sport:'NHL',icon:'🏒',lines:[
-    {name:'Colorado Avalanche',odds:+380},{name:'Florida Panthers',odds:+420},
-    {name:'Edmonton Oilers',odds:+480},{name:'Toronto Maple Leafs',odds:+550},
-    {name:'Winnipeg Jets',odds:+700},{name:'Tampa Bay Lightning',odds:+850},
-  ]},
-  {id:'nfl-sb',title:'Super Bowl LXI (2026-27 Season)',sport:'NFL',icon:'🏈',lines:[
-    {name:'Denver Broncos',odds:+450},{name:'Seattle Seahawks',odds:+500},
-    {name:'Philadelphia Eagles',odds:+600},{name:'Jacksonville Jaguars',odds:+700},
-    {name:'Los Angeles Chargers',odds:+750},{name:'Chicago Bears',odds:+1000},
-    {name:'San Francisco 49ers',odds:+1100},
-  ]},
-  {id:'nfl-draft',title:'2026 NFL Draft – #1 Overall Pick',sport:'DRAFT',icon:'🏈',lines:[
-    {name:'Cam Ward (Miami)',odds:-180},{name:'Dillon Gabriel (Oregon)',odds:+240},
-    {name:'Travis Hunter (Colorado)',odds:+400},{name:'Shedeur Sanders (Colorado)',odds:+600},
-  ]},
-  {id:'cfb-natty',title:'CFB National Championship 2026-27',sport:'CFB',icon:'🎓',lines:[
-    {name:'Georgia Bulldogs',odds:+500},{name:'Ohio State Buckeyes',odds:+600},
-    {name:'Alabama Crimson Tide',odds:+650},{name:'Texas Longhorns',odds:+700},
-    {name:'Oregon Ducks',odds:+800},{name:'Notre Dame Fighting Irish',odds:+1000},
-  ]},
-];
 // ── PLAYER SIMULATION ENGINE ──────────────────────────────────────────────────
 // League-average baselines for matchup adjustment
 const SIM_LEAGUE={
@@ -6166,51 +6037,8 @@ function renderEvents(){
   });
   wrap.innerHTML=html;
 }
-// ── RENDER FUTURES ────────────────────────────────────────────────────────────
-function renderFutures(){
-  const wrap=document.getElementById('futures-wrap');
-  if(!wrap)return;
-  // Update the stale-data warning based on whether we have live odds
-  const anyLive=Object.keys(_liveFutures).length>0;
-  const note=document.querySelector('#tab-futures .data-note');
-  if(note){
-    if(anyLive){
-      note.innerHTML='📡 Live consensus odds from the-odds-api · Championship markets auto-refresh on 🔄 Refresh Odds';
-      note.style.color='var(--green)';note.style.borderColor='rgba(74,222,128,.3)';
-    } else {
-      note.innerHTML='⚠ Sample data — click <strong>🔄 Refresh Odds</strong> (Schedule tab) to load live championship lines';
-      note.style.color='';note.style.borderColor='';
-    }
-  }
-  let html='';
-  FUTURES_DATA.forEach(market=>{
-    const liveLines=_liveFutures[market.id];
-    const lines=liveLines||market.lines;
-    const isLive=!!liveLines;
-    const liveBadge=isLive
-      ?`<span style="font-size:10px;font-weight:800;color:#4ade80;background:rgba(74,222,128,.13);border:1px solid rgba(74,222,128,.28);border-radius:4px;padding:2px 8px;margin-left:6px">📡 LIVE</span>`
-      :`<span style="font-size:10px;font-weight:600;color:var(--muted);background:var(--card2);border-radius:4px;padding:2px 7px;margin-left:6px">Sample</span>`;
-    html+=`<div class="fut-section">
-      <div class="fut-hdr"><span>${market.icon}</span> ${market.title}
-        <span style="font-size:11px;font-weight:600;color:var(--muted);background:var(--card2);border-radius:4px;padding:2px 7px;margin-left:4px">${market.sport}</span>
-        ${liveBadge}
-      </div>
-      <div class="fut-grid">`;
-    lines.forEach((line,li)=>{
-      const key=`fut-${market.id}-${li}`;
-      const oddsStr=(line.odds>0?'+':'')+line.odds;
-      // Color-code the odds: green for longshots, gold for mid, white for heavy favs
-      const oddsColor=line.odds>0?(line.odds>500?'var(--green)':'var(--gold)'):'var(--text)';
-      html+=`<div class="fut-row">
-        <span class="fut-name">${line.name}</span>
-        <span class="fut-odds-val" style="color:${oddsColor}">${oddsStr}</span>
-        <button class="fut-btn ${slipBets[key]?'selected':''}" id="cbtn-${key}" onclick="addCustomBet('${key}','${market.title}','${market.sport}','${line.name} (${market.title})',${line.odds})">+ Slip</button>
-      </div>`;
-    });
-    html+='</div></div>';
-  });
-  wrap.innerHTML=html;
-}
+// renderFutures/renderProps kept as stubs for backward-compat (init calls them; now no-ops)
+function renderFutures(){}
 // renderProps kept as stub for backward-compat (init calls it; now a no-op)
 function renderProps(){}
 
