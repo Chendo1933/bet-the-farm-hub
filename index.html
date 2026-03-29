@@ -3056,6 +3056,65 @@ function updateHdrNote(gamesCount){
   const gamePart=gamesCount!=null?` · ${gamesCount} game${gamesCount!==1?'s':''} w/ live odds`:'';
   el.textContent=`✅ Updated: ${dateStr}, ${timeStr} · ${totalTeams} team records${gamePart} · ${injTeams} teams w/ injuries`;
 }
+// ── MLB Probable Pitcher System ───────────────────────────────────────────
+// MLB_PITCHERS: keyed by team name (normalized), populated by fetchMLBProbablePitchers()
+// Format: { "New York Yankees": { name, era, whip, wins, losses, ip }, ... }
+let MLB_PITCHERS={};
+
+async function fetchMLBProbablePitchers(){
+  try{
+    const d=new Date();
+    const dateStr=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const url=`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${dateStr}&hydrate=probablePitcher(note,stats[type=[season]])`;
+    const resp=await fetch(url);
+    if(!resp.ok)return;
+    const data=await resp.json();
+    const newPitchers={};
+    for(const dateObj of(data.dates||[])){
+      for(const game of(dateObj.games||[])){
+        const sides=['home','away'];
+        for(const side of sides){
+          const teamObj=game.teams?.[side];
+          if(!teamObj)continue;
+          const teamName=teamObj.team?.name;
+          const pp=teamObj.probablePitcher;
+          if(!teamName||!pp)continue;
+          const seasonStats=(pp.stats||[]).find(s=>s.type?.displayName==='statsSingleSeason')?.stat||{};
+          const era=parseFloat(seasonStats.era);
+          const whip=parseFloat(seasonStats.whip);
+          newPitchers[teamName]={
+            name:pp.fullName||pp.lastName||'TBD',
+            era:isNaN(era)?null:era,
+            whip:isNaN(whip)?null:whip,
+            wins:seasonStats.wins||0,
+            losses:seasonStats.losses||0,
+            ip:seasonStats.inningsPitched||'0.0'
+          };
+        }
+      }
+    }
+    if(Object.keys(newPitchers).length>0)MLB_PITCHERS=newPitchers;
+    console.log(`[BTF] MLB pitchers loaded: ${Object.keys(MLB_PITCHERS).length} starters`);
+  }catch(e){
+    console.warn('[BTF] MLB pitcher fetch failed:',e.message);
+  }
+}
+
+// Lookup helper — tries hub DB name + raw API name + normalized fuzzy match.
+// Call as: getMLBPitcher(g.home, g.rawHome)
+function getMLBPitcher(name, rawName){
+  if(!name&&!rawName)return null;
+  if(name&&MLB_PITCHERS[name])return MLB_PITCHERS[name];
+  if(rawName&&MLB_PITCHERS[rawName])return MLB_PITCHERS[rawName];
+  const norm=n=>(n||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const t1=norm(name), t2=norm(rawName);
+  for(const k in MLB_PITCHERS){
+    const kn=norm(k);
+    if((t1&&kn===t1)||(t2&&kn===t2))return MLB_PITCHERS[k];
+  }
+  return null;
+}
+
 async function refreshAllOdds(){
   if(_isRefreshing)return; // already in progress — don't stack calls
   const apiKey=getApiKey();
@@ -3166,6 +3225,8 @@ async function refreshAllOdds(){
   } else {
     setOabStatus('ok',`✅ ${totalMatched} game${totalMatched!==1?'s':''} updated with live odds${_useCorsProxy?' (via proxy)':''}${futNote}${usageNote}`);
   }
+  // Fetch MLB probable pitchers when MLB is in season (Mar–Oct); _mo already declared above
+  if(![11,12,1,2].includes(_mo))fetchMLBProbablePitchers();
   renderSchedule();
   // Show the Data Health bar after odds load (gives match status feedback)
   const dhBar=document.getElementById('dh-bar');
