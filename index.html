@@ -3008,8 +3008,10 @@ async function fetchOddsForSport(sport,apiKey){
 // Uses implied-probability averaging across all returned bookmakers so the
 // displayed odds represent a consensus line rather than any single book.
 async function fetchFuturesOdds(apiKey){
-  // Skip re-fetch if cache is still fresh (within FUTURES_TTL window)
-  if(_futuresFetchTime&&Date.now()-_futuresFetchTime<FUTURES_TTL&&Object.keys(_liveFutures).length){
+  // Skip re-fetch if cache is still fresh (within FUTURES_TTL window).
+  // Note: do NOT gate on _liveFutures being non-empty — if all markets 404'd,
+  // we still want to honour the TTL and not hammer the API every refresh.
+  if(_futuresFetchTime&&Date.now()-_futuresFetchTime<FUTURES_TTL){
     return -1; // -1 signals "used cache" so caller can show cached note
   }
   const toProb=p=>p<0?(-p)/(-p+100):100/(p+100);
