@@ -339,6 +339,10 @@ def compute_ats_records():
         except Exception:
             continue
 
+        # index.json is a plain list — skip anything that isn't a results dict
+        if not isinstance(data, dict) or "sports" not in data:
+            continue
+
         for sport, games in data.get("sports", {}).items():
             if sport not in ATS_INDICES:
                 continue   # skip CFB/CBB — not in update pipeline
