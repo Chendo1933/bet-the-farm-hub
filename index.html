@@ -4828,7 +4828,24 @@ function getScorePerGame(t,ix,sport){
     const MLB_LG_AVG=4.5, conf=gp/30;
     return {ppg:rawPPG*conf+MLB_LG_AVG*(1-conf),papg:rawPAPG*conf+MLB_LG_AVG*(1-conf)};
   }
-  return ix.ppg!=null?{ppg:t[ix.ppg]||0,papg:t[ix.papg]||0}:null;
+  if(ix.ppg!=null){
+    const ppg=t[ix.ppg]||0, papg=t[ix.papg]||0;
+    if(ppg===0&&papg===0) return null; // no data at all — skip rather than project zeros
+    // Early-season smoothing for NBA/CBB: blend toward league average for small samples.
+    // NBA teams score 100-130 pts/gm; CBB 60-90. A 3-game sample can still skew projections
+    // when one team goes on a run. Full confidence at 15 gp (NBA) and 8 gp (CBB).
+    const SMOOTH={nba:{min:15,avg:115},cbb:{min:8,avg:73}};
+    const sm=SMOOTH[sport];
+    if(sm){
+      const gp=(t[ix.w]||0)+(t[ix.l]||0);
+      if(gp>0&&gp<sm.min){
+        const conf=gp/sm.min;
+        return {ppg:ppg*conf+sm.avg*(1-conf),papg:papg*conf+sm.avg*(1-conf)};
+      }
+    }
+    return {ppg,papg};
+  }
+  return null;
 }
 // Extract the mascot portion of a raw API name given the normalized school name.
 // e.g. getMascot("Arizona St Sun Devils", "Arizona State") → "Sun Devils"
