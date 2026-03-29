@@ -4820,7 +4820,13 @@ function getScorePerGame(t,ix,sport){
   }
   if(sport==='mlb'){
     const gp=((t[ix.w]||0)+(t[ix.l]||0))||162; // fallback to 162-game season when records not yet set
-    return {ppg:(t[ix.rs]||0)/gp,papg:(t[ix.ra]||0)/gp};
+    const rawPPG=(t[ix.rs]||0)/gp, rawPAPG=(t[ix.ra]||0)/gp;
+    // Early-season smoothing: blend toward MLB league average (4.5 RPG) for small samples.
+    // Without this, a team that scored 2 runs in game 1 shows ppg=2 and skews projections badly.
+    // At gp≥30 (or gp=162 pre-season fallback), use actual rates directly.
+    if(gp>=30) return {ppg:rawPPG,papg:rawPAPG};
+    const MLB_LG_AVG=4.5, conf=gp/30;
+    return {ppg:rawPPG*conf+MLB_LG_AVG*(1-conf),papg:rawPAPG*conf+MLB_LG_AVG*(1-conf)};
   }
   return ix.ppg!=null?{ppg:t[ix.ppg]||0,papg:t[ix.papg]||0}:null;
 }
@@ -7021,57 +7027,139 @@ function hbGetTier(score100){
 }
 
 // ── Alternate Lines Suggestions ───────────────────────────────────────────────
-// Synthesizes buy/sell half-point alt lines from the current spread and odds.
-// Shows the safer option (buy points, costs more juice) and riskier option
-// (sell points, gets better payout). Flags spreads near key numbers.
+// For SPREAD picks: uses projection cushion to guide buy/sell decisions.
+// For O/U picks: uses projection vs posted line to suggest harder alt lines that
+// pay BETTER odds while the projection still has cushion (the value opportunity).
+// e.g. proj 6.5 vs Under 9: Alt Under 8 at ~+145 with 1.5-run cushion = value.
 function hbAltLineSuggestions(p){
-  if(p.betType!=='spread'||p.spread==null||p.atsPick==null)return '';
-  const side=p.atsPick;
-  const sp=p.spread; // home team's spread (e.g., -9.5 means home is 9.5-pt fav)
-  // Picked team's spread from their own perspective
-  const pickedSp=side==='home'?sp:-sp; // positive = underdog, negative = favorite
-  const baseOdds=p.odds??-110;
-  const sport=(p.sport||'cbb').toLowerCase();
+  const sport=(p.sport||'').toLowerCase();
+  const s=p.sim||{};
+  const parts=[];
 
-  // Key numbers by sport — crossing these costs/saves more than a standard half pt
-  const KEY_NUMS={nfl:[3,3.5,6,6.5,7,7.5,10,14],cfb:[3,3.5,7,10,14],cbb:[],nba:[],nhl:[1.5],mlb:[1.5]};
-  const kn=KEY_NUMS[sport]||[];
+  // ── SPREAD ALT LINES (projection-cushion-driven) ──────────────────────────
+  // Projection cushion = how much the model's projected margin exceeds the spread.
+  // Large cushion → sell points (harder line, better payout). Thin → buy protection.
+  if(p.betType==='spread'&&p.spread!=null&&p.atsPick!=null){
+    const side=p.atsPick;
+    const sp=p.spread; // home's spread (negative = fav)
+    const pickedSp=side==='home'?sp:-sp; // from the picked team's perspective
+    const baseOdds=p.odds??-110;
+    const KEY_NUMS={nfl:[3,3.5,6,6.5,7,7.5,10,14],cfb:[3,3.5,7,10,14],cbb:[],nba:[],nhl:[1.5],mlb:[1.5]};
+    const kn=KEY_NUMS[sport]||[];
+    const nearKey=kn.find(k=>Math.abs(Math.abs(pickedSp)-k)<=0.5);
+    const baseImpl=impliedProb(baseOdds)??0.524;
+    const halfPtImpl=(sport==='nfl'||sport==='cfb')&&nearKey?0.05:0.025;
+    const teamShort=(side==='home'?p.home:p.away).split(' ').slice(-1)[0];
 
-  // Is current spread sitting right on a key number? (within 0.5 pts)
-  const nearKey=kn.find(k=>Math.abs(Math.abs(pickedSp)-k)<=0.5);
+    // cushion = pickedMargin + pickedSp
+    // pickedMargin=10 fav -7: 10+(-7)=3 (covers by 3) ✓
+    // pickedMargin=-3 dog +7: -3+7=4 (covers by 4) ✓
+    let projCushion=null;
+    if(s.projMargin!=null){
+      const pickedMargin=side==='home'?s.projMargin:-s.projMargin;
+      projCushion=pickedMargin+pickedSp;
+    }
 
-  // Convert base odds to no-vig implied probability
-  const baseImpl=impliedProb(baseOdds)??0.524;
+    if(projCushion!=null){
+      if(projCushion>=4){
+        // Big cushion — sell a point for better odds
+        const sellSp=pickedSp+(pickedSp<0?1:-1);
+        if(Math.sign(sellSp)===Math.sign(pickedSp)||sellSp===0){
+          const sellImpl=Math.max(0.08,baseImpl-halfPtImpl*2);
+          const sellOdds=sellImpl>=0.5?-Math.round(sellImpl/(1-sellImpl)*100):Math.round((1-sellImpl)/sellImpl*100);
+          const sellFmt=sellSp>=0?`+${sellSp}`:String(sellSp);
+          const sellOddsFmt=sellOdds>=0?`+${sellOdds}`:String(sellOdds);
+          parts.push(`<span class="hb-alt-item riskier" title="Proj covers by ${projCushion.toFixed(1)} — room to sell a point">📈 ${teamShort} ${sellFmt} · ~${sellOddsFmt} <em style="color:var(--muted);font-size:9px">(proj +${projCushion.toFixed(1)} cushion)</em></span>`);
+        }
+      } else if(projCushion>=0&&projCushion<2){
+        // Thin cushion — buy a point for safety
+        const buySp=pickedSp+(pickedSp<0?-1:1);
+        const buyImpl=Math.min(0.92,baseImpl+halfPtImpl*2);
+        const buyOdds=buyImpl>=0.5?-Math.round(buyImpl/(1-buyImpl)*100):Math.round((1-buyImpl)/buyImpl*100);
+        const buyFmt=buySp>=0?`+${buySp}`:String(buySp);
+        const buyOddsFmt=buyOdds>=0?`+${buyOdds}`:String(buyOdds);
+        parts.push(`<span class="hb-alt-item safer" title="Thin proj cushion — buying a point adds protection">🛡️ ${teamShort} ${buyFmt} · ~${buyOddsFmt} <em style="color:var(--muted);font-size:9px">(proj +${projCushion.toFixed(1)} cushion)</em></span>`);
+      } else if(projCushion<0){
+        // Projection doesn't reach the spread — flag the risk
+        parts.push(`<span class="hb-alt-item" style="color:#f97316;font-weight:500" title="Model projects this pick coming up short">⚠️ Proj ${Math.abs(projCushion).toFixed(1)} pts short of spread — consider passing or buying down</span>`);
+      }
+      // projCushion 2–4: comfortable, no action needed — no alt line shown
+    } else {
+      // No projection available — fall back to simple ±1 display
+      const saferSp=pickedSp>0?(pickedSp+1):(pickedSp-1);
+      const saferImpl=Math.min(0.92,baseImpl+halfPtImpl*2);
+      const saferOdds=saferImpl>=0.5?-Math.round(saferImpl/(1-saferImpl)*100):Math.round((1-saferImpl)/saferImpl*100);
+      const saferFmt=saferSp>=0?`+${saferSp}`:String(saferSp);
+      const saferOddsFmt=saferOdds>=0?`+${saferOdds}`:String(saferOdds);
+      parts.push(`<span class="hb-alt-item safer" title="Buy 1 pt — safer coverage, more juice">▲ ${teamShort} ${saferFmt} · ~${saferOddsFmt}</span>`);
+      const riskierSp=pickedSp>0?(pickedSp-1):(pickedSp+1);
+      if(Math.sign(riskierSp)===Math.sign(pickedSp)||riskierSp===0){
+        const riskierImpl=Math.max(0.08,baseImpl-halfPtImpl*2);
+        const riskierOdds=riskierImpl>=0.5?-Math.round(riskierImpl/(1-riskierImpl)*100):Math.round((1-riskierImpl)/riskierImpl*100);
+        const riskierFmt=riskierSp>=0?`+${riskierSp}`:String(riskierSp);
+        const riskierOddsFmt=riskierOdds>=0?`+${riskierOdds}`:String(riskierOdds);
+        parts.push(`<span class="hb-alt-item riskier" title="Sell 1 pt — riskier line, better payout">▼ ${teamShort} ${riskierFmt} · ~${riskierOddsFmt}</span>`);
+      }
+    }
+    if(nearKey)parts.push(`<span class="hb-alt-key">⚡ Key # ${nearKey}${projCushion!=null&&projCushion>=4?' — proj confirms room to sell':' — buying half pt has extra value'}</span>`);
+  }
 
-  // Half-point pricing: ~2.5% implied prob per half point normally;
-  // ~5% when crossing/sitting on a key number in football
-  const halfPtImpl=(sport==='nfl'||sport==='cfb')&&nearKey?0.05:0.025;
+  // ── O/U ALT LINES (projection-driven) ─────────────────────────────────────
+  // If our projected total is meaningfully away from the posted line, we can take a
+  // HARDER alt line that pays BETTER odds — and the projection still has cushion.
+  // e.g. proj 6.5 vs Under 9: Alt Under 8 at ~+145 with 1.5-run cushion = value.
+  // Alt Under at a LOWER number = harder bet = better payout (more +ve odds).
+  // Alt Over at a HIGHER number = harder bet = better payout.
+  if(p.betType==='ou'&&p.gObj?.total!=null){
+    const projTot=s.projTotal??null;
+    const mainLine=p.gObj.total;
+    const direction=(p.pickedTeam||'').toLowerCase(); // 'over' or 'under'
+    const baseOdds=p.odds??-110;
+    const baseImpl=impliedProb(baseOdds)??0.524;
+    // Each 0.5-unit move against you (harder line) reduces implied prob by ~2.5%
+    // → better payout (moving to the +odds side)
+    const halfPtImpl=0.025;
+    const MIN_CUSHION=0.5; // min buffer between proj and alt line required
 
-  // Safer: buy 1 full point toward better coverage
-  const saferSp=pickedSp>0?(pickedSp+1):(pickedSp-1);
-  const saferImpl=Math.min(0.92,baseImpl+halfPtImpl*2);
-  const saferOdds=saferImpl>=0.5?-Math.round(saferImpl/(1-saferImpl)*100):Math.round((1-saferImpl)/saferImpl*100);
-  const saferFmt=saferSp>=0?`+${saferSp}`:String(saferSp);
-  const saferOddsFmt=saferOdds>=0?`+${saferOdds}`:String(saferOdds);
+    if(projTot!=null&&(direction==='over'||direction==='under')){
+      // gap: how far projection is from the main line in the favorable direction
+      const gap=direction==='under'?(mainLine-projTot):(projTot-mainLine);
 
-  // Riskier: sell 1 full point for better payout
-  const riskierSp=pickedSp>0?(pickedSp-1):(pickedSp+1);
-  // Only show if riskier spread doesn't cross 0 (would flip the bet)
-  if(Math.sign(riskierSp)!==Math.sign(pickedSp)&&riskierSp!==0)return '';
-  const riskierImpl=Math.max(0.08,baseImpl-halfPtImpl*2);
-  const riskierOdds=riskierImpl>=0.5?-Math.round(riskierImpl/(1-riskierImpl)*100):Math.round((1-riskierImpl)/riskierImpl*100);
-  const riskierFmt=riskierSp>=0?`+${riskierSp}`:String(riskierSp);
-  const riskierOddsFmt=riskierOdds>=0?`+${riskierOdds}`:String(riskierOdds);
+      if(gap>=1.0){
+        // Try alt lines 1.0, 1.5, 2.0 units harder than the posted line
+        const altOpts=[];
+        [1.0,1.5,2.0].forEach(delta=>{
+          const altLine=direction==='under'?(mainLine-delta):(mainLine+delta);
+          const cushion=direction==='under'?(altLine-projTot):(projTot-altLine);
+          if(cushion>=MIN_CUSHION){
+            const halfPtMoves=delta/0.5; // number of 0.5-unit steps harder
+            const altImpl=Math.max(0.05,baseImpl-halfPtMoves*halfPtImpl);
+            const altOdds=altImpl>=0.5
+              ?-Math.round(altImpl/(1-altImpl)*100)
+              :Math.round((1-altImpl)/altImpl*100);
+            const altOddsFmt=altOdds>=0?`+${altOdds}`:String(altOdds);
+            const icon=direction==='under'?'📉':'📈';
+            const dirLabel=direction==='under'?'Under':'Over';
+            altOpts.push(`<span class="hb-alt-item riskier" title="Alt ${dirLabel} ${altLine} — harder line, better payout. Proj ${projTot.toFixed(1)}, cushion ${cushion.toFixed(1)}">${icon} Alt ${dirLabel} ${altLine} · ~${altOddsFmt} <em style="color:var(--muted);font-size:9px">(${cushion.toFixed(1)} cushion)</em></span>`);
+          }
+        });
+        if(altOpts.length){
+          // Show up to 2 alt options (best value first = tightest line with cushion)
+          parts.push(...altOpts.slice(0,2));
+          parts.push(`<span class="hb-alt-key">📊 Proj ${projTot.toFixed(1)} vs line ${mainLine} — alt lines pay more, proj still has cushion</span>`);
+        }
+      } else if(gap>0&&gap<1.0){
+        // Small gap — projection agrees but not enough room for alt lines
+        parts.push(`<span class="hb-alt-key">📊 Proj ${projTot.toFixed(1)} vs line ${mainLine} — slim margin, no alt line edge</span>`);
+      } else if(gap<=0){
+        // Projection is on the WRONG side of the main line
+        parts.push(`<span class="hb-alt-key" style="color:#f97316">⚠️ Proj ${projTot.toFixed(1)} conflicts with ${direction==='under'?'Under':'Over'} ${mainLine} pick — other signals drove this</span>`);
+      }
+    }
+  }
 
-  const teamShort=(side==='home'?p.home:p.away).split(' ').slice(-1)[0];
-  const keyNote=nearKey?`<span class="hb-alt-key">⚡ On key # ${nearKey} — buying half pt has extra value</span>`:'';
-
-  return `<div class="hb-altlines">
-    <span class="hb-alt-label">🔀 Alt Lines (est.)</span>
-    <span class="hb-alt-item safer" title="Buy 1 pt — safer coverage, more juice">▲ ${teamShort} ${saferFmt} · ~${saferOddsFmt}</span>
-    <span class="hb-alt-item riskier" title="Sell 1 pt — riskier line, better payout">▼ ${teamShort} ${riskierFmt} · ~${riskierOddsFmt}</span>
-    ${keyNote}
-  </div>`;
+  if(!parts.length)return '';
+  return `<div class="hb-altlines"><span class="hb-alt-label">🔀 Alt Lines</span>${parts.join('')}</div>`;
 }
 
 function hbRender(){
