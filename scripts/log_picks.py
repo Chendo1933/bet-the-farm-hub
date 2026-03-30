@@ -62,10 +62,10 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
             await page.evaluate("refreshAllOdds()")
             try:
                 await page.wait_for_function(
-                    "Array.isArray(window.TODAY_GAMES) && window.TODAY_GAMES.length > 0",
+                    "typeof TODAY_GAMES !== 'undefined' && Array.isArray(TODAY_GAMES) && TODAY_GAMES.length > 0",
                     timeout=TIMEOUT
                 )
-                game_count = await page.evaluate("window.TODAY_GAMES.length")
+                game_count = await page.evaluate("TODAY_GAMES.length")
                 print(f"  ✓ {game_count} game(s) loaded from ESPN/Odds API")
             except Exception:
                 print("  ⚠  Timed out waiting for live games — using static picks")
@@ -81,10 +81,10 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
         print(f"  ✓ {len(picks)} total picks generated")
 
         # Capture schedule snapshot — ALL today's games with spread/total
-        # TODAY_GAMES format: [{sport,home,away,date,time,spread,total,...}]
-        # 'home'/'away' are already DB-normalized names (resolved by the hub)
+        # TODAY_GAMES is a `let` variable (not a window property) — access without window.
+        # Guard with ||[] so a timeout/empty-odds run returns [] instead of crashing.
         today_games = await page.evaluate(
-            "window.TODAY_GAMES.map(g => ({sport:g.sport, home:g.home, away:g.away,"
+            "(typeof TODAY_GAMES !== 'undefined' ? TODAY_GAMES : []).map(g => ({sport:g.sport, home:g.home, away:g.away,"
             " date:g.date, time:g.time, spread:g.spread, total:g.total}))"
         )
         print(f"  ✓ {len(today_games)} game(s) in today's schedule snapshot")
