@@ -6885,7 +6885,13 @@ function hbGeneratePicks(){
       }
 
       if(gSp!==null){
-        const mlIsUnderdog=(mlSide==='home'&&gSp>0)||(mlSide==='away'&&gSp<0);
+        // Require the picked team to be a genuine ML underdog (positive ML odds).
+        // A team at -126 ML is a FAVORITE — the "wins outright as underdog" logic doesn't
+        // apply even if they happen to be on the +1.5 run-line side. Without this guard,
+        // slight ML favorites can generate a bridge pick with a misleading "underdog" label.
+        const pickedML=mlSide==='home'?g.mlHome:g.mlAway;
+        const mlIsMLUnderdog=pickedML==null||pickedML>0; // positive odds = underdog; null = unknown → allow
+        const mlIsUnderdog=((mlSide==='home'&&gSp>0)||(mlSide==='away'&&gSp<0))&&mlIsMLUnderdog;
         const mlSpreadScore=Math.min(mlResult.score*1.06,0.97);
         const mlOddsDisp=mlResult.odds>0?'+'+mlResult.odds:''+mlResult.odds;
 
