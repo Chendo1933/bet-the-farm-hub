@@ -6265,7 +6265,9 @@ function hbSimulateGame(g, ht, at, ix){
       sim.projTotal=projTot;
       const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[g.sport]||7;
       const gap=g.total-projTot;
-      projOver=0.5-Math.max(-0.35,Math.min(0.35,gap/(norm*2)));
+      // MLB early-season: suppress projection bias (see hbScoreOU comment for details)
+      const mlbThin=g.sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<15||((at[ix.w]||0)+(at[ix.l]||0))<15);
+      if(!mlbThin) projOver=0.5-Math.max(-0.35,Math.min(0.35,gap/(norm*2)));
     }
     // Blend: 55% history, 45% projection when both available; else whichever exists
     if(histOk&&projTot!=null) sim.overProb=histOver*0.55+projOver*0.45;
@@ -6354,7 +6356,11 @@ function hbScoreOU(g, ht, at, ix){
       const proj=_pOU.total;
       const gap=g.total-proj; // positive = line above proj = Under edge
       const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[sport]||7;
-      if(Math.abs(gap)>norm*0.80){ // require a meaningful gap — below this it's book noise
+      // MLB early-season guard: with <15 games, smoothing toward 4.5 RPG league avg
+      // projects ~9.0 total, which structurally beats every book line (~7.5-8.5) and
+      // generates a false "Over 99" on every game. Skip until real data takes over.
+      const mlbThinData=sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<15||((at[ix.w]||0)+(at[ix.l]||0))<15);
+      if(!mlbThinData&&Math.abs(gap)>norm*0.80){ // require a meaningful gap — below this it's book noise
         projSignal=0.5-Math.max(-0.40,Math.min(0.40,gap/(norm*2)));
         if(gap<0)factors.push({t:'pos',l:`📈 Proj ${proj.toFixed(1)} > line ${g.total} (+${Math.abs(gap).toFixed(1)} Over edge)`});
         else factors.push({t:'pos',l:`📉 Proj ${proj.toFixed(1)} < line ${g.total} (+${gap.toFixed(1)} Under edge)`});
