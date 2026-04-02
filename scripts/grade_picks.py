@@ -15,6 +15,17 @@ Grading logic:
     margin == 0 → push
   ML: winner = team with higher score
   O/U: skipped (we don't log the total line)
+
+performance.json schema (matches hub performance panel):
+  {
+    "last_updated": "YYYY-MM-DD",
+    "tiers": {
+      "elite":  { "w": 0, "l": 0, "p": 0 },
+      "strong": { "w": 0, "l": 0, "p": 0 }
+    },
+    "by_sport": { "nba": { "elite": { "w": 0, "l": 0, "p": 0 } } },
+    "graded_dates": ["2026-03-22", ...]
+  }
 """
 
 import json
@@ -45,6 +56,9 @@ def find_result(pick: dict, results_by_sport: dict) -> dict | None:
     sport = pick.get("sport", "").lower()
     home  = normalize(pick.get("home", ""))
     away  = normalize(pick.get("away", ""))
+
+    if not home or not away:
+        return None   # ungradeable pick with no game context
 
     for game in results_by_sport.get(sport, []):
         gh = normalize(game.get("home", ""))
@@ -93,14 +107,25 @@ def grade_ml(pick: dict, result: dict) -> str:
 
 
 def load_performance() -> dict:
+    """
+    Load existing performance.json, or return a fresh default.
+    Uses the hub-compatible schema: tiers / w / l / p / last_updated.
+    """
     existing = load_json(PERF_FILE)
-    if existing and "records" in existing:
+    # Accept existing file if it uses the correct hub schema ("tiers" key)
+    if existing and "tiers" in existing:
+        # Ensure both tiers are present (older files may only have one)
+        for tier in ("elite", "strong"):
+            existing["tiers"].setdefault(tier, {"w": 0, "l": 0, "p": 0})
+        existing.setdefault("by_sport", {})
+        existing.setdefault("graded_dates", [])
         return existing
+    # Fresh start (or legacy "records" schema — discard and rebuild)
     return {
-        "updated": "",
-        "records": {
-            tier: {"wins": 0, "losses": 0, "pushes": 0}
-            for tier in ("elite", "strong", "good", "lean")
+        "last_updated": "",
+        "tiers": {
+            "elite":  {"w": 0, "l": 0, "p": 0},
+            "strong": {"w": 0, "l": 0, "p": 0},
         },
         "by_sport": {},
         "graded_dates": [],
@@ -143,7 +168,7 @@ def main():
 
     graded = 0
     for pick in picks:
-        tier      = pick.get("tier", "lean")
+        tier      = pick.get("tier", "lean").lower()
         bet_type  = pick.get("betType", "spread")
         result    = find_result(pick, sports)
 
@@ -159,26 +184,26 @@ def main():
             print(f"  ? {pick['sport']} {pick['pickLabel']} — could not grade ({bet_type})")
             continue
 
-        rec = perf["records"].setdefault(
-            tier, {"wins": 0, "losses": 0, "pushes": 0}
-        )
-        if outcome == "win":
-            rec["wins"]   += 1
-        elif outcome == "loss":
-            rec["losses"] += 1
-        else:
-            rec["pushes"] += 1
+        # Only track elite and strong in the hub performance panel
+        if tier in ("elite", "strong"):
+            rec = perf["tiers"][tier]
+            if outcome == "win":
+                rec["w"] += 1
+            elif outcome == "loss":
+                rec["l"] += 1
+            else:
+                rec["p"] += 1
 
-        # Track by sport too
+        # Track by sport for both tracked tiers
         sport_key = pick["sport"].lower()
         sp_tiers  = perf["by_sport"].setdefault(sport_key, {})
-        sp_rec    = sp_tiers.setdefault(tier, {"wins": 0, "losses": 0, "pushes": 0})
+        sp_rec    = sp_tiers.setdefault(tier, {"w": 0, "l": 0, "p": 0})
         if outcome == "win":
-            sp_rec["wins"]   += 1
+            sp_rec["w"] += 1
         elif outcome == "loss":
-            sp_rec["losses"] += 1
+            sp_rec["l"] += 1
         else:
-            sp_rec["pushes"] += 1
+            sp_rec["p"] += 1
 
         icon = "✅" if outcome == "win" else "❌" if outcome == "loss" else "🔁"
         print(f"  {icon} [{tier.upper():6}] {pick['sport']} {pick['pickLabel']} "
@@ -190,19 +215,18 @@ def main():
         print(f"  ⚠  No picks could be graded for {date_key}")
         sys.exit(0)
 
-    perf["updated"] = date_key
+    perf["last_updated"] = date_key
     perf.setdefault("graded_dates", []).append(date_key)
     perf["graded_dates"].sort(reverse=True)
 
     # Print summary
     print(f"\n── Performance Summary ─────────────────────────────────────────")
-    for tier in ("elite", "strong", "good"):
-        rec = perf["records"].get(tier, {"wins": 0, "losses": 0, "pushes": 0})
-        total = rec["wins"] + rec["losses"]
-        pct   = f"{rec['wins']/total*100:.1f}%" if total > 0 else "—"
-        print(f"  {tier.upper():8} {rec['wins']}-{rec['losses']}"
-              + (f" ({rec['pushes']}P)" if rec["pushes"] else "")
-              + f"  →  {pct}")
+    for tier in ("elite", "strong"):
+        rec   = perf["tiers"].get(tier, {"w": 0, "l": 0, "p": 0})
+        total = rec["w"] + rec["l"]
+        pct   = f"{rec['w']/total*100:.1f}%" if total > 0 else "—"
+        push_str = f" ({rec['p']}P)" if rec["p"] else ""
+        print(f"  {tier.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
 
     os.makedirs(os.path.dirname(PERF_FILE), exist_ok=True)
     with open(PERF_FILE, "w") as f:
