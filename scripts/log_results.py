@@ -18,6 +18,12 @@ import sys
 import requests
 from datetime import datetime, timezone, timedelta
 
+try:
+    from schemas import validate as schema_validate, SchemaError
+except ImportError:
+    def schema_validate(name, data, **kw): return []
+    class SchemaError(Exception): pass
+
 DATA_DIR   = "data/results"
 SCHED_DIR  = "data/schedules"
 TIMEOUT    = 15
@@ -193,6 +199,13 @@ def main():
     if total_games == 0:
         print(f"\nℹ  No games found for {date_key} — skipping file write")
         sys.exit(0)
+
+    # Validate schema before writing
+    try:
+        schema_validate("results", all_results)
+    except SchemaError as e:
+        print(f"\n🚨 SCHEMA ERROR — refusing to write malformed results:\n{e}")
+        sys.exit(1)
 
     out_path = os.path.join(DATA_DIR, f"{date_key}.json")
     with open(out_path, "w", encoding="utf-8") as f:

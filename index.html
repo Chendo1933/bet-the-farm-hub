@@ -7864,27 +7864,42 @@ window.addEventListener('btf-odds-refreshed',()=>{
     const r=await fetch(PERF_URL);
     if(!r.ok)return; // file doesn't exist yet — panel stays hidden
     const d=await r.json();
-    const recs=d.records||{};
+
+    // Schema validation — surface a visible error instead of silently showing nothing
+    if(!d.tiers||typeof d.tiers!=='object'){
+      tiersEl.innerHTML=`<div style="color:#f87171;font-size:12px;padding:6px 10px;background:rgba(239,68,68,0.1);border-radius:6px;border:1px solid rgba(239,68,68,0.3)">
+        ⚠️ performance.json schema error — expected <code>tiers.elite.w</code> keys.<br>
+        Check that grade_picks.py is using the current version.
+      </div>`;
+      panel.style.display='block';
+      return;
+    }
+
     const tiers=[
       {key:'elite',  label:'🔥 Elite',  color:'#ef4444'},
       {key:'strong', label:'⚡ Strong', color:'var(--gold)'},
-      {key:'good',   label:'✅ Good',   color:'var(--green)'},
     ];
     const boxes=tiers.map(t=>{
-      const rec=recs[t.key]||{wins:0,losses:0,pushes:0};
-      const total=rec.wins+rec.losses;
+      const rec=d.tiers[t.key]||{w:0,l:0,p:0};
+      const total=(rec.w||0)+(rec.l||0);
       if(total===0)return'';
-      const pct=total>0?Math.round(rec.wins/total*100):0;
+      const pct=Math.round((rec.w||0)/total*100);
       const col=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
       return`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;min-width:100px;text-align:center">
         <div style="font-size:11px;font-weight:700;color:${t.color};margin-bottom:4px">${t.label}</div>
         <div style="font-size:18px;font-weight:900;color:${col}">${pct}%</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px">${rec.wins}-${rec.losses}${rec.pushes?` (${rec.pushes}P)`:''}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${rec.w||0}-${rec.l||0}${rec.p?` (${rec.p}P)`:''}</div>
       </div>`;
     }).filter(Boolean).join('');
-    if(!boxes)return;
+    if(!boxes){
+      // File exists and has correct schema, but no picks graded yet
+      tiersEl.innerHTML=`<div style="color:var(--muted);font-size:12px;padding:6px 10px">No graded picks yet — check back after tonight's games.</div>`;
+      panel.style.display='block';
+      if(d.last_updated)updEl.textContent=`Updated ${d.last_updated}`;
+      return;
+    }
     tiersEl.innerHTML=boxes;
-    if(d.updated)updEl.textContent=`Updated ${d.updated}`;
+    if(d.last_updated)updEl.textContent=`Updated ${d.last_updated}`;
     panel.style.display='block';
   }catch(e){/* silently skip if offline or file missing */}
 })();

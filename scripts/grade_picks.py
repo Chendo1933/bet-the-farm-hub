@@ -33,6 +33,14 @@ import os
 import sys
 from datetime import datetime, timezone, timedelta
 
+# Schema validator — catches key-name mismatches before they hit disk
+try:
+    from schemas import validate as schema_validate, SchemaError
+except ImportError:
+    # Running outside scripts/ directory — define a no-op so the script still works
+    def schema_validate(name, data, **kw): return []
+    class SchemaError(Exception): pass
+
 PICKS_DIR   = "data/picks"
 RESULTS_DIR = "data/results"
 PERF_FILE   = "data/performance.json"
@@ -227,6 +235,13 @@ def main():
         pct   = f"{rec['w']/total*100:.1f}%" if total > 0 else "—"
         push_str = f" ({rec['p']}P)" if rec["p"] else ""
         print(f"  {tier.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
+
+    # Validate schema before writing — crash loudly rather than silently corrupt
+    try:
+        schema_validate("performance", perf)
+    except SchemaError as e:
+        print(f"\n🚨 SCHEMA ERROR — refusing to write malformed data:\n{e}")
+        sys.exit(1)
 
     os.makedirs(os.path.dirname(PERF_FILE), exist_ok=True)
     with open(PERF_FILE, "w") as f:
