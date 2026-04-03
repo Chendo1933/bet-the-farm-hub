@@ -114,21 +114,39 @@ def grade_ml(pick: dict, result: dict) -> str:
         return "win" if away_sc > home_sc else "loss"
 
 
+CONF_BANDS = ["95-99", "90-94", "85-89", "80-84", "75-79", "70-74"]
+
+def conf_band(score100) -> str | None:
+    """Map a score100 value to a 5-point confidence band label, or None if out of range."""
+    if score100 is None:
+        return None
+    s = int(score100)
+    if s >= 95: return "95-99"
+    if s >= 90: return "90-94"
+    if s >= 85: return "85-89"
+    if s >= 80: return "80-84"
+    if s >= 75: return "75-79"
+    if s >= 70: return "70-74"
+    return None
+
+
 def load_performance() -> dict:
     """
     Load existing performance.json, or return a fresh default.
     Uses the hub-compatible schema: tiers / w / l / p / last_updated.
+    Also maintains by_conf for confidence-band hit-rate breakdown.
     """
     existing = load_json(PERF_FILE)
-    # Accept existing file if it uses the correct hub schema ("tiers" key)
     if existing and "tiers" in existing:
-        # Ensure both tiers are present (older files may only have one)
         for tier in ("elite", "strong"):
             existing["tiers"].setdefault(tier, {"w": 0, "l": 0, "p": 0})
         existing.setdefault("by_sport", {})
         existing.setdefault("graded_dates", [])
+        # Backfill by_conf for files written before this field existed
+        existing.setdefault("by_conf", {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS})
+        for band in CONF_BANDS:
+            existing["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
         return existing
-    # Fresh start (or legacy "records" schema — discard and rebuild)
     return {
         "last_updated": "",
         "tiers": {
@@ -136,6 +154,7 @@ def load_performance() -> dict:
             "strong": {"w": 0, "l": 0, "p": 0},
         },
         "by_sport": {},
+        "by_conf":  {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS},
         "graded_dates": [],
     }
 
@@ -192,29 +211,32 @@ def main():
             print(f"  ? {pick['sport']} {pick['pickLabel']} — could not grade ({bet_type})")
             continue
 
-        # Only track elite and strong in the hub performance panel
+        # Track by tier
         if tier in ("elite", "strong"):
             rec = perf["tiers"][tier]
-            if outcome == "win":
-                rec["w"] += 1
-            elif outcome == "loss":
-                rec["l"] += 1
-            else:
-                rec["p"] += 1
+            if outcome == "win":   rec["w"] += 1
+            elif outcome == "loss": rec["l"] += 1
+            else:                  rec["p"] += 1
 
-        # Track by sport for both tracked tiers
+        # Track by sport
         sport_key = pick["sport"].lower()
         sp_tiers  = perf["by_sport"].setdefault(sport_key, {})
         sp_rec    = sp_tiers.setdefault(tier, {"w": 0, "l": 0, "p": 0})
-        if outcome == "win":
-            sp_rec["w"] += 1
-        elif outcome == "loss":
-            sp_rec["l"] += 1
-        else:
-            sp_rec["p"] += 1
+        if outcome == "win":   sp_rec["w"] += 1
+        elif outcome == "loss": sp_rec["l"] += 1
+        else:                  sp_rec["p"] += 1
+
+        # Track by confidence band — the key question: do 95s hit more than 87s?
+        band = conf_band(pick.get("score100"))
+        if band:
+            br = perf["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
+            if outcome == "win":   br["w"] += 1
+            elif outcome == "loss": br["l"] += 1
+            else:                  br["p"] += 1
 
         icon = "✅" if outcome == "win" else "❌" if outcome == "loss" else "🔁"
-        print(f"  {icon} [{tier.upper():6}] {pick['sport']} {pick['pickLabel']} "
+        band_str = f" [{band}]" if band else ""
+        print(f"  {icon} [{tier.upper():6}]{band_str} {pick['sport']} {pick['pickLabel']} "
               f"({result['home']} {result['home_score']} – {result['away']} {result['away_score']}) "
               f"→ {outcome.upper()}")
         graded += 1
@@ -228,13 +250,24 @@ def main():
     perf["graded_dates"].sort(reverse=True)
 
     # Print summary
-    print(f"\n── Performance Summary ─────────────────────────────────────────")
+    print(f"\n── Performance by Tier ──────────────────────────────────────────")
     for tier in ("elite", "strong"):
         rec   = perf["tiers"].get(tier, {"w": 0, "l": 0, "p": 0})
         total = rec["w"] + rec["l"]
         pct   = f"{rec['w']/total*100:.1f}%" if total > 0 else "—"
         push_str = f" ({rec['p']}P)" if rec["p"] else ""
         print(f"  {tier.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
+
+    print(f"\n── Performance by Confidence Band ───────────────────────────────")
+    for band in CONF_BANDS:
+        rec   = perf["by_conf"].get(band, {"w": 0, "l": 0, "p": 0})
+        total = rec["w"] + rec["l"]
+        if total == 0:
+            continue
+        pct      = f"{rec['w']/total*100:.1f}%"
+        push_str = f" ({rec['p']}P)" if rec["p"] else ""
+        bar      = "█" * rec["w"] + "░" * rec["l"]
+        print(f"  {band}  {rec['w']}-{rec['l']}{push_str}  →  {pct}  {bar}")
 
     # Validate schema before writing — crash loudly rather than silently corrupt
     try:

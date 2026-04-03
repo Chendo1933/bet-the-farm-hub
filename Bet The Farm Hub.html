@@ -866,6 +866,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <span id="perf-updated" style="font-size:10px;color:var(--muted)"></span>
     </div>
     <div id="perf-tiers" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+    <div id="perf-conf-bands"></div>
   </div>
   <!-- Parlay Builder -->
   <div class="hb-parlay-builder" id="hb-parlay-builder" style="display:none">
@@ -1295,6 +1296,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="ig t-single-field"><label>Odds</label><input type="number" id="t-odds" placeholder="-110"></div>
       <div class="ig"><label>Stake ($)</label><input type="number" id="t-stake" placeholder="50" step="5"></div>
       <div class="ig"><label>Result</label><select id="t-result"><option>Pending</option><option>Win</option><option>Loss</option><option>Push</option></select></div>
+      <div class="ig" title="Hub confidence score (1–99). Pre-filled when logging from a Hot Bets pick. Used for Brier Score forecast accuracy tracking."><label>Model % <span style="font-weight:400;color:var(--muted)">(optional)</span></label><input type="number" id="t-conf" placeholder="e.g. 82" min="1" max="99" step="1"></div>
     </div>
     <!-- Parlay legs — shown only when Bet Type = Parlay -->
     <div id="parlay-legs-wrap" style="display:none;margin:10px 0 6px">
@@ -1321,7 +1323,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   </div>
   <div class="section-hdr" style="margin-top:18px"><h2>Bet History</h2><div class="badge" id="bet-ct">0 bets</div></div>
   <div class="tbl-wrap"><table>
-    <thead><tr><th>Date</th><th>Sport</th><th>Matchup</th><th>Type</th><th>Pick</th><th>Odds</th><th>Stake</th><th>Result</th><th>P&L</th><th>Del</th></tr></thead>
+    <thead><tr><th>Date</th><th>Sport</th><th>Matchup</th><th>Type</th><th>Pick</th><th>Odds</th><th>Stake</th><th>Result</th><th>P&L</th><th title="Hub model confidence % — used for Brier Score forecast accuracy tracking">Model %</th><th>Del</th></tr></thead>
     <tbody id="bet-tb"></tbody>
   </table></div>
 </div>
@@ -4203,6 +4205,9 @@ function hbLogBet(home,away,sport,pick,odds,estProb,game){
   const tp=document.getElementById('t-type'); if(tp)tp.value='Spread';
   const pk=document.getElementById('t-pick'); if(pk)pk.value=pick;
   const od=document.getElementById('t-odds'); if(od)od.value=odds;
+  // Pre-fill confidence % from the model score so Brier tracking captures it automatically
+  const cfEl=document.getElementById('t-conf');
+  if(cfEl)cfEl.value=(estProb!=null)?Math.round(estProb*100):'';
   document.getElementById('t-matchup')?.scrollIntoView({behavior:'smooth',block:'center'});
   document.getElementById('t-stake')?.focus();
 }
@@ -4317,7 +4322,13 @@ function addBet(){
     od=parseFloat(od);
   }
   const newBet={id:Date.now(),date:d,sport:sp,matchup:mu,type:tp,pick:pk,odds:od,stake:st,result:rs,flags:_pendingBetFlags||[]};
-  if(_pendingBetEstProb!=null)newBet.estProb=_pendingBetEstProb; // model's win probability estimate (for Brier score)
+  // Resolve estProb: manual t-conf field takes precedence, then _pendingBetEstProb from Hot Bets Log button
+  const confRaw=parseFloat(document.getElementById('t-conf')?.value);
+  if(!isNaN(confRaw)&&confRaw>=1&&confRaw<=99){
+    newBet.estProb=confRaw/100; // convert 82 → 0.82
+  } else if(_pendingBetEstProb!=null){
+    newBet.estProb=_pendingBetEstProb;
+  }
   bets.push(newBet);
   _pendingBetFlags=[];
   _pendingBetEstProb=null;
@@ -4328,6 +4339,7 @@ function addBet(){
   document.getElementById('t-odds').value='';
   document.getElementById('t-stake').value='';
   document.getElementById('t-result').value='Pending';
+  const cfClr=document.getElementById('t-conf'); if(cfClr)cfClr.value='';
   // Reset parlay legs
   const legsList=document.getElementById('parlay-legs-list');
   if(legsList)legsList.innerHTML='';
@@ -4336,6 +4348,16 @@ function addBet(){
 }
 function deleteBet(id){
   bets=bets.filter(b=>b.id!==id);saveBets();renderTracker();
+}
+function setEstProb(id){
+  // Lets the user retroactively attach a hub model confidence % to any bet,
+  // so it can be included in the Brier Score forecast accuracy calculation.
+  const val=prompt('Enter the hub model confidence % for this bet (1–99).\n\nThis is the score100 value from the pick card when you placed the bet.');
+  if(val===null)return;
+  const n=parseFloat(val);
+  if(isNaN(n)||n<1||n>99){alert('Please enter a whole number between 1 and 99.');return;}
+  const b=bets.find(x=>x.id===id);
+  if(b){b.estProb=n/100;saveBets();renderTracker();}
 }
 function updateBetResult(id,result){
   const b=bets.find(x=>x.id===id);
@@ -4478,20 +4500,30 @@ function renderTracker(){
   const netPL=settled.reduce((a,b)=>a+calcPL(b.odds,b.stake,b.result),0);
   const roi=totalStake>0?netPL/totalStake*100:0;
   const wr=settled.length>0?wins/settled.length*100:0;
-  // Brier score: measures forecast accuracy on bets logged from Hot Bets (have estProb)
-  // Formula: (1/N)·Σ(estProb − outcome)²  |  0.00=perfect · 0.25=coin flip
-  const brierBets=settled.filter(b=>b.estProb!=null&&b.result!=='Push');
+  // Brier score: measures forecast accuracy on all settled non-push bets.
+  // Uses estProb (hub model %) when set, otherwise falls back to the market's
+  // implied win probability from the bet's own odds — so every bet counts.
+  // Implied prob: negative odds → |o|/(|o|+100), positive → 100/(o+100)
+  // Formula: (1/N)·Σ(prob − outcome)²  |  0.00=perfect · 0.25=coin flip
+  function impliedProb(odds){
+    const o=parseFloat(odds);
+    if(isNaN(o)||o===0)return null;
+    return o<0?Math.abs(o)/(Math.abs(o)+100):100/(o+100);
+  }
+  const brierBets=settled.filter(b=>b.result!=='Push'&&(b.estProb!=null||impliedProb(b.odds)!=null));
+  const modelCount=brierBets.filter(b=>b.estProb!=null).length;
   let brierKpi='';
   if(brierBets.length>=3){
     const brierScore=brierBets.reduce((s,b)=>{
-      const f=b.estProb;
+      const f=b.estProb!=null?b.estProb:impliedProb(b.odds);
       const o=b.result==='Win'?1:0;
       return s+(f-o)*(f-o);
     },0)/brierBets.length;
     const bsClass=brierScore<=0.15?'green':brierScore>=0.25?'red':'';
-    brierKpi=`<div class="kpi" title="Brier Score measures forecast accuracy. Lower is better. 0.00 = perfect · 0.25 = coin flip. Computed on ${brierBets.length} Hot Bets–logged wagers."><div class="kpi-label">🎯 Brier Score</div><div class="kpi-val ${bsClass}">${brierScore.toFixed(3)}</div><div class="kpi-sub">${brierBets.length} tracked · 0.25=no skill</div></div>`;
+    const src=modelCount===brierBets.length?'model scores':modelCount>0?`${modelCount} model · ${brierBets.length-modelCount} implied`:'market implied odds';
+    brierKpi=`<div class="kpi" title="Brier Score measures forecast accuracy. Lower is better. 0.00 = perfect · 0.25 = coin flip. Uses hub model % when set, otherwise market implied odds from your bet."><div class="kpi-label">🎯 Brier Score</div><div class="kpi-val ${bsClass}">${brierScore.toFixed(3)}</div><div class="kpi-sub">${brierBets.length} tracked · ${src}</div></div>`;
   } else if(brierBets.length>0){
-    brierKpi=`<div class="kpi" title="Log bets via Hot Bets '📓 Log' button to track forecast accuracy."><div class="kpi-label">🎯 Brier Score</div><div class="kpi-val" style="font-size:14px;color:var(--muted)">Need ${3-brierBets.length} more</div><div class="kpi-sub">Log via Hot Bets</div></div>`;
+    brierKpi=`<div class="kpi"><div class="kpi-label">🎯 Brier Score</div><div class="kpi-val" style="font-size:14px;color:var(--muted)">Need ${3-brierBets.length} more</div><div class="kpi-sub">Settle ${3-brierBets.length} more bet${3-brierBets.length>1?'s':''}</div></div>`;
   }
   document.getElementById('tr-kpis').innerHTML=`
     <div class="kpi"><div class="kpi-label">Total Bets</div><div class="kpi-val">${bets.length}</div><div class="kpi-sub">${settled.length} settled · ${bets.length-settled.length} pending</div></div>
@@ -4505,7 +4537,7 @@ function renderTracker(){
   document.getElementById('bet-ct').textContent=bets.length+' bet'+(bets.length!==1?'s':'')+(parlayCount?` · ${parlayCount} parlay${parlayCount>1?'s':''}` :'');
   const delBtn=`style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:5px;padding:3px 9px;cursor:pointer;font-size:11px"`;
   tb.innerHTML=bets.length===0
-    ? `<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:22px">No bets logged yet — add your first bet above!</td></tr>`
+    ? `<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:22px">No bets logged yet — add your first bet above!</td></tr>`
     : [...bets].reverse().flatMap(b=>{
         const pl=calcPL(b.odds,b.stake,b.result);
         const rc=b.result==='Win'?'g':b.result==='Loss'?'r':'';
@@ -4540,13 +4572,17 @@ function renderTracker(){
                 ${['Pending','Win','Loss','Push'].map(r=>`<option value="${r}"${b.result===r?' selected':''}>${r}</option>`).join('')}
               </select></td>
               ${plCell}
+              <td class="c">—</td>
               <td class="c"><button onclick="deleteBet(${b.id})" ${delBtn}>✕</button></td>
             </tr>`,
             `<tr class="parlay-legs-row hide" id="pleg-row-${b.id}">
-              <td colspan="10"><div class="parlay-legs-list">${legHtml}</div></td>
+              <td colspan="11"><div class="parlay-legs-list">${legHtml}</div></td>
             </tr>`
           ];
         }
+        const confCell=b.estProb!=null
+          ?`<td class="c" style="font-size:11px;color:var(--muted)">${Math.round(b.estProb*100)}%</td>`
+          :`<td class="c"><button onclick="setEstProb(${b.id})" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);border-radius:5px;padding:2px 7px;cursor:pointer;font-size:10px" title="Set hub model confidence % for Brier Score tracking">Set %</button></td>`;
         return [`<tr>
           <td>${b.date||'—'}</td>
           <td class="c"><span class="badge" style="background:var(--navy);color:var(--muted)">${b.sport}</span></td>
@@ -4559,6 +4595,7 @@ function renderTracker(){
             ${['Pending','Win','Loss','Push'].map(r=>`<option value="${r}"${b.result===r?' selected':''}>${r}</option>`).join('')}
           </select></td>
           ${plCell}
+          ${confCell}
           <td class="c"><button onclick="deleteBet(${b.id})" ${delBtn}>✕</button></td>
         </tr>`];
       }).join('');
@@ -8051,6 +8088,37 @@ window.addEventListener('btf-odds-refreshed',()=>{
     tiersEl.innerHTML=boxes;
     if(d.last_updated)updEl.textContent=`Updated ${d.last_updated}`;
     panel.style.display='block';
+
+    // ── Confidence band breakdown ──────────────────────────────────────
+    const BANDS=['95-99','90-94','85-89','80-84','75-79','70-74'];
+    const confEl=document.getElementById('perf-conf-bands');
+    if(confEl&&d.by_conf){
+      const bandRows=BANDS.map(band=>{
+        const rec=d.by_conf[band]||{w:0,l:0,p:0};
+        const total=(rec.w||0)+(rec.l||0);
+        if(total===0)return'';
+        const pct=Math.round((rec.w||0)/total*100);
+        const col=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+        const barW=Math.round(pct);
+        const pushStr=rec.p?` <span style="color:var(--muted)">(${rec.p}P)</span>`:'';
+        return`<tr>
+          <td style="padding:3px 8px 3px 0;font-size:11px;color:var(--muted);white-space:nowrap">${band}</td>
+          <td style="padding:3px 8px;font-size:11px;color:var(--text)">${rec.w||0}-${rec.l||0}${pushStr}</td>
+          <td style="padding:3px 8px;font-size:11px;font-weight:700;color:${col}">${pct}%</td>
+          <td style="padding:3px 0;min-width:60px">
+            <div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.08);overflow:hidden">
+              <div style="height:100%;width:${barW}%;background:${col};border-radius:3px;transition:width 0.4s"></div>
+            </div>
+          </td>
+        </tr>`;
+      }).filter(Boolean).join('');
+      if(bandRows){
+        confEl.innerHTML=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.08em;margin-bottom:6px;text-transform:uppercase">By Confidence Band</div>
+          <table style="border-collapse:collapse;width:100%"><tbody>${bandRows}</tbody></table>
+        </div>`;
+      }
+    }
   }catch(e){/* silently skip if offline or file missing */}
 })();
 
