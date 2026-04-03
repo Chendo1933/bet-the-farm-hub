@@ -1801,38 +1801,40 @@ const NHL=[
 ];
 // MLB: name,lg,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,rs,ra,era,avg
 const MLB=[
-// 2026 season — W/L/ATS/O-U reset to 0; RS/RA/ERA/AVG retained from 2025 as pre-season baselines
+// W/L/RS/RA updated 2026-04-02 (week 1). ATS/O-U pending — awaiting data source access.
 // schema: name,lg,div, W,L, atsW,atsL,atsP, hAtsW,hAtsL, aAtsW,aAtsL, over,under,ouP, rs,ra, era,avg
-["Los Angeles Dodgers","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,874,648,3.42,0.256],
-["Atlanta Braves","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,826,682,3.68,0.262],
-["New York Yankees","AL","East",0,0,0,0,0,0,0,0,0,0,0,0,832,694,3.72,0.248],
-["Philadelphia Phillies","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,812,698,3.78,0.254],
-["Milwaukee Brewers","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,762,706,3.82,0.244],
-["Houston Astros","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,778,716,3.86,0.252],
-["Baltimore Orioles","AL","East",0,0,0,0,0,0,0,0,0,0,0,0,792,728,3.94,0.258],
-["Texas Rangers","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,764,726,4.02,0.252],
-["Cleveland Guardians","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,742,714,3.88,0.246],
-["Arizona Diamondbacks","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,778,732,4.08,0.258],
-["San Diego Padres","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,762,728,3.96,0.252],
-["Seattle Mariners","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,718,704,3.76,0.234],
-["New York Mets","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,778,742,4.12,0.256],
-["Minnesota Twins","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,734,718,4.04,0.248],
-["Toronto Blue Jays","AL","East",0,0,0,0,0,0,0,0,0,0,0,0,746,732,4.14,0.252],
-["Boston Red Sox","AL","East",0,0,0,0,0,0,0,0,0,0,0,0,762,748,4.22,0.258],
-["San Francisco Giants","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,718,734,4.18,0.244],
-["Chicago Cubs","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,714,738,4.24,0.248],
-["Detroit Tigers","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,692,742,4.32,0.242],
-["Tampa Bay Rays","AL","East",0,0,0,0,0,0,0,0,0,0,0,0,698,748,4.28,0.238],
-["Pittsburgh Pirates","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,686,758,4.44,0.242],
-["Miami Marlins","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,678,764,4.48,0.238],
-["Los Angeles Angels","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,682,768,4.52,0.240],
-["Washington Nationals","NL","East",0,0,0,0,0,0,0,0,0,0,0,0,672,774,4.56,0.236],
-["Cincinnati Reds","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,686,782,4.62,0.244],
-["Kansas City Royals","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,674,784,4.66,0.240],
-["Athletics","AL","West",0,0,0,0,0,0,0,0,0,0,0,0,648,798,4.78,0.232],
-["Colorado Rockies","NL","West",0,0,0,0,0,0,0,0,0,0,0,0,682,842,5.24,0.252],
-["Chicago White Sox","AL","Central",0,0,0,0,0,0,0,0,0,0,0,0,618,852,5.38,0.228],
-["St. Louis Cardinals","NL","Central",0,0,0,0,0,0,0,0,0,0,0,0,712,734,4.26,0.246],
+// W/L updated 2026-04-02 (week 1). ATS/O-U pending — awaiting data source access.
+// RS/RA/ERA/AVG updated to 2026 running totals. getScorePerGame detects and handles correctly.
+["Los Angeles Dodgers","NL","West",4,2,0,0,0,0,0,0,0,0,0,0,23,17,3.42,0.256],
+["Atlanta Braves","NL","East",4,2,0,0,0,0,0,0,0,0,0,0,24,12,3.68,0.262],
+["New York Yankees","AL","East",5,1,0,0,0,0,0,0,0,0,0,0,24,6,3.72,0.248],
+["Philadelphia Phillies","NL","East",3,3,0,0,0,0,0,0,0,0,0,0,23,36,3.78,0.254],
+["Milwaukee Brewers","NL","Central",5,1,0,0,0,0,0,0,0,0,0,0,45,17,3.82,0.244],
+["Houston Astros","AL","West",5,2,0,0,0,0,0,0,0,0,0,0,45,32,3.86,0.252],
+["Baltimore Orioles","AL","East",3,3,0,0,0,0,0,0,0,0,0,0,26,27,3.94,0.258],
+["Texas Rangers","AL","West",4,2,0,0,0,0,0,0,0,0,0,0,32,27,4.02,0.252],
+["Cleveland Guardians","AL","Central",4,3,0,0,0,0,0,0,0,0,0,0,22,29,3.88,0.246],
+["Arizona Diamondbacks","NL","West",3,3,0,0,0,0,0,0,0,0,0,0,25,27,4.08,0.258],
+["San Diego Padres","NL","West",2,4,0,0,0,0,0,0,0,0,0,0,19,26,3.96,0.252],
+["Seattle Mariners","AL","West",3,4,0,0,0,0,0,0,0,0,0,0,27,24,3.76,0.234],
+["New York Mets","NL","East",3,3,0,0,0,0,0,0,0,0,0,0,23,20,4.12,0.256],
+["Minnesota Twins","AL","Central",1,4,0,0,0,0,0,0,0,0,0,0,21,27,4.04,0.248],
+["Toronto Blue Jays","AL","East",4,2,0,0,0,0,0,0,0,0,0,0,27,28,4.14,0.252],
+["Boston Red Sox","AL","East",1,5,0,0,0,0,0,0,0,0,0,0,17,32,4.22,0.258],
+["San Francisco Giants","NL","West",2,4,0,0,0,0,0,0,0,0,0,0,14,25,4.18,0.244],
+["Chicago Cubs","NL","Central",3,3,0,0,0,0,0,0,0,0,0,0,30,24,4.24,0.248],
+["Detroit Tigers","AL","Central",2,4,0,0,0,0,0,0,0,0,0,0,24,24,4.32,0.242],
+["Tampa Bay Rays","AL","East",2,4,0,0,0,0,0,0,0,0,0,0,30,38,4.28,0.238],
+["Pittsburgh Pirates","NL","Central",3,3,0,0,0,0,0,0,0,0,0,0,29,26,4.44,0.242],
+["Miami Marlins","NL","East",5,1,0,0,0,0,0,0,0,0,0,0,33,18,4.48,0.238],
+["Los Angeles Angels","AL","West",3,4,0,0,0,0,0,0,0,0,0,0,31,35,4.52,0.240],
+["Washington Nationals","NL","East",3,3,0,0,0,0,0,0,0,0,0,0,38,28,4.56,0.236],
+["Cincinnati Reds","NL","Central",3,3,0,0,0,0,0,0,0,0,0,0,17,26,4.62,0.244],
+["Kansas City Royals","AL","Central",3,2,0,0,0,0,0,0,0,0,0,0,22,23,4.66,0.240],
+["Athletics","AL","West",1,5,0,0,0,0,0,0,0,0,0,0,17,27,4.78,0.232],
+["Colorado Rockies","NL","West",2,4,0,0,0,0,0,0,0,0,0,0,24,21,5.24,0.252],
+["Chicago White Sox","AL","Central",1,5,0,0,0,0,0,0,0,0,0,0,21,52,5.38,0.228],
+["St. Louis Cardinals","NL","Central",4,2,0,0,0,0,0,0,0,0,0,0,29,28,4.26,0.246],
 ];
 // ── UTILS ────────────────────────────────────────────────────────────────────
 const pct=(w,l)=>w+l===0?0:w/(w+l);
@@ -4787,10 +4789,15 @@ function getScorePerGame(t,ix,sport){
     return gp>0?{ppg:(t[ix.gf]||0)/gp,papg:(t[ix.ga]||0)/gp}:null;
   }
   if(sport==='mlb'){
-    const gp=((t[ix.w]||0)+(t[ix.l]||0))||162; // fallback to 162-game season when records not yet set
-    const rawPPG=(t[ix.rs]||0)/gp, rawPAPG=(t[ix.ra]||0)/gp;
+    const gpActual=(t[ix.w]||0)+(t[ix.l]||0);
+    const gp=gpActual||162; // fallback to 162-game season when records not yet set
+    const rs=t[ix.rs]||0, ra=t[ix.ra]||0;
+    // Prior-season detection: if RS > gpActual*20 it's a full-season total (no team scores 20+ RPG),
+    // so always divide by 162 to get the correct prior rate rather than the tiny current gp.
+    // Example: Dodgers W=3,L=0 → gpActual=3, RS=874 → 874÷3=291 (wrong) → use 874÷162=5.4 ✓
+    const priorGP=(gpActual>0&&rs>gpActual*20)?162:gp;
+    const rawPPG=rs/priorGP, rawPAPG=ra/priorGP;
     // Early-season smoothing: blend toward MLB league average (4.5 RPG) for small samples.
-    // Without this, a team that scored 2 runs in game 1 shows ppg=2 and skews projections badly.
     // At gp≥30 (or gp=162 pre-season fallback), use actual rates directly.
     if(gp>=30) return {ppg:rawPPG,papg:rawPAPG};
     const MLB_LG_AVG=4.5, conf=gp/30;
@@ -6320,7 +6327,10 @@ function hbSimulateGame(g, ht, at, ix){
       const norm={nfl:7,cfb:7,nba:10,cbb:10,nhl:1.0,mlb:1.5}[g.sport]||7;
       const gap=g.total-projTot;
       // MLB early-season: suppress projection bias (see hbScoreOU comment for details)
-      const mlbThin=g.sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<15||((at[ix.w]||0)+(at[ix.l]||0))<15);
+      // mlbThin guard: suppress O/U projection signal until 5+ games played.
+      // Threshold lowered from 15→5 now that getScorePerGame correctly detects prior-season
+      // RS/RA totals and uses 162 as denominator instead of tiny actual gp.
+      const mlbThin=g.sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<5||((at[ix.w]||0)+(at[ix.l]||0))<5);
       if(!mlbThin) projOver=0.5-Math.max(-0.35,Math.min(0.35,gap/(norm*2)));
     }
     // Blend: 55% history, 45% projection when both available; else whichever exists
@@ -6412,7 +6422,7 @@ function hbScoreOU(g, ht, at, ix){
       // MLB early-season guard: with <15 games, smoothing toward 4.5 RPG league avg
       // projects ~9.0 total, which structurally beats every book line (~7.5-8.5) and
       // generates a false "Over 99" on every game. Skip until real data takes over.
-      const mlbThinData=sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<15||((at[ix.w]||0)+(at[ix.l]||0))<15);
+      const mlbThinData=sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<5||((at[ix.w]||0)+(at[ix.l]||0))<5);
       if(!mlbThinData&&Math.abs(gap)>norm*0.80){
         projSignal=0.5-Math.max(-0.40,Math.min(0.40,gap/(norm*2)));
         if(gap<0)factors.push({t:'pos',l:`📈 Proj ${proj.toFixed(1)} > line ${g.total} (+${Math.abs(gap).toFixed(1)} Over edge)`});

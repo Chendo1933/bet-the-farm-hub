@@ -1797,7 +1797,7 @@ const NHL=[
 ];
 // MLB: name,lg,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,rs,ra,era,avg
 const MLB=[
-// 2026 season — W/L/ATS/O-U reset to 0; RS/RA/ERA/AVG retained from 2025 as pre-season baselines
+// W/L/RS/RA updated 2026-04-02 (week 1). ATS/O-U pending — awaiting data source access.
 // schema: name,lg,div, W,L, atsW,atsL,atsP, hAtsW,hAtsL, aAtsW,aAtsL, over,under,ouP, rs,ra, era,avg
 ["Los Angeles Dodgers","NL","West",4,2,0,0,0,0,0,0,0,0,0,0,23,17,3.42,0.256],
 ["Atlanta Braves","NL","East",4,2,0,0,0,0,0,0,0,0,0,0,24,12,3.68,0.262],
@@ -4768,10 +4768,15 @@ function getScorePerGame(t,ix,sport){
     return gp>0?{ppg:(t[ix.gf]||0)/gp,papg:(t[ix.ga]||0)/gp}:null;
   }
   if(sport==='mlb'){
-    const gp=((t[ix.w]||0)+(t[ix.l]||0))||162; // fallback to 162-game season when records not yet set
-    const rawPPG=(t[ix.rs]||0)/gp, rawPAPG=(t[ix.ra]||0)/gp;
+    const gpActual=(t[ix.w]||0)+(t[ix.l]||0);
+    const gp=gpActual||162; // fallback to 162-game season when records not yet set
+    const rs=t[ix.rs]||0, ra=t[ix.ra]||0;
+    // Prior-season detection: if RS > gpActual*20 it's a full-season total (no team scores 20+ RPG),
+    // so always divide by 162 to get the correct prior rate rather than the tiny current gp.
+    // Example: Dodgers W=3,L=0 → gpActual=3, RS=874 → 874÷3=291 (wrong) → use 874÷162=5.4 ✓
+    const priorGP=(gpActual>0&&rs>gpActual*20)?162:gp;
+    const rawPPG=rs/priorGP, rawPAPG=ra/priorGP;
     // Early-season smoothing: blend toward MLB league average (4.5 RPG) for small samples.
-    // Without this, a team that scored 2 runs in game 1 shows ppg=2 and skews projections badly.
     // At gp≥30 (or gp=162 pre-season fallback), use actual rates directly.
     if(gp>=30) return {ppg:rawPPG,papg:rawPAPG};
     const MLB_LG_AVG=4.5, conf=gp/30;
@@ -6381,7 +6386,7 @@ function hbScoreOU(g, ht, at, ix){
       // MLB early-season guard: with <15 games, smoothing toward 4.5 RPG league avg
       // projects ~9.0 total, which structurally beats every book line (~7.5-8.5) and
       // generates a false "Over 99" on every game. Skip until real data takes over.
-      const mlbThinData=sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<15||((at[ix.w]||0)+(at[ix.l]||0))<15);
+      const mlbThinData=sport==='mlb'&&(((ht[ix.w]||0)+(ht[ix.l]||0))<5||((at[ix.w]||0)+(at[ix.l]||0))<5);
       if(!mlbThinData&&Math.abs(gap)>norm*0.80){ // require a meaningful gap — below this it's book noise
         projSignal=0.5-Math.max(-0.40,Math.min(0.40,gap/(norm*2)));
         if(gap<0)factors.push({t:'pos',l:`📈 Proj ${proj.toFixed(1)} > line ${g.total} (+${Math.abs(gap).toFixed(1)} Over edge)`});
