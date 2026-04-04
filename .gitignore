@@ -13,3 +13,6 @@ skill-eval-review.html
 
 # Skills directory (install locally, don't need in repo)
 skills/
+
+# Claude Code worktrees (session-local, not repo content)
+.claude/worktrees/
