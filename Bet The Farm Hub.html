@@ -1436,7 +1436,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="gl-card"><div class="gl-term">F8b — Back-to-Back Road Fade (9%) <span class="gl-tag">Factor</span></div><div class="gl-def">NBA-only. Fires when a team is playing their second game in two nights on the road as a favorite. This is one of the most reliable fade spots in sports — B2B road favorites cover at only ~44%. When F8b fires, F3 (rest edge) is suppressed to avoid counting the same fatigue signal twice.</div><div class="gl-example">Example: Lakers played last night in Denver. Tonight they're in Portland as -4 favorites. F8b fires → strong lean to Portland.</div></div>
       <div class="gl-card"><div class="gl-term">F9 — ML Underdog Floor (12%) <span class="gl-tag">Factor</span></div><div class="gl-def">If the moneyline model rates the underdog with 60%+ confidence, and ATS records are close (within 7%), the spread pick is overridden to the ML side. Rationale: if an underdog wins outright, they always cover the spread. ML confidence acts as a floor for spread picks when the outright upset looks likely.</div><div class="gl-tip">💡 F9 only fires when the underdog is rated highly. It's a relatively rare override but prevents the model from picking a spread side while the ML model is screaming the other way.</div></div>
       <div class="gl-card"><div class="gl-term">Bayesian Shrinkage <span class="gl-tag">How It Works</span></div><div class="gl-def">A statistical technique applied to all ATS records before they enter the model. Small sample sizes are shrunk toward 50% (coin flip) because early-season records are unreliable. As the season progresses and sample sizes grow, the shrinkage fades. At 20+ games, the full ATS rate is used.</div><div class="gl-example">Example: 3-1 ATS (75%) in 4 games → shrunk to 56%. Same 75% after 25 games → trusted at ~73%. The model doesn't overreact to a hot start.</div></div>
-      <div class="gl-card"><div class="gl-term">Score Extremizer (1.6×) <span class="gl-tag">How It Works</span></div><div class="gl-def">After all factors are weighted and averaged, the raw score (typically 0.48–0.72) is pushed away from 50% by 1.6× before being converted to the 0–100 display scale. This is necessary because individual factors are capped below 1.0 — without the extremizer, strong picks would only score ~68 even when everything aligns. The 1.6× multiplier unlocks the full Elite tier range.</div><div class="gl-example">Example: Raw score 0.65 → extremized: 0.5 + (0.15 × 1.6) = 0.74 → displayed as 74 (Strong tier).</div></div>
+      <div class="gl-card"><div class="gl-term">Confidence Score = Cover Probability <span class="gl-tag">How It Works</span></div><div class="gl-def">The confidence ring (0–100) directly represents the model's estimated cover or win probability — no extremizer applied. A score of 63 means the model estimates a 63% chance of covering the spread. This makes calibration trackable: over time, picks rated 63 should win roughly 63% of the time. Tier boundaries: Elite ≥68%, Strong ≥62%, Good ≥57%, Lean &lt;57%.</div><div class="gl-example">Example: ATS history 69%, efficiency edge, rest advantage → weighted blend = 0.65 → displayed as 65 (Strong tier, 65% cover probability).</div></div>
     </div>
   </div>
 </div>
@@ -6485,13 +6485,13 @@ function hbScoreOU(g, ht, at, ix){
   const finalOverProb=overSum/wt;
   const finalPickOver=finalOverProb>=0.5;
   const finalConf=finalPickOver?finalOverProb:(1-finalOverProb);
-  const extremized=0.5+(finalConf-0.5)*1.6;
-  const finalScore=Math.max(0.01,Math.min(0.99,extremized));
+  // No extremizer — finalScore IS the probability (e.g. 0.62 = 62% Over probability).
+  // Consistent with spread scoring: the ring number = the model's actual probability estimate.
+  const finalScore=Math.max(0.01,Math.min(0.99,finalConf));
 
   // Raised bar — O/U picks need both direction clarity AND meaningful magnitude.
-  // The 0.57 threshold is higher than spreads (0.50) because season-avg stats
-  // have more noise relative to the dynamic lines books set for totals.
-  if(finalScore<0.57)return null;
+  // 0.55 = 55% probability threshold (slightly above breakeven noise for totals).
+  if(finalScore<0.55)return null;
 
   const finalOdds=finalPickOver?(g.overOdds??-110):(g.underOdds??-110);
   const finalImpl=impliedProb(finalOdds)??0.5238;
@@ -6557,9 +6557,9 @@ function hbScoreML(g, ht, at, ix){
     if(oddsEdge>=0.06){f.push({t:'pos',l:`💰 Good value at ${odds>0?'+'+odds:odds}`}); s+=0.68*0.15; w+=0.15;}
     else{s+=0.50*0.15; w+=0.15;}
     const rawScore=w>0?(s/w):0.5;
-    const extremized=0.5+(rawScore-0.5)*1.6;
-    const finalScore=Math.max(0.01,Math.min(0.99,extremized));
-    if(finalScore<0.52)return null;
+    // No extremizer — rawScore IS the probability (win rate vs implied probability).
+    const finalScore=Math.max(0.01,Math.min(0.99,rawScore));
+    if(finalScore<0.54)return null;
     const oddsDisp=odds>0?'+'+odds:''+odds;
     const rec=(side==='home')?`${hw}-${hl}`:`${aw}-${al}`;
     const why=`Win rate: ${(winPct*100).toFixed(0)}% (${rec}) vs implied ${(noVigImpl*100).toFixed(0)}% · Value edge: +${(winEdge*100).toFixed(1)}% · Odds: ${oddsDisp}`;
@@ -6912,28 +6912,19 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
 
   const rawScore=weight>0?(score/weight):0.5;
 
-  // ── Anchor to simulation cover probability ──────────────────────────────────
-  // Factor signals measure "how many things agree" but are disconnected from the
-  // actual historical cover rate. This creates the core contradiction: a high score
-  // (e.g. 88) alongside a low cover probability (e.g. 42%) displayed on the same card.
-  // Fix: blend rawScore (60%) with the simulation's Bayesian cover probability (40%)
-  // so the confidence score is always grounded in the actual historical cover rate.
-  // Result: hitting Elite (≥87) now requires BOTH strong signal agreement AND a
-  // meaningful cover edge in the ATS record — not just one or the other.
-  const pickedCoverProb = simHint
-    ? (atsPick==='home' ? (simHint.homeCoverProb ?? 0.5) : (simHint.awayCoverProb ?? 0.5))
-    : null;
-  const anchoredScore = pickedCoverProb != null
-    ? rawScore * 0.60 + pickedCoverProb * 0.40
-    : rawScore;
-
-  // Extremize: push confident signals further from 50% (1.6× stretch from center).
-  // Aggregated models are systematically over-cautious; 1.6× sharpens calibration
-  // and unlocks the full score range — previously everything topped out ~82 due to
-  // factor values being bounded at 0.72. Now strong picks can reach 88-92 only when
-  // the anchored score (factor signals + cover rate) both justify it.
-  const extremized=0.5+(anchoredScore-0.5)*1.6;
-  const finalScore=Math.max(0.01,Math.min(0.99,extremized));
+  // ── Unified probability output ──────────────────────────────────────────────
+  // The rawScore IS the cover probability — a direct weighted blend of all signals
+  // (ATS split, market implied, efficiency, rest, injury, pitcher, situational).
+  // No extremizer: 63 means 63% cover probability, not a compressed index.
+  // This keeps the confidence ring, the pick score, and the projected cover rate
+  // all telling the same story. Calibration tracking (Brier score) is meaningful
+  // only when the displayed number actually represents the model's probability estimate.
+  //
+  // simHint is no longer used for score anchoring — ATS data is already the primary
+  // input to rawScore via F1/F5, so blending with simHint.coverProb (also ATS-based)
+  // would double-weight historical ATS records. simHint is retained as a parameter
+  // for the sim card display (projected scores, O/U, win prob) — not for scoring.
+  const finalScore=Math.max(0.01,Math.min(0.99,rawScore));
 
   const slbl=SLBL[sport]||'Spread';
   const pickedTeam=(atsPick==='home')?g.home:g.away;
@@ -7006,13 +6997,13 @@ function hbGeneratePicks(){
     // hbScoreML is signal-based (win-rate edge, efficiency, odds value) and produces
     // a confidence score that may not match the actual win probability shown on the card.
     // Example: historical W% 50% vs market-implied 45% → ML fires "Strong" but sim shows
-    // "wins 48%" because sim blends historical + market. Apply the same 60/40 anchoring
-    // used for spread picks so ML confidence and win% always tell the same story.
+    // Blend ML factor score (60%) with market-implied win probability (40%) so the
+    // displayed ML confidence reflects both our model and the market's assessment.
+    // No extremizer — mlResult.score is already a raw probability from hbScoreML.
     if(mlResult&&sim){
       const mlWinProb=mlResult.atsPick==='home'?(sim.homeWinProb??0.5):(sim.awayWinProb??0.5);
-      const mlRawScore=0.5+(mlResult.score-0.5)/1.6; // de-extremize to get pre-extremizer prob
-      const mlAnchored=mlRawScore*0.60+mlWinProb*0.40;
-      mlResult.score=Math.max(0.01,Math.min(0.99,0.5+(mlAnchored-0.5)*1.6));
+      const mlAnchored=mlResult.score*0.60+mlWinProb*0.40;
+      mlResult.score=Math.max(0.01,Math.min(0.99,mlAnchored));
       mlResult.score100=Math.round(mlResult.score*100);
     }
     if(mlResult)picks.push({...mlResult,...base,betType:'ml',sim});
@@ -7021,7 +7012,7 @@ function hbGeneratePicks(){
     let spreadPickSide=null; // track which side got the spread pick for this game
     if(g.spread!=null){
       const r=hbScoreMatchup(g,ht,at,ix,mlResult,sim);
-      if(r.score>=0.50){
+      if(r.score>=0.54){
         spreadPickSide=r.atsPick;
         picks.push({...r,...base,betType:'spread',spread:g.spread,
           spreadHomeOdds:g.spreadHomeOdds,spreadAwayOdds:g.spreadAwayOdds,sim});
@@ -7108,9 +7099,15 @@ function hbGeneratePicks(){
 }
 
 function hbGetTier(score100){
-  if(score100>=87)return 'elite';
-  if(score100>=72)return 'strong';
-  if(score100>=60)return 'good';
+  // Calibrated to real cover/win probabilities — score100 IS the probability %.
+  // 52.4% = breakeven for -110 juice. Bands:
+  //   elite  ≥68%: exceptional conviction, multiple strong signals aligned
+  //   strong ≥62%: clear model edge
+  //   good   ≥57%: meaningful edge, worth logging
+  //   lean    <57%: below threshold, context only
+  if(score100>=68)return 'elite';
+  if(score100>=62)return 'strong';
+  if(score100>=57)return 'good';
   return 'lean';
 }
 
@@ -7369,16 +7366,12 @@ function hbRender(){
               ?(edgePct>=1?` <span style="color:#4ade80;font-size:9px">(+${edgePct}% vs mkt)</span>`
                :edgePct<=-1?` <span style="color:#f87171;font-size:9px">(${edgePct}% vs mkt)</span>`:'')
               :'';
-            parts.push(`<span class="hb-sim-item sim-win">🏆 ${shortName} wins ${(pickedWinProb*100).toFixed(0)}%${edgeTxt}</span>`);
+            parts.push(`<span class="hb-sim-item sim-win">🏆 ${shortName} wins ${(pickedWinProb*100).toFixed(0)}% <span style="color:var(--muted);font-size:9px">(mkt-implied)</span>${edgeTxt}</span>`);
           }
 
-          // Cover probability — only for spread bets, shown for the picked side
-          if(p.betType==='spread'&&side!=null){
-            const pickedCoverProb=side==='home'?s.homeCoverProb:s.awayCoverProb;
-            const pickedCoverSpread=side==='home'?s.homeCoverSpread:s.awayCoverSpread;
-            if(pickedCoverProb!=null)
-              parts.push(`<span class="hb-sim-item sim-cover">📏 ${shortName} ${pickedCoverSpread||''} covers ${(pickedCoverProb*100).toFixed(0)}%</span>`);
-          }
+          // Cover probability line removed — the confidence ring now directly shows
+          // the unified cover probability, so displaying it again here would duplicate
+          // the same number and create apparent contradictions when signals differed.
 
           // Model conflict warning: flag when projection and sim disagree strongly.
           // e.g. projection says team covers but win% < 50% — two models pulling opposite ways.
@@ -7437,7 +7430,7 @@ function hbRender(){
             parts.push(`<span class="hb-sim-item sim-ou">${isOver?'📈 Over':'📉 Under'} ${s.totalLine}${projPart} (${pct}%)</span>`);
           }
           if(!parts.length)return '';
-          return `<div class="hb-sim"><span class="hb-sim-label">📊 Game Simulation</span>${parts.join('')}</div>`;
+          return `<div class="hb-sim"><span class="hb-sim-label">📊 Score Model</span>${parts.join('')}</div>`;
         })()}
         <div class="hb-factors">${factorBadges}</div>
         <div class="hb-why">${p.why}</div>
