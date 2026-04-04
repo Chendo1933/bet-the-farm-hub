@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Bets — Change Preview</title>
+<style>
+:root{--bg:#0b1622;--card:#112240;--card2:#172d4d;--navy:#1a3a5c;--navy2:#2c5282;--gold:#c9a84c;--gold2:#f0c96a;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;--text:#e2e8f0;--muted:#7a95b4;--border:#1e3a5c;--alt:#0f1e30;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-serif;font-size:14px;padding:24px;}
+
+h1{color:var(--gold);font-size:20px;font-weight:800;margin-bottom:4px;}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:32px;}
+
+h2{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.section{margin-bottom:40px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.compare-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding:4px 10px;border-radius:4px;display:inline-block;}
+.label-before{background:rgba(239,68,68,.12);color:#f87171;}
+.label-after{background:rgba(34,197,94,.12);color:#4ade80;}
+.note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:6px;}
+
+/* ── Card styles (exact copy from hub) ── */
+.hb-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;width:320px;}
+.hb-card-elite{border-color:rgba(239,68,68,.5);box-shadow:0 0 0 1px rgba(239,68,68,.15);}
+.hb-card-strong{border-color:rgba(201,168,76,.45);}
+.hb-card-good{border-color:rgba(34,197,94,.3);}
+.hb-card-lean{border-color:var(--border);}
+.hb-card-top{height:4px;width:100%;}
+.hb-top-elite{background:linear-gradient(90deg,#ef4444,#f97316);}
+.hb-top-strong{background:linear-gradient(90deg,#c9a84c,#f0c96a);}
+.hb-top-good{background:linear-gradient(90deg,#22c55e,#4ade80);}
+.hb-top-lean{background:var(--border);}
+.hb-card-body{padding:14px 16px 16px;}
+.hb-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.hb-sport-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;letter-spacing:.5px;text-transform:uppercase;}
+.hb-sport-nba{background:rgba(249,115,22,.2);color:#fdba74;}
+.hb-sport-mlb{background:rgba(34,197,94,.2);color:#86efac;}
+.hb-conf-badge{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;}
+/* BEFORE: Good badge uses bright #4ade80 */
+.hb-conf-good-before{color:#4ade80;}
+/* AFTER: Good badge unified to match ring #22c55e */
+.hb-conf-good-after{color:#22c55e;}
+.hb-conf-elite{color:#ef4444;}
+.hb-conf-strong{color:var(--gold);}
+.hb-conf-lean{color:var(--muted);}
+.hb-score-ring{position:relative;width:44px;height:44px;flex-shrink:0;}
+.hb-score-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.hb-score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:900;color:var(--text);line-height:1;}
+.hb-pick{font-size:18px;font-weight:900;color:var(--text);margin-bottom:4px;line-height:1.2;}
+.hb-game{font-size:12px;color:var(--muted);margin-bottom:2px;}
+.hb-time{font-size:11px;color:var(--muted);opacity:.7;margin-bottom:10px;}
+/* Score model box */
+.hb-sim{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;padding:8px 10px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:8px;}
+.hb-sim-label{font-size:9px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;width:100%;margin-bottom:2px;}
+.hb-sim-item{font-size:11px;font-weight:600;color:var(--text);padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.04);}
+.hb-sim-item.sim-win{color:#60a5fa;}
+.hb-sim-item.sim-ou{color:#c084fc;}
+.hb-why{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:8px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:7px;border-left:2px solid var(--border);}
+</style>
+</head>
+<body>
+
+<h1>Hot Bets — Change Preview</h1>
+<p class="subtitle">Showing 3 proposed changes side-by-side before applying to the hub</p>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CHANGE 1: Score Model — remove clutter, keep one projection
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Change 1 — Simplify Score Model (keep win% for spread picks, remove conflict warning + O/U %)</h2>
+  <div class="compare">
+    <div>
+      <span class="compare-label label-before">Before — 4 lines, conflicting numbers</span>
+
+      <div class="hb-card hb-card-strong">
+        <div class="hb-card-top hb-top-strong"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-nba">NBA</span>
+              <span class="hb-conf-badge hb-conf-strong">⚡ Strong</span>
+            </div>
+            <!-- Score ring: Good tier, #22c55e -->
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#c9a84c" stroke-width="3.5"
+                  stroke-dasharray="80.5 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">76</div>
+            </div>
+          </div>
+          <div class="hb-pick">Lakers -4.5</div>
+          <div class="hb-game">Lakers vs Celtics</div>
+          <div class="hb-time">Tonight · 7:30 PM · Spread</div>
+          <!-- BEFORE: 4 items in score model box -->
+          <div class="hb-sim">
+            <span class="hb-sim-label">📊 Score Model</span>
+            <span class="hb-sim-item sim-win">🏆 Lakers wins 58% <span style="color:var(--muted);font-size:9px">(mkt-implied)</span> <span style="color:#4ade80;font-size:9px">(+4% vs mkt)</span></span>
+            <span class="hb-sim-item" style="color:#fbbf24;font-size:10px">⚠️ Models split: stats proj covers, market/history says underdog</span>
+            <span class="hb-sim-item sim-proj">🎯 Proj: Lakers 114 – Celtics 109 <span style="color:#fbbf24;font-size:9px">(covers by 0.5 — thin)</span></span>
+            <span class="hb-sim-item sim-ou">📈 Over 223.5 · proj 223 (51%)</span>
+          </div>
+          <div class="hb-why">Strong ATS home record (18-9) + rest edge after 2-day break.</div>
+        </div>
+      </div>
+      <p class="note">Problem: 58% win, ⚠️ conflict warning, 0.5 cushion, and 51% O/U all say different things. Which one do you follow?</p>
+    </div>
+
+    <div>
+      <span class="compare-label label-after">After — win% kept, clutter removed</span>
+      <div class="hb-card hb-card-strong">
+        <div class="hb-card-top hb-top-strong"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-nba">NBA</span>
+              <span class="hb-conf-badge hb-conf-strong">⚡ Strong</span>
+            </div>
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#c9a84c" stroke-width="3.5"
+                  stroke-dasharray="80.5 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">76</div>
+            </div>
+          </div>
+          <div class="hb-pick">Lakers -4.5</div>
+          <div class="hb-game">Lakers vs Celtics</div>
+          <div class="hb-time">Tonight · 7:30 PM · Spread</div>
+          <!-- AFTER: win% kept for ML reference, conflict warning + O/U % removed -->
+          <div class="hb-sim">
+            <span class="hb-sim-label">📊 Score Model</span>
+            <span class="hb-sim-item sim-win">🏆 Lakers wins 58% <span style="color:var(--muted);font-size:9px">(mkt-implied)</span> <span style="color:#4ade80;font-size:9px">(+4% vs mkt)</span></span>
+            <span class="hb-sim-item sim-proj">🎯 Proj: Lakers 114 – Celtics 109 <span style="color:#fbbf24;font-size:9px">(covers by 0.5 — thin)</span></span>
+          </div>
+          <div class="hb-why">Strong ATS home record (18-9) + rest edge after 2-day break.</div>
+        </div>
+      </div>
+      <p class="note">Win% stays so you can cross-reference ML underdog value. Conflict warning + O/U % removed — ring score is the confidence number.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CHANGE 2: Tier threshold — fix score 57-59 getting wrong color
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Change 2 — Tier threshold: score 57–59 was "Good" (green), should be "Lean" (gray)</h2>
+  <div class="compare">
+    <div>
+      <span class="compare-label label-before">Before — score 58 shows as Good (green)</span>
+      <div class="hb-card hb-card-good">
+        <div class="hb-card-top hb-top-good"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-mlb">MLB</span>
+              <span class="hb-conf-badge hb-conf-good-before">✅ Good</span>
+            </div>
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#22c55e" stroke-width="3.5"
+                  stroke-dasharray="65.6 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">58</div>
+            </div>
+          </div>
+          <div class="hb-pick">Yankees -1.5</div>
+          <div class="hb-game">Yankees vs Red Sox</div>
+          <div class="hb-time">Tonight · 6:05 PM · Spread</div>
+          <div class="hb-sim">
+            <span class="hb-sim-label">📊 Score Model</span>
+            <span class="hb-sim-item sim-proj">🎯 Proj: Yankees 4 – Red Sox 3 <span style="color:#fbbf24;font-size:9px">(covers by 0.2 — thin)</span></span>
+          </div>
+          <div class="hb-why">Slight edge based on home ATS record.</div>
+        </div>
+      </div>
+      <p class="note">Bug: score 58 is below the 60 threshold shown in the legend, but it shows as green "Good" because hbGetTier fired at ≥57.</p>
+    </div>
+
+    <div>
+      <span class="compare-label label-after">After — score 58 correctly shows as Lean (gray)</span>
+      <div class="hb-card hb-card-lean">
+        <div class="hb-card-top hb-top-lean"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-mlb">MLB</span>
+              <span class="hb-conf-badge hb-conf-lean">📊 Lean</span>
+            </div>
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#64748b" stroke-width="3.5"
+                  stroke-dasharray="65.6 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">58</div>
+            </div>
+          </div>
+          <div class="hb-pick">Yankees -1.5</div>
+          <div class="hb-game">Yankees vs Red Sox</div>
+          <div class="hb-time">Tonight · 6:05 PM · Spread</div>
+          <div class="hb-sim">
+            <span class="hb-sim-label">📊 Score Model</span>
+            <span class="hb-sim-item sim-proj">🎯 Proj: Yankees 4 – Red Sox 3 <span style="color:#fbbf24;font-size:9px">(covers by 0.2 — thin)</span></span>
+          </div>
+          <div class="hb-why">Slight edge based on home ATS record.</div>
+        </div>
+      </div>
+      <p class="note">Fix: hbGetTier threshold changed 57→60. Score 58 now correctly shows as gray "Lean" — no false confidence signal.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CHANGE 3: Green color unification
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <h2>Change 3 — Good tier color: unify badge + ring to same green</h2>
+  <div class="compare">
+    <div>
+      <span class="compare-label label-before">Before — badge #4ade80 (bright), ring #22c55e (darker)</span>
+      <div class="hb-card hb-card-good">
+        <div class="hb-card-top hb-top-good"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-nba">NBA</span>
+              <!-- Old: #4ade80 badge -->
+              <span class="hb-conf-badge" style="color:#4ade80">✅ Good</span>
+            </div>
+            <!-- Ring uses #22c55e — different shade -->
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#22c55e" stroke-width="3.5"
+                  stroke-dasharray="73.4 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">65</div>
+            </div>
+          </div>
+          <div class="hb-pick">Nuggets +3</div>
+          <div class="hb-game">Nuggets @ Clippers</div>
+          <div class="hb-time">Tonight · 10:00 PM · Spread</div>
+          <div class="hb-why">Solid road ATS record, Jokic rest advantage.</div>
+        </div>
+      </div>
+      <p class="note">Badge is #4ade80 (lime-ish bright), ring is #22c55e (darker green) — visually mismatched on same card.</p>
+    </div>
+
+    <div>
+      <span class="compare-label label-after">After — both use #22c55e (consistent)</span>
+      <div class="hb-card hb-card-good">
+        <div class="hb-card-top hb-top-good"></div>
+        <div class="hb-card-body">
+          <div class="hb-card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="hb-sport-tag hb-sport-nba">NBA</span>
+              <!-- Fixed: #22c55e badge matches ring -->
+              <span class="hb-conf-badge" style="color:#22c55e">✅ Good</span>
+            </div>
+            <div class="hb-score-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+                <circle cx="22" cy="22" r="18" fill="none" stroke="#22c55e" stroke-width="3.5"
+                  stroke-dasharray="73.4 113.1" stroke-linecap="round"/>
+              </svg>
+              <div class="hb-score-num">65</div>
+            </div>
+          </div>
+          <div class="hb-pick">Nuggets +3</div>
+          <div class="hb-game">Nuggets @ Clippers</div>
+          <div class="hb-time">Tonight · 10:00 PM · Spread</div>
+          <div class="hb-why">Solid road ATS record, Jokic rest advantage.</div>
+        </div>
+      </div>
+      <p class="note">Badge and ring now both use #22c55e. Consistent green across the whole card.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
