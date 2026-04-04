@@ -497,7 +497,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-conf-badge{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;}
 .hb-conf-elite{color:#ef4444;}
 .hb-conf-strong{color:var(--gold);}
-.hb-conf-good{color:#4ade80;}
+.hb-conf-good{color:#22c55e;}
 .hb-conf-lean{color:var(--muted);}
 .hb-score-ring{position:relative;width:44px;height:44px;flex-shrink:0;}
 .hb-score-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
@@ -7307,7 +7307,7 @@ function hbRender(){
   const counts={elite:0,strong:0,good:0,lean:0};
   picks.forEach(p=>counts[hbGetTier(p.score100)]++);
   const tierSummary=Object.entries(counts).filter(([,v])=>v>0)
-    .map(([k,v])=>`<span style="color:${k==='elite'?'#ef4444':k==='strong'?'#c9a84c':k==='good'?'#4ade80':'var(--muted)'}">${v} ${k}</span>`).join(' · ');
+    .map(([k,v])=>`<span style="color:${k==='elite'?'#ef4444':k==='strong'?'#c9a84c':k==='good'?'#22c55e':'var(--muted)'}">${v} ${k}</span>`).join(' · ');
 
   let html=picks.length?`<div style="font-size:12px;color:var(--muted);margin-bottom:12px">${picks.length} pick${picks.length!==1?'s':''} · ${tierSummary}${!hasOdds?' · <span style="color:var(--gold)">Season trends only — load live odds for tonight</span>':''}</div>`:'';
   html+='<div class="hb-grid">';
@@ -7373,16 +7373,9 @@ function hbRender(){
           // the unified cover probability, so displaying it again here would duplicate
           // the same number and create apparent contradictions when signals differed.
 
-          // Model conflict warning: flag when projection and sim disagree strongly.
-          // e.g. projection says team covers but win% < 50% — two models pulling opposite ways.
-          if(side!=null&&s.projMargin!=null&&pickedWinProb!=null){
-            const projFavorsPick=side==='home'?(s.projMargin>0):(s.projMargin<0);
-            const simFavorsOpp=pickedWinProb<0.46;
-            if(projFavorsPick && simFavorsOpp){
-              // Projection says covers but win% < 46% — clear conflict
-              parts.push(`<span class="hb-sim-item" style="color:#fbbf24;font-size:10px">⚠️ Models split: stats proj covers, market/history says underdog</span>`);
-            }
-          }
+          // Conflict warning removed — the ring score is now the single authoritative signal.
+          // When the model has low conviction it shows as a lower score/tier, which is clearer
+          // than a yellow warning that requires interpretation alongside other numbers.
 
           // Projected scoreline + cushion vs spread
           // Shows the model's projected final score and how much margin vs the spread line.
@@ -7422,8 +7415,10 @@ function hbRender(){
             parts.push(`<span class="hb-sim-item sim-proj">🎯 Proj: ${shortName} ${pickedScore} – ${oppShort} ${oppScore}${cushionTxt}</span>`);
           }
 
-          // O/U — same regardless of side
-          if(s.overProb!=null){
+          // O/U — only shown on O/U picks (betType==='ou'), not on spread/ML cards.
+          // On a spread card the O/U line was a secondary signal that created noise;
+          // on an O/U card it IS the primary pick so it belongs front and center.
+          if(s.overProb!=null&&p.betType==='ou'){
             const isOver=s.overProb>=0.5;
             const pct=(Math.max(s.overProb,1-s.overProb)*100).toFixed(0);
             const projPart=s.projTotal?` · proj ${s.projTotal.toFixed(0)}`:'' ;

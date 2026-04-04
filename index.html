@@ -496,7 +496,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-conf-badge{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;}
 .hb-conf-elite{color:#ef4444;}
 .hb-conf-strong{color:var(--gold);}
-.hb-conf-good{color:#4ade80;}
+.hb-conf-good{color:#22c55e;}
 .hb-conf-lean{color:var(--muted);}
 .hb-score-ring{position:relative;width:44px;height:44px;flex-shrink:0;}
 .hb-score-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
@@ -7187,7 +7187,7 @@ function hbRender(){
   const counts={elite:0,strong:0,good:0,lean:0};
   picks.forEach(p=>counts[hbGetTier(p.score100)]++);
   const tierSummary=Object.entries(counts).filter(([,v])=>v>0)
-    .map(([k,v])=>`<span style="color:${k==='elite'?'#ef4444':k==='strong'?'#c9a84c':k==='good'?'#4ade80':'var(--muted)'}">${v} ${k}</span>`).join(' · ');
+    .map(([k,v])=>`<span style="color:${k==='elite'?'#ef4444':k==='strong'?'#c9a84c':k==='good'?'#22c55e':'var(--muted)'}">${v} ${k}</span>`).join(' · ');
 
   let html=picks.length?`<div style="font-size:12px;color:var(--muted);margin-bottom:12px">${picks.length} pick${picks.length!==1?'s':''} · ${tierSummary}${!hasOdds?' · <span style="color:var(--gold)">Season trends only — load live odds for tonight</span>':''}</div>`:'';
   html+='<div class="hb-grid">';
@@ -7271,8 +7271,10 @@ function hbRender(){
             parts.push(`<span class="hb-sim-item sim-proj">🎯 Proj: ${shortName} ${pickedScore} – ${oppShort} ${oppScore}${cushionTxt}</span>`);
           }
 
-          // O/U — same regardless of side
-          if(s.overProb!=null){
+          // O/U — only shown on O/U picks (betType==='ou'), not on spread/ML cards.
+          // On a spread card the O/U line was a secondary signal that created noise;
+          // on an O/U card it IS the primary pick so it belongs front and center.
+          if(s.overProb!=null&&p.betType==='ou'){
             const isOver=s.overProb>=0.5;
             const pct=(Math.max(s.overProb,1-s.overProb)*100).toFixed(0);
             const projPart=s.projTotal?` · proj ${s.projTotal.toFixed(0)}`:'' ;
