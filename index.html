@@ -6418,6 +6418,13 @@ function hbScoreOU(g, ht, at, ix){
   // conflicting signals mean no clear edge; skip rather than average to noise.
   if(histSignal===null&&projSignal===null)return null;
   if(histSignal!==null&&projSignal!==null&&(histSignal>0.5)!==(projSignal>0.5))return null;
+  // MLB early-season: pitcher ERA alone (moderate signal) is too thin to make a pick.
+  // Without historical O/U records (< 5 games) or projection data, we'd fire Under on
+  // every game with decent starters — which is most of the board. Only allow pitcher-only
+  // picks when the signal is extreme: both aces (≤0.30) or both terrible starters (≥0.70).
+  if(sport==='mlb'&&histSignal===null&&projSignal===null&&pitcherOUSignal!==null){
+    if(pitcherOUSignal>0.30&&pitcherOUSignal<0.70)return null;
+  }
 
   // Blend: history carries more weight (it's less noisy than season-avg projection).
   let overSum=0, wt=0;
@@ -6975,8 +6982,34 @@ function hbGeneratePicks(){
       if(r)picks.push({...r,...base,betType:'ou',total:g.total,sim});
     }
   });
-  console.log(`[BTF] hbGeneratePicks: ${TODAY_GAMES.length} games → ${_dbg_ok} matched, ${_dbg_noTeam} team-miss, ${_dbg_noIx} no-sport-ix → ${picks.length} picks`);
-  return picks;
+  // ── Contradiction filter ──
+  // If a game has both an ML pick and a spread pick pointing opposite directions,
+  // the model is contradicting itself. Remove the lower-confidence one.
+  // Same-direction ML+spread is fine (ML confirms the spread, or is a separate bet).
+  const gamePickMap={};
+  picks.forEach((p,i)=>{
+    if(p.betType==='ml'||p.betType==='spread'){
+      if(!gamePickMap[p.game])gamePickMap[p.game]={};
+      // Spread can be pushed twice (bridge + regular) — keep the higher-confidence index
+      const existing=gamePickMap[p.game][p.betType];
+      if(existing==null||picks[existing].score<p.score)gamePickMap[p.game][p.betType]=i;
+    }
+  });
+  const contradictRemove=new Set();
+  Object.values(gamePickMap).forEach(({ml:mi,spread:si})=>{
+    if(mi==null||si==null)return;
+    const mlP=picks[mi], spP=picks[si];
+    if(mlP.atsPick&&spP.atsPick&&mlP.atsPick!==spP.atsPick){
+      // Opposite sides — remove the lower-confidence pick
+      if(mlP.score>=spP.score)contradictRemove.add(si);
+      else contradictRemove.add(mi);
+      console.log(`[BTF] Contradiction removed: ${mlP.game} ML(${mlP.atsPick} ${mlP.score100}) vs Spread(${spP.atsPick} ${spP.score100}) — kept ${mlP.score>=spP.score?'ML':'Spread'}`);
+    }
+  });
+  const finalPicks=picks.filter((_,i)=>!contradictRemove.has(i));
+
+  console.log(`[BTF] hbGeneratePicks: ${TODAY_GAMES.length} games → ${_dbg_ok} matched, ${_dbg_noTeam} team-miss, ${_dbg_noIx} no-sport-ix → ${finalPicks.length} picks (${contradictRemove.size} contradictions removed)`);
+  return finalPicks;
 }
 
 function hbGetTier(score100){
@@ -7141,7 +7174,7 @@ function hbRender(){
       home:p.home,away:p.away,atsPick:p.atsPick||null,
       spread:typeof p.spread==='number'?p.spread:null,
       pickLabel:p.pickLabel,score100:s,
-      tier:s>=87?'elite':s>=72?'strong':s>=60?'good':'lean',
+      tier:s>=68?'elite':s>=62?'strong':s>=57?'good':'lean',
       date:p.date||'',time:p.time||''};
   });
   window.BTF_PICKS_READY=true;
