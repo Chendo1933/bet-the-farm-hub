@@ -2,11 +2,13 @@
 """
 Bet The Farm Hub — Daily pick logger
 Uses Playwright to headlessly load the hub, inject the Odds API key,
-wait for live picks to generate, then save Elite + Strong picks to
-data/picks/YYYY-MM-DD.json for nightly performance grading.
+wait for live picks to generate, then save ALL picks with real game
+data to data/picks/YYYY-MM-DD.json for nightly performance grading.
 
 Required GitHub Secret: ODDS_API_KEY (your the-odds-api.com key)
-If the secret isn't set, falls back to static ATS-trend picks.
+If the secret isn't set OR live games fail to load, the script exits
+with code 1 so the GitHub Actions log shows a clear failure rather
+than silently saving ungradeable ATS-trend picks.
 
 Run before games start (~noon ET) via log-picks.yml workflow.
 """
@@ -41,7 +43,8 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
             )
             print(f"  ✓ Odds API key injected ({api_key[:6]}…)")
         else:
-            print("  ⚠  No ODDS_API_KEY — will capture static ATS-trend picks only")
+            print("  ❌ No ODDS_API_KEY set — cannot log real game picks")
+            sys.exit(1)
 
         page = await context.new_page()
 
@@ -68,7 +71,9 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
                 game_count = await page.evaluate("TODAY_GAMES.length")
                 print(f"  ✓ {game_count} game(s) loaded from ESPN/Odds API")
             except Exception:
-                print("  ⚠  Timed out waiting for live games — using static picks")
+                print("  ❌ Timed out waiting for live games — refusing to save trend picks")
+                await browser.close()
+                sys.exit(1)
 
         # Click the Hot Bets tab to trigger hbRender() + BTF_PICKS export
         await page.click("button[onclick*=\"showTab('hotbets'\"]")
@@ -131,17 +136,22 @@ def main():
     else:
         print("⚠  No TODAY_GAMES captured — schedule snapshot skipped")
 
-    # Filter to Elite + Strong only WITH actual game data (atsPick set, opponent known)
-    # Picks with atsPick=null are ATS-trend picks (no live matchup) — ungradeable
+    # Keep ALL picks with real game data — atsPick set + opponent known.
+    # ATS-trend picks have away="" and atsPick=None — those are ungradeable and excluded.
+    # We no longer filter by tier so every scored game gets tracked for calibration.
     tracked = [
         p for p in picks
-        if p.get("tier") in ("elite", "strong")
-        and p.get("atsPick") is not None
+        if p.get("atsPick") is not None
         and p.get("away", "").strip() != ""
     ]
-    print(f"\n  📊 {len(tracked)} Elite/Strong pick(s) to track:")
+
+    if not tracked:
+        print("  ❌ No real-game picks found even with live odds — check hub scoring output")
+        sys.exit(1)
+
+    print(f"\n  📊 {len(tracked)} pick(s) to track (all tiers with live game data):")
     for p in tracked:
-        print(f"     [{p['tier'].upper():6}] {p['sport']} · {p['pickLabel']} "
+        print(f"     [{p.get('tier','?').upper():6}] {p['sport']} · {p['pickLabel']} "
               f"({p['home']} vs {p['away']}) · {p['score100']}%")
 
     out = {
@@ -157,8 +167,11 @@ def main():
         json.dump(out, f, indent=2)
     print(f"\n✅ {len(tracked)} pick(s) saved → {out_path}")
 
-    if not tracked:
-        print("ℹ  No Elite/Strong picks today — nothing to grade later")
+    tier_counts = {}
+    for p in tracked:
+        t = p.get("tier", "lean")
+        tier_counts[t] = tier_counts.get(t, 0) + 1
+    print(f"   Breakdown: {tier_counts}")
 
     sys.exit(0)
 

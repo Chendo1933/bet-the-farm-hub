@@ -114,19 +114,24 @@ def grade_ml(pick: dict, result: dict) -> str:
         return "win" if away_sc > home_sc else "loss"
 
 
-CONF_BANDS = ["95-99", "90-94", "85-89", "80-84", "75-79", "70-74"]
+# Calibrated to new scoring system — scores typically range 50–70.
+# These bands let us answer "do 68% picks actually hit 68% of the time?"
+CONF_BANDS = ["68-70", "65-67", "62-64", "59-61", "56-58", "50-55"]
+
+# All four tiers used by the hub's updated scoring system
+ALL_TIERS = ("elite", "strong", "good", "lean")
 
 def conf_band(score100) -> str | None:
-    """Map a score100 value to a 5-point confidence band label, or None if out of range."""
+    """Map a score100 value to a confidence band label, or None if out of range."""
     if score100 is None:
         return None
     s = int(score100)
-    if s >= 95: return "95-99"
-    if s >= 90: return "90-94"
-    if s >= 85: return "85-89"
-    if s >= 80: return "80-84"
-    if s >= 75: return "75-79"
-    if s >= 70: return "70-74"
+    if s >= 68: return "68-70"
+    if s >= 65: return "65-67"
+    if s >= 62: return "62-64"
+    if s >= 59: return "59-61"
+    if s >= 56: return "56-58"
+    if s >= 50: return "50-55"
     return None
 
 
@@ -138,7 +143,7 @@ def load_performance() -> dict:
     """
     existing = load_json(PERF_FILE)
     if existing and "tiers" in existing:
-        for tier in ("elite", "strong"):
+        for tier in ALL_TIERS:
             existing["tiers"].setdefault(tier, {"w": 0, "l": 0, "p": 0})
         existing.setdefault("by_sport", {})
         existing.setdefault("graded_dates", [])
@@ -149,10 +154,7 @@ def load_performance() -> dict:
         return existing
     return {
         "last_updated": "",
-        "tiers": {
-            "elite":  {"w": 0, "l": 0, "p": 0},
-            "strong": {"w": 0, "l": 0, "p": 0},
-        },
+        "tiers": {tier: {"w": 0, "l": 0, "p": 0} for tier in ALL_TIERS},
         "by_sport": {},
         "by_conf":  {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS},
         "graded_dates": [],
@@ -211,8 +213,8 @@ def main():
             print(f"  ? {pick['sport']} {pick['pickLabel']} — could not grade ({bet_type})")
             continue
 
-        # Track by tier
-        if tier in ("elite", "strong"):
+        # Track by tier — all four tiers tracked now
+        if tier in ALL_TIERS:
             rec = perf["tiers"][tier]
             if outcome == "win":   rec["w"] += 1
             elif outcome == "loss": rec["l"] += 1
@@ -251,10 +253,12 @@ def main():
 
     # Print summary
     print(f"\n── Performance by Tier ──────────────────────────────────────────")
-    for tier in ("elite", "strong"):
+    for tier in ALL_TIERS:
         rec   = perf["tiers"].get(tier, {"w": 0, "l": 0, "p": 0})
         total = rec["w"] + rec["l"]
-        pct   = f"{rec['w']/total*100:.1f}%" if total > 0 else "—"
+        if total == 0:
+            continue
+        pct   = f"{rec['w']/total*100:.1f}%"
         push_str = f" ({rec['p']}P)" if rec["p"] else ""
         print(f"  {tier.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
 
