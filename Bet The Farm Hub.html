@@ -909,10 +909,10 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     <button class="hb-sort-btn" id="hb-sort-edge" onclick="hbSetSort('edge',this)">ATS Edge</button>
     <button class="hb-sort-btn" id="hb-sort-time" onclick="hbSetSort('time',this)">Game Time</button>
     <div class="hb-tier-legend">
-      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#ef4444"></div>Elite (87+)</div>
-      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#c9a84c"></div>Strong (72-84)</div>
-      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#22c55e"></div>Good (60-71)</div>
-      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:var(--muted)"></div>Lean (&lt;60)</div>
+      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#ef4444"></div>Elite (68+)</div>
+      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#c9a84c"></div>Strong (62-67)</div>
+      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#22c55e"></div>Good (57-61)</div>
+      <div class="hb-legend-item"><div class="hb-legend-dot" style="background:var(--muted)"></div>Lean (&lt;57)</div>
     </div>
   </div>
   <div id="hb-grid-wrap"></div>
@@ -1425,7 +1425,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <!-- SCORING SYSTEM -->
   <div id="gl-scoring" class="gl-section">
     <div class="gl-grid">
-      <div class="gl-card"><div class="gl-term">Confidence Tiers <span class="gl-tag">How It Works</span></div><div class="gl-def">Every pick is scored 0–100. That score maps to one of four tiers: 🔥 Elite (87–99), ⚡ Strong (72–86), ✅ Good (60–71), 📊 Lean (&lt;60). The higher the score, the more factors are aligned in one direction. Only Elite and Strong picks are logged for performance tracking.</div><div class="gl-tip">💡 A score of 87+ means nearly every measurable edge points the same way — ATS record, efficiency gap, rest, and market data all agree.</div></div>
+      <div class="gl-card"><div class="gl-term">Confidence Tiers <span class="gl-tag">How It Works</span></div><div class="gl-def">Every pick is scored 0–100. That number IS the model's estimated cover/win probability — a 65 means 65% chance of covering. Scores map to tiers: 🔥 Elite (68+), ⚡ Strong (62–67), ✅ Good (57–61), 📊 Lean (&lt;57). All tiers are logged for performance tracking to measure calibration over time.</div><div class="gl-tip">💡 Breakeven for -110 juice is 52.4%. Any pick rated Good or above has a real mathematical edge.</div></div>
       <div class="gl-card"><div class="gl-term">F1 — ATS Record Split (32%) <span class="gl-tag">Factor</span></div><div class="gl-def">The single heaviest factor. Uses the team's home ATS record when they're at home, away ATS when they're on the road. For CBB (neutral site), the overall season ATS record is used instead. All ATS signals are Bayesian-shrunk — small sample sizes are pulled toward 50% to prevent hot streaks from dominating early in a season.</div><div class="gl-example">Example: A team is 8-2 ATS at home (80%) with n=10 games. Shrunk to ~65% — still strong, but tempered.</div></div>
       <div class="gl-card"><div class="gl-term">F2 — Implied Probability Edge (20%) <span class="gl-tag">Factor</span></div><div class="gl-def">Compares the team's shrunk ATS win rate to the no-vig implied probability from the market spread. A positive edge means the team covers more often than the market expects. Uses the same Bayesian-shrunk rate as F1 — raw percentages would double-count hot small-sample records.</div><div class="gl-example">Example: Market implies 52% cover probability. Team's shrunk ATS rate is 62%. That's a +10 point edge — meaningful signal.</div></div>
       <div class="gl-card"><div class="gl-term">F3 — Rest Edge (12%) <span class="gl-tag">Factor</span></div><div class="gl-def">Measures the days-of-rest difference between both teams. A team with 10+ days off vs. a team on a short week has a meaningful physical and preparation edge. In the NBA, this factor is replaced by F8b when a back-to-back situation is detected — they can't both fire on the same game.</div><div class="gl-example">Example: Team A has 4 days rest, Team B played last night. +3 day edge for Team A → F3 boosts their score.</div></div>
@@ -4725,8 +4725,8 @@ function renderParlayOfDay(allPicks){
   const amOdds=decOdds>=2?Math.round((decOdds-1)*100):Math.round(-100/(decOdds-1));
   const amFmt=amOdds>=0?'+'+amOdds:''+amOdds;
   const legHTML=legs.map((l,i)=>{
-    const tier=l.score>=.87?'elite':l.score>=.72?'strong':l.score>=.60?'good':'lean';
-    const conf=l.score>=.87?'🔥 Elite':l.score>=.72?'⚡ Strong':l.score>=.60?'✅ Good':'📊 Lean';
+    const tier=l.score>=.68?'elite':l.score>=.62?'strong':l.score>=.57?'good':'lean';
+    const conf=l.score>=.68?'🔥 Elite':l.score>=.62?'⚡ Strong':l.score>=.57?'✅ Good':'📊 Lean';
     const legOdds=l.odds??-110;
     const legOddsDisp=legOdds>0?'+'+legOdds:''+legOdds;
     return `<div class="pod-leg">
@@ -4958,8 +4958,8 @@ function renderOverview(){
         <button onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:7px 20px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.3px">🔥 See all ${totalPicks} ranked picks in Hot Bets →</button>
       </div>`;
       bbEl.innerHTML='<div class="bb-grid">'+top.map((c,i)=>{
-        const tier=c.score>=.87?'elite':c.score>=.72?'strong':c.score>=.60?'good':'lean';
-        const confLbl=c.score>=.87?'🔥 Elite':c.score>=.72?'⚡ Strong':c.score>=.60?'✅ Good':'📊 Lean';
+        const tier=c.score>=.68?'elite':c.score>=.62?'strong':c.score>=.57?'good':'lean';
+        const confLbl=c.score>=.68?'🔥 Elite':c.score>=.62?'⚡ Strong':c.score>=.57?'✅ Good':'📊 Lean';
         return `<div class="bb-card ${tier}" style="cursor:pointer" onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()">
           <div class="bb-top"><span class="bb-sport">${c.sport}</span><span class="bb-conf ${tier}">${confLbl} · ${(c.score*100).toFixed(0)}%</span></div>
           <div class="bb-pick">${c.pick}</div>
