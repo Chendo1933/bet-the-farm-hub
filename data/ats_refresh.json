@@ -1,566 +1,566 @@
 {
   "source": "bettingpros.com",
   "season": "2025-26",
-  "as_of": "2026-03-30",
+  "as_of": "2026-04-06",
   "scraped_by": "scripts/scrape_ats.py (automated)",
   "_note": "NBA includes home/away ATS splits. NHL puck-line only (home/away not on site).",
   "sports": {
     "nba": [
       {
         "team": "Atlanta Hawks",
-        "aw": 40,
+        "aw": 43,
         "al": 35,
-        "haw": 40,
+        "haw": 43,
         "hal": 35,
-        "aaw": 21,
+        "aaw": 23,
         "aal": 16,
-        "ov": 37,
-        "un": 38
+        "ov": 38,
+        "un": 40
       },
       {
         "team": "Boston Celtics",
-        "aw": 44,
-        "al": 29,
-        "haw": 44,
-        "hal": 29,
-        "aaw": 25,
-        "aal": 11,
-        "ov": 28,
-        "un": 46
+        "aw": 47,
+        "al": 30,
+        "haw": 47,
+        "hal": 30,
+        "aaw": 27,
+        "aal": 12,
+        "ov": 30,
+        "un": 48
       },
       {
         "team": "Brooklyn Nets",
-        "aw": 36,
-        "al": 39,
-        "haw": 36,
-        "hal": 39,
+        "aw": 37,
+        "al": 41,
+        "haw": 37,
+        "hal": 41,
         "aaw": 19,
         "aal": 20,
-        "ov": 32,
-        "un": 43
+        "ov": 34,
+        "un": 44
       },
       {
         "team": "Charlotte Hornets",
-        "aw": 45,
+        "aw": 49,
         "al": 29,
-        "haw": 45,
+        "haw": 49,
         "hal": 29,
-        "aaw": 22,
+        "aaw": 24,
         "aal": 15,
-        "ov": 28,
-        "un": 47
+        "ov": 31,
+        "un": 48
       },
       {
         "team": "Chicago Bulls",
-        "aw": 34,
-        "al": 40,
-        "haw": 34,
-        "hal": 40,
-        "aaw": 15,
-        "aal": 21,
-        "ov": 37,
-        "un": 37
+        "aw": 36,
+        "al": 42,
+        "haw": 36,
+        "hal": 42,
+        "aaw": 16,
+        "aal": 22,
+        "ov": 38,
+        "un": 40
       },
       {
         "team": "Cleveland Cavaliers",
         "aw": 29,
-        "al": 43,
+        "al": 47,
         "haw": 29,
-        "hal": 43,
+        "hal": 47,
         "aaw": 15,
-        "aal": 20,
-        "ov": 37,
-        "un": 37
+        "aal": 23,
+        "ov": 38,
+        "un": 40
       },
       {
         "team": "Dallas Mavericks",
-        "aw": 34,
-        "al": 40,
-        "haw": 34,
-        "hal": 40,
-        "aaw": 16,
-        "aal": 21,
-        "ov": 34,
-        "un": 40
-      },
-      {
-        "team": "Denver Nuggets",
-        "aw": 40,
-        "al": 35,
-        "haw": 40,
-        "hal": 35,
-        "aaw": 23,
-        "aal": 15,
-        "ov": 46,
-        "un": 30
-      },
-      {
-        "team": "Detroit Pistons",
-        "aw": 39,
-        "al": 35,
-        "haw": 39,
-        "hal": 35,
-        "aaw": 20,
-        "aal": 16,
-        "ov": 34,
-        "un": 40
-      },
-      {
-        "team": "Golden State Warriors",
-        "aw": 32,
-        "al": 41,
-        "haw": 32,
-        "hal": 41,
-        "aaw": 17,
-        "aal": 20,
-        "ov": 43,
-        "un": 32
-      },
-      {
-        "team": "Houston Rockets",
-        "aw": 31,
-        "al": 42,
-        "haw": 31,
-        "hal": 42,
-        "aaw": 18,
-        "aal": 21,
-        "ov": 33,
-        "un": 41
-      },
-      {
-        "team": "Indiana Pacers",
         "aw": 35,
-        "al": 40,
+        "al": 43,
         "haw": 35,
-        "hal": 40,
-        "aaw": 13,
-        "aal": 24,
-        "ov": 39,
-        "un": 36
-      },
-      {
-        "team": "Los Angeles Clippers",
-        "aw": 38,
-        "al": 35,
-        "haw": 38,
-        "hal": 35,
-        "aaw": 19,
-        "aal": 20,
-        "ov": 38,
-        "un": 37
-      },
-      {
-        "team": "Los Angeles Lakers",
-        "aw": 39,
-        "al": 35,
-        "haw": 39,
-        "hal": 35,
-        "aaw": 19,
-        "aal": 19,
-        "ov": 39,
-        "un": 35
-      },
-      {
-        "team": "Memphis Grizzlies",
-        "aw": 33,
-        "al": 39,
-        "haw": 33,
-        "hal": 39,
+        "hal": 43,
         "aaw": 16,
-        "aal": 20,
-        "ov": 35,
-        "un": 39
-      },
-      {
-        "team": "Miami Heat",
-        "aw": 43,
-        "al": 32,
-        "haw": 43,
-        "hal": 32,
-        "aaw": 22,
-        "aal": 16,
-        "ov": 42,
-        "un": 33
-      },
-      {
-        "team": "Milwaukee Bucks",
-        "aw": 31,
-        "al": 42,
-        "haw": 31,
-        "hal": 42,
-        "aaw": 15,
         "aal": 22,
-        "ov": 31,
-        "un": 43
-      },
-      {
-        "team": "Minnesota Timberwolves",
-        "aw": 33,
-        "al": 40,
-        "haw": 33,
-        "hal": 40,
-        "aaw": 16,
-        "aal": 18,
-        "ov": 32,
+        "ov": 36,
         "un": 42
       },
       {
-        "team": "New Orleans Pelicans",
+        "team": "Denver Nuggets",
         "aw": 41,
-        "al": 33,
+        "al": 36,
         "haw": 41,
-        "hal": 33,
-        "aaw": 19,
+        "hal": 36,
+        "aaw": 23,
         "aal": 16,
-        "ov": 37,
-        "un": 39
+        "ov": 47,
+        "un": 31
       },
       {
-        "team": "New York Knicks",
-        "aw": 36,
-        "al": 38,
-        "haw": 36,
-        "hal": 38,
-        "aaw": 14,
-        "aal": 25,
-        "ov": 34,
+        "team": "Detroit Pistons",
+        "aw": 42,
+        "al": 36,
+        "haw": 42,
+        "hal": 36,
+        "aaw": 22,
+        "aal": 16,
+        "ov": 37,
         "un": 41
       },
       {
-        "team": "Oklahoma City Thunder",
+        "team": "Golden State Warriors",
         "aw": 35,
-        "al": 39,
+        "al": 41,
         "haw": 35,
-        "hal": 39,
+        "hal": 41,
+        "aaw": 17,
+        "aal": 20,
+        "ov": 45,
+        "un": 33
+      },
+      {
+        "team": "Houston Rockets",
+        "aw": 33,
+        "al": 44,
+        "haw": 33,
+        "hal": 44,
+        "aaw": 18,
+        "aal": 22,
+        "ov": 36,
+        "un": 42
+      },
+      {
+        "team": "Indiana Pacers",
+        "aw": 37,
+        "al": 41,
+        "haw": 37,
+        "hal": 41,
+        "aaw": 15,
+        "aal": 25,
+        "ov": 41,
+        "un": 37
+      },
+      {
+        "team": "Los Angeles Clippers",
+        "aw": 39,
+        "al": 37,
+        "haw": 39,
+        "hal": 37,
+        "aaw": 20,
+        "aal": 20,
+        "ov": 39,
+        "un": 39
+      },
+      {
+        "team": "Los Angeles Lakers",
+        "aw": 41,
+        "al": 37,
+        "haw": 41,
+        "hal": 37,
+        "aaw": 19,
+        "aal": 21,
+        "ov": 42,
+        "un": 36
+      },
+      {
+        "team": "Memphis Grizzlies",
+        "aw": 34,
+        "al": 42,
+        "haw": 34,
+        "hal": 42,
+        "aaw": 16,
+        "aal": 21,
+        "ov": 38,
+        "un": 40
+      },
+      {
+        "team": "Miami Heat",
+        "aw": 44,
+        "al": 34,
+        "haw": 44,
+        "hal": 34,
+        "aaw": 22,
+        "aal": 16,
+        "ov": 44,
+        "un": 34
+      },
+      {
+        "team": "Milwaukee Bucks",
+        "aw": 34,
+        "al": 43,
+        "haw": 34,
+        "hal": 43,
+        "aaw": 16,
+        "aal": 22,
+        "ov": 34,
+        "un": 44
+      },
+      {
+        "team": "Minnesota Timberwolves",
+        "aw": 35,
+        "al": 42,
+        "haw": 35,
+        "hal": 42,
+        "aaw": 18,
+        "aal": 19,
+        "ov": 34,
+        "un": 44
+      },
+      {
+        "team": "New Orleans Pelicans",
+        "aw": 42,
+        "al": 35,
+        "haw": 42,
+        "hal": 35,
+        "aaw": 19,
+        "aal": 18,
+        "ov": 37,
+        "un": 42
+      },
+      {
+        "team": "New York Knicks",
+        "aw": 37,
+        "al": 40,
+        "haw": 37,
+        "hal": 40,
+        "aaw": 14,
+        "aal": 27,
+        "ov": 35,
+        "un": 43
+      },
+      {
+        "team": "Oklahoma City Thunder",
+        "aw": 37,
+        "al": 40,
+        "haw": 37,
+        "hal": 40,
         "aaw": 18,
         "aal": 18,
-        "ov": 38,
+        "ov": 41,
         "un": 37
       },
       {
         "team": "Orlando Magic",
-        "aw": 32,
-        "al": 41,
-        "haw": 32,
-        "hal": 41,
-        "aaw": 15,
-        "aal": 20,
-        "ov": 40,
-        "un": 34
+        "aw": 34,
+        "al": 43,
+        "haw": 34,
+        "hal": 43,
+        "aaw": 16,
+        "aal": 21,
+        "ov": 42,
+        "un": 36
       },
       {
         "team": "Philadelphia 76ers",
-        "aw": 37,
-        "al": 36,
-        "haw": 37,
-        "hal": 36,
-        "aaw": 22,
-        "aal": 13,
-        "ov": 37,
-        "un": 37
-      },
-      {
-        "team": "Phoenix Suns",
-        "aw": 46,
-        "al": 27,
-        "haw": 46,
-        "hal": 27,
-        "aaw": 22,
-        "aal": 13,
-        "ov": 33,
-        "un": 41
-      },
-      {
-        "team": "Portland Trail Blazers",
-        "aw": 40,
-        "al": 35,
-        "haw": 40,
-        "hal": 35,
-        "aaw": 17,
-        "aal": 20,
-        "ov": 41,
-        "un": 35
-      },
-      {
-        "team": "Sacramento Kings",
-        "aw": 31,
-        "al": 43,
-        "haw": 31,
-        "hal": 43,
-        "aaw": 15,
-        "aal": 23,
-        "ov": 36,
+        "aw": 39,
+        "al": 38,
+        "haw": 39,
+        "hal": 38,
+        "aaw": 23,
+        "aal": 14,
+        "ov": 38,
         "un": 40
       },
       {
+        "team": "Phoenix Suns",
+        "aw": 47,
+        "al": 30,
+        "haw": 47,
+        "hal": 30,
+        "aaw": 23,
+        "aal": 16,
+        "ov": 36,
+        "un": 42
+      },
+      {
+        "team": "Portland Trail Blazers",
+        "aw": 42,
+        "al": 35,
+        "haw": 42,
+        "hal": 35,
+        "aaw": 18,
+        "aal": 20,
+        "ov": 41,
+        "un": 37
+      },
+      {
+        "team": "Sacramento Kings",
+        "aw": 33,
+        "al": 44,
+        "haw": 33,
+        "hal": 44,
+        "aaw": 16,
+        "aal": 23,
+        "ov": 38,
+        "un": 41
+      },
+      {
         "team": "San Antonio Spurs",
-        "aw": 44,
-        "al": 29,
-        "haw": 44,
-        "hal": 29,
-        "aaw": 25,
-        "aal": 14,
-        "ov": 30,
-        "un": 44
+        "aw": 45,
+        "al": 32,
+        "haw": 45,
+        "hal": 32,
+        "aaw": 26,
+        "aal": 16,
+        "ov": 32,
+        "un": 46
       },
       {
         "team": "Toronto Raptors",
-        "aw": 38,
-        "al": 35,
-        "haw": 38,
-        "hal": 35,
-        "aaw": 21,
-        "aal": 16,
-        "ov": 27,
-        "un": 47
+        "aw": 39,
+        "al": 38,
+        "haw": 39,
+        "hal": 38,
+        "aaw": 22,
+        "aal": 18,
+        "ov": 29,
+        "un": 49
       },
       {
         "team": "Utah Jazz",
-        "aw": 38,
-        "al": 37,
-        "haw": 38,
-        "hal": 37,
+        "aw": 40,
+        "al": 39,
+        "haw": 40,
+        "hal": 39,
         "aaw": 19,
-        "aal": 18,
-        "ov": 46,
-        "un": 29
+        "aal": 20,
+        "ov": 48,
+        "un": 31
       },
       {
         "team": "Washington Wizards",
-        "aw": 32,
-        "al": 42,
-        "haw": 32,
-        "hal": 42,
-        "aaw": 14,
-        "aal": 23,
-        "ov": 42,
-        "un": 32
+        "aw": 33,
+        "al": 45,
+        "haw": 33,
+        "hal": 45,
+        "aaw": 15,
+        "aal": 25,
+        "ov": 45,
+        "un": 33
       }
     ],
     "nhl": [
       {
         "team": "Anaheim Ducks",
         "plw": 35,
-        "pll": 38,
-        "ov": 42,
+        "pll": 42,
+        "ov": 46,
         "un": 31
       },
       {
         "team": "Boston Bruins",
-        "plw": 48,
-        "pll": 26,
-        "ov": 41,
-        "un": 33
+        "plw": 50,
+        "pll": 28,
+        "ov": 42,
+        "un": 36
       },
       {
         "team": "Buffalo Sabres",
         "plw": 43,
-        "pll": 31,
-        "ov": 34,
-        "un": 40
+        "pll": 34,
+        "ov": 36,
+        "un": 41
       },
       {
         "team": "Calgary Flames",
-        "plw": 41,
-        "pll": 32,
-        "ov": 36,
+        "plw": 42,
+        "pll": 34,
+        "ov": 39,
         "un": 37
       },
       {
         "team": "Carolina Hurricanes",
-        "plw": 27,
-        "pll": 46,
-        "ov": 39,
-        "un": 34
+        "plw": 29,
+        "pll": 48,
+        "ov": 42,
+        "un": 35
       },
       {
         "team": "Chicago Blackhawks",
-        "plw": 45,
-        "pll": 29,
-        "ov": 30,
-        "un": 44
+        "plw": 47,
+        "pll": 30,
+        "ov": 31,
+        "un": 46
       },
       {
         "team": "Colorado Avalanche",
-        "plw": 36,
-        "pll": 36,
-        "ov": 30,
-        "un": 42
+        "plw": 38,
+        "pll": 38,
+        "ov": 32,
+        "un": 44
       },
       {
         "team": "Columbus Blue Jackets",
         "plw": 41,
-        "pll": 33,
-        "ov": 35,
-        "un": 39
+        "pll": 36,
+        "ov": 36,
+        "un": 41
       },
       {
         "team": "Dallas Stars",
-        "plw": 29,
-        "pll": 45,
-        "ov": 36,
-        "un": 38
+        "plw": 30,
+        "pll": 47,
+        "ov": 37,
+        "un": 40
       },
       {
         "team": "Detroit Red Wings",
-        "plw": 36,
-        "pll": 37,
-        "ov": 34,
-        "un": 39
+        "plw": 38,
+        "pll": 39,
+        "ov": 36,
+        "un": 41
       },
       {
         "team": "Edmonton Oilers",
-        "plw": 30,
-        "pll": 44,
+        "plw": 32,
+        "pll": 45,
         "ov": 43,
-        "un": 31
+        "un": 34
       },
       {
         "team": "Florida Panthers",
-        "plw": 24,
-        "pll": 49,
-        "ov": 40,
-        "un": 33
+        "plw": 26,
+        "pll": 51,
+        "ov": 43,
+        "un": 34
       },
       {
         "team": "Los Angeles Kings",
         "plw": 29,
-        "pll": 44,
-        "ov": 31,
-        "un": 42
+        "pll": 47,
+        "ov": 33,
+        "un": 43
       },
       {
         "team": "Minnesota Wild",
-        "plw": 35,
-        "pll": 39,
-        "ov": 40,
-        "un": 34
+        "plw": 37,
+        "pll": 40,
+        "ov": 42,
+        "un": 35
       },
       {
         "team": "Montreal Canadiens",
-        "plw": 42,
-        "pll": 31,
-        "ov": 41,
-        "un": 32
+        "plw": 43,
+        "pll": 34,
+        "ov": 42,
+        "un": 35
       },
       {
         "team": "Nashville Predators",
-        "plw": 41,
+        "plw": 43,
         "pll": 33,
-        "ov": 34,
+        "ov": 36,
         "un": 40
       },
       {
         "team": "New Jersey Devils",
-        "plw": 28,
-        "pll": 45,
-        "ov": 33,
-        "un": 40
+        "plw": 31,
+        "pll": 46,
+        "ov": 35,
+        "un": 42
       },
       {
         "team": "New York Islanders",
-        "plw": 38,
-        "pll": 36,
-        "ov": 35,
-        "un": 39
-      },
-      {
-        "team": "New York Rangers",
-        "plw": 37,
-        "pll": 37,
-        "ov": 34,
+        "plw": 40,
+        "pll": 38,
+        "ov": 38,
         "un": 40
       },
       {
-        "team": "Ottawa Senators",
-        "plw": 36,
+        "team": "New York Rangers",
+        "plw": 41,
         "pll": 37,
-        "ov": 38,
-        "un": 35
+        "ov": 35,
+        "un": 43
+      },
+      {
+        "team": "Ottawa Senators",
+        "plw": 38,
+        "pll": 39,
+        "ov": 40,
+        "un": 37
       },
       {
         "team": "Philadelphia Flyers",
-        "plw": 48,
-        "pll": 25,
-        "ov": 35,
-        "un": 38
+        "plw": 49,
+        "pll": 28,
+        "ov": 37,
+        "un": 40
       },
       {
         "team": "Pittsburgh Penguins",
-        "plw": 42,
-        "pll": 31,
-        "ov": 41,
-        "un": 32
+        "plw": 46,
+        "pll": 32,
+        "ov": 45,
+        "un": 33
       },
       {
         "team": "San Jose Sharks",
-        "plw": 44,
-        "pll": 27,
-        "ov": 34,
-        "un": 37
+        "plw": 46,
+        "pll": 29,
+        "ov": 37,
+        "un": 38
       },
       {
         "team": "Seattle Kraken",
         "plw": 46,
-        "pll": 26,
-        "ov": 32,
-        "un": 40
+        "pll": 29,
+        "ov": 33,
+        "un": 42
       },
       {
         "team": "St. Louis Blues",
-        "plw": 39,
+        "plw": 43,
         "pll": 33,
-        "ov": 32,
-        "un": 40
+        "ov": 34,
+        "un": 42
       },
       {
         "team": "Tampa Bay Lightning",
-        "plw": 36,
-        "pll": 37,
-        "ov": 38,
-        "un": 35
+        "plw": 38,
+        "pll": 38,
+        "ov": 39,
+        "un": 37
       },
       {
         "team": "Toronto Maple Leafs",
-        "plw": 30,
-        "pll": 44,
-        "ov": 43,
-        "un": 31
+        "plw": 32,
+        "pll": 45,
+        "ov": 45,
+        "un": 32
       },
       {
         "team": "Utah Mammoth",
-        "plw": 33,
+        "plw": 35,
         "pll": 41,
-        "ov": 35,
+        "ov": 37,
         "un": 39
       },
       {
         "team": "Vancouver Canucks",
-        "plw": 31,
-        "pll": 41,
-        "ov": 43,
-        "un": 29
+        "plw": 32,
+        "pll": 44,
+        "ov": 46,
+        "un": 30
       },
       {
         "team": "Vegas Golden Knights",
-        "plw": 27,
+        "plw": 30,
         "pll": 47,
-        "ov": 37,
-        "un": 37
+        "ov": 38,
+        "un": 39
       },
       {
         "team": "Washington Capitals",
-        "plw": 38,
-        "pll": 36,
-        "ov": 32,
+        "plw": 40,
+        "pll": 38,
+        "ov": 36,
         "un": 42
       },
       {
         "team": "Winnipeg Jets",
-        "plw": 37,
-        "pll": 36,
-        "ov": 36,
-        "un": 37
+        "plw": 38,
+        "pll": 38,
+        "ov": 37,
+        "un": 39
       }
     ]
   }

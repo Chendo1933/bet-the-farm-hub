@@ -25,7 +25,7 @@ DATA_DIR   = "data/picks"
 SCHED_DIR  = "data/schedules"
 HUB_FILE   = "index.html"
 PORT       = 8181
-TIMEOUT    = 45_000   # 45s — allow time for ESPN + Odds API calls
+TIMEOUT    = 90_000   # 90s — allow time for multiple sport API calls (MLB+NBA+NHL each with 700ms stagger)
 
 
 async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
@@ -48,9 +48,12 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
 
         page = await context.new_page()
 
-        # Suppress console noise from the hub
-        page.on("console", lambda m: None)
-        page.on("pageerror", lambda e: print(f"  page error: {e}"))
+        # Print errors/warnings from the hub; suppress noisy info/debug logs
+        def _on_console(m):
+            if m.type in ("error", "warning"):
+                print(f"  [hub:{m.type}] {m.text}")
+        page.on("console", _on_console)
+        page.on("pageerror", lambda e: print(f"  [page error] {e}"))
 
         await page.goto(f"http://localhost:{PORT}/{HUB_FILE}", wait_until="domcontentloaded")
         print(f"  ✓ Hub loaded at localhost:{PORT}")
@@ -71,6 +74,18 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
                 game_count = await page.evaluate("TODAY_GAMES.length")
                 print(f"  ✓ {game_count} game(s) loaded from ESPN/Odds API")
             except Exception:
+                # Read hub's status bar to surface why the API fetch failed
+                try:
+                    oab_status = await page.evaluate(
+                        "document.querySelector('.oab-status')?.textContent?.trim() || '(no status text found)'"
+                    )
+                    print(f"  [hub status] {oab_status}")
+                    game_count_raw = await page.evaluate(
+                        "typeof TODAY_GAMES !== 'undefined' ? TODAY_GAMES.length : 'undefined'"
+                    )
+                    print(f"  [TODAY_GAMES.length] {game_count_raw}")
+                except Exception as diag_err:
+                    print(f"  [diag error] {diag_err}")
                 print("  ❌ Timed out waiting for live games — refusing to save trend picks")
                 await browser.close()
                 sys.exit(1)
