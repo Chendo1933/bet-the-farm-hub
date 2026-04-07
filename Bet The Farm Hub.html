@@ -3212,7 +3212,7 @@ const SCORES_KEY='btf_score_results'; // localStorage: {gameId:{sport,winner,los
 // (e.g. via update_records.py). On version mismatch at init, btf_score_results is
 // automatically cleared so game-delta records already baked into the new baseline
 // aren't double-counted when applyStoredResults() re-applies the history.
-const BTF_BASELINE_VER='2026-03-04-v1';
+const BTF_BASELINE_VER='2026-04-07-v1';
 const BTF_BASELINE_VER_KEY='btf_baseline_ver';
 let _scoresSyncTime={};               // sport → timestamp of last successful fetch
 const SCORES_TTL=30*60*1000;          // re-fetch at most every 30 minutes per sport
