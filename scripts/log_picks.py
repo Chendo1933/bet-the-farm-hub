@@ -16,6 +16,7 @@ Run before games start (~noon ET) via log-picks.yml workflow.
 import asyncio
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -37,11 +38,16 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
 
         # Inject Odds API key into localStorage before the page loads
         # The hub reads localStorage.btf_odds_key on startup and auto-refreshes
+        # Use json.dumps() to safely encode the key — raw f-string interpolation into
+        # a single-quoted JS string breaks if the key contains quotes, newlines, or
+        # trailing whitespace (common when GitHub Secrets are copy-pasted), causing
+        # "Invalid or unexpected token" page errors and the hub never loading the key.
         if api_key:
+            safe_key = api_key.strip()   # strip any accidental whitespace/newlines
             await context.add_init_script(
-                f"localStorage.setItem('btf_odds_key', '{api_key}');"
+                f"localStorage.setItem('btf_odds_key', {json.dumps(safe_key)});"
             )
-            print(f"  ✓ Odds API key injected ({api_key[:6]}…)")
+            print(f"  ✓ Odds API key injected ({safe_key[:6]}…)")
         else:
             print("  ❌ No ODDS_API_KEY set — cannot log real game picks")
             sys.exit(1)
