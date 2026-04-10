@@ -33,7 +33,6 @@ jobs:
             echo "No grading changes to commit"
           else
             git commit -m "perf: grade picks $(date -d 'yesterday' +'%Y-%m-%d')"
-            git pull --rebase
-            git push
+            git push --force-with-lease
             echo "✅ Performance log updated"
           fi

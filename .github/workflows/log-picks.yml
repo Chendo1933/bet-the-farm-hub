@@ -40,7 +40,6 @@ jobs:
             echo "No new picks or schedule data to commit"
           else
             git commit -m "picks: $(date +'%Y-%m-%d') Elite/Strong + schedule snapshot"
-            git pull --rebase
-            git push
+            git push --force-with-lease
             echo "✅ Picks and schedule snapshot committed"
           fi
