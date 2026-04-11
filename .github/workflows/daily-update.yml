@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Morning odds snapshot (for line-movement tracking)
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/snapshot_odds.py
+
       - name: Fetch ESPN standings and patch hub (NBA · NHL · MLB · NFL)
         run: python scripts/update_stats.py
 
@@ -34,7 +39,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html data/odds_snapshots/
           if git diff --staged --quiet; then
             echo "Nothing changed — hub already up to date"
           else

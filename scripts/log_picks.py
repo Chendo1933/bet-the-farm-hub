@@ -24,6 +24,7 @@ from datetime import datetime, timezone
 
 DATA_DIR   = "data/picks"
 SCHED_DIR  = "data/schedules"
+SNAP_DIR   = "data/odds_snapshots"
 HUB_FILE   = "index.html"
 PORT       = 8181
 TIMEOUT    = 90_000   # 90s — allow time for multiple sport API calls (MLB+NBA+NHL each with 700ms stagger)
@@ -65,6 +66,18 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
         print(f"  ✓ Hub loaded at localhost:{PORT}")
 
         if api_key:
+            # Inject morning odds snapshot for line-movement tracking (Factor F12).
+            # The hub reads window.BTF_MORNING_ODDS when building TODAY_GAMES and
+            # computes spreadMove = current spread − morning spread.
+            morning_path = os.path.join(SNAP_DIR, f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}-morning.json")
+            if os.path.exists(morning_path):
+                with open(morning_path) as mf:
+                    morning_json = mf.read()
+                await page.evaluate(f"window.BTF_MORNING_ODDS = {morning_json};")
+                print(f"  ✓ Morning odds snapshot injected for line movement")
+            else:
+                print(f"  ⚠  No morning snapshot found ({morning_path}) — F12 will skip")
+
             # The hub's auto-refresh only fires when the Analyzer tab is opened.
             # In headless mode we never open that tab, so we must call refreshAllOdds()
             # explicitly via JS. Wait for init() to finish first (key loaded into DOM),
@@ -111,7 +124,8 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
         # Guard with ||[] so a timeout/empty-odds run returns [] instead of crashing.
         today_games = await page.evaluate(
             "(typeof TODAY_GAMES !== 'undefined' ? TODAY_GAMES : []).map(g => ({sport:g.sport, home:g.home, away:g.away,"
-            " date:g.date, time:g.time, spread:g.spread, total:g.total}))"
+            " date:g.date, time:g.time, spread:g.spread, total:g.total,"
+            " spreadMove:g.spreadMove??null, totalMove:g.totalMove??null}))"
         )
         print(f"  ✓ {len(today_games)} game(s) in today's schedule snapshot")
 

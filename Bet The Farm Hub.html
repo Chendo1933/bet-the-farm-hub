@@ -3232,6 +3232,15 @@ function importGamesFromAPI(apiData,sport){
     const _awayCorrNull=TEAM_NAME_CORRECTIONS[ag.away_team]===null||TEAM_NAME_CORRECTIONS[ag.away_team.replace(/\bSt\b(?!\.)/g,'State')]===null;
     const homeStatus=_homeCorrNull?'skip':homeRow?'ok':'unmatched';
     const awayStatus=_awayCorrNull?'skip':awayRow?'ok':'unmatched';
+    // Line movement: compare current spread/total to morning snapshot (if available)
+    let spreadMove=null, totalMove=null;
+    if(window.BTF_MORNING_ODDS){
+      const mo=window.BTF_MORNING_ODDS;
+      const sportGames=mo.games?.[sport]||[];
+      const match=sportGames.find(m=>m.home===ag.home_team&&m.away===ag.away_team);
+      if(match&&odds.spread!=null&&match.spread!=null) spreadMove=odds.spread-match.spread;
+      if(match&&odds.total!=null&&match.total!=null) totalMove=odds.total-match.total;
+    }
     TODAY_GAMES.push({
       sport,
       home:homeDbName,
@@ -3243,6 +3252,8 @@ function importGamesFromAPI(apiData,sport){
       time:timeStr,
       spread:odds.spread??null,
       total:odds.total??null,
+      spreadMove,
+      totalMove,
       spreadLabel:sport==='nhl'?'Puck Line':sport==='mlb'?'Run Line':'Spread',
       mlHome:odds.mlHome??null,
       mlAway:odds.mlAway??null,
@@ -7290,6 +7301,25 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
       score+=f11*0.10; weight+=0.10;
       if(edge>0.15)factors.push({t:'pos',l:`🔥 Picked team hot (last 10: ${(atsPick==='home'?hPct:aPct)*100|0}% W)`});
       else if(edge<-0.15)factors.push({t:'neg',l:`❄️ Picked team cold (last 10: ${(atsPick==='home'?hPct:aPct)*100|0}% W)`});
+    }
+  }
+
+  // ── 12. Line movement (morning → afternoon spread change) ──
+  // If the line moved toward our pick, sharp money confirms the direction → boost.
+  // If it moved away, the market is correcting against us → caution penalty.
+  // spreadMove = current home spread − morning home spread.
+  // Positive spreadMove means home spread got bigger (line moved toward away / against home).
+  if(g.spreadMove!=null&&Math.abs(g.spreadMove)>=0.5){
+    const movedTowardPick=(atsPick==='home'&&g.spreadMove<0)||(atsPick==='away'&&g.spreadMove>0);
+    const absMove=Math.abs(g.spreadMove);
+    if(movedTowardPick){
+      const f12=absMove>=2?0.72:absMove>=1?0.64:0.58;
+      score+=f12*0.08; weight+=0.08;
+      factors.push({t:'pos',l:`📉 Line moved ${absMove.toFixed(1)} pts toward pick`});
+    } else {
+      const f12=absMove>=2?0.28:absMove>=1?0.36:0.42;
+      score+=f12*0.08; weight+=0.08;
+      factors.push({t:'neg',l:`📈 Line moved ${absMove.toFixed(1)} pts against pick`});
     }
   }
 
