@@ -97,6 +97,74 @@ NHL_NAME_MAP = {
 }
 
 
+NFL_NAME_MAP = {
+    "Arizona":       "Arizona Cardinals",
+    "Atlanta":       "Atlanta Falcons",
+    "Baltimore":     "Baltimore Ravens",
+    "Buffalo":       "Buffalo Bills",
+    "Carolina":      "Carolina Panthers",
+    "Chicago":       "Chicago Bears",
+    "Cincinnati":    "Cincinnati Bengals",
+    "Cleveland":     "Cleveland Browns",
+    "Dallas":        "Dallas Cowboys",
+    "Denver":        "Denver Broncos",
+    "Detroit":       "Detroit Lions",
+    "Green Bay":     "Green Bay Packers",
+    "Houston":       "Houston Texans",
+    "Indianapolis":  "Indianapolis Colts",
+    "Jacksonville":  "Jacksonville Jaguars",
+    "Kansas City":   "Kansas City Chiefs",
+    "Las Vegas":     "Las Vegas Raiders",
+    "Miami":         "Miami Dolphins",
+    "Minnesota":     "Minnesota Vikings",
+    "New England":   "New England Patriots",
+    "New Orleans":   "New Orleans Saints",
+    "Philadelphia":  "Philadelphia Eagles",
+    "Pittsburgh":    "Pittsburgh Steelers",
+    "San Francisco": "San Francisco 49ers",
+    "Seattle":       "Seattle Seahawks",
+    "Tampa Bay":     "Tampa Bay Buccaneers",
+    "Tennessee":     "Tennessee Titans",
+    "Washington":    "Washington Commanders",
+    # Ambiguous — resolved by display text
+    "Los Angeles Rams":      "Los Angeles Rams",
+    "Los Angeles Chargers":  "Los Angeles Chargers",
+    "New York Giants":       "New York Giants",
+    "New York Jets":         "New York Jets",
+}
+
+MLB_NAME_MAP = {
+    "Arizona":       "Arizona Diamondbacks",
+    "Atlanta":       "Atlanta Braves",
+    "Baltimore":     "Baltimore Orioles",
+    "Boston":        "Boston Red Sox",
+    "Cincinnati":    "Cincinnati Reds",
+    "Cleveland":     "Cleveland Guardians",
+    "Colorado":      "Colorado Rockies",
+    "Detroit":       "Detroit Tigers",
+    "Houston":       "Houston Astros",
+    "Kansas City":   "Kansas City Royals",
+    "Miami":         "Miami Marlins",
+    "Milwaukee":     "Milwaukee Brewers",
+    "Minnesota":     "Minnesota Twins",
+    "Oakland":       "Athletics",
+    "Philadelphia":  "Philadelphia Phillies",
+    "Pittsburgh":    "Pittsburgh Pirates",
+    "San Diego":     "San Diego Padres",
+    "San Francisco": "San Francisco Giants",
+    "Seattle":       "Seattle Mariners",
+    "St. Louis":     "St. Louis Cardinals",
+    "Tampa Bay":     "Tampa Bay Rays",
+    "Texas":         "Texas Rangers",
+    "Toronto":       "Toronto Blue Jays",
+    "Washington":    "Washington Nationals",
+    # Ambiguous — resolved by W-L wins below
+    # "Los Angeles" → Dodgers (higher wins) vs Angels (lower wins)
+    # "New York"    → Yankees (higher wins) vs Mets (lower wins)
+    # "Chicago"     → Cubs (higher wins) vs White Sox (lower wins)
+}
+
+
 def resolve_nba_name(display: str, wl_wins: int) -> str | None:
     if display == "Los Angeles":
         return "Los Angeles Lakers" if wl_wins >= 45 else "Los Angeles Clippers"
@@ -109,6 +177,27 @@ def resolve_nhl_name(display: str, wl_wins: int) -> str | None:
     if display == "New York":
         return "New York Islanders" if wl_wins >= 38 else "New York Rangers"
     return NHL_NAME_MAP.get(display)
+
+
+def resolve_nfl_name(display: str, wl_wins: int) -> str | None:
+    # NFL has full names like "Los Angeles Rams" / "New York Giants" on BettingPros
+    if display in NFL_NAME_MAP:
+        return NFL_NAME_MAP[display]
+    # Try with full display name (handles "Los Angeles Rams", "New York Jets", etc.)
+    for key, val in NFL_NAME_MAP.items():
+        if display.startswith(key):
+            return val
+    return None
+
+
+def resolve_mlb_name(display: str, wl_wins: int) -> str | None:
+    if display == "Los Angeles":
+        return "Los Angeles Dodgers" if wl_wins >= 40 else "Los Angeles Angels"
+    if display == "New York":
+        return "New York Yankees" if wl_wins >= 40 else "New York Mets"
+    if display == "Chicago":
+        return "Chicago Cubs" if wl_wins >= 35 else "Chicago White Sox"
+    return MLB_NAME_MAP.get(display)
 
 
 # ── JS extractor ──────────────────────────────────────────────────────────────
@@ -164,7 +253,8 @@ def parse_wl(team_cell: str) -> tuple[str, int]:
 def rows_to_dict(rows: list, sport: str, filter_name: str) -> dict:
     """Convert extracted table rows to {hub_db_name: (wins, losses)}."""
     result = {}
-    resolve = resolve_nba_name if sport == "nba" else resolve_nhl_name
+    _resolvers = {"nba": resolve_nba_name, "nhl": resolve_nhl_name, "nfl": resolve_nfl_name, "mlb": resolve_mlb_name}
+    resolve = _resolvers.get(sport, resolve_nba_name)
     for row in rows:
         if len(row) < 2:
             continue
@@ -232,7 +322,11 @@ async def scrape_sport(page, sport: str) -> dict:
 
 
 async def run_scrape() -> dict:
+    from datetime import datetime
     from playwright.async_api import async_playwright
+
+    month = datetime.now().month
+    result = {}
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -244,31 +338,48 @@ async def run_scrape() -> dict:
         page = await context.new_page()
 
         print("Scraping NBA...")
-        nba = await scrape_sport(page, "nba")
+        result["nba"] = await scrape_sport(page, "nba")
 
         print("Scraping NHL...")
         nhl_raw = await scrape_sport(page, "nhl")
         # NHL uses plw/pll field names (puck line) — rename aw/al
-        nhl = {}
+        result["nhl"] = {}
         for team, d in nhl_raw.items():
-            nhl[team] = dict(plw=d["aw"], pll=d["al"], ov=d["ov"], un=d["un"])
+            result["nhl"][team] = dict(plw=d["aw"], pll=d["al"], ov=d["ov"], un=d["un"])
+
+        # NFL: skip March through August (off-season)
+        if month not in range(3, 9):
+            print("Scraping NFL...")
+            result["nfl"] = await scrape_sport(page, "nfl")
+        else:
+            print("NFL off-season — skipping")
+            result["nfl"] = {}
+
+        # MLB: skip November through February (off-season)
+        if month not in (11, 12, 1, 2):
+            print("Scraping MLB...")
+            result["mlb"] = await scrape_sport(page, "mlb")
+        else:
+            print("MLB off-season — skipping")
+            result["mlb"] = {}
 
         await browser.close()
-        return {"nba": nba, "nhl": nhl}
+        return result
 
 
 def build_json(data: dict) -> dict:
     today = date.today().isoformat()
+    sports = {}
+    for sport in ("nba", "nhl", "nfl", "mlb"):
+        if data.get(sport):
+            sports[sport] = [{"team": t, **v} for t, v in sorted(data[sport].items())]
     out = {
         "source": "bettingpros.com",
         "season": "2025-26",
         "as_of": today,
         "scraped_by": "scripts/scrape_ats.py (automated)",
-        "_note": "NBA includes home/away ATS splits. NHL puck-line only (home/away not on site).",
-        "sports": {
-            "nba": [{"team": t, **v} for t, v in sorted(data["nba"].items())],
-            "nhl": [{"team": t, **v} for t, v in sorted(data["nhl"].items())],
-        }
+        "_note": "NBA/NFL/MLB include home/away ATS splits. NHL puck-line only.",
+        "sports": sports,
     }
     return out
 
@@ -284,9 +395,12 @@ def main():
     data = asyncio.run(run_scrape())
 
     # Summarise
-    nba_count = len(data["nba"])
-    nhl_count = len(data["nhl"])
-    print(f"\nScraped: {nba_count}/30 NBA teams, {nhl_count}/32 NHL teams")
+    counts = []
+    for sport, expected in [("nba", 30), ("nhl", 32), ("nfl", 32), ("mlb", 30)]:
+        n = len(data.get(sport, {}))
+        if n > 0:
+            counts.append(f"{n}/{expected} {sport.upper()}")
+    print(f"\nScraped: {', '.join(counts) or 'no teams'}")
 
     payload = build_json(data)
 

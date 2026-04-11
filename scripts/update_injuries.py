@@ -101,7 +101,8 @@ def fetch_sport_injuries(sport, url):
             if not detail and hub_status == "Injured Reserve":
                 detail = ""
 
-            players.append({"player": pname, "status": hub_status, "detail": detail})
+            position = athlete.get("position", {}).get("abbreviation", "")
+            players.append({"player": pname, "status": hub_status, "detail": detail, "pos": position})
 
         if players:
             result[hub_name] = players

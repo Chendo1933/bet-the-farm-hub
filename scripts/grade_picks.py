@@ -77,11 +77,11 @@ def find_result(pick: dict, results_by_sport: dict) -> dict | None:
     return None
 
 
-def grade_spread(pick: dict, result: dict) -> str:
+def grade_spread(pick: dict, result: dict) -> tuple[str, float | None]:
     """
-    Returns 'win', 'loss', or 'push'.
-    spread = home team's line (negative = home favored).
-    margin = home_score - away_score
+    Returns (outcome, cover_margin).
+    outcome: 'win', 'loss', 'push', or 'ungraded'.
+    cover_margin: absolute margin of cover/miss (None if ungraded).
     """
     spread    = pick.get("spread")
     ats_pick  = pick.get("atsPick")   # 'home' or 'away'
@@ -89,29 +89,31 @@ def grade_spread(pick: dict, result: dict) -> str:
     away_sc   = result.get("away_score", 0)
 
     if spread is None or ats_pick is None:
-        return "ungraded"
+        return ("ungraded", None)
 
     margin = (home_sc - away_sc) + spread   # > 0 means home covered
 
     if abs(margin) < 0.01:                  # push
-        return "push"
+        return ("push", 0.0)
     if ats_pick == "home":
-        return "win" if margin > 0 else "loss"
+        return ("win" if margin > 0 else "loss", abs(margin))
     else:   # away
-        return "win" if margin < 0 else "loss"
+        return ("win" if margin < 0 else "loss", abs(margin))
 
 
-def grade_ml(pick: dict, result: dict) -> str:
-    """For moneyline picks: did the picked team win outright?"""
+def grade_ml(pick: dict, result: dict) -> tuple[str, float | None]:
+    """For moneyline picks: did the picked team win outright?
+    Returns (outcome, point_margin)."""
     ats_pick = pick.get("atsPick")
     home_sc  = result.get("home_score", 0)
     away_sc  = result.get("away_score", 0)
+    pt_margin = abs(home_sc - away_sc)
     if home_sc == away_sc:
-        return "push"
+        return ("push", 0.0)
     if ats_pick == "home":
-        return "win" if home_sc > away_sc else "loss"
+        return ("win" if home_sc > away_sc else "loss", pt_margin)
     else:
-        return "win" if away_sc > home_sc else "loss"
+        return ("win" if away_sc > home_sc else "loss", pt_margin)
 
 
 # Calibrated to new scoring system — scores typically range 50–70.
@@ -141,6 +143,8 @@ def load_performance() -> dict:
     Uses the hub-compatible schema: tiers / w / l / p / last_updated.
     Also maintains by_conf for confidence-band hit-rate breakdown.
     """
+    _MARGINS_DEFAULT = {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0}
+
     existing = load_json(PERF_FILE)
     if existing and "tiers" in existing:
         for tier in ALL_TIERS:
@@ -151,12 +155,23 @@ def load_performance() -> dict:
         existing.setdefault("by_conf", {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS})
         for band in CONF_BANDS:
             existing["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
+        # Backfill margins tracking
+        existing.setdefault("margins", dict(_MARGINS_DEFAULT))
+        existing.setdefault("margins_by_tier", {tier: dict(_MARGINS_DEFAULT) for tier in ALL_TIERS})
+        for tier in ALL_TIERS:
+            existing["margins_by_tier"].setdefault(tier, dict(_MARGINS_DEFAULT))
+        existing.setdefault("margins_by_conf", {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS})
+        for band in CONF_BANDS:
+            existing["margins_by_conf"].setdefault(band, dict(_MARGINS_DEFAULT))
         return existing
     return {
         "last_updated": "",
         "tiers": {tier: {"w": 0, "l": 0, "p": 0} for tier in ALL_TIERS},
         "by_sport": {},
         "by_conf":  {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS},
+        "margins": dict(_MARGINS_DEFAULT),
+        "margins_by_tier": {tier: dict(_MARGINS_DEFAULT) for tier in ALL_TIERS},
+        "margins_by_conf": {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS},
         "graded_dates": [],
     }
 
@@ -205,9 +220,12 @@ def main():
             print(f"  ? {pick['sport']} {pick['pickLabel']} — no matching result found")
             continue
 
-        outcome = (grade_ml(pick, result)     if bet_type == "ml"
-                   else grade_spread(pick, result) if bet_type == "spread"
-                   else "ungraded")
+        if bet_type == "ml":
+            outcome, margin = grade_ml(pick, result)
+        elif bet_type == "spread":
+            outcome, margin = grade_spread(pick, result)
+        else:
+            outcome, margin = "ungraded", None
 
         if outcome == "ungraded":
             print(f"  ? {pick['sport']} {pick['pickLabel']} — could not grade ({bet_type})")
@@ -228,7 +246,7 @@ def main():
         elif outcome == "loss": sp_rec["l"] += 1
         else:                  sp_rec["p"] += 1
 
-        # Track by confidence band — the key question: do 95s hit more than 87s?
+        # Track by confidence band — the key question: do 65s hit more than 58s?
         band = conf_band(pick.get("score100"))
         if band:
             br = perf["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
@@ -236,11 +254,37 @@ def main():
             elif outcome == "loss": br["l"] += 1
             else:                  br["p"] += 1
 
+        # Accumulate margins and Brier scores (skip pushes)
+        if outcome != "push":
+            predicted = pick.get("score100", 50) / 100.0
+            actual = 1.0 if outcome == "win" else 0.0
+            brier = (predicted - actual) ** 2
+
+            # Top-level margins
+            m = perf["margins"]
+            if margin is not None:
+                m["total"] += margin; m["count"] += 1
+            m["brier_sum"] += brier; m["brier_n"] += 1
+
+            # By tier
+            mt = perf["margins_by_tier"].setdefault(tier, {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0})
+            if margin is not None:
+                mt["total"] += margin; mt["count"] += 1
+            mt["brier_sum"] += brier; mt["brier_n"] += 1
+
+            # By confidence band
+            if band:
+                mb = perf["margins_by_conf"].setdefault(band, {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0})
+                if margin is not None:
+                    mb["total"] += margin; mb["count"] += 1
+                mb["brier_sum"] += brier; mb["brier_n"] += 1
+
         icon = "✅" if outcome == "win" else "❌" if outcome == "loss" else "🔁"
         band_str = f" [{band}]" if band else ""
+        margin_str = f" (margin: {margin:.1f})" if margin else ""
         print(f"  {icon} [{tier.upper():6}]{band_str} {pick['sport']} {pick['pickLabel']} "
               f"({result['home']} {result['home_score']} – {result['away']} {result['away_score']}) "
-              f"→ {outcome.upper()}")
+              f"→ {outcome.upper()}{margin_str}")
         graded += 1
 
     if graded == 0:
@@ -272,6 +316,16 @@ def main():
         push_str = f" ({rec['p']}P)" if rec["p"] else ""
         bar      = "█" * rec["w"] + "░" * rec["l"]
         print(f"  {band}  {rec['w']}-{rec['l']}{push_str}  →  {pct}  {bar}")
+
+    # Margin and Brier summary
+    m = perf.get("margins", {})
+    if m.get("count", 0) > 0:
+        avg_margin = m["total"] / m["count"]
+        print(f"\n── Margins & Calibration ────────────────────────────────────────")
+        print(f"  Avg cover/miss margin: {avg_margin:.1f} pts ({m['count']} graded)")
+    if m.get("brier_n", 0) > 0:
+        brier = m["brier_sum"] / m["brier_n"]
+        print(f"  Brier score: {brier:.4f} (lower is better, 0.25 = coin flip)")
 
     # Validate schema before writing — crash loudly rather than silently corrupt
     try:

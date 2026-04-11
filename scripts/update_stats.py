@@ -434,6 +434,128 @@ def update_ats_ou(html_lines):
     return total
 
 
+# ── Recent form (last 10 games per team) ─────────────────────────────────────
+# Scans results files newest-first to compute each team's last-10 record.
+# New SIDX indices: r10w, r10l, r10ppg, r10papg (appended to each sport array)
+
+R10_INDICES = {
+    # Matches SIDX r10w/r10l/r10ppg/r10papg values
+    "nba": dict(r10w=20, r10l=21, r10ppg=22, r10papg=23),
+    "nhl": dict(r10w=20, r10l=21, r10ppg=22, r10papg=23),
+    "nfl": dict(r10w=19, r10l=20, r10ppg=21, r10papg=22),
+    "cfb": dict(r10w=19, r10l=20, r10ppg=21, r10papg=22),
+    "cbb": dict(r10w=19, r10l=20, r10ppg=21, r10papg=22),
+    "mlb": dict(r10w=19, r10l=20, r10ppg=21, r10papg=22),
+}
+
+
+def compute_recent_form():
+    """
+    Scan data/results/*.json newest-first, compute per-team last-10 game records.
+    Returns {sport: {team_db_name: {r10w, r10l, r10ppg, r10papg}}}.
+    """
+    pattern = os.path.join(RESULTS_DIR, "*.json")
+    result_files = sorted(glob.glob(pattern), reverse=True)  # newest first
+
+    if not result_files:
+        print("  · No results files for recent form")
+        return {}
+
+    # Track per team: {sport: {team: {games: int, w: int, l: int, pf: int, pa: int}}}
+    team_stats = defaultdict(lambda: defaultdict(lambda: {"games": 0, "w": 0, "l": 0, "pf": 0, "pa": 0}))
+
+    for fpath in result_files:
+        fname = os.path.basename(fpath)
+        if fname == "index.json":
+            continue
+        try:
+            with open(fpath) as f:
+                data = json.load(f)
+        except Exception:
+            continue
+
+        if not isinstance(data, dict) or "sports" not in data:
+            continue
+
+        for sport, games in data.get("sports", {}).items():
+            for g in games:
+                h_score = g.get("home_score")
+                a_score = g.get("away_score")
+                if h_score is None or a_score is None:
+                    continue
+
+                home_db = g.get("home_db") or g.get("home", "")
+                away_db = g.get("away_db") or g.get("away", "")
+
+                # Home team
+                ht = team_stats[sport][home_db]
+                if ht["games"] < 10:
+                    ht["games"] += 1
+                    ht["pf"] += h_score
+                    ht["pa"] += a_score
+                    if h_score > a_score:
+                        ht["w"] += 1
+                    elif a_score > h_score:
+                        ht["l"] += 1
+
+                # Away team
+                at = team_stats[sport][away_db]
+                if at["games"] < 10:
+                    at["games"] += 1
+                    at["pf"] += a_score
+                    at["pa"] += h_score
+                    if a_score > h_score:
+                        at["w"] += 1
+                    elif h_score > a_score:
+                        at["l"] += 1
+
+    # Convert to final format
+    result = {}
+    for sport, teams in team_stats.items():
+        result[sport] = {}
+        for team, s in teams.items():
+            gp = s["games"] or 1
+            result[sport][team] = {
+                "r10w": s["w"],
+                "r10l": s["l"],
+                "r10ppg": round(s["pf"] / gp, 1),
+                "r10papg": round(s["pa"] / gp, 1),
+            }
+
+    return result
+
+
+def update_recent_form(html_lines):
+    """Compute last-10 form from results files and patch hub arrays."""
+    print("\n── Recent Form (last 10 games) ─────────────────────────────────")
+
+    form = compute_recent_form()
+    if not form:
+        print("  · No recent form data computed")
+        return 0
+
+    total = 0
+    for sport, teams in form.items():
+        idx = R10_INDICES.get(sport)
+        if not idx:
+            continue
+        sport_total = 0
+        for team_name, stats in teams.items():
+            updates = {
+                idx["r10w"]:    stats["r10w"],
+                idx["r10l"]:    stats["r10l"],
+                idx["r10ppg"]:  stats["r10ppg"],
+                idx["r10papg"]: stats["r10papg"],
+            }
+            n = patch_rows(html_lines, team_name, updates)
+            sport_total += n
+        if sport_total:
+            print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with last-10 form")
+        total += sport_total
+
+    return total
+
+
 # ── timestamp banner ──────────────────────────────────────────────────────────
 
 def update_timestamp(html_lines):
@@ -468,6 +590,7 @@ def main():
     changed += update_mlb(html_lines)
     changed += update_nfl(html_lines)
     changed += update_ats_ou(html_lines)
+    changed += update_recent_form(html_lines)
 
     if changed:
         update_timestamp(html_lines)
