@@ -28,7 +28,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/performance.json 2>/dev/null || true
+          git add data/performance.json data/pick_history.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No grading changes to commit"
           else

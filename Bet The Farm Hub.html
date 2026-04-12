@@ -787,6 +787,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button onclick="showTab('analyzer',this)">⚡ Analyzer</button>
   <button onclick="showTab('props',this)">🎯 Player Sim</button>
   <button onclick="showTab('tracker',this)">📓 Bet Tracker</button>
+  <button onclick="showTab('pickperf',this)">📈 Performance</button>
   <button onclick="showTab('viewingroom',this)">📺 Viewing Room</button>
   <div class="nav-dropdown" id="nav-more-dd">
     <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
@@ -1327,6 +1328,41 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     <tbody id="bet-tb"></tbody>
   </table></div>
 </div>
+<!-- ── PICK PERFORMANCE (model picks) ──────────────────── -->
+<div id="tab-pickperf" class="tab-content">
+  <div class="page-title">Pick Performance</div>
+  <div class="page-sub">Automated model picks — graded nightly against real results</div>
+  <div id="pp-kpis" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"></div>
+  <div id="pp-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center">
+    <select id="pp-sport-filter" onchange="renderPickPerf()" style="padding:6px 10px;border-radius:6px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:12px">
+      <option value="all">All Sports</option>
+      <option value="nba">NBA</option><option value="nhl">NHL</option><option value="mlb">MLB</option>
+      <option value="nfl">NFL</option><option value="cfb">CFB</option><option value="cbb">CBB</option>
+    </select>
+    <select id="pp-tier-filter" onchange="renderPickPerf()" style="padding:6px 10px;border-radius:6px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:12px">
+      <option value="all">All Tiers</option>
+      <option value="elite">Elite</option><option value="strong">Strong</option>
+      <option value="good">Good</option><option value="lean">Lean</option>
+    </select>
+    <select id="pp-type-filter" onchange="renderPickPerf()" style="padding:6px 10px;border-radius:6px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:12px">
+      <option value="all">All Bet Types</option>
+      <option value="spread">Spread/ATS</option><option value="ml">Moneyline</option><option value="ou">Over/Under</option>
+    </select>
+  </div>
+  <div id="pp-breakdown" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px"></div>
+  <div id="pp-history-wrap">
+    <div class="section-hdr"><h2>Graded Picks</h2><div class="badge" id="pp-count">0</div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Date</th><th>Sport</th><th>Type</th><th>Tier</th><th>Pick</th><th>Score</th><th>Result</th><th>Score</th><th>Margin</th></tr></thead>
+      <tbody id="pp-tbody"></tbody>
+    </table></div>
+  </div>
+  <div id="pp-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted)">
+    <div style="font-size:32px;margin-bottom:12px">📊</div>
+    <div style="font-size:14px">No graded picks yet — data populates after games are played and graded nightly.</div>
+  </div>
+</div>
+
 <!-- ── ANGLES ─────────────────────────────────────── -->
 <div id="tab-angles" class="tab-content">
   <div class="page-title">Betting Angles &amp; Edges</div>
@@ -2300,6 +2336,7 @@ function showTab(id,btn){
   mobileNavActivate(id);
   if(id==='tracker')renderTracker();
   if(id==='overview')renderOverview();
+  if(id==='pickperf')loadPickPerf();
   if(id==='angles')renderAngles();
   if(id==='events')renderEvents();
   if(id==='viewingroom')vrOnTabOpen();
@@ -8474,7 +8511,151 @@ window.addEventListener('btf-odds-refreshed',()=>{
   if(document.getElementById('tab-hotbets')?.classList.contains('active'))hbRender();
 });
 
-// ── Pick Performance Panel ─────────────────────────────────────────────────
+// ── Pick Performance Tab ──────────────────────────────────────────────────
+// Full performance dashboard: fetches pick_history.json + performance.json
+// and renders KPIs, breakdowns by tier/sport/bet-type, and a graded pick log.
+let _ppData=null, _ppPerf=null;
+const _PP_BASE='https://raw.githubusercontent.com/Chendo1933/bet-the-farm-hub/main/data';
+async function loadPickPerf(){
+  if(!_ppData){
+    try{
+      const [hRes,pRes]=await Promise.all([
+        fetch(`${_PP_BASE}/pick_history.json`),
+        fetch(`${_PP_BASE}/performance.json`)
+      ]);
+      if(hRes.ok) _ppData=await hRes.json();
+      if(pRes.ok) _ppPerf=await pRes.json();
+    }catch(e){/* offline */}
+  }
+  renderPickPerf();
+}
+function renderPickPerf(){
+  const tbody=document.getElementById('pp-tbody');
+  const kpis=document.getElementById('pp-kpis');
+  const breakdown=document.getElementById('pp-breakdown');
+  const emptyEl=document.getElementById('pp-empty');
+  const histWrap=document.getElementById('pp-history-wrap');
+  const countBadge=document.getElementById('pp-count');
+  if(!tbody)return;
+
+  const picks=(_ppData?.picks)||[];
+  const perf=_ppPerf||{};
+  if(!picks.length&&!perf.tiers){
+    emptyEl.style.display='block';histWrap.style.display='none';kpis.innerHTML='';breakdown.innerHTML='';return;
+  }
+  emptyEl.style.display='none';histWrap.style.display='block';
+
+  // Apply filters
+  const sf=document.getElementById('pp-sport-filter')?.value||'all';
+  const tf=document.getElementById('pp-tier-filter')?.value||'all';
+  const bf=document.getElementById('pp-type-filter')?.value||'all';
+  const filtered=picks.filter(p=>{
+    if(sf!=='all'&&p.sport!==sf)return false;
+    if(tf!=='all'&&p.tier!==tf)return false;
+    if(bf!=='all'&&p.betType!==bf)return false;
+    return true;
+  });
+
+  // KPI cards from filtered picks
+  const wins=filtered.filter(p=>p.outcome==='win').length;
+  const losses=filtered.filter(p=>p.outcome==='loss').length;
+  const pushes=filtered.filter(p=>p.outcome==='push').length;
+  const total=wins+losses;
+  const pct=total>0?Math.round(wins/total*100):0;
+  const pctCol=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+  const avgMargin=filtered.filter(p=>p.margin!=null).reduce((s,p)=>s+p.margin,0);
+  const marginCt=filtered.filter(p=>p.margin!=null).length;
+  const avgM=marginCt>0?(avgMargin/marginCt).toFixed(1):'—';
+
+  function kpiCard(label,value,color){
+    return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px;min-width:90px;text-align:center">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">${label}</div>
+      <div style="font-size:22px;font-weight:900;color:${color||'var(--text)'}">${value}</div>
+    </div>`;
+  }
+  kpis.innerHTML=[
+    kpiCard('Record',`${wins}-${losses}${pushes?` (${pushes}P)`:''}`,pctCol),
+    kpiCard('Win %',total>0?`${pct}%`:'—',pctCol),
+    kpiCard('Avg Margin',avgM,'var(--text2)'),
+    kpiCard('Total Picks',filtered.length+'','var(--muted)'),
+  ].join('');
+
+  // Breakdown cards: by tier, by bet type, by sport
+  function breakdownCard(title,data){
+    const rows=Object.entries(data).filter(([,v])=>(v.w+v.l)>0).map(([k,v])=>{
+      const t=v.w+v.l;const p=Math.round(v.w/t*100);
+      const c=p>=57?'#4ade80':p>=50?'var(--gold)':'#f87171';
+      const push=v.p?` <span style="color:var(--muted)">(${v.p}P)</span>`:'';
+      return `<tr><td style="padding:3px 8px 3px 0;font-size:11px;color:var(--text);text-transform:capitalize">${k}</td>
+        <td style="padding:3px 8px;font-size:11px;color:var(--muted)">${v.w}-${v.l}${push}</td>
+        <td style="padding:3px 8px;font-size:11px;font-weight:700;color:${c}">${p}%</td>
+        <td style="padding:3px 0;min-width:50px"><div style="height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden"><div style="height:100%;width:${p}%;background:${c};border-radius:3px"></div></div></td></tr>`;
+    }).join('');
+    if(!rows)return '';
+    return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;min-width:180px;flex:1">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${title}</div>
+      <table style="border-collapse:collapse;width:100%"><tbody>${rows}</tbody></table></div>`;
+  }
+
+  // Build breakdown data from filtered picks
+  const byTier={},byType={},bySport={};
+  filtered.forEach(p=>{
+    if(p.outcome!=='win'&&p.outcome!=='loss'&&p.outcome!=='push')return;
+    [[byTier,p.tier],[byType,p.betType],[bySport,p.sport]].forEach(([obj,key])=>{
+      if(!key)return;
+      if(!obj[key])obj[key]={w:0,l:0,p:0};
+      if(p.outcome==='win')obj[key].w++;
+      else if(p.outcome==='loss')obj[key].l++;
+      else obj[key].p++;
+    });
+  });
+  breakdown.innerHTML=[
+    breakdownCard('By Tier',byTier),
+    breakdownCard('By Bet Type',byType),
+    breakdownCard('By Sport',bySport),
+  ].filter(Boolean).join('');
+
+  // If no filtered picks in history but perf.json has aggregate data, show from perf
+  if(!filtered.length&&perf.tiers){
+    // Show aggregate from performance.json
+    const aggByTier={};
+    for(const [t,r] of Object.entries(perf.tiers||{})){
+      if((r.w+r.l)>0) aggByTier[t]=r;
+    }
+    const aggByType={};
+    for(const [t,r] of Object.entries(perf.by_bet_type||{})){
+      if((r.w+r.l)>0) aggByType[t]=r;
+    }
+    breakdown.innerHTML=[
+      breakdownCard('By Tier',aggByTier),
+      breakdownCard('By Bet Type',aggByType),
+    ].filter(Boolean).join('');
+  }
+
+  // Pick history table (newest first)
+  const sorted=[...filtered].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  countBadge.textContent=sorted.length+' graded';
+  tbody.innerHTML=sorted.map(p=>{
+    const icon=p.outcome==='win'?'✅':p.outcome==='loss'?'❌':'🔁';
+    const tierCol=p.tier==='elite'?'#ef4444':p.tier==='strong'?'var(--gold)':p.tier==='good'?'#60a5fa':'var(--muted)';
+    const typeLabel=p.betType==='spread'?'ATS':p.betType==='ml'?'ML':p.betType==='ou'?'O/U':p.betType||'—';
+    const scoreStr=p.homeScore!=null&&p.awayScore!=null?`${p.homeScore}-${p.awayScore}`:'—';
+    const marginStr=p.margin!=null?p.margin.toFixed(1):'—';
+    return `<tr>
+      <td>${p.date||'—'}</td>
+      <td style="text-transform:uppercase;font-size:11px">${p.sport||'—'}</td>
+      <td><span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,.06);color:var(--muted)">${typeLabel}</span></td>
+      <td><span style="color:${tierCol};font-weight:700;font-size:11px;text-transform:uppercase">${p.tier||'—'}</span></td>
+      <td style="font-size:12px">${p.pick||'—'}</td>
+      <td style="font-size:11px;color:var(--muted)">${p.score100!=null?p.score100+'%':'—'}</td>
+      <td>${icon}</td>
+      <td style="font-size:11px;color:var(--muted)">${scoreStr}</td>
+      <td style="font-size:11px">${marginStr}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Pick Performance Panel (Hot Bets header) ──────────────────────────────
 // Fetches data/performance.json from the repo and renders tier hit rates
 // in the Hot Bets header so you can see how Elite/Strong picks are tracking.
 (async function loadPerfPanel(){
@@ -8501,6 +8682,8 @@ window.addEventListener('btf-odds-refreshed',()=>{
     const tiers=[
       {key:'elite',  label:'🔥 Elite',  color:'#ef4444'},
       {key:'strong', label:'⚡ Strong', color:'var(--gold)'},
+      {key:'good',   label:'👍 Good',   color:'#60a5fa'},
+      {key:'lean',   label:'📊 Lean',   color:'var(--muted)'},
     ];
     const boxes=tiers.map(t=>{
       const rec=d.tiers[t.key]||{w:0,l:0,p:0};
@@ -8526,7 +8709,7 @@ window.addEventListener('btf-odds-refreshed',()=>{
     panel.style.display='block';
 
     // ── Confidence band breakdown ──────────────────────────────────────
-    const BANDS=['95-99','90-94','85-89','80-84','75-79','70-74'];
+    const BANDS=['68-70','65-67','62-64','59-61','56-58','50-55'];
     const confEl=document.getElementById('perf-conf-bands');
     if(confEl&&d.by_conf){
       const bandRows=BANDS.map(band=>{

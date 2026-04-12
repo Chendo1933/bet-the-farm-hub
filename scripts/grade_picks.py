@@ -41,9 +41,10 @@ except ImportError:
     def schema_validate(name, data, **kw): return []
     class SchemaError(Exception): pass
 
-PICKS_DIR   = "data/picks"
-RESULTS_DIR = "data/results"
-PERF_FILE   = "data/performance.json"
+PICKS_DIR    = "data/picks"
+RESULTS_DIR  = "data/results"
+PERF_FILE    = "data/performance.json"
+HISTORY_FILE = "data/pick_history.json"
 
 
 def load_json(path: str) -> dict | None:
@@ -145,6 +146,8 @@ def load_performance() -> dict:
     """
     _MARGINS_DEFAULT = {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0}
 
+    _BET_TYPES = ("spread", "ml", "ou")
+
     existing = load_json(PERF_FILE)
     if existing and "tiers" in existing:
         for tier in ALL_TIERS:
@@ -163,12 +166,17 @@ def load_performance() -> dict:
         existing.setdefault("margins_by_conf", {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS})
         for band in CONF_BANDS:
             existing["margins_by_conf"].setdefault(band, dict(_MARGINS_DEFAULT))
+        # Backfill by_bet_type
+        existing.setdefault("by_bet_type", {bt: {"w": 0, "l": 0, "p": 0} for bt in _BET_TYPES})
+        for bt in _BET_TYPES:
+            existing["by_bet_type"].setdefault(bt, {"w": 0, "l": 0, "p": 0})
         return existing
     return {
         "last_updated": "",
         "tiers": {tier: {"w": 0, "l": 0, "p": 0} for tier in ALL_TIERS},
         "by_sport": {},
         "by_conf":  {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS},
+        "by_bet_type": {bt: {"w": 0, "l": 0, "p": 0} for bt in _BET_TYPES},
         "margins": dict(_MARGINS_DEFAULT),
         "margins_by_tier": {tier: dict(_MARGINS_DEFAULT) for tier in ALL_TIERS},
         "margins_by_conf": {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS},
@@ -209,6 +217,11 @@ def main():
     if date_key in perf.get("graded_dates", []):
         print(f"  · {date_key} already graded — skipping")
         sys.exit(0)
+
+    # Load existing pick history (append new entries)
+    history = load_json(HISTORY_FILE) or {"picks": []}
+    if not isinstance(history.get("picks"), list):
+        history = {"picks": []}
 
     graded = 0
     for pick in picks:
@@ -253,6 +266,29 @@ def main():
             if outcome == "win":   br["w"] += 1
             elif outcome == "loss": br["l"] += 1
             else:                  br["p"] += 1
+
+        # Track by bet type (spread / ml / ou)
+        bt_rec = perf["by_bet_type"].setdefault(bet_type, {"w": 0, "l": 0, "p": 0})
+        if outcome == "win":   bt_rec["w"] += 1
+        elif outcome == "loss": bt_rec["l"] += 1
+        else:                  bt_rec["p"] += 1
+
+        # Append to pick history log
+        history["picks"].append({
+            "date": date_key,
+            "sport": pick.get("sport", ""),
+            "betType": bet_type,
+            "tier": tier,
+            "pick": pick.get("pickLabel", ""),
+            "home": pick.get("home", ""),
+            "away": pick.get("away", ""),
+            "spread": pick.get("spread"),
+            "score100": pick.get("score100"),
+            "outcome": outcome,
+            "margin": round(margin, 1) if margin is not None else None,
+            "homeScore": result.get("home_score"),
+            "awayScore": result.get("away_score"),
+        })
 
         # Accumulate margins and Brier scores (skip pushes)
         if outcome != "push":
@@ -317,6 +353,16 @@ def main():
         bar      = "█" * rec["w"] + "░" * rec["l"]
         print(f"  {band}  {rec['w']}-{rec['l']}{push_str}  →  {pct}  {bar}")
 
+    print(f"\n── Performance by Bet Type ──────────────────────────────────────")
+    for bt in ("spread", "ml", "ou"):
+        rec   = perf["by_bet_type"].get(bt, {"w": 0, "l": 0, "p": 0})
+        total = rec["w"] + rec["l"]
+        if total == 0:
+            continue
+        pct      = f"{rec['w']/total*100:.1f}%"
+        push_str = f" ({rec['p']}P)" if rec["p"] else ""
+        print(f"  {bt.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
+
     # Margin and Brier summary
     m = perf.get("margins", {})
     if m.get("count", 0) > 0:
@@ -338,7 +384,12 @@ def main():
     with open(PERF_FILE, "w") as f:
         json.dump(perf, f, indent=2)
 
+    # Save pick history
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(history, f, indent=2)
+
     print(f"\n✅ {graded} pick(s) graded → {PERF_FILE}")
+    print(f"   {len(history['picks'])} total picks in history → {HISTORY_FILE}")
     sys.exit(0)
 
 
