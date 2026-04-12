@@ -176,12 +176,56 @@ def update_nba(html_lines):
 # ── NHL ───────────────────────────────────────────────────────────────────────
 #   W=3  L=4  OTL=5  gf=16  ga=17
 
+def fetch_nhl_special_teams():
+    """
+    Fetch PP% and PK% from the NHL Stats API (free, no key needed).
+    Returns {team_full_name: {pp: float, pk: float}} or {} on failure.
+    """
+    now = datetime.now()
+    # NHL season spans two calendar years: e.g. 2025-26 season = seasonId 20252026
+    year = now.year if now.month >= 9 else now.year - 1
+    season_id = f"{year}{year + 1}"
+    url = (
+        f"https://api.nhle.com/stats/rest/en/team/summary"
+        f"?isAggregate=false&isGame=false"
+        f"&cayenneExp=seasonId={season_id}%20and%20gameTypeId=2"
+    )
+    # NHL API team name → hub team name corrections
+    NHL_NAME_MAP = {
+        "Utah Hockey Club": "Utah Mammoth",
+        "Montréal Canadiens": "Montreal Canadiens",
+    }
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        if resp.status_code != 200:
+            print(f"  · NHL Stats API returned {resp.status_code} — PP%/PK% skipped")
+            return {}
+        data = resp.json()
+        result = {}
+        for team in data.get("data", []):
+            name = team.get("teamFullName", "")
+            name = NHL_NAME_MAP.get(name, name)
+            pp = team.get("powerPlayPct")
+            pk = team.get("penaltyKillPct")
+            if name and pp is not None and pk is not None:
+                result[name] = {"pp": round(pp * 100, 1), "pk": round(pk * 100, 1)}
+        print(f"  ✓ NHL Stats API: {len(result)} teams with PP%/PK%")
+        return result
+    except Exception as e:
+        print(f"  · NHL Stats API error: {e} — PP%/PK% skipped")
+        return {}
+
+
 def update_nhl(html_lines):
     print("\n── NHL ──────────────────────────────────────────────────────────")
     urls = [
         "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings",
         "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/standings",
     ]
+
+    # Fetch special teams data from NHL Stats API
+    special_teams = fetch_nhl_special_teams()
+
     total = 0
     for entry in fetch_standings(urls, "NHL"):
         raw  = entry.get("team", {}).get("displayName", "")
@@ -198,11 +242,20 @@ def update_nhl(html_lines):
         if gf:  updates[16] = int(gf)
         if ga:  updates[17] = int(ga)
 
+        # Patch PP% and PK% from NHL Stats API (indices 18, 19)
+        st = special_teams.get(name, {})
+        if st.get("pp") is not None:
+            updates[18] = st["pp"]
+        if st.get("pk") is not None:
+            updates[19] = st["pk"]
+
         n = patch_rows(html_lines, name, updates)
         if n:
             total += n
+            pp_str = f" | PP {st['pp']}% PK {st['pk']}%" if st else ""
             print(f"  ✓ {name}: {int(w)}-{int(l)}-{int(otl)}"
-                  + (f" | GF/GA {int(gf)}/{int(ga)}" if gf else ""))
+                  + (f" | GF/GA {int(gf)}/{int(ga)}" if gf else "")
+                  + pp_str)
         else:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
     return total

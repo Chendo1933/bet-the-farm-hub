@@ -5148,7 +5148,7 @@ const SIDX={
   cfb:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:1, w:3,l:4,ppg:17,papg:18,r10w:19,r10l:20,r10ppg:21,r10papg:22},
   nba:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:0, w:3,l:4,ppg:15,papg:16,ortg:18,drtg:19,r10w:20,r10l:21,r10ppg:22,r10papg:23},
   cbb:{aw:4,al:5,haw:7,hal:8,aaw:9,aal:10,ov:11,un:12,ni:0,  w:2,l:3,ppg:17,papg:18,adjoe:14,adjde:15,tempo:16,r10w:19,r10l:20,r10ppg:21,r10papg:22},
-  nhl:{aw:6,al:7,haw:6,hal:7,aaw:6,aal:7,ov:13,un:14,ni:0,   w:3,l:4,otl:5,gf:16,ga:17,r10w:20,r10l:21,r10ppg:22,r10papg:23},
+  nhl:{aw:6,al:7,haw:6,hal:7,aaw:6,aal:7,ov:13,un:14,ni:0,   w:3,l:4,otl:5,gf:16,ga:17,pp:18,pk:19,r10w:20,r10l:21,r10ppg:22,r10papg:23},
   mlb:{aw:5,al:6,haw:8,hal:9,aaw:10,aal:11,ov:12,un:13,ni:0, w:3,l:4,rs:15,ra:16,era:17,avg:18,r10w:19,r10l:20,r10ppg:21,r10papg:22}
 };
 const SLBL={nfl:'Spread',cfb:'Spread',nba:'Spread',cbb:'Spread',nhl:'Puck Line',mlb:'Run Line'};
@@ -6859,6 +6859,35 @@ function hbScoreOU(g, ht, at, ix){
     }
   }
 
+  // ── NHL special teams O/U signal ──
+  // Both teams with strong PP + weak PK = more power-play goals = Over lean.
+  // Both teams with weak PP + strong PK = fewer PP goals = Under lean.
+  // Computed before the signal gate so it counts as a qualifying signal.
+  let nhlSTSignal=null;
+  if(sport==='nhl'&&ix.pp!=null&&ix.pk!=null){
+    const hPP=ht[ix.pp]||0, hPK=ht[ix.pk]||0;
+    const aPP=at[ix.pp]||0, aPK=at[ix.pk]||0;
+    if(hPP>0&&hPK>0&&aPP>0&&aPK>0){
+      // Combined "leakiness": how much each team's PK lets through vs opponent PP
+      // High combined PP + low combined PK = more goals = Over
+      const avgPP=(hPP+aPP)/2, avgPK=(hPK+aPK)/2;
+      // League avg PP ~22%, PK ~80%. Deviation drives the signal.
+      if(avgPP>=24&&avgPK<=79){
+        nhlSTSignal=0.70; // both strong PP, both weak PK → Over
+        factors.push({t:'pos',l:`⚡ Both PP hot (${hPP.toFixed(1)}%/${aPP.toFixed(1)}%) + PK leaky (${hPK.toFixed(1)}%/${aPK.toFixed(1)}%) → Over`});
+      } else if(avgPP>=22&&avgPK<=78){
+        nhlSTSignal=0.62;
+        factors.push({t:'pos',l:`⚡ PP/PK combo favors Over (PP avg ${avgPP.toFixed(1)}%, PK avg ${avgPK.toFixed(1)}%)`});
+      } else if(avgPP<=18&&avgPK>=82){
+        nhlSTSignal=0.30; // both weak PP, both strong PK → Under
+        factors.push({t:'pos',l:`🔒 Both PK elite (${hPK.toFixed(1)}%/${aPK.toFixed(1)}%) + PP cold (${hPP.toFixed(1)}%/${aPP.toFixed(1)}%) → Under`});
+      } else if(avgPP<=20&&avgPK>=81){
+        nhlSTSignal=0.38;
+        factors.push({t:'pos',l:`⚡ PP/PK combo favors Under (PP avg ${avgPP.toFixed(1)}%, PK avg ${avgPK.toFixed(1)}%)`});
+      }
+    }
+  }
+
   // ── MLB starter signal (affects O/U direction) ──
   // Uses FIP when available (defense-independent); falls back to ERA.
   // Computed before the signal gate so it counts as a qualifying signal.
@@ -6911,7 +6940,7 @@ function hbScoreOU(g, ht, at, ix){
   // ── Signal gate ──
   // Need at least one signal. If both are present, they must agree in direction —
   // conflicting signals mean no clear edge; skip rather than average to noise.
-  if(histSignal===null&&projSignal===null&&pitcherOUSignal===null)return null;
+  if(histSignal===null&&projSignal===null&&pitcherOUSignal===null&&nhlSTSignal===null)return null;
   if(histSignal!==null&&projSignal!==null&&(histSignal>0.5)!==(projSignal>0.5))return null;
   // MLB early-season: pitcher ERA alone (moderate signal) is too thin to make a pick.
   // Without historical O/U records (< 5 games) or projection data, we'd fire Under on
@@ -6926,6 +6955,7 @@ function hbScoreOU(g, ht, at, ix){
   if(histSignal!==null){overSum+=histSignal*0.55; wt+=0.55;}
   if(projSignal!==null){overSum+=projSignal*0.25; wt+=0.25;}
   if(pitcherOUSignal!==null){overSum+=pitcherOUSignal*0.20; wt+=0.20;}
+  if(nhlSTSignal!==null){overSum+=nhlSTSignal*0.20; wt+=0.20;}
 
   const rawOverProb=overSum/wt;
   const pickOver=rawOverProb>=0.5;
@@ -7201,6 +7231,25 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
     if(effEdge>3)factors.push({t:'pos',l:`⚡ Adj eff edge +${effEdge.toFixed(1)}`});
     else if(effEdge<-3)factors.push({t:'neg',l:`⚡ Adj eff gap ${effEdge.toFixed(1)}`});
     score+=effScore*0.2; weight+=0.2;  // boosted 0.10→0.20: KenPom efficiency is strongest CBB predictor
+  }
+  // NHL: Special teams matchup (PP% vs opponent PK%)
+  // A team's power play vs the opponent's penalty kill is one of the strongest
+  // edges in hockey — a top-5 PP against a bottom-5 PK creates 0.3-0.5 extra goals/game.
+  // Net special teams edge = (picked team's PP% - opp PK%) - (opp PP% - picked PK%).
+  // Positive = our team has the special teams advantage.
+  if(sport==='nhl'&&ix.pp!=null&&ix.pk!=null){
+    const hPP=ht[ix.pp]||0, hPK=ht[ix.pk]||0;
+    const aPP=at[ix.pp]||0, aPK=at[ix.pk]||0;
+    if(hPP>0&&hPK>0&&aPP>0&&aPK>0){
+      // Each team's net ST edge = their PP% exploiting opp PK weaknesses minus opp PP% vs their PK
+      const hSTnet=(hPP-(100-aPK))-(aPP-(100-hPK));
+      const aSTnet=-hSTnet;
+      const stEdge=atsPick==='home'?hSTnet:aSTnet;
+      const stScore=stEdge>6?0.72:stEdge>3?0.62:stEdge>-3?0.50:stEdge>-6?0.38:0.28;
+      if(stEdge>4)factors.push({t:'pos',l:`⚡ Special teams edge: PP ${atsPick==='home'?hPP:aPP}% vs PK ${atsPick==='home'?aPK:hPK}%`});
+      else if(stEdge<-4)factors.push({t:'neg',l:`⚡ Opp special teams edge: PP ${atsPick==='home'?aPP:hPP}% vs PK ${atsPick==='home'?hPK:aPK}%`});
+      score+=stScore*0.15; weight+=0.15;
+    }
   }
   // MLB: Run Differential efficiency (RS/G − RA/G net vs opponent)
   // Baseball equivalent of ORtg/DRtg — best single-number indicator of true team quality.
