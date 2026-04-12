@@ -12,8 +12,8 @@
         "away_score": 153,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 14.5,
+        "total": 238.5,
         "home_db": "Washington Wizards",
         "away_db": "Philadelphia 76ers"
       },
@@ -26,8 +26,8 @@
         "away_score": 130,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 2.5,
+        "total": 235.5,
         "home_db": "Orlando Magic",
         "away_db": "Atlanta Hawks"
       },
@@ -40,8 +40,8 @@
         "away_score": 147,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 4.5,
+        "total": 229.5,
         "home_db": "Miami Heat",
         "away_db": "Boston Celtics"
       },
@@ -54,8 +54,8 @@
         "away_score": 130,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 13.5,
+        "total": 225.0,
         "home_db": "Memphis Grizzlies",
         "away_db": "New York Knicks"
       },
@@ -68,8 +68,8 @@
         "away_score": 123,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -12.0,
+        "total": 227.5,
         "home_db": "Toronto Raptors",
         "away_db": "Sacramento Kings"
       },
@@ -82,8 +82,8 @@
         "away_score": 145,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -3.0,
+        "total": 246.5,
         "home_db": "Chicago Bulls",
         "away_db": "Indiana Pacers"
       },
@@ -96,8 +96,8 @@
         "away_score": 113,
         "winner": "home",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -18.5,
+        "total": 216.0,
         "home_db": "Houston Rockets",
         "away_db": "Milwaukee Bucks"
       },
@@ -110,8 +110,8 @@
         "away_score": 130,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 17.0,
+        "total": 250.5,
         "home_db": "Utah Jazz",
         "away_db": "Denver Nuggets"
       },
@@ -124,8 +124,8 @@
         "away_score": 127,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 14.0,
+        "total": 227.5,
         "home_db": "Golden State Warriors",
         "away_db": "San Antonio Spurs"
       }
@@ -140,8 +140,8 @@
         "away_score": 8,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -1.5,
+        "total": 6.5,
         "home_db": "Colorado Avalanche",
         "away_db": "Vancouver Canucks"
       },
@@ -168,8 +168,8 @@
         "away_score": 3,
         "winner": "home",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 1.5,
+        "total": 7.0,
         "home_db": "San Jose Sharks",
         "away_db": "Anaheim Ducks"
       }
@@ -338,8 +338,8 @@
         "away_score": 5,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 1.5,
+        "total": 8.5,
         "home_db": "Seattle Mariners",
         "away_db": "New York Yankees"
       },
@@ -352,8 +352,8 @@
         "away_score": 1,
         "winner": "home",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -5.5,
+        "total": 8.5,
         "home_db": "San Diego Padres",
         "away_db": "San Francisco Giants"
       },
@@ -366,8 +366,8 @@
         "away_score": 9,
         "winner": "home",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": 1.5,
+        "total": 8.0,
         "home_db": "Kansas City Royals",
         "away_db": "Minnesota Twins"
       },
@@ -380,8 +380,8 @@
         "away_score": 4,
         "winner": "away",
         "status": "Final",
-        "spread": null,
-        "total": null,
+        "spread": -1.5,
+        "total": 8.0,
         "home_db": "Los Angeles Dodgers",
         "away_db": "Cleveland Guardians"
       }

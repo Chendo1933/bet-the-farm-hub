@@ -11,7 +11,11 @@
         "home_score": 114,
         "away_score": 103,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -2.0,
+        "total": 223.5,
+        "home_db": "Charlotte Hornets",
+        "away_db": "New York Knicks"
       },
       {
         "game_id": "401810919",
@@ -21,7 +25,11 @@
         "home_score": 129,
         "away_score": 108,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -5.0,
+        "total": 225.5,
+        "home_db": "Detroit Pistons",
+        "away_db": "New Orleans Pelicans"
       },
       {
         "game_id": "401810920",
@@ -31,7 +39,11 @@
         "home_score": 121,
         "away_score": 117,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -15.5,
+        "total": 231.5,
+        "home_db": "Orlando Magic",
+        "away_db": "Sacramento Kings"
       }
     ],
     "nhl": [
@@ -53,7 +65,11 @@
         "home_score": 3,
         "away_score": 4,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.0,
+        "home_db": "Ottawa Senators",
+        "away_db": "Pittsburgh Penguins"
       },
       {
         "game_id": "401803490",
@@ -63,7 +79,11 @@
         "home_score": 3,
         "away_score": 4,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.5,
+        "home_db": "Tampa Bay Lightning",
+        "away_db": "Seattle Kraken"
       },
       {
         "game_id": "401803491",
@@ -73,7 +93,11 @@
         "home_score": 2,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 1.5,
+        "total": 6.0,
+        "home_db": "Florida Panthers",
+        "away_db": "Minnesota Wild"
       },
       {
         "game_id": "401803492",
@@ -83,7 +107,11 @@
         "home_score": 2,
         "away_score": 1,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": 1.5,
+        "total": 5.5,
+        "home_db": "New York Islanders",
+        "away_db": "Dallas Stars"
       },
       {
         "game_id": "401803493",
@@ -93,7 +121,11 @@
         "home_score": 5,
         "away_score": 1,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 5.5,
+        "home_db": "Philadelphia Flyers",
+        "away_db": "Chicago Blackhawks"
       },
       {
         "game_id": "401803494",
@@ -113,7 +145,11 @@
         "home_score": 2,
         "away_score": 4,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.0,
+        "home_db": "Nashville Predators",
+        "away_db": "New Jersey Devils"
       },
       {
         "game_id": "401803496",
@@ -123,7 +159,11 @@
         "home_score": 2,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 1.5,
+        "total": 6.0,
+        "home_db": "Winnipeg Jets",
+        "away_db": "Colorado Avalanche"
       },
       {
         "game_id": "401803497",
@@ -133,7 +173,11 @@
         "home_score": 4,
         "away_score": 7,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.0,
+        "home_db": "Utah Mammoth",
+        "away_db": "Washington Capitals"
       },
       {
         "game_id": "401803498",
@@ -143,7 +187,11 @@
         "home_score": 2,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 1.5,
+        "total": 6.5,
+        "home_db": "Calgary Flames",
+        "away_db": "Anaheim Ducks"
       },
       {
         "game_id": "401803499",
@@ -153,7 +201,11 @@
         "home_score": 3,
         "away_score": 4,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.5,
+        "home_db": "Vegas Golden Knights",
+        "away_db": "Edmonton Oilers"
       },
       {
         "game_id": "401803500",
@@ -163,7 +215,11 @@
         "home_score": 0,
         "away_score": 4,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 1.5,
+        "total": 6.0,
+        "home_db": "Vancouver Canucks",
+        "away_db": "Los Angeles Kings"
       }
     ],
     "mlb": [
@@ -215,7 +271,11 @@
         "home_score": 0,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 2.5,
+        "total": 3.5,
+        "home_db": "Cincinnati Reds",
+        "away_db": "Boston Red Sox"
       },
       {
         "game_id": "401814695",
@@ -225,7 +285,11 @@
         "home_score": 0,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 2.5,
+        "total": 3.5,
+        "home_db": "Houston Astros",
+        "away_db": "Los Angeles Angels"
       },
       {
         "game_id": "401814701",
@@ -235,7 +299,11 @@
         "home_score": 2,
         "away_score": 8,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": 5.5,
+        "total": 10.5,
+        "home_db": "San Diego Padres",
+        "away_db": "Detroit Tigers"
       },
       {
         "game_id": "401814694",
@@ -245,7 +313,11 @@
         "home_score": 5,
         "away_score": 3,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -2.5,
+        "total": 7.5,
+        "home_db": "Philadelphia Phillies",
+        "away_db": "Texas Rangers"
       },
       {
         "game_id": "401814697",
@@ -255,7 +327,11 @@
         "home_score": 9,
         "away_score": 7,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 16.5,
+        "home_db": "St. Louis Cardinals",
+        "away_db": "Tampa Bay Rays"
       },
       {
         "game_id": "401814699",
@@ -265,7 +341,11 @@
         "home_score": 8,
         "away_score": 2,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 9.0,
+        "home_db": "Los Angeles Dodgers",
+        "away_db": "Arizona Diamondbacks"
       },
       {
         "game_id": "401814700",
@@ -275,7 +355,11 @@
         "home_score": 4,
         "away_score": 6,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "spread": -1.5,
+        "total": 6.5,
+        "home_db": "Seattle Mariners",
+        "away_db": "Cleveland Guardians"
       }
     ],
     "cbb": [
