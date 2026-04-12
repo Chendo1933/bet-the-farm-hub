@@ -767,7 +767,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 <body>
 <header>
   <div class="logo">🏆 BET THE FARM <span>All-Sports Hub</span></div>
-  <div class="hdr-note">✅ Updated: Apr 11, 2026 (auto) · 93 team records · 21 games today · 55 teams w/ injuries</div>
+  <div class="hdr-note">✅ Updated: Apr 12, 2026 (auto) · 93 team records · 21 games today · 55 teams w/ injuries</div>
 </header>
 <nav>
   <button class="active" onclick="showTab('overview',this)">📊 Overview</button>
@@ -1483,7 +1483,7 @@ let TODAY_GAMES=[
   // NBA, NHL, and CBB games are fetched live — no hardcoded fallbacks needed.
 ];
 // INJURIES format: {"Team Name":[{player,status,detail},...]}
-let INJURIES={"":[{"player":"Colin Miller","status":"Injured Reserve","detail":"Miller (knee) has resumed skating but is not close to returning to the lineup, Mitchell Clinton of the Jets' official site reports Tuesday"}]};
+let INJURIES={"":[{"player":"Colin Miller","status":"Injured Reserve","detail":"Miller (knee) has resumed skating but is not close to returning to the lineup, Mitchell Clinton of the Jets' official site reports Tuesday","pos":"D"}]};
 // ── DATA ─────────────────────────────────────────────────────────────────────
 // NFL: name,conf,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,ppg,papg,offRk,defRk
 const NFL=[
@@ -1764,73 +1764,73 @@ const CBB=[
 // NHL: name,conf,div,W,L,OTL,plW,plL,plP,hW,hL,aW,aL,over,under,ouP,gf,ga,ppPct,pkPct
 const NHL=[
 // NHL W/L/ATS/O-U updated 2026-04-10 from BettingPros + ESPN
-["Florida Panthers","Eastern","Atlantic",37,38,4,27,52,0,20,7,15,7,44,34,2,234,271,23.4,82.6],
-["Winnipeg Jets","Western","Central",35,31,12,40,38,0,20,6,16,9,38,39,1,224,236,21.8,83.4],
-["Washington Capitals","Eastern","Metropolitan",40,30,9,41,38,0,19,7,15,9,36,43,1,252,240,22.6,81.8],
-["Colorado Avalanche","Western","Central",52,16,10,40,38,0,19,7,14,11,32,45,2,293,198,24.2,80.4],
-["Tampa Bay Lightning","Eastern","Atlantic",48,25,6,38,41,0,18,8,13,12,40,38,1,282,223,22.8,81.2],
-["Carolina Hurricanes","Eastern","Metropolitan",51,22,6,30,49,0,18,8,14,11,43,35,1,288,235,21.4,83.6],
-["Toronto Maple Leafs","Eastern","Atlantic",32,33,14,32,47,0,18,8,13,12,45,33,3,245,284,23.6,80.8],
-["Edmonton Oilers","Western","Pacific",40,29,10,34,45,0,18,8,14,11,45,34,0,275,265,25.2,79.6],
-["Vegas Golden Knights","Western","Pacific",36,26,17,30,49,0,17,9,13,12,38,40,1,252,245,22.2,81.4],
-["Dallas Stars","Western","Central",47,20,12,30,49,0,17,9,13,12,38,40,2,267,218,21.6,82.2],
-["Boston Bruins","Eastern","Atlantic",43,26,10,51,28,0,17,9,13,12,43,36,0,264,246,21.2,83.8],
-["New York Rangers","Eastern","Metropolitan",33,37,9,41,38,0,16,10,13,12,36,43,3,232,243,22.4,81.6],
-["Vancouver Canucks","Western","Pacific",22,48,8,33,45,0,16,10,12,12,46,31,1,203,301,22.8,80.6],
-["Nashville Predators","Western","Central",37,32,10,45,34,0,16,10,12,13,36,42,0,239,260,20.8,82.4],
-["Ottawa Senators","Eastern","Atlantic",42,27,10,40,39,0,15,11,12,12,41,37,1,269,241,22.6,81.2],
-["Minnesota Wild","Western","Central",45,22,12,39,40,0,15,11,12,13,43,35,0,265,230,21.4,82.6],
-["New Jersey Devils","Eastern","Metropolitan",40,36,3,31,48,0,14,12,12,12,35,43,3,221,244,22.2,81.8],
-["Seattle Kraken","Western","Pacific",33,34,11,47,31,0,14,12,12,13,35,42,2,218,251,21.6,82.4],
-["Pittsburgh Penguins","Eastern","Metropolitan",41,22,16,47,32,0,13,13,11,13,45,33,1,285,252,20.8,81.4],
-["New York Islanders","Eastern","Metropolitan",43,31,5,41,38,0,13,13,11,14,38,40,2,231,232,20.4,82.8],
-["Calgary Flames","Western","Pacific",32,37,9,43,35,0,13,13,11,14,40,37,3,203,250,21.2,81.6],
-["Detroit Red Wings","Eastern","Atlantic",41,29,9,39,40,0,12,14,11,13,37,41,2,234,241,20.6,82.2],
-["St. Louis Blues","Western","Central",33,33,12,43,35,0,12,14,11,14,34,43,0,208,244,20.4,82.4],
+["Florida Panthers","Eastern","Atlantic",38,38,4,1,0,0,20,7,15,7,1,0,2,240,273,23.4,82.6],
+["Winnipeg Jets","Western","Central",35,32,12,0,1,0,20,6,16,9,1,0,1,225,243,21.8,83.4],
+["Washington Capitals","Eastern","Metropolitan",41,30,9,1,0,0,19,7,15,9,1,0,1,258,243,22.6,81.8],
+["Colorado Avalanche","Western","Central",52,16,11,0,1,0,19,7,14,11,0,1,2,295,201,24.2,80.4],
+["Tampa Bay Lightning","Eastern","Atlantic",49,25,6,1,0,0,18,8,13,12,0,1,1,284,224,22.8,81.2],
+["Carolina Hurricanes","Eastern","Metropolitan",52,22,6,1,0,0,18,8,14,11,0,1,1,292,236,21.4,83.6],
+["Toronto Maple Leafs","Eastern","Atlantic",32,34,14,0,1,0,18,8,13,12,1,0,3,247,290,23.6,80.8],
+["Edmonton Oilers","Western","Pacific",40,30,10,1,0,0,18,8,14,11,0,1,0,275,266,25.2,79.6],
+["Vegas Golden Knights","Western","Pacific",37,26,17,1,0,0,17,9,13,12,0,1,1,255,247,22.2,81.4],
+["Dallas Stars","Western","Central",48,20,12,1,0,0,17,9,13,12,0,1,2,269,218,21.6,82.2],
+["Boston Bruins","Eastern","Atlantic",43,27,10,0,1,0,17,9,13,12,0,1,0,265,248,21.2,83.8],
+["New York Rangers","Eastern","Metropolitan",33,38,9,0,1,0,16,10,13,12,0,1,3,232,245,22.4,81.6],
+["Vancouver Canucks","Western","Pacific",23,48,8,1,0,0,16,10,12,12,1,0,1,207,304,22.8,80.6],
+["Nashville Predators","Western","Central",38,32,10,1,0,0,16,10,12,13,0,1,0,241,261,20.8,82.4],
+["Ottawa Senators","Eastern","Atlantic",43,27,10,1,0,0,15,11,12,12,0,1,1,272,241,22.6,81.2],
+["Minnesota Wild","Western","Central",45,23,12,0,1,0,15,11,12,13,0,1,0,266,232,21.4,82.6],
+["New Jersey Devils","Eastern","Metropolitan",41,36,3,1,0,0,14,12,12,12,1,0,3,226,247,22.2,81.8],
+["Seattle Kraken","Western","Pacific",34,34,11,1,0,0,14,12,12,13,0,1,2,222,252,21.6,82.4],
+["Pittsburgh Penguins","Eastern","Metropolitan",41,23,16,0,1,0,13,13,11,13,1,0,1,288,258,20.8,81.4],
+["New York Islanders","Eastern","Metropolitan",43,32,5,0,1,0,13,13,11,14,0,1,2,231,235,20.4,82.8],
+["Calgary Flames","Western","Pacific",32,38,9,0,1,0,13,13,11,14,0,1,3,204,254,21.2,81.6],
+["Detroit Red Wings","Eastern","Atlantic",41,30,9,0,1,0,12,14,11,13,1,0,2,237,246,20.6,82.2],
+["St. Louis Blues","Western","Central",34,33,12,1,0,0,12,14,11,14,1,0,0,213,247,20.4,82.4],
 ["Buffalo Sabres","Eastern","Atlantic",49,23,8,46,34,0,11,15,11,13,37,42,3,280,236,21.8,80.8],
-["Los Angeles Kings","Western","Pacific",33,26,19,30,48,0,13,13,11,13,33,44,1,215,237,21.4,81.8],
+["Los Angeles Kings","Western","Pacific",34,26,19,0,1,0,13,13,11,13,0,1,1,216,237,21.4,81.8],
 ["Anaheim Ducks","Western","Pacific",42,32,5,36,43,0,9,18,9,16,46,32,3,263,277,19.6,80.2],
-["Utah Mammoth","Western","Central",42,30,6,36,42,0,10,17,10,15,38,39,0,258,224,20.2,81.4],
-["Philadelphia Flyers","Eastern","Metropolitan",40,27,12,50,29,0,11,16,10,14,37,41,0,236,238,20.8,81.2],
-["Columbus Blue Jackets","Eastern","Metropolitan",39,28,12,42,37,0,9,18,10,14,37,41,3,245,246,20.2,81.6],
-["Montreal Canadiens","Eastern","Atlantic",47,22,10,44,35,0,10,17,10,14,43,35,0,275,246,21.4,80.8],
-["Chicago Blackhawks","Western","Central",28,37,14,48,31,0,8,20,9,16,31,47,3,204,263,19.4,80.4],
-["San Jose Sharks","Western","Pacific",37,34,7,46,32,0,7,21,7,17,38,39,3,237,280,18.8,79.8],
+["Utah Mammoth","Western","Central",42,31,6,0,1,0,10,17,10,15,0,1,0,259,228,20.2,81.4],
+["Philadelphia Flyers","Eastern","Metropolitan",41,27,12,1,0,0,11,16,10,14,1,0,0,243,239,20.8,81.2],
+["Columbus Blue Jackets","Eastern","Metropolitan",40,28,12,1,0,0,9,18,10,14,1,0,3,250,248,20.2,81.6],
+["Montreal Canadiens","Eastern","Atlantic",47,23,10,0,1,0,10,17,10,14,1,0,0,277,251,21.4,80.8],
+["Chicago Blackhawks","Western","Central",28,38,14,0,1,0,8,20,9,16,1,0,3,207,268,19.4,80.4],
+["San Jose Sharks","Western","Pacific",37,34,8,0,1,0,7,21,7,17,1,0,3,240,284,18.8,79.8],
 ];
 // MLB: name,lg,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,rs,ra,era,avg
 const MLB=[
 // MLB W/L/ATS/O-U updated 2026-04-10 from BettingPros + ESPN + MLB Stats API
 // schema: name,lg,div, W,L, atsW,atsL,atsP, hAtsW,hAtsL, aAtsW,aAtsL, over,under,ouP, rs,ra, era,avg
-["Los Angeles Dodgers","NL","West",10,3,0,1,0,0,1,0,0,1,0,0,83,48,3.36,3.42],
-["Atlanta Braves","NL","East",9,5,1,0,0,1,0,0,0,1,0,0,77,37,2.02,3.68],
-["New York Yankees","AL","East",8,5,0,1,0,0,0,0,1,1,0,0,57,34,2.34,3.72],
-["Philadelphia Phillies","NL","East",6,7,0,1,0,0,1,0,0,1,0,0,46,62,4.09,3.78],
-["Milwaukee Brewers","NL","Central",8,5,0,1,0,0,1,0,0,1,0,0,73,53,3.77,3.82],
-["Houston Astros","AL","West",6,8,0,1,0,0,0,0,1,1,0,0,85,87,6.05,3.86],
-["Baltimore Orioles","AL","East",6,7,0,1,0,0,1,0,0,1,0,0,48,55,3.98,3.94],
-["Texas Rangers","AL","West",7,6,1,0,0,0,0,1,0,1,0,0,51,47,2.94,4.02],
-["Cleveland Guardians","AL","Central",8,6,0,1,0,0,0,0,1,1,0,0,51,54,3.13,3.88],
-["Arizona Diamondbacks","NL","West",8,6,1,0,0,0,0,1,0,1,0,0,57,63,3.91,4.08],
-["San Diego Padres","NL","West",8,6,1,0,0,1,0,0,0,0,1,0,58,53,3.51,3.96],
-["Seattle Mariners","AL","West",5,9,1,0,0,1,0,0,0,1,0,0,49,48,2.62,3.76],
-["New York Mets","NL","East",7,7,0,1,0,0,1,0,0,0,1,0,56,53,3.18,4.12],
-["Minnesota Twins","AL","Central",7,7,0,1,0,0,0,0,1,1,0,0,64,65,3.87,4.04],
-["Toronto Blue Jays","AL","East",6,7,1,0,0,1,0,0,0,1,0,0,51,67,4.64,4.14],
-["Boston Red Sox","AL","East",4,9,0,1,0,0,0,0,1,0,1,0,46,58,4.19,4.22],
-["San Francisco Giants","NL","West",6,8,1,0,0,0,0,1,0,1,0,0,47,60,4.03,4.18],
-["Chicago Cubs","NL","Central",6,7,0,1,0,0,1,0,0,0,1,0,56,46,3.32,4.24],
-["Detroit Tigers","AL","Central",5,9,1,0,0,1,0,0,0,0,1,0,56,57,4.24,4.32],
-["Tampa Bay Rays","AL","East",6,7,1,0,0,1,0,0,0,1,0,0,60,72,5.08,4.28],
-["Pittsburgh Pirates","NL","Central",8,5,1,0,0,0,0,1,0,0,1,0,56,48,3.08,4.44],
-["Miami Marlins","NL","East",8,6,0,1,0,0,0,0,1,0,1,0,67,56,3.58,4.48],
-["Los Angeles Angels","AL","West",7,7,1,0,0,0,0,1,0,1,0,0,61,64,3.74,4.52],
-["Washington Nationals","NL","East",5,8,1,0,0,0,0,1,0,1,0,0,78,81,6.06,4.56],
-["Cincinnati Reds","NL","Central",8,6,0,1,0,0,1,0,0,1,0,0,41,58,3.37,4.62],
-["Kansas City Royals","AL","Central",6,8,1,0,0,1,0,0,0,0,1,0,47,59,4.35,4.66],
-["Athletics","AL","West",6,7,1,0,0,0,0,1,0,0,1,0,51,59,4.71,4.78],
-["Colorado Rockies","NL","West",6,8,0,1,0,0,0,0,1,0,1,0,58,55,3.62,5.24],
-["Chicago White Sox","AL","Central",5,9,0,1,0,0,0,0,1,0,1,0,43,72,5.02,5.38],
-["St. Louis Cardinals","NL","Central",8,5,1,0,0,1,0,0,0,0,1,0,62,64,4.95,4.26],
+["Los Angeles Dodgers","NL","West",11,3,1,1,0,1,1,0,0,2,0,0,89,51,3.36,3.42],
+["Atlanta Braves","NL","East",9,6,1,1,0,1,1,0,0,1,1,0,77,43,2.02,3.68],
+["New York Yankees","AL","East",8,6,0,2,0,0,0,0,2,2,0,0,61,39,2.34,3.72],
+["Philadelphia Phillies","NL","East",7,7,1,1,0,1,1,0,0,1,1,0,50,65,4.09,3.78],
+["Milwaukee Brewers","NL","Central",8,6,0,2,0,0,2,0,0,1,1,0,74,56,3.77,3.82],
+["Houston Astros","AL","West",6,9,1,1,0,0,0,1,1,2,0,0,92,95,6.05,3.86],
+["Baltimore Orioles","AL","East",7,7,1,1,0,1,1,0,0,2,0,0,54,57,3.98,3.94],
+["Texas Rangers","AL","West",7,7,1,1,0,0,0,1,1,2,0,0,54,53,2.94,4.02],
+["Cleveland Guardians","AL","Central",9,6,1,1,0,0,0,1,1,1,1,0,57,54,3.13,3.88],
+["Arizona Diamondbacks","NL","West",8,7,1,1,0,0,0,1,1,1,1,0,60,67,3.91,4.08],
+["San Diego Padres","NL","West",9,6,2,0,0,2,0,0,0,1,1,0,67,58,3.51,3.96],
+["Seattle Mariners","AL","West",6,9,1,1,0,1,1,0,0,2,0,0,57,55,2.62,3.76],
+["New York Mets","NL","East",7,8,0,2,0,0,2,0,0,1,1,0,62,64,3.18,4.12],
+["Minnesota Twins","AL","Central",8,7,1,1,0,0,0,1,1,2,0,0,71,69,3.87,4.04],
+["Toronto Blue Jays","AL","East",6,8,1,1,0,1,1,0,0,2,0,0,55,74,4.64,4.14],
+["Boston Red Sox","AL","East",5,9,1,1,0,0,0,1,1,0,1,0,53,59,4.19,4.22],
+["San Francisco Giants","NL","West",6,9,1,1,0,0,0,1,1,2,0,0,49,66,4.03,4.18],
+["Chicago Cubs","NL","Central",6,8,0,2,0,0,2,0,0,1,1,0,59,50,3.32,4.24],
+["Detroit Tigers","AL","Central",6,9,2,0,0,2,0,0,0,0,2,0,62,58,4.24,4.32],
+["Tampa Bay Rays","AL","East",7,7,2,0,0,2,0,0,0,2,0,0,65,76,5.08,4.28],
+["Pittsburgh Pirates","NL","Central",9,5,2,0,0,0,0,2,0,1,1,0,60,51,3.08,4.44],
+["Miami Marlins","NL","East",8,7,0,2,0,0,0,0,2,0,2,0,68,62,3.58,4.48],
+["Los Angeles Angels","AL","West",7,8,1,1,0,0,0,1,1,2,0,0,64,71,3.74,4.52],
+["Washington Nationals","NL","East",6,8,2,0,0,0,0,2,0,1,1,0,81,82,6.06,4.56],
+["Cincinnati Reds","NL","Central",9,6,1,1,0,1,1,0,0,2,0,0,48,61,3.37,4.62],
+["Kansas City Royals","AL","Central",7,8,2,0,0,2,0,0,0,0,2,0,49,59,4.35,4.66],
+["Athletics","AL","West",7,7,2,0,0,0,0,2,0,1,1,0,62,65,4.71,4.78],
+["Colorado Rockies","NL","West",6,9,0,2,0,0,0,0,2,1,1,0,63,64,3.62,5.24],
+["Chicago White Sox","AL","Central",5,10,0,2,0,0,0,0,2,0,2,0,43,74,5.02,5.38],
+["St. Louis Cardinals","NL","Central",8,6,1,1,0,1,1,0,0,0,1,0,63,71,4.95,4.26],
 ];
 // ── UTILS ────────────────────────────────────────────────────────────────────
 const pct=(w,l)=>w+l===0?0:w/(w+l);
