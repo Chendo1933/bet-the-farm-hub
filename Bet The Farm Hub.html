@@ -1516,7 +1516,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 // TODAY_GAMES format: [{sport,home,away,time,spread,total,spreadLabel}]
 const TODAY_DATE_STR=(()=>{const d=new Date();return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});})();
 // MLB_PITCHERS: keyed by team name (normalized), populated by fetchMLBProbablePitchers()
-// Format: { "New York Yankees": { name, era, whip, wins, losses, ip }, ... }
+// Format: { "New York Yankees": { name, era, whip, wins, losses, ip, k9, bb9, hr9, baa, gs, fip }, ... }
 let MLB_PITCHERS={};
 let TODAY_GAMES=[
   // All games auto-populate from the Odds API on Refresh.
@@ -3397,13 +3397,30 @@ async function fetchMLBProbablePitchers(){
           const seasonStats=(pp.stats||[]).find(s=>s.type?.displayName==='statsSingleSeason')?.stat||{};
           const era=parseFloat(seasonStats.era);
           const whip=parseFloat(seasonStats.whip);
+          const ip=parseFloat(seasonStats.inningsPitched)||0;
+          const k9=ip>0?parseFloat(seasonStats.strikeoutsPer9Inn):null;
+          const bb9=ip>0?parseFloat(seasonStats.walksPer9Inn):null;
+          const hr9=ip>0?parseFloat(seasonStats.homeRunsPer9):null;
+          const baa=parseFloat(seasonStats.avg);
+          const gs=parseInt(seasonStats.gamesStarted)||0;
+          // Compute FIP: ((13*HR + 3*BB - 2*K) / IP) + 3.2 (league constant)
+          const hr=parseInt(seasonStats.homeRuns)||0;
+          const bb=parseInt(seasonStats.baseOnBalls)||0;
+          const k=parseInt(seasonStats.strikeOuts)||0;
+          const fip=ip>=3?((13*hr+3*bb-2*k)/ip)+3.2:null;
           newPitchers[teamName]={
             name:pp.fullName||pp.lastName||'TBD',
             era:isNaN(era)?null:era,
             whip:isNaN(whip)?null:whip,
             wins:seasonStats.wins||0,
             losses:seasonStats.losses||0,
-            ip:seasonStats.inningsPitched||'0.0'
+            ip:seasonStats.inningsPitched||'0.0',
+            k9:isNaN(k9)?null:k9,
+            bb9:isNaN(bb9)?null:bb9,
+            hr9:isNaN(hr9)?null:hr9,
+            baa:isNaN(baa)?null:baa,
+            gs,
+            fip:fip!=null?Math.round(fip*100)/100:null,
           };
         }
       }
@@ -6603,6 +6620,35 @@ function hbProjectScores(g,ht,at,ix){
     homeScore=(hsc.ppg*vB+asc.papg*vB)/2;
     awayScore=(asc.ppg*vD+hsc.papg*vD)/2;
   }
+  // ── MLB: Starter-adjusted run projection ──────────────────────────────────
+  // Team RS/RA averages assume an average pitcher starts. But baseball is
+  // pitcher-driven — adjust runs allowed based on today's starter vs team ERA.
+  // Ratio = starter ERA / team ERA. Ace (ratio 0.67) → opponent scores ~25% fewer runs.
+  // #5 starter (ratio 1.35) → opponent scores ~25% more. Capped at ±30% to avoid
+  // extreme swings from early-season small samples (< 20 IP).
+  if(g.sport==='mlb'){
+    const hPit=getMLBPitcher(g.home,g.rawHome);
+    const aPit=getMLBPitcher(g.away,g.rawAway);
+    const hTeamERA=ht[ix.era]||0;
+    const aTeamERA=at[ix.era]||0;
+    // Adjust awayScore (runs scored by away team = runs allowed by home pitcher)
+    if(hPit?.era!=null&&hTeamERA>0){
+      const ipNum=parseFloat(hPit.ip)||0;
+      const ratio=hPit.era/hTeamERA;
+      // Dampen toward 1.0 for small samples: full weight at 30 IP, half at 15 IP
+      const conf=Math.min(1,ipNum/30);
+      const adj=1+(ratio-1)*conf;
+      awayScore*=Math.max(0.70,Math.min(1.30,adj));
+    }
+    // Adjust homeScore (runs scored by home team = runs allowed by away pitcher)
+    if(aPit?.era!=null&&aTeamERA>0){
+      const ipNum=parseFloat(aPit.ip)||0;
+      const ratio=aPit.era/aTeamERA;
+      const conf=Math.min(1,ipNum/30);
+      const adj=1+(ratio-1)*conf;
+      homeScore*=Math.max(0.70,Math.min(1.30,adj));
+    }
+  }
   let total=homeScore+awayScore;
   // ── MLB: apply home ballpark run factor ───────────────────────────────────
   if(g.sport==='mlb'&&g.home){
@@ -6813,52 +6859,52 @@ function hbScoreOU(g, ht, at, ix){
     }
   }
 
-  // ── MLB starter ERA signal (affects O/U direction) ──
-  // Computed before the signal gate so it can be counted as a qualifying signal
-  // alongside histSignal/projSignal. Both aces lean Under; both bad starters lean Over.
+  // ── MLB starter signal (affects O/U direction) ──
+  // Uses FIP when available (defense-independent); falls back to ERA.
+  // Computed before the signal gate so it counts as a qualifying signal.
   let pitcherOUSignal=null;
   if(sport==='mlb'){
     const hPit=getMLBPitcher(g.home,g.rawHome);
     const aPit=getMLBPitcher(g.away,g.rawAway);
-    if(hPit?.era!=null&&aPit?.era!=null){
+    const hVal=hPit?.fip??hPit?.era, aVal=aPit?.fip??aPit?.era;
+    const statLbl=(hPit?.fip!=null&&aPit?.fip!=null)?'FIP':'ERA';
+    if(hVal!=null&&aVal!=null){
       const hN=hPit.name.split(' ').slice(-1)[0];
       const aN=aPit.name.split(' ').slice(-1)[0];
-      const avgERA=(hPit.era+aPit.era)/2;
-      // Tier each starter independently — O/U direction depends on BOTH pitchers
+      const avgVal=(hVal+aVal)/2;
+      // Tier each starter — O/U direction depends on BOTH pitchers
       // elite ≤3.25 · quality ≤4.00 · average ≤4.75 · weak >4.75
-      const ptier=era=>era<=3.25?'e':era<=4.00?'q':era<=4.75?'a':'w';
-      const hT=ptier(hPit.era), aT=ptier(aPit.era);
+      const ptier=v=>v<=3.25?'e':v<=4.00?'q':v<=4.75?'a':'w';
+      const hT=ptier(hVal), aT=ptier(aVal);
       const bothGood=(hT==='e'||hT==='q')&&(aT==='e'||aT==='q');
       const bothWeak=hT==='w'&&aT==='w';
       const oneGoodOneWeak=((hT==='e'||hT==='q')&&aT==='w')||((aT==='e'||aT==='q')&&hT==='w');
+      // K/9 context for labels
+      const hK=hPit?.k9!=null?` ${hPit.k9.toFixed(1)}K/9`:'';
+      const aK=aPit?.k9!=null?` ${aPit.k9.toFixed(1)}K/9`:'';
       if(bothGood){
-        // Both quality starters → Under lean (shared suppression of scoring)
-        if(avgERA<=3.25){
-          pitcherOUSignal=0.25; // both aces
-          factors.push({t:'pos',l:`🔒 Both aces: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → strong Under`});
-        } else if(avgERA<=3.75){
-          pitcherOUSignal=0.32; // elite matchup
-          factors.push({t:'pos',l:`🎯 Elite matchup: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → Under lean`});
+        if(avgVal<=3.25){
+          pitcherOUSignal=0.25;
+          factors.push({t:'pos',l:`🔒 Both aces: ${hN} ${hVal.toFixed(2)}${hK} + ${aN} ${aVal.toFixed(2)}${aK} ${statLbl} → strong Under`});
+        } else if(avgVal<=3.75){
+          pitcherOUSignal=0.32;
+          factors.push({t:'pos',l:`🎯 Elite matchup: ${hN} ${hVal.toFixed(2)}${hK} + ${aN} ${aVal.toFixed(2)}${aK} ${statLbl} → Under lean`});
         } else {
-          pitcherOUSignal=0.40; // both decent, mild lean
-          factors.push({t:'pos',l:`🎯 Quality starters: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → slight Under`});
+          pitcherOUSignal=0.40;
+          factors.push({t:'pos',l:`🎯 Quality starters: ${hN} ${hVal.toFixed(2)} + ${aN} ${aVal.toFixed(2)} ${statLbl} → slight Under`});
         }
       } else if(bothWeak){
-        // Both struggling → Over lean (neither pitcher suppresses scoring)
-        if(avgERA>=5.25){
-          pitcherOUSignal=0.75; // both bad
-          factors.push({t:'pos',l:`📈 Both struggling: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → strong Over`});
+        if(avgVal>=5.25){
+          pitcherOUSignal=0.75;
+          factors.push({t:'pos',l:`📈 Both struggling: ${hN} ${hVal.toFixed(2)} + ${aN} ${aVal.toFixed(2)} ${statLbl} → strong Over`});
         } else {
-          pitcherOUSignal=0.65; // both below avg
-          factors.push({t:'pos',l:`📈 Both weak: ${hN} ${hPit.era.toFixed(2)} + ${aN} ${aPit.era.toFixed(2)} ERA → Over lean`});
+          pitcherOUSignal=0.65;
+          factors.push({t:'pos',l:`📈 Both weak: ${hN} ${hVal.toFixed(2)} + ${aN} ${aVal.toFixed(2)} ${statLbl} → Over lean`});
         }
       } else if(oneGoodOneWeak){
-        // Ace vs liability — advantage is DIRECTIONAL (who covers), not about the total
-        // F10 in hbScoreMatchup already captures this as a spread edge
         pitcherOUSignal=null;
-        factors.push({t:'neu',l:`⚾ Ace vs liability: ${hN} ${hPit.era.toFixed(2)} vs ${aN} ${aPit.era.toFixed(2)} ERA → spread edge only`});
+        factors.push({t:'neu',l:`⚾ Ace vs liability: ${hN} ${hVal.toFixed(2)} vs ${aN} ${aVal.toFixed(2)} ${statLbl} → spread edge only`});
       }
-      // average vs anything: no pitcher O/U signal — too ambiguous
     }
   }
 
@@ -7174,28 +7220,36 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
   }
 
   // ── 10. Starting pitcher matchup (MLB only) ──
-  // ERA differential between today's scheduled starters from the MLB Stats API.
-  // Lower ERA = better pitcher. A 1.0 ERA gap is very meaningful in baseball.
-  // Weight: 0.20 — as impactful as run differential for a single game.
+  // Uses FIP (Fielding Independent Pitching) when available — strips out defense and luck,
+  // isolating what the pitcher actually controls (K, BB, HR). Falls back to ERA.
+  // Weight: 0.22 — single most predictive factor in MLB game outcomes.
   if(sport==='mlb'){
     const hPit=getMLBPitcher(g.home,g.rawHome);
     const aPit=getMLBPitcher(g.away,g.rawAway);
-    if(hPit?.era!=null&&aPit?.era!=null){
-      const pickedERA=atsPick==='home'?hPit.era:aPit.era;
-      const oppERA=atsPick==='home'?aPit.era:hPit.era;
-      const eraDiff=oppERA-pickedERA; // positive = picked team's starter is better
-      const pitScore=eraDiff>1.5?0.72:eraDiff>0.75?0.64:eraDiff>0?0.56:eraDiff>-0.75?0.44:eraDiff>-1.5?0.36:0.28;
-      const pickedPit=atsPick==='home'?hPit:aPit;
-      const oppPit=atsPick==='home'?aPit:hPit;
-      const pName=pickedPit.name.split(' ').slice(-1)[0];
-      const oName=oppPit.name.split(' ').slice(-1)[0];
-      if(eraDiff>0.75)
-        factors.push({t:'pos',l:`🎯 ${pName} (${pickedERA.toFixed(2)} ERA) vs ${oName} (${oppERA.toFixed(2)} ERA)`});
-      else if(eraDiff<-0.75)
-        factors.push({t:'neg',l:`🎯 ${oName} (${oppERA.toFixed(2)} ERA) outmatches ${pName} (${pickedERA.toFixed(2)} ERA)`});
-      else
-        factors.push({t:'neu',l:`🎯 Even SP matchup: ${pName} ${pickedERA.toFixed(2)} vs ${oName} ${oppERA.toFixed(2)}`});
-      score+=pitScore*0.20; weight+=0.20;
+    if(hPit&&aPit){
+      // Prefer FIP over ERA; fall back to ERA if FIP unavailable
+      const hStat=hPit.fip??hPit.era, aStat=aPit.fip??aPit.era;
+      const statLabel=(hPit.fip!=null&&aPit.fip!=null)?'FIP':'ERA';
+      if(hStat!=null&&aStat!=null){
+        const pickedStat=atsPick==='home'?hStat:aStat;
+        const oppStat=atsPick==='home'?aStat:hStat;
+        const diff=oppStat-pickedStat; // positive = picked team's starter is better
+        const pitScore=diff>1.5?0.74:diff>0.75?0.65:diff>0?0.56:diff>-0.75?0.44:diff>-1.5?0.36:0.26;
+        const pickedPit=atsPick==='home'?hPit:aPit;
+        const oppPit=atsPick==='home'?aPit:hPit;
+        const pName=pickedPit.name.split(' ').slice(-1)[0];
+        const oName=oppPit.name.split(' ').slice(-1)[0];
+        // Build rich label with K/9 and WHIP when available
+        const pExtra=pickedPit.k9!=null?` ${pickedPit.k9.toFixed(1)}K/9`:'';
+        const oExtra=oppPit.k9!=null?` ${oppPit.k9.toFixed(1)}K/9`:'';
+        if(diff>0.75)
+          factors.push({t:'pos',l:`🎯 ${pName} (${pickedStat.toFixed(2)} ${statLabel}${pExtra}) vs ${oName} (${oppStat.toFixed(2)}${oExtra})`});
+        else if(diff<-0.75)
+          factors.push({t:'neg',l:`🎯 ${oName} (${oppStat.toFixed(2)} ${statLabel}${oExtra}) outmatches ${pName} (${pickedStat.toFixed(2)}${pExtra})`});
+        else
+          factors.push({t:'neu',l:`🎯 SP matchup: ${pName} ${pickedStat.toFixed(2)} vs ${oName} ${oppStat.toFixed(2)} ${statLabel}`});
+        score+=pitScore*0.22; weight+=0.22;
+      }
     }
   }
 
