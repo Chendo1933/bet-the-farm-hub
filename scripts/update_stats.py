@@ -216,6 +216,75 @@ def fetch_nhl_special_teams():
         return {}
 
 
+def fetch_nhl_goalie_stats():
+    """
+    Fetch starting goalie SV% and GAA from the NHL Stats API.
+    For each team, picks the goalie with the most games started.
+    Returns {hub_team_name: {sv: float, gaa: float, name: str}} or {} on failure.
+    """
+    now = datetime.now()
+    year = now.year if now.month >= 9 else now.year - 1
+    season_id = f"{year}{year + 1}"
+    url = (
+        f"https://api.nhle.com/stats/rest/en/goalie/summary"
+        f"?isAggregate=false&isGame=false"
+        f"&cayenneExp=seasonId={season_id}%20and%20gameTypeId=2"
+        f"&sort=%5B%7B%22property%22%3A%22gamesStarted%22%2C%22direction%22%3A%22DESC%22%7D%5D"
+        f"&limit=90"
+    )
+    # NHL API abbreviation → hub team name
+    NHL_ABBR_MAP = {
+        "ANA": "Anaheim Ducks", "BOS": "Boston Bruins", "BUF": "Buffalo Sabres",
+        "CAR": "Carolina Hurricanes", "CBJ": "Columbus Blue Jackets",
+        "CGY": "Calgary Flames", "CHI": "Chicago Blackhawks",
+        "COL": "Colorado Avalanche", "DAL": "Dallas Stars",
+        "DET": "Detroit Red Wings", "EDM": "Edmonton Oilers",
+        "FLA": "Florida Panthers", "LAK": "Los Angeles Kings",
+        "MIN": "Minnesota Wild", "MTL": "Montreal Canadiens",
+        "NJD": "New Jersey Devils", "NSH": "Nashville Predators",
+        "NYI": "New York Islanders", "NYR": "New York Rangers",
+        "OTT": "Ottawa Senators", "PHI": "Philadelphia Flyers",
+        "PIT": "Pittsburgh Penguins", "SEA": "Seattle Kraken",
+        "SJS": "San Jose Sharks", "STL": "St. Louis Blues",
+        "TBL": "Tampa Bay Lightning", "TOR": "Toronto Maple Leafs",
+        "UTA": "Utah Mammoth", "VAN": "Vancouver Canucks",
+        "VGK": "Vegas Golden Knights", "WPG": "Winnipeg Jets",
+        "WSH": "Washington Capitals",
+    }
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        if resp.status_code != 200:
+            print(f"  · NHL goalie API returned {resp.status_code} — SV%/GAA skipped")
+            return {}
+        data = resp.json()
+        # Group by team, pick goalie with most games started per team
+        by_team = {}
+        for g in data.get("data", []):
+            abbr = (g.get("teamAbbrevs") or "").split(",")[0]  # handle traded players
+            gs = g.get("gamesStarted", 0) or 0
+            if abbr and gs > by_team.get(abbr, {}).get("gs", 0):
+                by_team[abbr] = {
+                    "gs": gs,
+                    "sv": g.get("savePct"),
+                    "gaa": g.get("goalsAgainstAverage"),
+                    "name": g.get("goalieFullName", ""),
+                }
+        result = {}
+        for abbr, info in by_team.items():
+            team_name = NHL_ABBR_MAP.get(abbr)
+            if team_name and info["sv"] is not None and info["gaa"] is not None:
+                result[team_name] = {
+                    "sv": round(info["sv"], 4),
+                    "gaa": round(info["gaa"], 3),
+                    "name": info["name"],
+                }
+        print(f"  ✓ NHL goalie API: {len(result)} teams with starter SV%/GAA")
+        return result
+    except Exception as e:
+        print(f"  · NHL goalie API error: {e} — SV%/GAA skipped")
+        return {}
+
+
 def update_nhl(html_lines):
     print("\n── NHL ──────────────────────────────────────────────────────────")
     urls = [
@@ -225,6 +294,8 @@ def update_nhl(html_lines):
 
     # Fetch special teams data from NHL Stats API
     special_teams = fetch_nhl_special_teams()
+    # Fetch starter goalie SV%/GAA from NHL Stats API
+    goalie_stats = fetch_nhl_goalie_stats()
 
     total = 0
     for entry in fetch_standings(urls, "NHL"):
@@ -249,13 +320,21 @@ def update_nhl(html_lines):
         if st.get("pk") is not None:
             updates[19] = st["pk"]
 
+        # Patch starter goalie SV% and GAA (indices 24, 25)
+        gl = goalie_stats.get(name, {})
+        if gl.get("sv") is not None:
+            updates[24] = gl["sv"]
+        if gl.get("gaa") is not None:
+            updates[25] = gl["gaa"]
+
         n = patch_rows(html_lines, name, updates)
         if n:
             total += n
             pp_str = f" | PP {st['pp']}% PK {st['pk']}%" if st else ""
+            gl_str = f" | G: {gl['name'].split()[-1]} SV%{gl['sv']:.3f}" if gl else ""
             print(f"  ✓ {name}: {int(w)}-{int(l)}-{int(otl)}"
                   + (f" | GF/GA {int(gf)}/{int(ga)}" if gf else "")
-                  + pp_str)
+                  + pp_str + gl_str)
         else:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
     return total
@@ -264,6 +343,60 @@ def update_nhl(html_lines):
 # ── MLB ───────────────────────────────────────────────────────────────────────
 #   W=3  L=4  rs=15 (season total)  ra=16 (season total)
 #   era=17 and avg=18 intentionally NOT overwritten — those are pre-season priors
+#   ops=23  whip=24  (from MLB Stats API)
+
+MLB_NAME_MAP_STATSAPI = {
+    "Arizona Diamondbacks": "Arizona Diamondbacks",
+    "Cleveland Guardians":  "Cleveland Guardians",
+}
+
+
+def fetch_mlb_advanced():
+    """
+    Fetch team OPS (hitting) and WHIP (pitching) from MLB Stats API (free, no key).
+    Returns {team_full_name: {ops: float, whip: float}} or {} on failure.
+    """
+    year = datetime.now().year
+    hitting_url = (
+        f"https://statsapi.mlb.com/api/v1/teams/stats"
+        f"?stats=season&group=hitting&season={year}&sportIds=1"
+    )
+    pitching_url = (
+        f"https://statsapi.mlb.com/api/v1/teams/stats"
+        f"?stats=season&group=pitching&season={year}&sportIds=1"
+    )
+    result = {}
+    try:
+        # Fetch hitting stats (OPS)
+        resp = requests.get(hitting_url, headers=HEADERS, timeout=TIMEOUT)
+        if resp.status_code != 200:
+            print(f"  · MLB Stats API hitting returned {resp.status_code} — OPS skipped")
+            return {}
+        for split in resp.json().get("stats", [{}])[0].get("splits", []):
+            name = split.get("team", {}).get("name", "")
+            name = MLB_NAME_MAP_STATSAPI.get(name, name)
+            ops = split.get("stat", {}).get("ops")
+            if name and ops is not None:
+                result.setdefault(name, {})["ops"] = float(ops)
+
+        # Fetch pitching stats (WHIP)
+        resp = requests.get(pitching_url, headers=HEADERS, timeout=TIMEOUT)
+        if resp.status_code != 200:
+            print(f"  · MLB Stats API pitching returned {resp.status_code} — WHIP skipped")
+            return result
+        for split in resp.json().get("stats", [{}])[0].get("splits", []):
+            name = split.get("team", {}).get("name", "")
+            name = MLB_NAME_MAP_STATSAPI.get(name, name)
+            whip = split.get("stat", {}).get("whip")
+            if name and whip is not None:
+                result.setdefault(name, {})["whip"] = float(whip)
+
+        print(f"  ✓ MLB Stats API: {len(result)} teams with OPS/WHIP")
+        return result
+    except Exception as e:
+        print(f"  · MLB Stats API error: {e} — OPS/WHIP skipped")
+        return result
+
 
 def update_mlb(html_lines):
     print("\n── MLB ──────────────────────────────────────────────────────────")
@@ -271,6 +404,10 @@ def update_mlb(html_lines):
         "https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings",
         "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/standings",
     ]
+
+    # Fetch advanced stats from MLB Stats API
+    advanced = fetch_mlb_advanced()
+
     total = 0
     for entry in fetch_standings(urls, "MLB"):
         raw  = entry.get("team", {}).get("displayName", "")
@@ -287,11 +424,22 @@ def update_mlb(html_lines):
         if rs: updates[15] = rs
         if ra: updates[16] = ra
 
+        # Patch OPS + WHIP from MLB Stats API (indices 23, 24)
+        adv = advanced.get(name, {})
+        if adv.get("ops") is not None:
+            updates[23] = round(adv["ops"], 3)
+        if adv.get("whip") is not None:
+            updates[24] = round(adv["whip"], 2)
+
         n = patch_rows(html_lines, name, updates)
         if n:
             total += n
+            adv_str = ""
+            if adv.get("ops") is not None:
+                adv_str = f" | OPS {adv['ops']:.3f} WHIP {adv.get('whip', 0):.2f}"
             print(f"  ✓ {name}: {int(w)}-{int(l)}"
-                  + (f" | RS/RA {rs}/{ra}" if rs else ""))
+                  + (f" | RS/RA {rs}/{ra}" if rs else "")
+                  + adv_str)
         else:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
     return total
