@@ -7577,42 +7577,7 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
 function hbGeneratePicks(){
   const picks=[];
   if(!TODAY_GAMES.length){
-    const fallback=[];
-    const processStatic=(arr,sp,getVals)=>{
-      arr.forEach(t=>{
-        const v=getVals(t); if(!v)return;
-        const{name,haw,hal,aw,al}=v;
-        const n=haw+hal; if(n<5)return;
-        const pct=haw/n;
-        const overall=aw+al>=5?aw/(aw+al):pct;
-        const score=(pct*.6+overall*.4);
-        if(score<0.46)return; // low bar — per-sport top-3 selection handles quality filter
-        fallback.push({score,score100:Math.round(score*100),sport:sp,
-          pickLabel:`${name} (Home ATS ${(pct*100).toFixed(0)}%)`,
-          pickType:'Home ATS Trend',pickedTeam:name,
-          game:'Season trend — load schedule for tonight',time:'',date:'',
-          odds:-110,edge:(score-0.5238)*100,factors:[{t:'pos',l:`🏠 Home ATS ${(pct*100).toFixed(0)}% (${haw}-${hal})`}],
-          why:`${name} covers at home ${(pct*100).toFixed(0)}% (${haw}-${hal}). Overall ATS: ${aw}-${al}. Refresh Odds in Analyzer for tonight's games.`
-        });
-      });
-    };
-    processStatic(NFL,'NFL',t=>{const[nm,,,w,l,aw,al,,haw,hal]=t;return{name:nm,haw,hal,aw,al};});
-    processStatic(CFB,'CFB',t=>{const[rank,name,conf,w,lx,atw,atl,,haw,hal]=t;if(!name)return null;return{name,haw:haw||0,hal:hal||0,aw:atw,al:atl};});
-    processStatic(NBA,'NBA',t=>{const[nm,,,w,l,aw,al,,haw,hal]=t;if(!nm)return null;return{name:nm,haw:haw||0,hal:hal||0,aw,al};});
-    processStatic(CBB,'CBB',t=>{const[nm,cf,w,l,aw,al,,haw,hal]=t;if(!nm)return null;return{name:nm,haw:haw||0,hal:hal||0,aw,al};});
-    processStatic(NHL,'NHL',t=>{const[nm,,,w,l,otl,plw,pll]=t;return{name:nm,haw:plw||0,hal:pll||0,aw:plw||0,al:pll||0};});
-    processStatic(MLB,'MLB',t=>{const[nm,,,w,l,aw,al,,haw,hal]=t;return{name:nm,haw:haw||0,hal:hal||0,aw,al};});
-    // Guarantee representation: take top 3 per sport by score, then sort combined list
-    const bySport={};
-    fallback.forEach(p=>{if(!bySport[p.sport])bySport[p.sport]=[];bySport[p.sport].push(p);});
-    const guaranteed=[];
-    Object.values(bySport).forEach(arr=>{
-      arr.sort((a,b)=>b.score-a.score);
-      guaranteed.push(...arr.slice(0,3));
-    });
-    guaranteed.sort((a,b)=>b.score-a.score);
-    // Tag fallback picks as spread type so bet-type filter works correctly
-    return guaranteed.map(p=>({...p,betType:'spread',home:p.pickedTeam,away:'',rawHome:p.pickedTeam,rawAway:''}));
+    return picks; // No games loaded — hbRender will show the empty-state message
   }
 
   let _dbg_noIx=0,_dbg_noTeam=0,_dbg_ok=0;
@@ -7951,21 +7916,12 @@ function hbRender(){
 
   if(!picks.length){
     if(hasOdds){
-      // Live odds loaded but no picks survive filtering — show message and stop.
-      // Without this early return the empty grid overwrite below would erase the message.
       wrap.innerHTML='<div class="hb-empty">No picks found for selected filter — try "All Sports" or check back once lines are posted.</div>';
-      hbRenderParlay();
-      return;
-    }
-    // No odds — try fallback season-trend picks
-    const fb=hbGeneratePicks();
-    if(fb.length){
-      picks=fb.slice(0,12);
     } else {
-      wrap.innerHTML=topHtml+'<div class="hb-empty">📡 Refresh Odds in the Analyzer for tonight\'s ranked picks<br>Showing season-long ATS trends below in the meantime</div>';
-      hbRenderParlay();
-      return;
+      wrap.innerHTML=topHtml+'<div class="hb-empty">No games loaded yet. Go to <strong>Matchup Analyzer</strong> and click <strong>Refresh Odds</strong> to load today\'s games, then come back here for scored picks.</div>';
     }
+    hbRenderParlay();
+    return;
   }
 
   const counts={elite:0,strong:0,good:0,lean:0};
