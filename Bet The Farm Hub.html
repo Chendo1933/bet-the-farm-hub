@@ -515,6 +515,40 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-sim-item{font-size:11px;font-weight:600;color:var(--text);padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.04);}
 .hb-sim-item.sim-win{color:#60a5fa;}.hb-sim-item.sim-cover{color:#4ade80;}.hb-sim-item.sim-ou{color:#c084fc;}
 .hb-why{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:8px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:7px;border-left:2px solid var(--border);}
+/* ── Prediction block ── */
+.hb-prediction{margin:10px 0;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;}
+.hb-pred-main{margin-bottom:10px;}
+.hb-proj-score{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.hb-proj-picked{font-size:20px;font-weight:900;color:var(--text);}
+.hb-proj-dash{font-size:16px;color:var(--muted);font-weight:400;}
+.hb-proj-opp{font-size:20px;font-weight:900;color:var(--muted);}
+.hb-proj-cushion{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;margin-left:4px;}
+.hb-cush-good{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.25);}
+.hb-cush-thin{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25);}
+.hb-cush-bad{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.25);}
+/* O/U projection */
+.hb-ou-proj{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.hb-ou-dir{font-size:18px;font-weight:900;}
+.hb-ou-over{color:#a78bfa;}
+.hb-ou-under{color:#60a5fa;}
+.hb-ou-val{font-size:13px;font-weight:700;color:var(--text);}
+.hb-ou-pct{font-size:11px;color:var(--muted);font-weight:600;}
+/* Metrics row */
+.hb-metrics{display:flex;gap:2px;flex-wrap:wrap;}
+.hb-metric{flex:1;min-width:60px;text-align:center;padding:6px 4px;background:rgba(255,255,255,.03);border-radius:6px;}
+.hb-metric-val{display:block;font-size:15px;font-weight:900;color:var(--text);line-height:1.2;}
+.hb-metric-lbl{display:block;font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+.hb-val-pos{color:#4ade80;}
+.hb-val-neg{color:#f87171;}
+/* Factor rows */
+.hb-frows{margin:8px 0 10px;display:flex;flex-direction:column;gap:3px;}
+.hb-frow{font-size:11px;font-weight:600;color:var(--text2);padding:4px 8px;border-radius:5px;display:flex;align-items:flex-start;gap:6px;line-height:1.4;}
+.hb-frow-icon{font-size:11px;font-weight:900;width:14px;text-align:center;flex-shrink:0;line-height:1.4;}
+.hb-frow-pos{background:rgba(74,222,128,.06);border-left:2px solid #4ade80;}.hb-frow-pos .hb-frow-icon{color:#4ade80;}
+.hb-frow-neg{background:rgba(248,113,113,.06);border-left:2px solid #f87171;}.hb-frow-neg .hb-frow-icon{color:#f87171;}
+.hb-frow-neu{background:rgba(148,163,184,.06);border-left:2px solid var(--muted);}.hb-frow-neu .hb-frow-icon{color:var(--muted);}
+/* Footer tweaks */
+.hb-log-btn{background:rgba(201,168,76,.12)!important;border-color:rgba(201,168,76,.3)!important;}
 /* Alt lines strip */
 .hb-altlines{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:6px 0 10px;padding:6px 10px;background:rgba(96,165,250,.04);border:1px solid rgba(96,165,250,.12);border-radius:7px;}
 .hb-alt-label{font-size:9px;font-weight:800;color:#60a5fa;text-transform:uppercase;letter-spacing:.5px;width:100%;margin-bottom:2px;}
@@ -7940,7 +7974,76 @@ function hbRender(){
     const inParlay=_hbParlay.some(x=>x.game===p.game&&x.pickLabel===p.pickLabel);
     const kellyAmt=kellyStake(p.score,p.odds,1000,0.25);
     const kellyDisp=kellyAmt>0.5?`¼Kelly: $${kellyAmt.toFixed(0)}/1k`:'Marginal edge';
-    const factorBadges=p.factors.slice(0,4).map(f=>`<span class="hb-factor hb-factor-${f.t}">${f.l}</span>`).join('');
+
+    // ── Build prediction data for card ──
+    const s=p.sim;
+    const side=p.atsPick;
+    const pickedTeam=side==='home'?p.home:side==='away'?p.away:null;
+    const shortPicked=pickedTeam?pickedTeam.split(' ').slice(-1)[0]:null;
+    const oppTeam=side==='home'?p.away:side==='away'?p.home:null;
+    const shortOpp=oppTeam?oppTeam.split(' ').slice(-1)[0]:null;
+
+    // Win probability
+    const winProb=s&&side?(side==='home'?s.homeWinProb:s.awayWinProb):null;
+    const impliedProb2=s&&side?(side==='home'?s.homeImplied:s.awayImplied):null;
+    const edgePct=(winProb!=null&&impliedProb2!=null)?Math.round((winProb-impliedProb2)*100):null;
+
+    // Projected score
+    let projHtml='';
+    if(s&&s.projHomeScore!=null&&s.projMargin!=null&&side!=null){
+      let hS,aS;
+      const noTie=['nba','cbb','nfl','cfb','mlb'];
+      if(noTie.includes((p.sport||'').toLowerCase())&&Math.round(s.projHomeScore)===Math.round(s.projAwayScore)&&Math.abs(s.projMargin)>0.01){
+        if(s.projMargin>0){hS=Math.round(s.projHomeScore);aS=hS-1;}else{aS=Math.round(s.projAwayScore);hS=aS-1;}
+      }else{hS=Math.round(s.projHomeScore);aS=Math.round(s.projAwayScore);}
+      const pScore=side==='home'?hS:aS, oScore=side==='home'?aS:hS;
+      let cushion=null,cushionCls='',cushionLbl='';
+      const sp2=p.gObj?.spread??null;
+      if(sp2!=null){
+        cushion=side==='home'?(s.projMargin+sp2):(-(s.projMargin+sp2));
+        if(cushion>3){cushionCls='hb-cush-good';cushionLbl=`covers by ${cushion.toFixed(1)}`;}
+        else if(cushion>=0){cushionCls='hb-cush-thin';cushionLbl=`covers by ${cushion.toFixed(1)} (thin)`;}
+        else{cushionCls='hb-cush-bad';cushionLbl=`${Math.abs(cushion).toFixed(1)} short`;}
+      }
+      projHtml=`<div class="hb-proj-score">
+        <span class="hb-proj-picked">${shortPicked} ${pScore}</span>
+        <span class="hb-proj-dash">-</span>
+        <span class="hb-proj-opp">${shortOpp} ${oScore}</span>
+        ${cushionLbl?`<span class="hb-proj-cushion ${cushionCls}">${cushionLbl}</span>`:''}
+      </div>`;
+    }
+
+    // O/U projection (for ou picks) — use the PICK direction, not raw sim
+    let ouHtml='';
+    if(p.betType==='ou'){
+      const isOver=p.pickedTeam==='Over'||(p.pickLabel||'').startsWith('Over');
+      const confPct=p.score100||Math.round((p.score||0.5)*100);
+      const projT=s?.projTotal?s.projTotal.toFixed(1):'';
+      const totalLine=s?.totalLine||p.gObj?.total||'';
+      ouHtml=`<div class="hb-ou-proj">
+        <span class="hb-ou-dir ${isOver?'hb-ou-over':'hb-ou-under'}">${isOver?'OVER':'UNDER'} ${totalLine}</span>
+        ${projT?`<span class="hb-ou-val">Proj Total: ${projT}</span>`:''}
+        <span class="hb-ou-pct">${confPct}% confidence</span>
+      </div>`;
+    }
+
+    // Pitchers (MLB)
+    let pitHtml='';
+    if(p.sport==='MLB'){
+      const hPit=getMLBPitcher(p.home,p.rawHome);
+      const aPit=getMLBPitcher(p.away,p.rawAway);
+      if(hPit||aPit){
+        const fmt=pit=>pit?`${pit.name.split(' ').slice(-1)[0]}${pit.fip!=null?' '+pit.fip.toFixed(2)+' FIP':pit.era!=null?' '+pit.era.toFixed(2)+' ERA':''}`:'TBD';
+        pitHtml=`<div class="hb-pitchers">${fmt(aPit)} vs ${fmt(hPit)}</div>`;
+      }
+    }
+
+    // Factor list (readable rows, not tiny badges)
+    const factorList=p.factors.slice(0,4).map(f=>{
+      const icon=f.t==='pos'?'+':f.t==='neg'?'-':'~';
+      return `<div class="hb-frow hb-frow-${f.t}"><span class="hb-frow-icon">${icon}</span>${f.l}</div>`;
+    }).join('');
+
     html+=`<div class="hb-card hb-card-${tier}">
       <div class="hb-card-top hb-top-${tier}"></div>
       <div class="hb-card-body">
@@ -7952,114 +8055,25 @@ function hbRender(){
           ${hbScoreRing(p.score100,tier)}
         </div>
         <div class="hb-pick">${p.pickLabel}</div>
-        <div class="hb-game">${(()=>{
-          const hm=getMascot(p.rawHome||p.home,p.home);
-          const am=getMascot(p.rawAway||p.away,p.away);
-          const hHtml=hm?`${p.home}<span class="team-mascot">${hm}</span>`:p.home;
-          const aHtml=am?`${p.away}<span class="team-mascot">${am}</span>`:p.away;
-          return `${aHtml} <span style="color:var(--muted)">@</span> ${hHtml}`;
-        })()}</div>
+        <div class="hb-game">${p.away} <span style="color:var(--muted)">@</span> ${p.home}</div>
         <div class="hb-time">${p.date?p.date+' · ':''}${p.time||'Time TBD'} · ${p.pickType}</div>
-        ${(()=>{
-          if(p.sport!=='MLB')return '';
-          const hPit=getMLBPitcher(p.home,p.rawHome);
-          const aPit=getMLBPitcher(p.away,p.rawAway);
-          if(!hPit&&!aPit)return '';
-          const fmt=pit=>pit?`${pit.name}${pit.era!=null?' ('+pit.era.toFixed(2)+' ERA)':''}`:'TBD';
-          return `<div class="hb-pitchers">⚾ ${fmt(aPit)} @ ${fmt(hPit)}</div>`;
-        })()}
-        ${(()=>{
-          const s=p.sim; if(!s)return '';
-          const parts=[];
-          // Always show from the PICKED TEAM's perspective so the simulation aligns with the bet
-          // atsPick is null for O/U picks — skip win/cover items in that case
-          const side=p.atsPick; // 'home', 'away', or null (O/U picks)
-          const pickedTeam=side==='home'?p.home:side==='away'?p.away:null;
-          const shortName=pickedTeam?pickedTeam.split(' ').slice(-1)[0]:null;
-
-          // Win probability for the picked team + market edge indicator (only for ML/spread picks)
-          const pickedWinProb=side==='home'?s.homeWinProb:side==='away'?s.awayWinProb:null;
-          const pickedImplied=side==='home'?s.homeImplied:side==='away'?s.awayImplied:null;
-          if(pickedWinProb!=null&&shortName!=null){
-            const edgePct=pickedImplied!=null?Math.round((pickedWinProb-pickedImplied)*100):null;
-            const edgeTxt=edgePct!=null
-              ?(edgePct>=1?` <span style="color:#4ade80;font-size:9px">(+${edgePct}% vs mkt)</span>`
-               :edgePct<=-1?` <span style="color:#f87171;font-size:9px">(${edgePct}% vs mkt)</span>`:'')
-              :'';
-            parts.push(`<span class="hb-sim-item sim-win">🏆 ${shortName} wins ${(pickedWinProb*100).toFixed(0)}% <span style="color:var(--muted);font-size:9px">(mkt-implied)</span>${edgeTxt}</span>`);
-          }
-
-          // Cover probability line removed — the confidence ring now directly shows
-          // the unified cover probability, so displaying it again here would duplicate
-          // the same number and create apparent contradictions when signals differed.
-
-          // Conflict warning removed — the ring score is now the single authoritative signal.
-          // When the model has low conviction it shows as a lower score/tier, which is clearer
-          // than a yellow warning that requires interpretation alongside other numbers.
-
-          // Projected scoreline + cushion vs spread
-          // Shows the model's projected final score and how much margin vs the spread line.
-          // cushion = projMargin + sp (home perspective): positive means the pick covers with room,
-          // negative means the projected margin doesn't reach the spread (and by how much).
-          if(s.projHomeScore!=null&&s.projMargin!=null&&side!=null){
-            // For no-tie sports, prevent rounding from producing a false 118-118 display.
-            // The cushion calc uses the raw float margin (correct); only the display needs fixing.
-            let hScore,aScore;
-            const noTieSports=['nba','cbb','nfl','cfb','mlb'];
-            if(noTieSports.includes((p.sport||'').toLowerCase())&&
-               Math.round(s.projHomeScore)===Math.round(s.projAwayScore)&&
-               Math.abs(s.projMargin)>0.01){
-              if(s.projMargin>0){hScore=String(Math.round(s.projHomeScore));aScore=String(Math.round(s.projHomeScore)-1);}
-              else{aScore=String(Math.round(s.projAwayScore));hScore=String(Math.round(s.projAwayScore)-1);}
-            } else {
-              hScore=s.projHomeScore.toFixed(0);
-              aScore=s.projAwayScore.toFixed(0);
-            }
-            const oppShort=(side==='home'?p.away:p.home).split(' ').slice(-1)[0];
-            const pickedScore=side==='home'?hScore:aScore;
-            const oppScore=side==='home'?aScore:hScore;
-            let cushionTxt='';
-            const sp2=p.gObj?.spread??null;
-            if(sp2!=null){
-              // homeCushion = projMargin + sp (sp negative for favorites, positive for dogs)
-              // e.g. home -7: need projMargin>7 → cushion = projMargin-7 = projMargin+(-7) = projMargin+sp
-              // e.g. home +3: need projMargin>-3 → cushion = projMargin+3 = projMargin+sp ✓
-              const cushion=side==='home'?(s.projMargin+sp2):(-(s.projMargin+sp2));
-              if(cushion>3)
-                cushionTxt=` <span style="color:#4ade80;font-size:9px">(covers by ${cushion.toFixed(1)})</span>`;
-              else if(cushion>=0)
-                cushionTxt=` <span style="color:#fbbf24;font-size:9px">(covers by ${cushion.toFixed(1)} — thin)</span>`;
-              else
-                cushionTxt=` <span style="color:#f87171;font-size:9px">(${Math.abs(cushion).toFixed(1)} short of spread)</span>`;
-            }
-            parts.push(`<span class="hb-sim-item sim-proj">🎯 Proj: ${shortName} ${pickedScore} – ${oppShort} ${oppScore}${cushionTxt}</span>`);
-          }
-
-          // O/U — only shown on O/U picks (betType==='ou'), not on spread/ML cards.
-          // On a spread card the O/U line was a secondary signal that created noise;
-          // on an O/U card it IS the primary pick so it belongs front and center.
-          if(s.overProb!=null&&p.betType==='ou'){
-            const isOver=s.overProb>=0.5;
-            const pct=(Math.max(s.overProb,1-s.overProb)*100).toFixed(0);
-            const projPart=s.projTotal?` · proj ${s.projTotal.toFixed(0)}`:'' ;
-            parts.push(`<span class="hb-sim-item sim-ou">${isOver?'📈 Over':'📉 Under'} ${s.totalLine}${projPart} (${pct}%)</span>`);
-          }
-          if(!parts.length)return '';
-          return `<div class="hb-sim"><span class="hb-sim-label">📊 Score Model</span>${parts.join('')}</div>`;
-        })()}
-        <div class="hb-factors">${factorBadges}</div>
-        <div class="hb-why">${p.why}</div>
-        ${hbAltLineSuggestions(p)}
+        ${pitHtml}
+        <div class="hb-prediction">
+          ${projHtml||ouHtml?`<div class="hb-pred-main">${projHtml}${ouHtml}</div>`:''}
+          ${winProb!=null&&shortPicked?`<div class="hb-metrics">
+            <div class="hb-metric"><span class="hb-metric-val">${(winProb*100).toFixed(0)}%</span><span class="hb-metric-lbl">Win Prob</span></div>
+            ${edgePct!=null?`<div class="hb-metric"><span class="hb-metric-val ${edgePct>=1?'hb-val-pos':edgePct<=-1?'hb-val-neg':''}">${edgePct>=0?'+':''}${edgePct}%</span><span class="hb-metric-lbl">vs Market</span></div>`:''}
+            <div class="hb-metric"><span class="hb-metric-val">${oddsDisp}</span><span class="hb-metric-lbl">Odds</span></div>
+            <div class="hb-metric"><span class="hb-metric-val">${kellyDisp.replace('¼Kelly: ','')}</span><span class="hb-metric-lbl">¼ Kelly</span></div>
+          </div>`:''}
+        </div>
+        ${factorList?`<div class="hb-frows">${factorList}</div>`:''}
         <div class="hb-footer">
-          <div>
-            <div class="hb-odds">${oddsDisp}</div>
-            <div class="hb-kelly">${kellyDisp}</div>
-          </div>
           <div class="hb-actions">
-            <button class="hb-analyze-btn" onclick="hbGoAnalyze('${p.home}','${p.away}','${p.sport.toLowerCase()}')">📊 Analyze</button>
-            <button class="hb-analyze-btn" style="background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.3)" onclick="hbLogBet('${p.home.replace(/'/g,"\\'")}','${p.away.replace(/'/g,"\\'")}','${p.sport}','${p.pickLabel.replace(/'/g,"\\'")}',${p.odds},${p.score.toFixed(4)},'${p.game.replace(/'/g,"\\'")}')">📓 Log</button>
+            <button class="hb-analyze-btn" onclick="hbGoAnalyze('${p.home}','${p.away}','${p.sport.toLowerCase()}')">Analyze</button>
+            <button class="hb-analyze-btn hb-log-btn" onclick="hbLogBet('${p.home.replace(/'/g,"\\'")}','${p.away.replace(/'/g,"\\'")}','${p.sport}','${p.pickLabel.replace(/'/g,"\\'")}',${p.odds},${p.score.toFixed(4)},'${p.game.replace(/'/g,"\\'")}')">Log</button>
             <button class="hb-add-btn ${inParlay?'added':''}" id="hb-btn-${i}" onclick="hbToggleParlay(${i},${JSON.stringify({pickLabel:p.pickLabel,game:p.game,sport:p.sport,odds:p.odds,score100:p.score100}).replace(/"/g,'&quot;')})">
-              ${inParlay?'✓ Added':'＋ Parlay'}
+              ${inParlay?'✓ Added':'+ Parlay'}
             </button>
           </div>
         </div>
