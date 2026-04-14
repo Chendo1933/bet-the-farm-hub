@@ -119,7 +119,7 @@ def grade_ml(pick: dict, result: dict) -> tuple[str, float | None]:
 
 # Calibrated to new scoring system — scores typically range 50–70.
 # These bands let us answer "do 68% picks actually hit 68% of the time?"
-CONF_BANDS = ["68-70", "65-67", "62-64", "59-61", "56-58", "50-55"]
+CONF_BANDS = ["80+", "75-79", "71-74", "68-70", "65-67", "62-64", "59-61", "56-58", "50-55"]
 
 # All four tiers used by the hub's updated scoring system
 ALL_TIERS = ("elite", "strong", "good", "lean")
@@ -129,6 +129,9 @@ def conf_band(score100) -> str | None:
     if score100 is None:
         return None
     s = int(score100)
+    if s >= 80: return "80+"
+    if s >= 75: return "75-79"
+    if s >= 71: return "71-74"
     if s >= 68: return "68-70"
     if s >= 65: return "65-67"
     if s >= 62: return "62-64"

@@ -8867,7 +8867,7 @@ function renderPickPerf(){
     panel.style.display='block';
 
     // ── Confidence band breakdown ──────────────────────────────────────
-    const BANDS=['68-70','65-67','62-64','59-61','56-58','50-55'];
+    const BANDS=['80+','75-79','71-74','68-70','65-67','62-64','59-61','56-58','50-55'];
     const confEl=document.getElementById('perf-conf-bands');
     if(confEl&&d.by_conf){
       const bandRows=BANDS.map(band=>{
