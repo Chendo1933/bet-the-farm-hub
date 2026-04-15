@@ -14,7 +14,10 @@ Grading logic:
     margin < 0  → away covers
     margin == 0 → push
   ML: winner = team with higher score
-  O/U: skipped (we don't log the total line)
+  O/U: actual_total = home_score + away_score
+    actual_total > total → over hits
+    actual_total < total → under hits
+    actual_total == total → push
 
 performance.json schema (matches hub performance panel):
   {
@@ -115,6 +118,28 @@ def grade_ml(pick: dict, result: dict) -> tuple[str, float | None]:
         return ("win" if home_sc > away_sc else "loss", pt_margin)
     else:
         return ("win" if away_sc > home_sc else "loss", pt_margin)
+
+
+def grade_ou(pick: dict, result: dict) -> tuple[str, float | None]:
+    """Grade over/under picks against the total line.
+    Returns (outcome, margin_from_total)."""
+    total = pick.get("total")
+    picked = pick.get("pickedTeam", "").lower()  # 'over' or 'under'
+    home_sc = result.get("home_score", 0)
+    away_sc = result.get("away_score", 0)
+
+    if total is None or picked not in ("over", "under"):
+        return ("ungraded", None)
+
+    actual_total = home_sc + away_sc
+    margin = actual_total - total  # positive = game went over
+
+    if abs(margin) < 0.01:
+        return ("push", 0.0)
+    if picked == "over":
+        return ("win" if margin > 0 else "loss", abs(margin))
+    else:  # under
+        return ("win" if margin < 0 else "loss", abs(margin))
 
 
 # Calibrated to new scoring system — scores typically range 50–70.
@@ -240,6 +265,8 @@ def main():
             outcome, margin = grade_ml(pick, result)
         elif bet_type == "spread":
             outcome, margin = grade_spread(pick, result)
+        elif bet_type == "ou":
+            outcome, margin = grade_ou(pick, result)
         else:
             outcome, margin = "ungraded", None
 
@@ -286,6 +313,7 @@ def main():
             "home": pick.get("home", ""),
             "away": pick.get("away", ""),
             "spread": pick.get("spread"),
+            "total": pick.get("total"),
             "score100": pick.get("score100"),
             "outcome": outcome,
             "margin": round(margin, 1) if margin is not None else None,

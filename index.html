@@ -954,22 +954,33 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 </div>
 <!-- ── OVERVIEW ─────────────────────────────────────── -->
 <div id="tab-overview" class="tab-content active">
-  <div class="page-title">Dashboard Overview</div>
-  <div class="page-sub">Your all-sports betting command center · 2025-26 season</div>
+  <div class="page-title">Command Center</div>
+  <div class="page-sub">Model predictions, performance, and today's action at a glance</div>
+
+  <!-- KPI row -->
   <div class="kpi-grid" id="ov-kpis"></div>
-  <div id="ov-edge-insights" style="margin-bottom:4px"></div>
-  <div class="section-hdr"><h2>🎰 Best Parlay of the Day</h2><div class="badge" id="pod-badge">High Probability</div></div>
+
+  <!-- Top Picks -->
+  <div class="section-hdr"><h2>Top Picks Today</h2><div class="badge" id="bb-badge">Loading...</div></div>
+  <div id="ov-bestbets" style="margin-bottom:4px"></div>
+
+  <!-- Best Parlay -->
+  <div class="section-hdr"><h2>Best Parlay of the Day</h2><div class="badge" id="pod-badge">High Probability</div></div>
   <div id="ov-parlay-of-day" style="margin-bottom:4px"></div>
-  <div class="section-hdr"><h2>🔥 Best Bets Today</h2><div class="badge" id="bb-badge">Loading...</div></div>
-  <div id="ov-bestbets" style="margin-bottom:22px"></div>
-  <div class="section-hdr"><h2>📊 Sport Leaderboards</h2></div>
+
+  <!-- Performance Snapshot -->
+  <div class="section-hdr"><h2>Performance Snapshot</h2><div class="badge" id="ov-perf-badge">from grading pipeline</div></div>
+  <div id="ov-perf-snapshot" style="margin-bottom:4px"></div>
+
+  <!-- Sport Leaderboards -->
+  <div class="section-hdr"><h2>ATS Leaderboards</h2></div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
-    <div class="card"><div class="card-title">🏈 NFL — Best ATS (Home)</div><div class="mini-list" id="ov-nfl"></div></div>
-    <div class="card"><div class="card-title">🎓 CFB — Best ATS (Overall)</div><div class="mini-list" id="ov-cfb"></div></div>
-    <div class="card"><div class="card-title">🏀 NBA — Best ATS (Overall)</div><div class="mini-list" id="ov-nba"></div></div>
-    <div class="card"><div class="card-title">🏀 CBB — Best ATS (Overall)</div><div class="mini-list" id="ov-cbb"></div></div>
-    <div class="card"><div class="card-title">🏒 NHL — Best Puck Line %</div><div class="mini-list" id="ov-nhl"></div></div>
-    <div class="card"><div class="card-title">⚾ MLB — Best ATS (Overall)</div><div class="mini-list" id="ov-mlb"></div></div>
+    <div class="card"><div class="card-title">NFL — Best ATS (Home)</div><div class="mini-list" id="ov-nfl"></div></div>
+    <div class="card"><div class="card-title">CFB — Best ATS (Overall)</div><div class="mini-list" id="ov-cfb"></div></div>
+    <div class="card"><div class="card-title">NBA — Best ATS (Overall)</div><div class="mini-list" id="ov-nba"></div></div>
+    <div class="card"><div class="card-title">CBB — Best ATS (Overall)</div><div class="mini-list" id="ov-cbb"></div></div>
+    <div class="card"><div class="card-title">NHL — Best Puck Line %</div><div class="mini-list" id="ov-nhl"></div></div>
+    <div class="card"><div class="card-title">MLB — Best ATS (Overall)</div><div class="mini-list" id="ov-mlb"></div></div>
   </div>
 </div>
 <!-- ── NFL ─────────────────────────────────────────── -->
@@ -5304,6 +5315,7 @@ function fuzzyTeam(sport,name){
 
 // ── OVERVIEW ──────────────────────────────────────────────────────────────────
 function renderOverview(){
+  // ── LEADERBOARDS (always rendered) ────────────────────────────────────────
   const miRow=(nm,val)=>`<div class="mi"><span class="tn">${nm}</span><span style="color:var(--gold);font-weight:700">${val}</span></div>`;
   const nflTop=[...NFL].sort((a,b)=>(b[8]/(b[8]+b[9]||1))-(a[8]/(a[8]+a[9]||1))).slice(0,5);
   const ovNfl=document.getElementById('ov-nfl');
@@ -5323,111 +5335,215 @@ function renderOverview(){
   const mlbTop=[...MLB].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
   const ovMlb=document.getElementById('ov-mlb');
   if(ovMlb)ovMlb.innerHTML=mlbTop.map(t=>miRow(t[0],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
-  const settled=bets.filter(b=>b.result!=='Pending');
-  const wins=settled.filter(b=>b.result==='Win').length;
-  const losses=settled.filter(b=>b.result==='Loss').length;
-  const netPL=settled.reduce((a,b)=>a+calcPL(b.odds,b.stake,b.result),0);
-  const wr=settled.length>0?wins/settled.length*100:0;
-  // ── BEST BETS ─────────────────────────────────────────────────────────────
-  const MIN_S=5;
-  const bbEl=document.getElementById('ov-bestbets');
-  if(!bbEl)return;
 
+  // ── GENERATE PICKS ────────────────────────────────────────────────────────
+  const bbEl=document.getElementById('ov-bestbets');
   const bbBadge=document.getElementById('bb-badge');
+  let allPicks=[];
   if(TODAY_GAMES.length){
-    if(bbBadge)bbBadge.textContent=`${TODAY_GAMES.length} Games Today`;
-    // ── TONIGHT MODE: use the same Hot Bets engine for consistency ──────────
-    // hbGeneratePicks() runs the full 9-factor scorer (ML correlation, rest edges,
-    // simulation, home dog / B2B / bye signals, etc.) — same picks as Hot Bets tab.
     const rawHBPicks=hbGeneratePicks();
     rawHBPicks.sort((a,b)=>b.score-a.score);
-    // Map Hot Bets pick shape → Overview pick shape
-    const picks=rawHBPicks.map(p=>({
-      score:p.score,
-      sport:(p.sport||'').toUpperCase(),
-      pick:p.pickLabel,
-      type:p.pickType,
-      game:p.game,
-      time:p.time||'',
-      date:p.date||'',
-      rawHome:p.home,
-      rawAway:p.away,
-      odds:p.odds??-110,
-      why:p.why,
-      // preserve HB fields for bet slip compatibility
-      betType:p.betType,
-      spread:p.spread,
-      total:p.total,
-      atsPick:p.atsPick,
+    allPicks=rawHBPicks.map(p=>({
+      score:p.score,sport:(p.sport||'').toUpperCase(),
+      pick:p.pickLabel,type:p.pickType,game:p.game,
+      time:p.time||'',date:p.date||'',odds:p.odds??-110,why:p.why,
+      betType:p.betType,spread:p.spread,total:p.total,atsPick:p.atsPick,
     }));
-    // One pick per game max
-    const _seenGames=new Set();
-    const top=[];
-    for(const p of picks){
-      if(top.length>=3)break;
-      if(_seenGames.has(p.game))continue;
-      _seenGames.add(p.game);
-      top.push(p);
-    }
-    // ── Build Best Parlay of the Day (highest probability legs, Hot Bets engine) ─
-    renderParlayOfDay(picks);
-    if(!top.length){
-      bbEl.innerHTML='<div style="color:var(--muted);font-size:13px;padding:8px 0">Games loaded but team data couldn\'t be matched — check back after next update.</div>';
-    } else {
-      const totalPicks=picks.length;
+  }
+
+  // ── KPI ROW ───────────────────────────────────────────────────────────────
+  const ovKpis=document.getElementById('ov-kpis');
+  if(ovKpis){
+    // Count today's games by sport
+    const sportCounts={};
+    TODAY_GAMES.forEach(g=>{const s=(g.sport||'').toUpperCase();sportCounts[s]=(sportCounts[s]||0)+1;});
+    const slateStr=Object.entries(sportCounts).map(([s,n])=>`${n} ${s}`).join(' · ')||'No games loaded';
+
+    // Pick tier distribution
+    const tierCounts={elite:0,strong:0,good:0,lean:0};
+    allPicks.forEach(p=>{
+      const t=p.score>=.68?'elite':p.score>=.62?'strong':p.score>=.57?'good':'lean';
+      tierCounts[t]++;
+    });
+    const tierStr=allPicks.length
+      ?[tierCounts.elite&&`${tierCounts.elite} Elite`,tierCounts.strong&&`${tierCounts.strong} Strong`,
+        tierCounts.good&&`${tierCounts.good} Good`,tierCounts.lean&&`${tierCounts.lean} Lean`].filter(Boolean).join(' · ')
+      :'Load odds to generate';
+
+    ovKpis.innerHTML=`
+      <div class="kpi"><div class="kpi-label">Today's Slate</div><div class="kpi-val">${TODAY_GAMES.length}</div><div class="kpi-sub">${slateStr}</div></div>
+      <div class="kpi"><div class="kpi-label">Model Picks</div><div class="kpi-val">${allPicks.length}</div><div class="kpi-sub">${tierStr}</div></div>
+      <div class="kpi" id="ov-kpi-record"><div class="kpi-label">Model Record</div><div class="kpi-val">—</div><div class="kpi-sub">Loading...</div></div>
+      <div class="kpi" id="ov-kpi-winrate"><div class="kpi-label">Win Rate</div><div class="kpi-val">—</div><div class="kpi-sub">Loading...</div></div>`;
+  }
+
+  // ── TOP PICKS ─────────────────────────────────────────────────────────────
+  if(bbEl){
+    if(allPicks.length){
+      if(bbBadge)bbBadge.textContent=`${TODAY_GAMES.length} Games · ${allPicks.length} Picks`;
+      const _seen=new Set();const top=[];
+      for(const p of allPicks){if(top.length>=5)break;if(_seen.has(p.game))continue;_seen.add(p.game);top.push(p);}
       const viewAllCta=`<div style="text-align:center;margin-top:12px">
-        <button onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:7px 20px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.3px">🔥 See all ${totalPicks} ranked picks in Hot Bets →</button>
+        <button onclick="document.querySelector(\'nav button[onclick*=hotbets]\').click()" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:7px 20px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.3px">See all ${allPicks.length} ranked picks in Hot Bets</button>
       </div>`;
       bbEl.innerHTML='<div class="bb-grid">'+top.map((c,i)=>{
         const tier=c.score>=.68?'elite':c.score>=.62?'strong':c.score>=.57?'good':'lean';
-        const confLbl=c.score>=.68?'🔥 Elite':c.score>=.62?'⚡ Strong':c.score>=.57?'✅ Good':'📊 Lean';
-        return `<div class="bb-card ${tier}" style="cursor:pointer" onclick="document.querySelector(\"nav button[onclick*='hotbets']\").click()">
+        const confLbl=c.score>=.68?'Elite':c.score>=.62?'Strong':c.score>=.57?'Good':'Lean';
+        const oddsStr=c.odds>0?'+'+c.odds:''+c.odds;
+        return `<div class="bb-card ${tier}" style="cursor:pointer" onclick="document.querySelector('nav button[onclick*=hotbets]').click()">
           <div class="bb-top"><span class="bb-sport">${c.sport}</span><span class="bb-conf ${tier}">${confLbl} · ${(c.score*100).toFixed(0)}%</span></div>
           <div class="bb-pick">${c.pick}</div>
-          <div class="bb-type">${c.type}${c.time?' · '+(c.date?c.date+' · ':'')+c.time:''}</div>
-          <div class="bb-game">${c.game}</div>
+          <div class="bb-type">${c.type} · ${oddsStr}</div>
+          <div class="bb-game">${c.game}${c.time?' · '+c.time:''}</div>
         </div>`;
       }).join('')+'</div>'+viewAllCta;
+    } else {
+      if(bbBadge)bbBadge.textContent='Waiting for odds';
+      bbEl.innerHTML='<div style="color:var(--muted);font-size:13px;padding:8px 0">Refresh Odds in the Analyzer to load today\'s picks.</div>';
     }
-  } else {
-    renderParlayOfDay([]);
-    if(bbBadge)bbBadge.textContent='Top ATS Trends';
-    // ── FALLBACK MODE: no schedule yet — show top ATS teams as a preview ──
-    const cands=[];
-    const addCands=(arr,sp,getVals)=>arr.forEach(t=>{
-      const v=getVals(t); if(!v)return;
-      const{nm,aw,al,rec}=v; const tot=aw+al; if(tot<8)return;
-      cands.push({nm,sp,aw,al,pct:aw/tot,rec});
-    });
-    addCands(NFL,'NFL',t=>{const[nm,,, w,l,aw,al]=t;return{nm,aw,al,rec:`${w}-${l}`};});
-    addCands(NBA,'NBA',t=>{const[nm,,,w,l,aw,al]=t;return{nm,aw,al,rec:`${w}-${l}`};});
-    addCands(CBB,'CBB',t=>{const[nm,,w,l,aw,al]=t;return{nm,aw,al,rec:`${w}-${l}`};});
-    addCands(NHL,'NHL',t=>{const[nm,,,w,l,otl,aw,al]=t;return{nm,aw,al,rec:`${w}-${l}-${otl}`};});
-    addCands(MLB,'MLB',t=>{const[nm,,,w,l,aw,al]=t;return{nm,aw,al,rec:`${w}-${l}`};});
-    cands.sort((a,b)=>b.pct-a.pct);
-    const top=cands.slice(0,6);
-    bbEl.innerHTML=`<div class="bb-fallback">📡 Refresh Odds in the Analyzer to load tonight's picks — top ATS trends right now:</div>
-    <div class="bb-grid">`+top.map((c,i)=>{
-      const tier=c.pct>=.72?'elite':c.pct>=.64?'strong':c.pct>=.57?'good':'lean';
-      const confLbl=c.pct>=.72?'🔥 Elite':c.pct>=.64?'⚡ Strong':c.pct>=.57?'✅ Good':'📊 Solid';
-      return `<div class="bb-card ${tier}">
-        <div class="bb-top"><span class="bb-sport">${c.sp}</span><span class="bb-conf ${tier}">${confLbl}</span></div>
-        <div class="bb-pick">${c.nm}</div>
-        <div class="bb-type">ATS · ${c.aw}-${c.al} (${(c.pct*100).toFixed(1)}%)</div>
-        <div class="bb-game">${c.rec} overall</div>
-        <div class="bb-why">One of the strongest cover trends in ${c.sp} this season</div>
-      </div>`;
-    }).join('')+'</div>';
   }
-  // ── END BEST BETS ─────────────────────────────────────────────────────────
 
-  const ovKpis=document.getElementById('ov-kpis');
-  if(ovKpis)ovKpis.innerHTML=`
-    <div class="kpi"><div class="kpi-label">My Bets Logged</div><div class="kpi-val">${bets.length}</div><div class="kpi-sub">${settled.length} settled</div></div>
-    <div class="kpi"><div class="kpi-label">Win-Loss</div><div class="kpi-val">${wins}-${losses}</div><div class="kpi-sub">${bets.filter(b=>b.result==='Push').length} push</div></div>
-    <div class="kpi"><div class="kpi-label">Win Rate</div><div class="kpi-val ${wr>=55?'green':wr<45&&settled.length>0?'red':''}">${settled.length>0?wr.toFixed(1)+'%':'—'}</div><div class="kpi-sub">Breakeven ~52.4%</div></div>
-    <div class="kpi"><div class="kpi-label">Net P&L</div><div class="kpi-val ${netPL>=0?'green':'red'}">${bets.length>0?(netPL>=0?'+':'')+'$'+Math.abs(netPL).toFixed(2):'—'}</div><div class="kpi-sub">Go to Tracker to log bets</div></div>`;
-  renderEdgeInsights();
+  // ── PARLAY ────────────────────────────────────────────────────────────────
+  renderParlayOfDay(allPicks);
+
+  // ── PERFORMANCE SNAPSHOT (async) ──────────────────────────────────────────
+  renderOverviewPerf();
+}
+
+async function renderOverviewPerf(){
+  const snapEl=document.getElementById('ov-perf-snapshot');
+  const recKpi=document.getElementById('ov-kpi-record');
+  const wrKpi=document.getElementById('ov-kpi-winrate');
+  if(!snapEl)return;
+
+  // Fetch perf data if not cached
+  if(!_ppPerf||!_ppData){
+    try{
+      const [hRes,pRes]=await Promise.all([
+        fetch(`${_PP_BASE}/pick_history.json`),
+        fetch(`${_PP_BASE}/performance.json`)
+      ]);
+      if(hRes.ok&&!_ppData) _ppData=await hRes.json();
+      if(pRes.ok&&!_ppPerf) _ppPerf=await pRes.json();
+    }catch(e){/* offline */}
+  }
+
+  const perf=_ppPerf||{};
+  const picks=(_ppData?.picks)||[];
+
+  // Compute totals from tiers
+  const tiers=perf.tiers||{};
+  let totalW=0,totalL=0,totalP=0;
+  for(const r of Object.values(tiers)){totalW+=r.w||0;totalL+=r.l||0;totalP+=r.p||0;}
+  const totalGraded=totalW+totalL;
+  const winRate=totalGraded>0?totalW/totalGraded*100:0;
+
+  // Update KPI cards
+  if(recKpi){
+    if(totalGraded>0){
+      const pushStr=totalP?` <span style="font-size:11px;color:var(--muted)">(${totalP}P)</span>`:'';
+      recKpi.innerHTML=`<div class="kpi-label">Model Record</div><div class="kpi-val">${totalW}-${totalL}${pushStr}</div><div class="kpi-sub">${totalGraded} graded picks</div>`;
+    } else {
+      recKpi.innerHTML='<div class="kpi-label">Model Record</div><div class="kpi-val">—</div><div class="kpi-sub">Grading starts after first game day</div>';
+    }
+  }
+  if(wrKpi){
+    if(totalGraded>0){
+      const wrCls=winRate>=55?'green':winRate<48?'red':'';
+      wrKpi.innerHTML=`<div class="kpi-label">Win Rate</div><div class="kpi-val ${wrCls}">${winRate.toFixed(1)}%</div><div class="kpi-sub">Breakeven ~52.4%</div>`;
+    } else {
+      wrKpi.innerHTML='<div class="kpi-label">Win Rate</div><div class="kpi-val">—</div><div class="kpi-sub">Breakeven ~52.4%</div>';
+    }
+  }
+  if(document.getElementById('ov-perf-badge'))document.getElementById('ov-perf-badge').textContent=totalGraded>0?`${totalGraded} graded`:'awaiting data';
+
+  if(totalGraded<1){
+    snapEl.innerHTML='<div style="color:var(--muted);font-size:13px;padding:10px 0">Performance data will appear here once the nightly grading pipeline runs.</div>';
+    return;
+  }
+
+  // ── By Tier breakdown ──
+  const tierOrder=['elite','strong','good','lean'];
+  const tierLabels={elite:'Elite',strong:'Strong',good:'Good',lean:'Lean'};
+  const tierRows=tierOrder.map(t=>{
+    const r=tiers[t];if(!r)return '';
+    const n=r.w+r.l;if(!n)return '';
+    const pct=Math.round(r.w/n*100);
+    const c=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+    const pushStr=r.p?` (${r.p}P)`:'';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:4px 0">
+      <span style="font-size:11px;color:var(--text);min-width:50px">${tierLabels[t]}</span>
+      <span style="font-size:11px;color:var(--muted);min-width:55px">${r.w}-${r.l}${pushStr}</span>
+      <span style="font-size:11px;font-weight:700;color:${c};min-width:35px">${pct}%</span>
+      <div style="flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden"><div style="height:100%;width:${pct}%;background:${c};border-radius:3px"></div></div>
+    </div>`;
+  }).filter(Boolean).join('');
+
+  // ── By Bet Type breakdown ──
+  const btLabels={spread:'Spread',ml:'ML',ou:'O/U'};
+  const btData=perf.by_bet_type||{};
+  const btRows=Object.entries(btData).map(([k,r])=>{
+    const n=r.w+r.l;if(!n)return '';
+    const pct=Math.round(r.w/n*100);
+    const c=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:4px 0">
+      <span style="font-size:11px;color:var(--text);min-width:50px">${btLabels[k]||k}</span>
+      <span style="font-size:11px;color:var(--muted);min-width:55px">${r.w}-${r.l}</span>
+      <span style="font-size:11px;font-weight:700;color:${c};min-width:35px">${pct}%</span>
+      <div style="flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden"><div style="height:100%;width:${pct}%;background:${c};border-radius:3px"></div></div>
+    </div>`;
+  }).filter(Boolean).join('');
+
+  // ── Recent trend (last 7 days from pick history) ──
+  let recentStr='';
+  if(picks.length){
+    const now=new Date();
+    const weekAgo=new Date(now);weekAgo.setDate(weekAgo.getDate()-7);
+    const weekKey=weekAgo.toISOString().slice(0,10);
+    const recent=picks.filter(p=>p.date>=weekKey&&(p.outcome==='win'||p.outcome==='loss'));
+    if(recent.length>=3){
+      const rW=recent.filter(p=>p.outcome==='win').length;
+      const rPct=Math.round(rW/recent.length*100);
+      const rc=rPct>=57?'#4ade80':rPct>=50?'var(--gold)':'#f87171';
+      recentStr=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Last 7 Days</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;color:var(--text)">${rW}-${recent.length-rW}</span>
+          <span style="font-size:13px;font-weight:700;color:${rc}">${rPct}%</span>
+          <span style="font-size:11px;color:var(--muted)">(${recent.length} picks)</span>
+        </div>
+      </div>`;
+    }
+  }
+
+  // ── Margins / Brier if available ──
+  let marginStr='';
+  const m=perf.margins||{};
+  if(m.count>0){
+    const avg=(m.total/m.count).toFixed(1);
+    marginStr=`<div style="font-size:11px;color:var(--muted);margin-top:6px">Avg margin: ${avg} pts`;
+    if(m.brier_n>0){
+      const brier=(m.brier_sum/m.brier_n).toFixed(3);
+      marginStr+=` · Brier: ${brier}`;
+    }
+    marginStr+='</div>';
+  }
+
+  snapEl.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">By Tier</div>
+      ${tierRows}
+      ${marginStr}
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">By Bet Type</div>
+      ${btRows||'<div style="font-size:11px;color:var(--muted)">No data yet</div>'}
+      ${recentStr}
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:10px">
+    <button onclick="document.querySelector('nav button[onclick*=pickperf]').click()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:6px 16px;border-radius:16px;cursor:pointer;font-size:11px">View full performance breakdown</button>
+  </div>`;
 }
 // ── ANGLES / TIPS ─────────────────────────────────────────────────────────────
 const TIPS=[
@@ -7921,6 +8037,8 @@ function hbRender(){
     return{sport:p.sport,betType:p.betType||'spread',
       home:p.home,away:p.away,atsPick:p.atsPick||null,
       spread:typeof p.spread==='number'?p.spread:null,
+      total:typeof p.total==='number'?p.total:null,
+      pickedTeam:p.pickedTeam||null,
       pickLabel:p.pickLabel,score100:s,
       tier:s>=68?'elite':s>=62?'strong':s>=57?'good':'lean',
       date:p.date||'',time:p.time||''};
@@ -8739,12 +8857,14 @@ function renderPickPerf(){
   ].join('');
 
   // Breakdown cards: by tier, by bet type, by sport
+  const _bdLabels={spread:'Spread',ml:'ML',ou:'O/U'};
   function breakdownCard(title,data){
     const rows=Object.entries(data).filter(([,v])=>(v.w+v.l)>0).map(([k,v])=>{
       const t=v.w+v.l;const p=Math.round(v.w/t*100);
       const c=p>=57?'#4ade80':p>=50?'var(--gold)':'#f87171';
       const push=v.p?` <span style="color:var(--muted)">(${v.p}P)</span>`:'';
-      return `<tr><td style="padding:3px 8px 3px 0;font-size:11px;color:var(--text);text-transform:capitalize">${k}</td>
+      const lbl=_bdLabels[k]||k.charAt(0).toUpperCase()+k.slice(1);
+      return `<tr><td style="padding:3px 8px 3px 0;font-size:11px;color:var(--text)">${lbl}</td>
         <td style="padding:3px 8px;font-size:11px;color:var(--muted)">${v.w}-${v.l}${push}</td>
         <td style="padding:3px 8px;font-size:11px;font-weight:700;color:${c}">${p}%</td>
         <td style="padding:3px 0;min-width:50px"><div style="height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden"><div style="height:100%;width:${p}%;background:${c};border-radius:3px"></div></div></td></tr>`;

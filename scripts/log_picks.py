@@ -171,13 +171,14 @@ def main():
     else:
         print("⚠  No TODAY_GAMES captured — schedule snapshot skipped")
 
-    # Keep ALL picks with real game data — atsPick set + opponent known.
+    # Keep ALL picks with real game data — opponent must be known (away != "").
+    # Spread/ML picks have atsPick set; O/U picks have betType='ou' + pickedTeam.
     # ATS-trend picks have away="" and atsPick=None — those are ungradeable and excluded.
     # We no longer filter by tier so every scored game gets tracked for calibration.
     tracked = [
         p for p in picks
-        if p.get("atsPick") is not None
-        and p.get("away", "").strip() != ""
+        if p.get("away", "").strip() != ""
+        and (p.get("atsPick") is not None or p.get("betType") == "ou")
     ]
 
     if not tracked:
