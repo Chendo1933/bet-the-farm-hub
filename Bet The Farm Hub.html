@@ -556,66 +556,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-alt-item.safer{background:rgba(74,222,128,.08);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
 .hb-alt-item.riskier{background:rgba(251,146,60,.08);color:#fb923c;border:1px solid rgba(251,146,60,.2);}
 .hb-alt-key{font-size:10px;color:#fbbf24;font-weight:600;padding:1px 5px;background:rgba(251,191,36,.08);border-radius:4px;border:1px solid rgba(251,191,36,.2);}
-/* ── March Madness 2026 ──────────────────────────────────────────────────────── */
-.mm-subtitle{color:var(--muted);font-size:13px;margin:-8px 0 18px;}
-.mm-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
-.mm-pill{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:700;padding:6px 16px;border-radius:20px;cursor:pointer;transition:all .15s;}
-.mm-pill.active{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold);}
-.mm-bracket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:start;}
-@media(max-width:800px){.mm-bracket-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:500px){.mm-bracket-grid{grid-template-columns:1fr;}}
-.mm-round-col{display:flex;flex-direction:column;gap:8px;}
-.mm-round-title{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.mm-game{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:8px 10px;position:relative;transition:border-color .15s;}
-.mm-game.upset{border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.04);}
-.mm-game.all-data{border-color:rgba(74,222,128,.2);}
-.mm-team{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:12px;font-weight:600;color:var(--muted);}
-.mm-team.winner{color:var(--text);font-weight:800;}
-.mm-team.upset-winner{color:#fb923c;font-weight:800;}
-.mm-seed{font-size:10px;font-weight:900;color:var(--muted);width:16px;text-align:center;flex-shrink:0;}
-.mm-seed.fav{color:var(--gold);}
-.mm-name{flex:1;font-size:12px;}
-.mm-db{font-size:8px;padding:1px 4px;border-radius:3px;font-weight:800;flex-shrink:0;}
-.mm-db.in{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
-.mm-db.out{background:rgba(100,116,139,.1);color:#64748b;border:1px solid rgba(100,116,139,.2);}
-.mm-divider{height:1px;background:var(--border);margin:3px 0;}
-.mm-game-footer{display:flex;align-items:center;justify-content:space-between;margin-top:5px;}
-.mm-pick-label{font-size:10px;color:var(--muted);}
-.mm-conf{font-size:10px;font-weight:800;padding:1px 6px;border-radius:4px;}
-.mm-conf.high{background:rgba(74,222,128,.12);color:#4ade80;}
-.mm-conf.med{background:rgba(251,191,36,.12);color:#fbbf24;}
-.mm-conf.low{background:rgba(148,163,184,.12);color:#94a3b8;}
-.mm-eff{font-size:9px;color:var(--muted);margin-top:3px;font-style:italic;}
-.mm-ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-@media(max-width:600px){.mm-ff-grid{grid-template-columns:1fr;}}
-.mm-ff-game{background:var(--card2);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:14px;}
-.mm-ff-title{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
-.mm-champ-game{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:18px;text-align:center;margin-top:10px;}
-.mm-champ-title{font-size:14px;font-weight:900;color:var(--gold);margin-bottom:12px;}
-.mm-champ-team{font-size:18px;font-weight:900;color:var(--text);margin:4px 0;}
-.mm-champ-conf{font-size:12px;color:var(--muted);}
-.mm-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:10px;color:var(--muted);}
-.mm-region-champion{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:8px 10px;margin-top:4px;font-size:12px;font-weight:800;color:var(--gold);text-align:center;}
-/* MM Live results bar */
-.mm-live-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:8px;margin-bottom:14px;flex-wrap:wrap;}
-.mm-refresh-btn{background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.mm-refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
-.mm-refresh-btn:disabled{opacity:.5;cursor:not-allowed;}
-.mm-game.final{opacity:1;}
-.mm-game.final .mm-game-footer .mm-pick-label{color:#4ade80;}
-.mm-final-badge{font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.3);}
-/* ── MM Style badges ──────────────────────────── */
-.mm-style-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
-.mm-sbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.3px;}
-.mm-sbadge.pace-fast{background:rgba(251,146,60,.12);color:#fb923c;border:1px solid rgba(251,146,60,.25);}
-.mm-sbadge.pace-slow{background:rgba(148,163,184,.1);color:#94a3b8;border:1px solid rgba(148,163,184,.2);}
-.mm-sbadge.three-high{background:rgba(168,85,247,.1);color:#c084fc;border:1px solid rgba(168,85,247,.2);}
-.mm-sbadge.big-man{background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.25);}
-.mm-sbadge.zone{background:rgba(236,72,153,.1);color:#f472b6;border:1px solid rgba(236,72,153,.2);}
-.mm-sbadge.playin{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
-.mm-matchup-note{font-size:8.5px;color:var(--gold);margin-top:4px;padding:3px 6px;background:rgba(201,168,76,.08);border-radius:4px;border-left:2px solid rgba(201,168,76,.4);line-height:1.4;}
-.mm-style-adj{font-size:8px;color:var(--muted);margin-top:2px;font-style:italic;}
-.mm-game.style-edge{border-color:rgba(201,168,76,.35);}
 .hb-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .hb-odds{font-size:13px;font-weight:900;color:var(--gold);}
 .hb-kelly{font-size:11px;color:var(--muted);}
@@ -826,7 +766,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <div class="nav-dropdown" id="nav-more-dd">
     <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
     <div class="nav-dd-menu" id="nav-more-menu">
-      <button onclick="showTab('mm2026',this);closeNavDropdowns()" style="position:relative">🏆 Bracket<span style="position:absolute;top:6px;right:12px;background:#f59e0b;color:#000;font-size:8px;font-weight:900;padding:1px 4px;border-radius:99px;line-height:1.4">NEW</span></button>
       <button onclick="showTab('angles',this);closeNavDropdowns()">🎯 Angles</button>
       <button onclick="showTab('glossary',this);closeNavDropdowns()">📖 Glossary</button>
     </div>
@@ -863,7 +802,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button class="mm-sheet-btn" onclick="showTab('cbb',this);closeMobileMenu();mobileNavActivate(null)">🏀 College Basketball</button>
   <button class="mm-sheet-btn" onclick="showTab('nhl',this);closeMobileMenu();mobileNavActivate(null)">🏒 NHL</button>
   <button class="mm-sheet-btn" onclick="showTab('mlb',this);closeMobileMenu();mobileNavActivate(null)">⚾ MLB</button>
-  <button class="mm-sheet-btn" onclick="showTab('mm2026',this);closeMobileMenu();mobileNavActivate(null)">🏆 Bracket</button>
   <button class="mm-sheet-btn" onclick="showTab('props',this);closeMobileMenu();mobileNavActivate(null)">🎯 Player Sim</button>
   <button class="mm-sheet-btn" onclick="showTab('viewingroom',this);closeMobileMenu();mobileNavActivate(null)">📺 Viewing Room</button>
   <button class="mm-sheet-btn" onclick="showTab('angles',this);closeMobileMenu();mobileNavActivate(null)">🎯 Angles</button>
@@ -972,16 +910,9 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <div class="section-hdr"><h2>Performance Snapshot</h2><div class="badge" id="ov-perf-badge">from grading pipeline</div></div>
   <div id="ov-perf-snapshot" style="margin-bottom:4px"></div>
 
-  <!-- Sport Leaderboards -->
-  <div class="section-hdr"><h2>ATS Leaderboards</h2></div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
-    <div class="card"><div class="card-title">NFL — Best ATS (Home)</div><div class="mini-list" id="ov-nfl"></div></div>
-    <div class="card"><div class="card-title">CFB — Best ATS (Overall)</div><div class="mini-list" id="ov-cfb"></div></div>
-    <div class="card"><div class="card-title">NBA — Best ATS (Overall)</div><div class="mini-list" id="ov-nba"></div></div>
-    <div class="card"><div class="card-title">CBB — Best ATS (Overall)</div><div class="mini-list" id="ov-cbb"></div></div>
-    <div class="card"><div class="card-title">NHL — Best Puck Line %</div><div class="mini-list" id="ov-nhl"></div></div>
-    <div class="card"><div class="card-title">MLB — Best ATS (Overall)</div><div class="mini-list" id="ov-mlb"></div></div>
-  </div>
+  <!-- Leaderboards -->
+  <div class="section-hdr"><h2>Leaderboards</h2><div class="badge" id="ov-lb-badge">In-Season</div></div>
+  <div id="ov-leaderboards"></div>
 </div>
 <!-- ── NFL ─────────────────────────────────────────── -->
 <div id="tab-nfl" class="tab-content">
@@ -1147,32 +1078,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   </table></div>
 </div>
 <!-- ── MAJOR EVENTS ──────────────────────────────────── -->
-<!-- ── MARCH MADNESS 2026 ─────────────────────────────── -->
-<div id="tab-mm2026" class="tab-content">
-  <div class="page-title">🏆 March Madness 2026</div>
-  <div class="mm-subtitle">Model predictions · KenPom efficiency + style matchup adjustments · Updated with play-in results</div>
-  <div class="mm-legend">
-    <span><span class="mm-db in" style="padding:2px 6px">DB</span> In database — efficiency model</span>
-    <span><span class="mm-db out" style="padding:2px 6px">—</span> Seed history only</span>
-    <span style="color:#fb923c;font-weight:700">🔥 Upset pick</span>
-    <span><span class="mm-sbadge pace-fast">🏃 FAST</span> High-tempo style</span>
-    <span><span class="mm-sbadge three-high">🎯 3PT</span> 3PT-heavy offense</span>
-    <span><span class="mm-sbadge big-man">🏔 BIG</span> Dominant big man</span>
-    <span><span class="mm-sbadge playin">▶ PLAY-IN</span> Won play-in game</span>
-  </div>
-  <div class="mm-pills">
-    <button class="mm-pill active" onclick="mmSetRegion('EAST',this)">🔵 East</button>
-    <button class="mm-pill" onclick="mmSetRegion('WEST',this)">🔴 West</button>
-    <button class="mm-pill" onclick="mmSetRegion('SOUTH',this)">🟢 South</button>
-    <button class="mm-pill" onclick="mmSetRegion('MIDWEST',this)">🟡 Midwest</button>
-    <button class="mm-pill" onclick="mmSetRegion('FF',this)">🏆 Final Four</button>
-  </div>
-  <div class="mm-live-bar">
-    <span id="mm-fetch-status" style="font-size:12px">⟳ Loading live results…</span>
-    <button class="mm-refresh-btn" id="mm-refresh-btn" onclick="fetchMMActualResults()">🔄 Refresh Results</button>
-  </div>
-  <div id="mm-content"></div>
-</div>
 <!-- ── PLAYER SIM ────────────────────────────────────── -->
 <div id="tab-props" class="tab-content">
   <div class="page-title">🎯 Player Sim</div>
@@ -2061,49 +1966,6 @@ const CBB=[
 ["Fresno State","Mountain West",16,14,13,16,0,7,8,6,8,13,17,0,106.8,108.4,69.4,68.4,70.2,0,0,0,0],
 
 ["Wyoming","Mountain West",13,16,12,15,0,7,7,5,8,12,16,0,104.6,109.2,67.4,65.8,68.4,0,0,0,0],
-
-// ── NCAA Tournament mid-majors (2025 bracket additions) ──────────────────
-["Akron","MAC",22,11,13,14,0,7,7,6,7,14,15,0,107.8,105.4,70.2,72.4,69.6,0,0,0,0],
-
-["CA Baptist","Big West",26,8,15,11,0,8,6,7,5,15,14,0,108.6,106.2,69.4,74.8,68.2,0,0,0,0],
-
-["Furman","Southern",27,8,14,12,0,8,6,6,6,14,14,0,109.4,105.8,70.6,76.2,67.4,0,0,0,0],
-
-["Hawai'i","Big West",24,10,14,12,0,8,6,6,6,16,12,0,108.2,106.4,70.8,73.6,68.8,0,0,0,0],
-
-["Hofstra","CAA",25,10,14,12,0,8,6,6,6,14,14,0,108.4,106.8,69.6,74.2,69.4,0,0,0,0],
-
-["Howard","MEAC",20,14,12,14,0,7,7,5,7,13,15,0,104.6,108.4,68.2,68.8,70.2,0,0,0,0],
-
-["Idaho","Big Sky",21,12,12,14,0,7,7,5,7,13,14,0,106.4,107.8,70.4,70.6,70.8,0,0,0,0],
-
-["Kennesaw State","ASUN",23,11,13,13,0,7,7,6,6,14,14,0,107.2,107.4,70.2,72.8,71.6,0,0,0,0],
-
-["Lehigh","Patriot",25,8,14,11,0,8,6,6,5,14,13,0,108.6,105.6,68.8,75.4,68.4,0,0,0,0],
-
-["Long Island","Northeast",22,12,13,13,0,7,7,5,7,13,14,0,104.8,108.6,71.2,69.4,70.6,0,0,0,0],
-
-["N Dakota State","Summit",24,10,13,12,0,8,6,6,6,15,13,0,108.2,106.4,69.8,73.6,69.2,0,0,0,0],
-
-["Northern Iowa","MVC",23,11,13,13,0,7,7,6,6,14,14,0,109.4,105.2,67.6,73.8,68.4,0,0,0,0],
-
-["Penn","Ivy",22,8,13,11,0,7,6,6,5,12,14,0,108.6,106.2,68.4,74.2,69.6,0,0,0,0],
-
-["Queens","ASUN",22,12,13,13,0,7,7,6,6,13,14,0,106.8,107.2,70.4,71.6,71.2,0,0,0,0],
-
-["SMU","ACC",24,9,14,11,0,8,6,6,5,14,12,0,114.8,107.4,70.6,78.2,71.8,0,0,0,0],
-
-["Saint Louis","Atlantic 10",24,10,14,12,0,8,6,6,6,14,14,0,111.4,106.8,69.2,75.6,70.4,0,0,0,0],
-
-["Santa Clara","WCC",24,10,13,12,0,7,7,6,6,14,14,0,109.2,107.2,68.6,74.4,70.2,0,0,0,0],
-
-["Siena","MAAC",22,12,13,13,0,7,7,6,6,14,14,0,106.6,108.4,70.6,71.2,71.8,0,0,0,0],
-
-["South Florida","American Athletic",22,12,13,13,0,7,7,6,6,14,13,0,110.2,107.6,70.4,74.6,72.2,0,0,0,0],
-
-["Tennessee State","OVC",20,14,11,13,0,7,7,5,7,12,15,0,104.2,109.6,71.4,67.8,71.4,0,0,0,0],
-
-["Wright State","Horizon",24,10,13,12,0,8,6,6,6,14,14,0,108.8,106.2,70.2,73.6,69.2,0,0,0,0]
 
 ];
 // NHL: name,conf,div,W,L,OTL,plW,plL,plP,hW,hL,aW,aL,over,under,ouP,gf,ga,ppPct,pkPct
@@ -5314,27 +5176,148 @@ function fuzzyTeam(sport,name){
 }
 
 // ── OVERVIEW ──────────────────────────────────────────────────────────────────
+// ── OVERVIEW LEADERBOARDS ────────────────────────────────────────────────────
+function renderOvLeaderboards(){
+  const el=document.getElementById('ov-leaderboards');
+  const badge=document.getElementById('ov-lb-badge');
+  if(!el)return;
+
+  // Season detection — only show sports currently playing
+  const mon=new Date().getMonth(); // 0-indexed
+  const inSeason={
+    nfl:mon>=8||mon<=1,     // Sep-Feb
+    cfb:mon>=7||mon<=0,     // Aug-Jan
+    nba:mon>=9||mon<=5,     // Oct-Jun
+    cbb:mon>=10||mon<=3,    // Nov-Apr
+    nhl:mon>=9||mon<=5,     // Oct-Jun
+    mlb:mon>=2&&mon<=9      // Mar-Oct
+  };
+
+  // Sport configs: array, name index, ATS-W index, ATS-L index, tab id, icon, label
+  const SPORTS=[
+    {key:'nfl',arr:NFL,ni:0,aw:8,al:9, tab:'nfl', icon:'🏈',label:'NFL',atsLabel:'Home ATS'},
+    {key:'cfb',arr:CFB,ni:1,aw:5,al:6, tab:'cfb', icon:'🎓',label:'CFB',atsLabel:'ATS'},
+    {key:'nba',arr:NBA,ni:0,aw:5,al:6, tab:'nba', icon:'🏀',label:'NBA',atsLabel:'ATS'},
+    {key:'cbb',arr:CBB,ni:0,aw:4,al:5, tab:'cbb', icon:'🏀',label:'CBB',atsLabel:'ATS'},
+    {key:'nhl',arr:NHL,ni:0,aw:6,al:7, tab:'nhl', icon:'🏒',label:'NHL',atsLabel:'Puck Line'},
+    {key:'mlb',arr:MLB,ni:0,aw:5,al:6, tab:'mlb', icon:'⚾',label:'MLB',atsLabel:'Run Line'},
+  ];
+
+  const active=SPORTS.filter(s=>inSeason[s.key]&&s.arr.length>0);
+  if(badge)badge.textContent=active.map(s=>s.label).join(' · ');
+
+  // ── HOT / COLD across all in-season sports ──
+  const allTeams=[];
+  active.forEach(s=>{
+    const ix=SIDX[s.key];
+    s.arr.forEach(t=>{
+      const aw=t[s.aw]||0,al=t[s.al]||0,tot=aw+al;
+      if(tot<8)return; // min sample
+      const name=t[s.ni];
+      // Last 10 record if available
+      const r10w=ix.r10w!=null?(t[ix.r10w]||0):0;
+      const r10l=ix.r10l!=null?(t[ix.r10l]||0):0;
+      const r10tot=r10w+r10l;
+      // O/U record
+      const ov=ix.ov!=null?(t[ix.ov]||0):0;
+      const un=ix.un!=null?(t[ix.un]||0):0;
+      allTeams.push({name,sport:s.key,icon:s.icon,label:s.label,tab:s.tab,
+        aw,al,pct:aw/tot,
+        r10w,r10l,r10pct:r10tot>=5?r10w/r10tot:null,
+        ov,un,ouTot:ov+un,ouPct:(ov+un)>=5?ov/(ov+un):null
+      });
+    });
+  });
+
+  // Top 3 hottest + coldest by ATS%
+  const hottest=[...allTeams].sort((a,b)=>b.pct-a.pct).slice(0,3);
+  const coldest=[...allTeams].sort((a,b)=>a.pct-b.pct).slice(0,3);
+
+  const teamRow=(t,type)=>{
+    const pct=Math.round(t.pct*100);
+    const c=type==='hot'?'#4ade80':'#f87171';
+    const arrow=type==='hot'?'▲':'▼';
+    const r10=t.r10pct!=null?` · L10: ${t.r10w}-${t.r10l}`:'';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer" onclick="showTab('${t.tab}')">
+      <span style="font-size:12px">${t.icon}</span>
+      <span style="flex:1;font-size:12px;color:var(--text);font-weight:600">${t.name}</span>
+      <span style="font-size:11px;color:var(--muted)">${t.aw}-${t.al}${r10}</span>
+      <span style="font-size:12px;font-weight:700;color:${c}">${arrow} ${pct}%</span>
+    </div>`;
+  };
+
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Hottest ATS</div>
+      ${hottest.map(t=>teamRow(t,'hot')).join('')}
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Coldest ATS</div>
+      ${coldest.map(t=>teamRow(t,'cold')).join('')}
+    </div>
+  </div>`;
+
+  // ── Per-sport cards (in-season only) with ATS, O/U leaders, last-10 hot ──
+  html+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
+  active.forEach(s=>{
+    const ix=SIDX[s.key];
+    const teams=allTeams.filter(t=>t.sport===s.key);
+
+    // Best ATS (top 3)
+    const bestATS=[...teams].sort((a,b)=>b.pct-a.pct).slice(0,3);
+    let atsRows=bestATS.map(t=>{
+      const pct=Math.round(t.pct*100);
+      const c=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.aw}-${t.al}</span>
+        <span style="font-size:11px;font-weight:700;color:${c}">${pct}%</span>
+      </div>`;
+    }).join('');
+
+    // Best O/U overs (top 3 by over%)
+    const bestOU=[...teams].filter(t=>t.ouTot>=5).sort((a,b)=>(b.ouPct||0)-(a.ouPct||0)).slice(0,3);
+    let ouRows=bestOU.map(t=>{
+      const pct=Math.round((t.ouPct||0)*100);
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.ov}-${t.un}</span>
+        <span style="font-size:11px;font-weight:700;color:#60a5fa">${pct}% Over</span>
+      </div>`;
+    }).join('');
+
+    // Hottest last-10 (top 3 by recent form)
+    const hotL10=[...teams].filter(t=>t.r10pct!=null).sort((a,b)=>(b.r10pct||0)-(a.r10pct||0)).slice(0,3);
+    let l10Rows=hotL10.length?hotL10.map(t=>{
+      const pct=Math.round((t.r10pct||0)*100);
+      const c=pct>=70?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.r10w}-${t.r10l}</span>
+        <span style="font-size:11px;font-weight:700;color:${c}">${pct}%</span>
+      </div>`;
+    }).join(''):'<div style="font-size:10px;color:var(--muted)">Not enough data</div>';
+
+    html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer" onclick="showTab('${s.tab}')">
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px">${s.icon} ${s.label}</div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Best ${s.atsLabel}</div>
+      ${atsRows}
+      <div style="height:1px;background:var(--border);margin:8px 0"></div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Most Overs</div>
+      ${ouRows||'<div style="font-size:10px;color:var(--muted)">No data</div>'}
+      <div style="height:1px;background:var(--border);margin:8px 0"></div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Hottest Last 10</div>
+      ${l10Rows}
+    </div>`;
+  });
+  html+='</div>';
+
+  el.innerHTML=html;
+}
+
 function renderOverview(){
-  // ── LEADERBOARDS (always rendered) ────────────────────────────────────────
-  const miRow=(nm,val)=>`<div class="mi"><span class="tn">${nm}</span><span style="color:var(--gold);font-weight:700">${val}</span></div>`;
-  const nflTop=[...NFL].sort((a,b)=>(b[8]/(b[8]+b[9]||1))-(a[8]/(a[8]+a[9]||1))).slice(0,5);
-  const ovNfl=document.getElementById('ov-nfl');
-  if(ovNfl)ovNfl.innerHTML=nflTop.map(t=>miRow(t[0],`${t[8]}-${t[9]} (${(t[8]/(t[8]+t[9]||1)*100).toFixed(0)}%)`)).join('');
-  const cfbTop=[...CFB].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovCfb=document.getElementById('ov-cfb');
-  if(ovCfb)ovCfb.innerHTML=cfbTop.map(t=>miRow(t[1],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
-  const nbaTop=[...NBA].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovNba=document.getElementById('ov-nba');
-  if(ovNba)ovNba.innerHTML=nbaTop.map(t=>miRow(t[0],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
-  const cbbTop=[...CBB].sort((a,b)=>(b[4]/(b[4]+b[5]||1))-(a[4]/(a[4]+a[5]||1))).slice(0,5);
-  const ovCbb=document.getElementById('ov-cbb');
-  if(ovCbb)ovCbb.innerHTML=cbbTop.map(t=>miRow(t[0],`${t[4]}-${t[5]} (${(t[4]/(t[4]+t[5]||1)*100).toFixed(0)}%)`)).join('');
-  const nhlTop=[...NHL].sort((a,b)=>(b[6]/(b[6]+b[7]||1))-(a[6]/(a[6]+a[7]||1))).slice(0,5);
-  const ovNhl=document.getElementById('ov-nhl');
-  if(ovNhl)ovNhl.innerHTML=nhlTop.map(t=>miRow(t[0],`${t[6]}-${t[7]} (${(t[6]/(t[6]+t[7]||1)*100).toFixed(0)}%)`)).join('');
-  const mlbTop=[...MLB].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovMlb=document.getElementById('ov-mlb');
-  if(ovMlb)ovMlb.innerHTML=mlbTop.map(t=>miRow(t[0],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
+  // ── LEADERBOARDS ──────────────────────────────────────────────────────────
+  renderOvLeaderboards();
 
   // ── GENERATE PICKS ────────────────────────────────────────────────────────
   const bbEl=document.getElementById('ov-bestbets');
@@ -5766,11 +5749,6 @@ const EVENT_GAMES=[
   {event:'Conference Tournaments',round:'SEC Semis',sport:'cbb',away:'Auburn Tigers',home:'Arkansas Razorbacks',time:'Mar 15 · 1:00 PM ET',spread:-7.5,total:141,mlHome:280,mlAway:-340},
   {event:'Conference Tournaments',round:'Big 12 Semis',sport:'cbb',away:'Kansas Jayhawks',home:"Baylor Bears",time:'Mar 15 · 3:30 PM ET',spread:-4.5,total:143,mlHome:175,mlAway:-210},
   {event:'Conference Tournaments',round:'Big East Semis',sport:'cbb',away:"St. John's Red Storm",home:'UConn Huskies',time:'Mar 15 · 6:00 PM ET',spread:3,total:136.5,mlHome:-148,mlAway:125},
-  // March Madness Sweet 16 Projections
-  {event:'March Madness',round:'Sweet 16 · East',sport:'cbb',away:'Duke Blue Devils',home:'Tennessee Volunteers',time:'Mar 28 · 7:09 PM ET',spread:-3.5,total:141.5,mlHome:148,mlAway:-175},
-  {event:'March Madness',round:'Sweet 16 · West',sport:'cbb',away:'Gonzaga Bulldogs',home:'Arizona Wildcats',time:'Mar 28 · 9:39 PM ET',spread:-3,total:152.5,mlHome:128,mlAway:-152},
-  {event:'March Madness',round:'Sweet 16 · South',sport:'cbb',away:'Auburn Tigers',home:'Michigan Wolverines',time:'Mar 29 · 7:09 PM ET',spread:-6,total:136.5,mlHome:225,mlAway:-270},
-  {event:'March Madness',round:'Sweet 16 · Midwest',sport:'cbb',away:'Houston Cougars',home:'Iowa State Cyclones',time:'Mar 29 · 9:39 PM ET',spread:-3,total:131.5,mlHome:128,mlAway:-152},
   // NBA High-Stakes Regular Season
   {event:'NBA Playoff Race',round:'Top Seed Showdown',sport:'nba',away:'Oklahoma City Thunder',home:'Cleveland Cavaliers',time:'Mar 5 · 8:00 PM ET',spread:2,total:232,mlHome:-108,mlAway:-112},
   {event:'NBA Playoff Race',round:'East Battle',sport:'nba',away:'Milwaukee Bucks',home:'Boston Celtics',time:'Mar 7 · 7:30 PM ET',spread:-7,total:225,mlHome:260,mlAway:-320},
@@ -8310,477 +8288,14 @@ function hbGoAnalyze(home,away,sport){
   },100);
 }
 
-// ── MARCH MADNESS 2026 BRACKET ANALYZER ──────────────────────────────────────
+// ── SHOWtab HOOK ────────────────────────────────────────────────────────────
 
-// 2026 Tournament bracket — order per region: 1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15
-// First Four winners slotted: West 11=Texas, Midwest 11=SMU, Midwest 16=Howard, South 16=Lehigh
-// ── MM Live Results from ESPN ──────────────────────────────────────────────
-let MM_ACTUAL_RESULTS={};
-let _mmFetchStatus='idle';
-let _mmFetchTime=null;
-let _mmFetchCount=0;
-
-function mmNorm(espnName){
-  if(!espnName)return'';
-  const all=Object.values(MM_BRACKET).flat().map(t=>t[1]);
-  const low=espnName.toLowerCase();
-  for(const t of all){if(low.includes(t.toLowerCase()))return t;}
-  for(const t of all){if(t.toLowerCase().includes(low))return t;}
-  return'';
-}
-
-async function fetchMMActualResults(){
-  const btn=document.getElementById('mm-refresh-btn');
-  if(btn)btn.disabled=true;
-  _mmFetchStatus='loading';
-  updateMMStatus();
-  try{
-    const today=new Date().toISOString().slice(0,10).replace(/-/g,'');
-    let events=[];
-    const urls=[
-      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?groups=100&limit=300&dates=20260318-${today}`,
-      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?limit=300&dates=20260318-${today}`
-    ];
-    for(const url of urls){
-      const d=await espnGet(url);
-      if(d?.events?.length){events=d.events;break;}
-    }
-    const bracketSet=new Set(Object.values(MM_BRACKET).flat().map(t=>t[1]));
-    const results={};
-    let count=0;
-    for(const ev of events){
-      if(!ev.status?.type?.completed)continue;
-      const comp=ev.competitions?.[0];
-      if(!comp)continue;
-      let winner=null,loser=null;
-      for(const c of(comp.competitors||[])){
-        const bn=mmNorm(c.team?.displayName||c.team?.shortDisplayName||c.team?.name||'');
-        if(!bn||!bracketSet.has(bn))continue;
-        if(c.winner)winner=bn; else loser=bn;
-      }
-      if(winner&&loser){
-        const key=[winner,loser].sort().join('|');
-        results[key]=winner;
-        count++;
-      }
-    }
-    MM_ACTUAL_RESULTS=results;
-    _mmFetchCount=count;
-    _mmFetchStatus=count>0?'done':'empty';
-    _mmFetchTime=new Date();
-    _mmSimCache={};
-    updateMMStatus();
-    const el=document.getElementById('mm-content');
-    if(el)el.innerHTML=_mmActiveRegion==='FF'?mmRenderFF():mmRenderRegion(_mmActiveRegion);
-  }catch(e){
-    console.warn('[MM fetch]',e);
-    _mmFetchStatus='error';
-    updateMMStatus();
-  }
-  if(btn)btn.disabled=false;
-}
-
-function updateMMStatus(){
-  const el=document.getElementById('mm-fetch-status');
-  if(!el)return;
-  if(_mmFetchStatus==='loading'){
-    el.innerHTML='<span style="color:var(--muted)">⟳ Fetching live results…</span>';
-  } else if(_mmFetchStatus==='done'){
-    const t=_mmFetchTime?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    el.innerHTML=`<span style="color:#4ade80">✓ ${_mmFetchCount} result${_mmFetchCount!==1?'s':''} loaded · Updated ${t}</span>`;
-  } else if(_mmFetchStatus==='empty'){
-    el.innerHTML='<span style="color:var(--muted)">No completed games found — showing model predictions</span>';
-  } else if(_mmFetchStatus==='error'){
-    el.innerHTML='<span style="color:#f87171">⚠ Could not load live results — showing predictions</span>';
-  } else {
-    el.innerHTML='<span style="color:var(--muted)">Tap Refresh to load live results</span>';
-  }
-}
-
-const MM_BRACKET={
-  EAST:[[1,'Duke'],[16,'Siena'],[8,'Ohio State'],[9,'TCU'],[5,"St. John's"],[12,'Northern Iowa'],
-        [4,'Kansas'],[13,'CA Baptist'],[6,'Louisville'],[11,'South Florida'],[3,'Michigan State'],[14,'N Dakota State'],
-        [7,'UCLA'],[10,'UCF'],[2,'UConn'],[15,'Furman']],
-  WEST:[[1,'Arizona'],[16,'Long Island'],[8,'Villanova'],[9,'Utah State'],[5,'Wisconsin'],[12,'High Point'],
-        [4,'Arkansas'],[13,"Hawai'i"],[6,'BYU'],[11,'Texas'],[3,'Gonzaga'],[14,'Kennesaw State'],
-        [7,'Miami FL'],[10,'Missouri'],[2,'Purdue'],[15,'Queens']],
-  SOUTH:[[1,'Florida'],[16,'Lehigh'],[8,'Clemson'],[9,'Iowa'],[5,'Vanderbilt'],[12,'McNeese'],
-         [4,'Nebraska'],[13,'Troy'],[6,'UNC'],[11,'VCU'],[3,'Illinois'],[14,'Penn'],
-         [7,"Saint Mary's"],[10,'Texas A&M'],[2,'Houston'],[15,'Idaho']],
-  MIDWEST:[[1,'Michigan'],[16,'Howard'],[8,'Georgia'],[9,'Saint Louis'],[5,'Texas Tech'],[12,'Akron'],
-           [4,'Alabama'],[13,'Hofstra'],[6,'Tennessee'],[11,'SMU'],[3,'Virginia'],[14,'Wright State'],
-           [7,'Kentucky'],[10,'Santa Clara'],[2,'Iowa State'],[15,'Tennessee State']],
-};
-// Final Four: East champion plays South champion; West plays Midwest
-const MM_FF_PAIRS=[['EAST','SOUTH'],['WEST','MIDWEST']];
-// Historical seed-matchup win rates for the better (lower-numbered) seed
-const MM_SEED_RATE={1:0.988,2:0.941,3:0.853,4:0.791,5:0.647,6:0.620,7:0.602,8:0.513,9:0.487,10:0.398,11:0.380,12:0.353};
-
-// ── Play-in results (First Four) ─────────────────────────────────────────────
-// Teams confirmed in the main bracket via play-in win
-const MM_PLAYIN_WINNERS=new Set(['Howard','Texas']);
-
-// ── Style data for all 64 bracket teams ──────────────────────────────────────
-// pace: 1=slow, 2=avg, 3=fast (relative to D1 avg ~70 poss/40min)
-// threePt: 1=low, 2=avg, 3=high (3PA as % of FGA: low<28%, high>38%)
-// bigMan: null or string — dominant interior presence (matchup advantage factor)
-// zone: true if team uses zone defense heavily (disrupts 3PT rhythm offenses)
-// note: scouting note shown on card
-const MM_STYLE={
-  // ── EAST ──────────────────────────────────────────────────────────────────
-  'Duke':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Elite guard play, versatile bigs, blue-blood depth'},
-  'Siena':         {pace:2,threePt:3,bigMan:null,       zone:true, note:'MAAC; zone D + 3PT heavy — classic mid-major chaos style'},
-  'Ohio State':    {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten balanced; solid interior'},
-  'TCU':           {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big 12; guard-driven 3PT offense'},
-  "St. John's":    {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big East; press defense, fast transition game'},
-  'Northern Iowa': {pace:1,threePt:2,bigMan:null,       zone:false,note:'MVC grinder — half-court, physical interior, hard to score on'},
-  'Kansas':        {pace:2,threePt:2,bigMan:null,       zone:false,note:'Blue-blood; disciplined, deep roster'},
-  'CA Baptist':    {pace:3,threePt:3,bigMan:null,       zone:false,note:'WAC; pace-and-space, lives and dies by the 3PT'},
-  'Louisville':    {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; athletic wings, transition offense'},
-  'South Florida': {pace:3,threePt:2,bigMan:null,       zone:false,note:'American; length-based defense, fast break'},
-  'Michigan State':{pace:1,threePt:2,bigMan:null,       zone:false,note:'Izzo system: half-court, physical, tournament-tested'},
-  'N Dakota State':{pace:2,threePt:3,bigMan:null,       zone:false,note:'Summit League; 3PT reliant — if they\'re hot, watch out'},
-  'UCLA':          {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big Ten; perimeter-oriented, skilled guards'},
-  'UCF':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big 12; athletic bigs + transition, improving program'},
-  'UConn':         {pace:1,threePt:2,bigMan:'7ft interior tradition — always has an NBA-caliber big',zone:false,note:'Back-to-back champs system; dominant paint + elite defense'},
-  'Furman':        {pace:3,threePt:3,bigMan:null,       zone:false,note:'SoCon; run-and-gun, 3PT heavy — upset Virginia in 2023 via this style'},
-  // ── WEST ──────────────────────────────────────────────────────────────────
-  'Arizona':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big 12; up-tempo, athletic across all positions'},
-  'Long Island':   {pace:3,threePt:3,bigMan:null,       zone:true, note:'CAA; pace-and-3, zone heavy — small school that needs shooters to go off'},
-  'Villanova':     {pace:1,threePt:3,bigMan:null,       zone:false,note:'Big East; 3PT program identity — very high volume, very slow pace'},
-  'Utah State':    {pace:1,threePt:3,bigMan:null,       zone:false,note:'MWC; Princeton-style system, very deliberate + 3PT reliant'},
-  'Wisconsin':     {pace:1,threePt:2,bigMan:null,       zone:false,note:'Badger motion offense; methodical, hard to outscore'},
-  'High Point':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big South; shooter-heavy roster, pace varies by matchup'},
-  'Arkansas':      {pace:3,threePt:2,bigMan:null,       zone:false,note:'SEC; 40-min press defense, forces chaos & turnovers'},
-  "Hawai'i":       {pace:2,threePt:3,bigMan:null,       zone:true, note:'Big West; zone D + 3PT offense, classic disruptive combo'},
-  'BYU':           {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big 12; physical, disciplined, experienced'},
-  'Texas':         {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big 12; play-in winner — athletic wings, versatile defense'},
-  'Gonzaga':       {pace:3,threePt:2,bigMan:'Elite frontcourt tradition — consistently has NBA-caliber 7-footer',zone:false,note:'WCC dominant; always has a dominant big + skilled shooters around him'},
-  'Kennesaw State':{pace:1,threePt:2,bigMan:null,       zone:true, note:'ASUN; physical, zone-heavy — upset Kansas State in 2023 with this formula'},
-  'Miami FL':      {pace:3,threePt:3,bigMan:null,       zone:false,note:'ACC; perimeter-oriented, 3PT heavy, athletic'},
-  'Missouri':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; balanced, athletic, improving program'},
-  'Purdue':        {pace:1,threePt:2,bigMan:'7ft+ center tradition (Edey lineage) — massive paint presence',zone:false,note:'Big Ten; methodical pace but elite big man creates absolute mismatch vs small teams'},
-  'Queens':        {pace:3,threePt:3,bigMan:null,       zone:false,note:'ASUN; pace-and-space, 3PT-or-bust — needs shooters hot to pull upset'},
-  // ── SOUTH ─────────────────────────────────────────────────────────────────
-  'Florida':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'SEC; athletic, transition-oriented, high energy'},
-  'Lehigh':        {pace:2,threePt:3,bigMan:null,       zone:false,note:'Patriot; smart 3PT offense — historic upset program (beat Duke in 2012)'},
-  'Clemson':       {pace:2,threePt:2,bigMan:null,       zone:false,note:'ACC; balanced, strong defensive identity'},
-  'Iowa':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; physical interior, evolving system'},
-  'Vanderbilt':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'SEC; perimeter-heavy, 3PT reliant'},
-  'McNeese':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'Southland; physical guards, in-your-face defense — in our DB with real efficiency data'},
-  'Nebraska':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; size-oriented frontcourt, methodical'},
-  'Troy':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Sun Belt; balanced, consistent — in our DB'},
-  'UNC':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; run-and-gun, athletic wings, high-pace pressure'},
-  'VCU':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'A-10; HAVOC press defense — forces 20+ turnovers, pace disruptor'},
-  'Illinois':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; versatile, balanced attack'},
-  'Penn':          {pace:1,threePt:3,bigMan:null,       zone:false,note:'Ivy; motion offense, high IQ but athleticism gap is real vs power teams'},
-  "Saint Mary's":  {pace:1,threePt:2,bigMan:null,       zone:false,note:'WCC; Princeton-style, deliberate, very smart basketball'},
-  'Texas A&M':     {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; physical frontcourt, methodical half-court'},
-  'Houston':       {pace:1,threePt:2,bigMan:null,       zone:false,note:'Big 12; elite Kelvin Sampson defense — allows least efficient shots in country'},
-  'Idaho':         {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Sky; average metrics, seed-based prediction only'},
-  // ── MIDWEST ───────────────────────────────────────────────────────────────
-  'Michigan':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; disciplined, versatile roster'},
-  'Howard':        {pace:1,threePt:2,bigMan:null,       zone:false,note:'MEAC play-in winner; disciplined HBCU program — tends to play below-tempo and limit possessions to stay close'},
-  'Georgia':       {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; athletic, improved program under Mike White'},
-  'Saint Louis':   {pace:2,threePt:2,bigMan:null,       zone:false,note:'A-10; fundamentally sound, experienced'},
-  'Texas Tech':    {pace:1,threePt:2,bigMan:null,       zone:false,note:'Big 12; elite suffocating defense — allows very few quality looks'},
-  'Akron':         {pace:3,threePt:2,bigMan:null,       zone:false,note:'MAC; aggressive defense + transition — solid mid-major'},
-  'Alabama':       {pace:3,threePt:3,bigMan:null,       zone:false,note:'SEC; Nate Oats system — extreme pace + extreme 3PT volume, highest variance team in field'},
-  'Hofstra':       {pace:2,threePt:3,bigMan:null,       zone:true, note:'CAA; 3PT heavy + zone defense — classic disruptive combo for upsets'},
-  'Tennessee':     {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; elite physical defense, tough to score on'},
-  'SMU':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; athletic guards, transition-oriented'},
-  'Virginia':      {pace:1,threePt:2,bigMan:null,       zone:false,note:'ACC; PACK line defense — slowest tempo in college basketball, suffocating'},
-  'Wright State':  {pace:2,threePt:3,bigMan:null,       zone:false,note:'Horizon; 3PT volume offense — in-tournament can light it up from deep'},
-  'Kentucky':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; raw athleticism, one-and-done talent'},
-  'Santa Clara':   {pace:2,threePt:3,bigMan:null,       zone:false,note:'WCC; Gonzaga-adjacent style, system-based 3PT offense'},
-  'Iowa State':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big 12; perimeter-dominant, elite 3PT offense + zone-busting ability'},
-  'Tennessee State':{pace:3,threePt:2,bigMan:null,      zone:false,note:'OVC; athletic, transition-heavy'},
-};
-
-// ── Style-based matchup adjustment ────────────────────────────────────────────
-// Returns float adjustment to team1 win probability based on stylistic clash
-// Keeps adjustments small (max ±8%) so style is a tiebreaker, not an override
-function mmStyleAdj(name1, name2){
-  const s1=MM_STYLE[name1], s2=MM_STYLE[name2];
-  if(!s1||!s2)return{adj:0,notes:[]};
-  let adj=0;
-  const notes=[];
-  // Pace mismatch — faster team tends to get their style of game
-  const paceDiff=s1.pace-s2.pace; // positive = team1 is faster
-  if(Math.abs(paceDiff)>=2){
-    const paceAdj=paceDiff*0.015; // ±1.5% per tier
-    adj+=paceAdj;
-    const faster=paceAdj>0?name1:name2, slower=paceAdj>0?name2:name1;
-    notes.push(`⚡ Pace clash: ${faster} wants to run, ${slower} wants to grind`);
-  }
-  // Big man advantage — dominant interior player vs team without one
-  const big1=s1.bigMan?1:0, big2=s2.bigMan?1:0;
-  if(big1!==big2){
-    const bigAdj=(big1-big2)*0.045; // 4.5% for having dominant big
-    adj+=bigAdj;
-    const bigTeam=bigAdj>0?name1:name2;
-    const smallTeam=bigAdj>0?name2:name1;
-    const bigNote=bigAdj>0?s1.bigMan:s2.bigMan;
-    notes.push(`🏔 Size edge: ${bigTeam} — ${bigNote}`);
-  }
-  // 3PT heavy offense vs zone defense — zone can disrupt 3PT rhythm
-  if(s2.zone&&s1.threePt===3){
-    adj-=0.025; // team1's 3PT offense will be disrupted by team2's zone
-    notes.push(`🎯 Zone risk: ${name2} zone D will challenge ${name1}'s 3PT offense`);
-  }
-  if(s1.zone&&s2.threePt===3){
-    adj+=0.025; // team1's zone will disrupt team2's 3PT offense
-    notes.push(`🎯 Zone risk: ${name1} zone D will challenge ${name2}'s 3PT offense`);
-  }
-  // Both teams are 3PT heavy — high variance game, slight edge to bigger program
-  if(s1.threePt===3&&s2.threePt===3){
-    notes.push(`🎲 High-variance: both teams 3PT reliant — coin-flip potential`);
-  }
-  // Alabama-style chaos boost — extreme pace + extreme 3PT is genuinely unpredictable
-  if((s1.pace===3&&s1.threePt===3)||(s2.pace===3&&s2.threePt===3)){
-    const chaosTeam=s1.pace===3&&s1.threePt===3?name1:name2;
-    notes.push(`💥 ${chaosTeam}: extreme pace + 3PT volume = maximum variance`);
-  }
-  adj=Math.max(-0.08,Math.min(0.08,adj));
-  return{adj,notes};
-}
-
-let _mmActiveRegion='EAST';
-let _mmSimCache={};
-
-function mmTeamData(name){
-  const row=fuzzyTeam('cbb',name);
-  if(!row)return null;
-  const ix=SIDX.cbb;
-  const adjOE=parseFloat(row[ix.adjoe])||100;
-  const adjDE=parseFloat(row[ix.adjde])||100;
-  const w=parseFloat(row[ix.w])||0, l=parseFloat(row[ix.l])||0;
-  return{adjOE,adjDE,net:adjOE-adjDE,winPct:(w+l)>0?w/(w+l):0.5,w,l};
-}
-
-function mmPredict(name1,seed1,name2,seed2){
-  // ── Use actual ESPN result if available ───────────────────────────────────
-  const _ak=[name1,name2].sort().join('|');
-  if(MM_ACTUAL_RESULTS[_ak]){
-    const _aw=MM_ACTUAL_RESULTS[_ak];
-    const _t1w=_aw===name1;
-    const _d1=mmTeamData(name1),_d2=mmTeamData(name2);
-    const _sty=mmStyleAdj(name1,name2);
-    return{winner:_aw,winnerSeed:_t1w?seed1:seed2,prob:1.0,
-      isUpset:(_t1w?seed1:seed2)>Math.min(seed1,seed2),isActual:true,
-      t1:{name:name1,seed:seed1,data:_d1,style:MM_STYLE[name1]||null},
-      t2:{name:name2,seed:seed2,data:_d2,style:MM_STYLE[name2]||null},
-      bothInDB:!!(_d1&&_d2),styleNotes:_sty.notes,styleAdj:_sty.adj};
-  }
-  const d1=mmTeamData(name1), d2=mmTeamData(name2);
-  // Seed-based base rate: always from perspective of the lower (better) seed
-  const betterSeed=Math.min(seed1,seed2);
-  const baseRate=MM_SEED_RATE[betterSeed]??0.5;
-  const seedProb=(seed1<seed2)?baseRate:1-baseRate; // prob that team1 wins
-
-  let baseProb;
-  if(d1&&d2){
-    // Both in DB — use KenPom net efficiency logit (70%) + seed history (30%)
-    const netDiff=d1.net-d2.net;
-    const effProb=1/(1+Math.exp(-0.15*netDiff));
-    baseProb=effProb*0.70+seedProb*0.30;
-  } else if(d1){
-    // Team1 in DB, team2 not — efficiency nudge on top of seed base
-    const boost=d1.net>22?0.04:d1.net>16?0.02:0;
-    baseProb=seed1<seed2?seedProb+boost:seedProb-boost;
-  } else if(d2){
-    const boost=d2.net>22?0.04:d2.net>16?0.02:0;
-    baseProb=seed1<seed2?seedProb-boost:seedProb+boost;
-  } else {
-    baseProb=seedProb;
-  }
-  // Apply style-based matchup adjustment (max ±8%)
-  const styleResult=mmStyleAdj(name1,name2);
-  let finalProb=Math.max(0.04,Math.min(0.97,baseProb+styleResult.adj));
-  const winner=finalProb>=0.5?name1:name2;
-  const winnerSeed=finalProb>=0.5?seed1:seed2;
-  const prob=finalProb>=0.5?finalProb:1-finalProb;
-  const isUpset=winnerSeed>Math.min(seed1,seed2);
-  return{winner,winnerSeed,prob,isUpset,
-    t1:{name:name1,seed:seed1,data:d1,style:MM_STYLE[name1]||null},
-    t2:{name:name2,seed:seed2,data:d2,style:MM_STYLE[name2]||null},
-    bothInDB:!!(d1&&d2),
-    styleNotes:styleResult.notes,styleAdj:styleResult.adj};
-}
-
-function mmSimRegion(regionKey){
-  if(_mmSimCache[regionKey])return _mmSimCache[regionKey];
-  const teams=MM_BRACKET[regionKey];
-  const r64=[];
-  for(let i=0;i<16;i+=2) r64.push(mmPredict(teams[i][1],teams[i][0],teams[i+1][1],teams[i+1][0]));
-  const r32=[];
-  for(let i=0;i<8;i+=2) r32.push(mmPredict(r64[i].winner,r64[i].winnerSeed,r64[i+1].winner,r64[i+1].winnerSeed));
-  const s16=[
-    mmPredict(r32[0].winner,r32[0].winnerSeed,r32[1].winner,r32[1].winnerSeed),
-    mmPredict(r32[2].winner,r32[2].winnerSeed,r32[3].winner,r32[3].winnerSeed),
-  ];
-  const e8=mmPredict(s16[0].winner,s16[0].winnerSeed,s16[1].winner,s16[1].winnerSeed);
-  const result={r64,r32,s16,e8};
-  _mmSimCache[regionKey]=result;
-  return result;
-}
-
-function mmGameCard(game,showEff){
-  const{t1,t2,winner,winnerSeed,prob,isUpset,isActual,bothInDB,styleNotes,styleAdj}=game;
-  const conf=prob>=0.80?'high':prob>=0.65?'med':'low';
-  const confLabel=isActual?'Final':`${(prob*100).toFixed(0)}%`;
-  const t1win=winner===t1.name;
-
-  // Build style badges for one team
-  const styleBadges=(t)=>{
-    if(!t.style)return'';
-    const badges=[];
-    if(t.style.pace===3) badges.push('<span class="mm-sbadge pace-fast">🏃 FAST</span>');
-    if(t.style.pace===1) badges.push('<span class="mm-sbadge pace-slow">🐢 SLOW</span>');
-    if(t.style.threePt===3) badges.push('<span class="mm-sbadge three-high">🎯 3PT</span>');
-    if(t.style.bigMan) badges.push(`<span class="mm-sbadge big-man" title="${t.style.bigMan}">🏔 BIG</span>`);
-    if(t.style.zone) badges.push('<span class="mm-sbadge zone">▣ ZONE</span>');
-    if(MM_PLAYIN_WINNERS.has(t.name)) badges.push('<span class="mm-sbadge playin">▶ PLAY-IN</span>');
-    return badges.length?`<div class="mm-style-row">${badges.join('')}</div>`:'';
-  };
-
-  const teamRow=(t,isWinner)=>{
-    const upsetWin=isWinner&&isUpset;
-    const cls=isWinner?(upsetWin?'upset-winner':'winner'):'';
-    const dbBadge=t.data?'<span class="mm-db in">DB</span>':'<span class="mm-db out">—</span>';
-    const icon=isWinner?(upsetWin?'🔥 ':'✓ '):'';
-    return `<div class="mm-team ${cls}">
-      <span class="mm-seed ${t.seed<=4?'fav':''}">${t.seed}</span>
-      <span class="mm-name">${icon}${t.name}</span>
-      ${dbBadge}
-    </div>
-    ${styleBadges(t)}`;
-  };
-
-  // Efficiency + scouting note line
-  let effLine='';
-  if(showEff&&bothInDB){
-    const nd1=t1.data.net.toFixed(1),nd2=t2.data.net.toFixed(1);
-    const n1=t1.name.split(' ').pop(), n2=t2.name.split(' ').pop();
-    effLine=`<div class="mm-eff">Net eff: ${n1} ${nd1>0?'+':''}${nd1} vs ${n2} ${nd2>0?'+':''}${nd2}</div>`;
-  } else if(showEff&&!bothInDB){
-    const inDB=t1.data?t1.name:t2.data?t2.name:null;
-    effLine=`<div class="mm-eff">⚪ Seed-based${inDB?' ('+inDB.split(' ').pop()+' in DB)':''}</div>`;
-  }
-  // Scouting notes for non-DB teams (helps explain small school strengths)
-  const scoutNote=(t)=>{
-    if(!t.style||!t.style.note||t.data)return''; // skip if in DB (eff line covers it)
-    return`<div class="mm-eff" style="color:var(--muted);margin-top:1px">📋 ${t.name}: ${t.style.note}</div>`;
-  };
-
-  // Style matchup note(s) — show if any notable clash exists
-  const matchupHtml=styleNotes&&styleNotes.length
-    ?`<div class="mm-matchup-note">${styleNotes.join(' · ')}</div>`:'';
-
-  // Style adjustment indicator
-  const adjHtml=styleAdj&&Math.abs(styleAdj)>=0.01
-    ?`<div class="mm-style-adj">Style adj: ${styleAdj>0?'+':''}${(styleAdj*100).toFixed(1)}% → ${t1.name}</div>`:'';
-
-  const hasStyleEdge=styleNotes&&styleNotes.length>0;
-  return `<div class="mm-game${isUpset?' upset':bothInDB?' all-data':hasStyleEdge?' style-edge':''}">
-    ${teamRow(t1,t1win)}
-    <div class="mm-divider"></div>
-    ${teamRow(t2,!t1win)}
-    <div class="mm-game-footer">
-      <span class="mm-pick-label">${isUpset?'🔥 Upset pick':'Model pick'}</span>
-      <span class="mm-conf ${conf}">${confLabel}</span>
-    </div>
-    ${effLine}
-    ${scoutNote(t1)}${scoutNote(t2)}
-    ${matchupHtml}
-    ${adjHtml}
-  </div>`;
-}
-
-function mmRenderRegion(regionKey){
-  const sim=mmSimRegion(regionKey);
-  const teams=MM_BRACKET[regionKey];
-
-  const r64Col=sim.r64.map(g=>mmGameCard(g,true)).join('');
-  const r32Col=sim.r32.map(g=>mmGameCard(g,false)).join('');
-  const s16Col=sim.s16.map(g=>mmGameCard(g,false)).join('');
-  const champCard=mmGameCard(sim.e8,false);
-  const champDiv=`<div class="mm-region-champion">🏆 ${regionKey} Champion: ${sim.e8.winner} (${sim.e8.winnerSeed} seed)</div>`;
-
-  return `<div class="mm-bracket-grid">
-    <div class="mm-round-col"><div class="mm-round-title">Round of 64</div>${r64Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Round of 32</div>${r32Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Sweet 16 → Elite 8</div>${s16Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Elite 8</div>${champCard}${champDiv}</div>
-  </div>`;
-}
-
-function mmRenderFF(){
-  // Simulate all 4 regions first
-  const champs={};
-  ['EAST','WEST','SOUTH','MIDWEST'].forEach(r=>{champs[r]=mmSimRegion(r).e8;});
-
-  const sf1=mmPredict(champs.EAST.winner,champs.EAST.winnerSeed,champs.SOUTH.winner,champs.SOUTH.winnerSeed);
-  const sf2=mmPredict(champs.WEST.winner,champs.WEST.winnerSeed,champs.MIDWEST.winner,champs.MIDWEST.winnerSeed);
-  const title=mmPredict(sf1.winner,sf1.winnerSeed,sf2.winner,sf2.winnerSeed);
-
-  const regionCards=['EAST','WEST','SOUTH','MIDWEST'].map(r=>{
-    const c=champs[r];
-    const d=mmTeamData(c.winner);
-    const netStr=d?` · Net eff: ${d.net>0?'+':''}${d.net.toFixed(1)}`:'';
-    return `<div class="mm-game"><div class="mm-team winner"><span class="mm-seed fav">${c.winnerSeed}</span><span class="mm-name">🏆 ${c.winner}</span></div><div class="mm-eff">${r} Champion${netStr}</div></div>`;
-  });
-
-  return `<div style="margin-bottom:16px">
-    <div class="mm-round-title" style="margin-bottom:10px">Regional Champions</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${regionCards.join('')}</div>
-  </div>
-  <div class="mm-ff-grid">
-    <div class="mm-ff-game">
-      <div class="mm-ff-title">Semifinal 1 — East vs South (Apr 5)</div>
-      ${mmGameCard(sf1,true)}
-    </div>
-    <div class="mm-ff-game">
-      <div class="mm-ff-title">Semifinal 2 — West vs Midwest (Apr 5)</div>
-      ${mmGameCard(sf2,true)}
-    </div>
-  </div>
-  <div class="mm-champ-game">
-    <div class="mm-champ-title">🏆 National Championship — Apr 7</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
-      <div>
-        <div class="mm-champ-team">${sf1.winner}</div>
-        <div class="mm-champ-conf">(${sf1.winnerSeed} seed · ${sf1.prob>=0.5?sf1.winner===title.winner?'✓ Advancing':'':''} East/South)</div>
-      </div>
-      <div style="font-size:20px;font-weight:900;color:var(--gold)">vs</div>
-      <div>
-        <div class="mm-champ-team">${sf2.winner}</div>
-        <div class="mm-champ-conf">(${sf2.winnerSeed} seed · West/Midwest)</div>
-      </div>
-    </div>
-    <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(201,168,76,.2)">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Predicted Champion</div>
-      <div style="font-size:24px;font-weight:900;color:var(--gold)">🏆 ${title.winner}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px">${title.winnerSeed} seed · ${(title.prob*100).toFixed(0)}% model confidence · Total: 141 pts</div>
-    </div>
-  </div>`;
-}
-
-function mmSetRegion(region,btn){
-  _mmActiveRegion=region;
-  document.querySelectorAll('.mm-pill').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  const el=document.getElementById('mm-content');
-  if(!el)return;
-  el.innerHTML=region==='FF'?mmRenderFF():mmRenderRegion(region);
-}
-
+// (March Madness 2026 bracket removed — tournament complete)
 // Hook into showTab to render MM on first visit
 const _origShowTab=showTab;
 showTab=function(id,btn){
   _origShowTab(id,btn);
   if(id==='hotbets')hbRender();
-  if(id==='mm2026'){_mmSimCache={};mmSetRegion(_mmActiveRegion,document.querySelector('.mm-pill.active'));fetchMMActualResults();}
 };
 // Re-render Hot Bets when odds refresh completes
 window.addEventListener('btf-odds-refreshed',()=>{
@@ -9089,25 +8604,61 @@ function vrParseEvent(ev, sport){
   const isFinal = st.type&&st.type.completed;
   const detail = (st.type&&st.type.shortDetail)||'';
 
-  // Spread from ESPN odds if available
-  let espnSpread = null;
+  // Odds: spread, total, detail line
+  let espnSpread=null, espnTotal=null, espnOddsDetail=null;
   if(comp.odds&&comp.odds[0]){
-    const odd = comp.odds[0];
-    espnSpread = odd.spread!=null ? odd.spread : null; // positive = home favored by X
+    const odd=comp.odds[0];
+    espnSpread=odd.spread!=null?odd.spread:null;
+    espnTotal=odd.overUnder!=null?odd.overUnder:null;
+    espnOddsDetail=odd.details||null;
   }
 
+  // TV broadcast
+  let broadcast=null;
+  if(comp.broadcasts&&comp.broadcasts[0]&&comp.broadcasts[0].names){
+    broadcast=comp.broadcasts[0].names.join(', ');
+  }
+
+  // Venue
+  let venue=null;
+  if(comp.venue){
+    const v=comp.venue;
+    venue=v.fullName||(v.address?.city)||null;
+  }
+
+  // Team records (overall)
+  const homeRec=(home.records||[]).find(r=>r.name==='overall')?.summary||null;
+  const awayRec=(away.records||[]).find(r=>r.name==='overall')?.summary||null;
+
+  // Leaders (top performer per team — points leader)
+  let homeLeader=null,awayLeader=null;
+  const extractLeader=(c)=>{
+    const cats=c.leaders||[];
+    // Prefer points leader, fall back to first category
+    const ptsCat=cats.find(l=>l.name==='pointsPerGame'||l.name==='points')||cats[0];
+    if(!ptsCat?.leaders?.length)return null;
+    const top=ptsCat.leaders[0];
+    return{name:top.athlete?.shortName||top.athlete?.displayName||'',
+      value:top.displayValue||'',stat:ptsCat.displayName||ptsCat.name||''};
+  };
+  homeLeader=extractLeader(home);
+  awayLeader=extractLeader(away);
+
   return {
-    id: ev.id,
-    sport,
+    id: ev.id, sport,
     home: home.team.displayName||home.team.shortDisplayName||'Home',
     away: away.team.displayName||away.team.shortDisplayName||'Away',
+    homeAbbr: home.team.abbreviation||'',
+    awayAbbr: away.team.abbreviation||'',
     homeScore: isLive||isFinal ? (parseInt(home.score)||0) : null,
     awayScore: isLive||isFinal ? (parseInt(away.score)||0) : null,
     homeWinning: isLive && parseInt(home.score||0) > parseInt(away.score||0),
     awayWinning: isLive && parseInt(away.score||0) > parseInt(home.score||0),
-    isLive, isFinal,
-    detail,      // "Q4 2:14", "Bot 7th", "Final", "7:30 PM ET"
-    espnSpread,
+    isLive, isFinal, detail,
+    espnSpread, espnTotal, espnOddsDetail,
+    broadcast, venue,
+    homeRec, awayRec,
+    homeLeader, awayLeader,
     date: (ev.date||'').slice(0,10),
   };
 }
@@ -9214,24 +8765,74 @@ function vrRenderCard(game, isPinned, bet){
   const pinActive = (isPinned||isManPinned) ? 'active' : '';
   const cardClass = `vr-card${game.isLive?' live':''}${isPinned?' pinned-card':''}`;
 
+  // Records row
+  const recHtml=(game.homeRec||game.awayRec)?`<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:0 2px">
+    <span>${game.awayAbbr} ${game.awayRec||''}</span><span>${game.homeAbbr} ${game.homeRec||''}</span>
+  </div>`:'';
+
+  // Odds row (spread + total)
+  let oddsHtml='';
+  if(game.espnSpread!=null||game.espnTotal!=null){
+    const parts=[];
+    if(game.espnOddsDetail)parts.push(game.espnOddsDetail);
+    else if(game.espnSpread!=null)parts.push(`Spread: ${game.espnSpread>0?'+':''}${game.espnSpread}`);
+    if(game.espnTotal!=null)parts.push(`O/U ${game.espnTotal}`);
+    oddsHtml=`<div style="font-size:10px;color:var(--gold);padding:2px 2px 0;display:flex;justify-content:center;gap:10px">${parts.map(p=>`<span>${p}</span>`).join('')}</div>`;
+  }
+
+  // O/U tracker for live/final games
+  let ouHtml='';
+  if((game.isLive||game.isFinal)&&game.espnTotal!=null){
+    const totalScore=game.homeScore+game.awayScore;
+    const diff=totalScore-game.espnTotal;
+    const pace=game.isLive?(diff>0?'Over pace':'Under pace'):(diff>0?'Over':'Under');
+    const c=diff>0?'#4ade80':'#60a5fa';
+    ouHtml=`<div style="font-size:10px;text-align:center;padding:2px 0">
+      <span style="color:var(--muted)">Combined: ${totalScore}</span>
+      <span style="color:${c};font-weight:700;margin-left:6px">${pace} (${diff>0?'+':''}${diff.toFixed(1)})</span>
+    </div>`;
+  }
+
+  // Broadcast + venue info row
+  let infoHtml='';
+  const infoParts=[];
+  if(game.broadcast)infoParts.push(`📺 ${game.broadcast}`);
+  if(game.venue)infoParts.push(game.venue);
+  if(infoParts.length)infoHtml=`<div style="font-size:9px;color:var(--muted);text-align:center;padding:1px 0">${infoParts.join(' · ')}</div>`;
+
+  // Leaders row (for pre-game / upcoming)
+  let leadersHtml='';
+  if(!game.isLive&&!game.isFinal&&(game.homeLeader||game.awayLeader)){
+    const fmtL=(l,abbr)=>l?`<span>${abbr}: ${l.name} ${l.value}</span>`:'';
+    leadersHtml=`<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);padding:2px 2px 0">
+      ${fmtL(game.awayLeader,game.awayAbbr)}${fmtL(game.homeLeader,game.homeAbbr)}
+    </div>`;
+  }
+
   return `<div class="${cardClass}" id="vr-card-${game.id}">
     <div class="vr-card-top">
       <span class="vr-sport-tag">${VR_SPORT_ICON[game.sport]||''} ${VR_SPORT_LABEL[game.sport]||game.sport.toUpperCase()}</span>
       ${statusHtml}
     </div>
+    ${recHtml}
     <div class="vr-score-row">
       <div class="vr-team">
         <div class="vr-team-name">${game.away}</div>
         <div class="${aClass}">${aScore}</div>
       </div>
-      <div class="vr-score-sep">·</div>
+      <div class="vr-score-sep">@</div>
       <div class="vr-team">
         <div class="vr-team-name">${game.home}</div>
         <div class="${hClass}">${hScore}</div>
       </div>
     </div>
+    ${oddsHtml}
+    ${ouHtml}
+    ${infoHtml}
+    ${leadersHtml}
+    ${betBarHtml?`<div style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px">${betBarHtml}</div>`:''}
     <div class="vr-card-footer">
-      ${betBarHtml || '<div style="flex:1"></div>'}
+      <div style="flex:1"></div>
       <button class="vr-pin-btn ${pinActive}" onclick="vrTogglePin('${game.id}')" title="${isManPinned?'Unpin':'Pin game'}">${pinIcon}</button>
     </div>
   </div>`;

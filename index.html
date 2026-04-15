@@ -556,66 +556,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-alt-item.safer{background:rgba(74,222,128,.08);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
 .hb-alt-item.riskier{background:rgba(251,146,60,.08);color:#fb923c;border:1px solid rgba(251,146,60,.2);}
 .hb-alt-key{font-size:10px;color:#fbbf24;font-weight:600;padding:1px 5px;background:rgba(251,191,36,.08);border-radius:4px;border:1px solid rgba(251,191,36,.2);}
-/* ── March Madness 2026 ──────────────────────────────────────────────────────── */
-.mm-subtitle{color:var(--muted);font-size:13px;margin:-8px 0 18px;}
-.mm-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
-.mm-pill{background:var(--card2);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:700;padding:6px 16px;border-radius:20px;cursor:pointer;transition:all .15s;}
-.mm-pill.active{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold);}
-.mm-bracket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:start;}
-@media(max-width:800px){.mm-bracket-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:500px){.mm-bracket-grid{grid-template-columns:1fr;}}
-.mm-round-col{display:flex;flex-direction:column;gap:8px;}
-.mm-round-title{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.mm-game{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:8px 10px;position:relative;transition:border-color .15s;}
-.mm-game.upset{border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.04);}
-.mm-game.all-data{border-color:rgba(74,222,128,.2);}
-.mm-team{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:12px;font-weight:600;color:var(--muted);}
-.mm-team.winner{color:var(--text);font-weight:800;}
-.mm-team.upset-winner{color:#fb923c;font-weight:800;}
-.mm-seed{font-size:10px;font-weight:900;color:var(--muted);width:16px;text-align:center;flex-shrink:0;}
-.mm-seed.fav{color:var(--gold);}
-.mm-name{flex:1;font-size:12px;}
-.mm-db{font-size:8px;padding:1px 4px;border-radius:3px;font-weight:800;flex-shrink:0;}
-.mm-db.in{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
-.mm-db.out{background:rgba(100,116,139,.1);color:#64748b;border:1px solid rgba(100,116,139,.2);}
-.mm-divider{height:1px;background:var(--border);margin:3px 0;}
-.mm-game-footer{display:flex;align-items:center;justify-content:space-between;margin-top:5px;}
-.mm-pick-label{font-size:10px;color:var(--muted);}
-.mm-conf{font-size:10px;font-weight:800;padding:1px 6px;border-radius:4px;}
-.mm-conf.high{background:rgba(74,222,128,.12);color:#4ade80;}
-.mm-conf.med{background:rgba(251,191,36,.12);color:#fbbf24;}
-.mm-conf.low{background:rgba(148,163,184,.12);color:#94a3b8;}
-.mm-eff{font-size:9px;color:var(--muted);margin-top:3px;font-style:italic;}
-.mm-ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-@media(max-width:600px){.mm-ff-grid{grid-template-columns:1fr;}}
-.mm-ff-game{background:var(--card2);border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:14px;}
-.mm-ff-title{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
-.mm-champ-game{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:18px;text-align:center;margin-top:10px;}
-.mm-champ-title{font-size:14px;font-weight:900;color:var(--gold);margin-bottom:12px;}
-.mm-champ-team{font-size:18px;font-weight:900;color:var(--text);margin:4px 0;}
-.mm-champ-conf{font-size:12px;color:var(--muted);}
-.mm-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:10px;color:var(--muted);}
-.mm-region-champion{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:8px 10px;margin-top:4px;font-size:12px;font-weight:800;color:var(--gold);text-align:center;}
-/* MM Live results bar */
-.mm-live-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:8px;margin-bottom:14px;flex-wrap:wrap;}
-.mm-refresh-btn{background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.mm-refresh-btn:hover{border-color:var(--gold);color:var(--gold);}
-.mm-refresh-btn:disabled{opacity:.5;cursor:not-allowed;}
-.mm-game.final{opacity:1;}
-.mm-game.final .mm-game-footer .mm-pick-label{color:#4ade80;}
-.mm-final-badge{font-size:10px;font-weight:800;padding:1px 7px;border-radius:4px;background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.3);}
-/* ── MM Style badges ──────────────────────────── */
-.mm-style-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
-.mm-sbadge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.3px;}
-.mm-sbadge.pace-fast{background:rgba(251,146,60,.12);color:#fb923c;border:1px solid rgba(251,146,60,.25);}
-.mm-sbadge.pace-slow{background:rgba(148,163,184,.1);color:#94a3b8;border:1px solid rgba(148,163,184,.2);}
-.mm-sbadge.three-high{background:rgba(168,85,247,.1);color:#c084fc;border:1px solid rgba(168,85,247,.2);}
-.mm-sbadge.big-man{background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.25);}
-.mm-sbadge.zone{background:rgba(236,72,153,.1);color:#f472b6;border:1px solid rgba(236,72,153,.2);}
-.mm-sbadge.playin{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
-.mm-matchup-note{font-size:8.5px;color:var(--gold);margin-top:4px;padding:3px 6px;background:rgba(201,168,76,.08);border-radius:4px;border-left:2px solid rgba(201,168,76,.4);line-height:1.4;}
-.mm-style-adj{font-size:8px;color:var(--muted);margin-top:2px;font-style:italic;}
-.mm-game.style-edge{border-color:rgba(201,168,76,.35);}
 .hb-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .hb-odds{font-size:13px;font-weight:900;color:var(--gold);}
 .hb-kelly{font-size:11px;color:var(--muted);}
@@ -802,7 +742,7 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 <body>
 <header>
   <div class="logo">🏆 BET THE FARM <span>All-Sports Hub</span></div>
-  <div class="hdr-note">✅ Updated: Apr 15, 2026 (auto) · 93 team records · 21 games today · 55 teams w/ injuries</div>
+  <div class="hdr-note">✅ Updated: Mar 1, 2026 · 93 team records · 21 games today · 55 teams w/ injuries</div>
 </header>
 <nav>
   <button class="active" onclick="showTab('overview',this)">📊 Overview</button>
@@ -826,7 +766,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <div class="nav-dropdown" id="nav-more-dd">
     <button id="nav-more-btn" onclick="toggleNavDD('nav-more-dd')">••• More <span class="nav-dd-arrow">▼</span></button>
     <div class="nav-dd-menu" id="nav-more-menu">
-      <button onclick="showTab('mm2026',this);closeNavDropdowns()" style="position:relative">🏆 Bracket<span style="position:absolute;top:6px;right:12px;background:#f59e0b;color:#000;font-size:8px;font-weight:900;padding:1px 4px;border-radius:99px;line-height:1.4">NEW</span></button>
       <button onclick="showTab('angles',this);closeNavDropdowns()">🎯 Angles</button>
       <button onclick="showTab('glossary',this);closeNavDropdowns()">📖 Glossary</button>
     </div>
@@ -863,7 +802,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <button class="mm-sheet-btn" onclick="showTab('cbb',this);closeMobileMenu();mobileNavActivate(null)">🏀 College Basketball</button>
   <button class="mm-sheet-btn" onclick="showTab('nhl',this);closeMobileMenu();mobileNavActivate(null)">🏒 NHL</button>
   <button class="mm-sheet-btn" onclick="showTab('mlb',this);closeMobileMenu();mobileNavActivate(null)">⚾ MLB</button>
-  <button class="mm-sheet-btn" onclick="showTab('mm2026',this);closeMobileMenu();mobileNavActivate(null)">🏆 Bracket</button>
   <button class="mm-sheet-btn" onclick="showTab('props',this);closeMobileMenu();mobileNavActivate(null)">🎯 Player Sim</button>
   <button class="mm-sheet-btn" onclick="showTab('viewingroom',this);closeMobileMenu();mobileNavActivate(null)">📺 Viewing Room</button>
   <button class="mm-sheet-btn" onclick="showTab('angles',this);closeMobileMenu();mobileNavActivate(null)">🎯 Angles</button>
@@ -972,16 +910,9 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   <div class="section-hdr"><h2>Performance Snapshot</h2><div class="badge" id="ov-perf-badge">from grading pipeline</div></div>
   <div id="ov-perf-snapshot" style="margin-bottom:4px"></div>
 
-  <!-- Sport Leaderboards -->
-  <div class="section-hdr"><h2>ATS Leaderboards</h2></div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
-    <div class="card"><div class="card-title">NFL — Best ATS (Home)</div><div class="mini-list" id="ov-nfl"></div></div>
-    <div class="card"><div class="card-title">CFB — Best ATS (Overall)</div><div class="mini-list" id="ov-cfb"></div></div>
-    <div class="card"><div class="card-title">NBA — Best ATS (Overall)</div><div class="mini-list" id="ov-nba"></div></div>
-    <div class="card"><div class="card-title">CBB — Best ATS (Overall)</div><div class="mini-list" id="ov-cbb"></div></div>
-    <div class="card"><div class="card-title">NHL — Best Puck Line %</div><div class="mini-list" id="ov-nhl"></div></div>
-    <div class="card"><div class="card-title">MLB — Best ATS (Overall)</div><div class="mini-list" id="ov-mlb"></div></div>
-  </div>
+  <!-- Leaderboards -->
+  <div class="section-hdr"><h2>Leaderboards</h2><div class="badge" id="ov-lb-badge">In-Season</div></div>
+  <div id="ov-leaderboards"></div>
 </div>
 <!-- ── NFL ─────────────────────────────────────────── -->
 <div id="tab-nfl" class="tab-content">
@@ -1147,32 +1078,6 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
   </table></div>
 </div>
 <!-- ── MAJOR EVENTS ──────────────────────────────────── -->
-<!-- ── MARCH MADNESS 2026 ─────────────────────────────── -->
-<div id="tab-mm2026" class="tab-content">
-  <div class="page-title">🏆 March Madness 2026</div>
-  <div class="mm-subtitle">Model predictions · KenPom efficiency + style matchup adjustments · Updated with play-in results</div>
-  <div class="mm-legend">
-    <span><span class="mm-db in" style="padding:2px 6px">DB</span> In database — efficiency model</span>
-    <span><span class="mm-db out" style="padding:2px 6px">—</span> Seed history only</span>
-    <span style="color:#fb923c;font-weight:700">🔥 Upset pick</span>
-    <span><span class="mm-sbadge pace-fast">🏃 FAST</span> High-tempo style</span>
-    <span><span class="mm-sbadge three-high">🎯 3PT</span> 3PT-heavy offense</span>
-    <span><span class="mm-sbadge big-man">🏔 BIG</span> Dominant big man</span>
-    <span><span class="mm-sbadge playin">▶ PLAY-IN</span> Won play-in game</span>
-  </div>
-  <div class="mm-pills">
-    <button class="mm-pill active" onclick="mmSetRegion('EAST',this)">🔵 East</button>
-    <button class="mm-pill" onclick="mmSetRegion('WEST',this)">🔴 West</button>
-    <button class="mm-pill" onclick="mmSetRegion('SOUTH',this)">🟢 South</button>
-    <button class="mm-pill" onclick="mmSetRegion('MIDWEST',this)">🟡 Midwest</button>
-    <button class="mm-pill" onclick="mmSetRegion('FF',this)">🏆 Final Four</button>
-  </div>
-  <div class="mm-live-bar">
-    <span id="mm-fetch-status" style="font-size:12px">⟳ Loading live results…</span>
-    <button class="mm-refresh-btn" id="mm-refresh-btn" onclick="fetchMMActualResults()">🔄 Refresh Results</button>
-  </div>
-  <div id="mm-content"></div>
-</div>
 <!-- ── PLAYER SIM ────────────────────────────────────── -->
 <div id="tab-props" class="tab-content">
   <div class="page-title">🎯 Player Sim</div>
@@ -1568,73 +1473,73 @@ let TODAY_GAMES=[
   // NBA, NHL, and CBB games are fetched live — no hardcoded fallbacks needed.
 ];
 // INJURIES format: {"Team Name":[{player,status,detail},...]}
-let INJURIES={"":[{"player":"Derek Forbort","status":"Injured Reserve","detail":"Forbort (undisclosed) was placed on long-term injured reserve Tuesday","pos":"D"}]};
+let INJURIES={"Atlanta Hawks": [{"player": "Nickeil Alexander-Walker", "status": "Day-To-Day", "detail": "Sprain"}, {"player": "Jalen Johnson", "status": "Day-To-Day", "detail": "Soreness"}], "Boston Celtics": [{"player": "Baylor Scheierman", "status": "Day-To-Day", "detail": "Fracture"}, {"player": "Jayson Tatum", "status": "Day-To-Day", "detail": "Achilles"}], "Brooklyn Nets": [{"player": "Nic Claxton", "status": "Day-To-Day", "detail": "Sprain"}, {"player": "Egor Demin", "status": "Out", "detail": ""}], "Chicago Bulls": [{"player": "Patrick Williams", "status": "Out", "detail": "Strain"}, {"player": "Jalen Smith", "status": "Out", "detail": "Strain"}, {"player": "Anfernee Simons", "status": "Out", "detail": "Fracture"}, {"player": "Zach Collins", "status": "Out", "detail": "Surgery"}, {"player": "Jaden Ivey", "status": "Out", "detail": "Soreness"}], "Cleveland Cavaliers": [{"player": "Dean Wade", "status": "Out", "detail": "Sprain"}, {"player": "Keon Ellis", "status": "Day-To-Day", "detail": "Fracture"}, {"player": "James Harden", "status": "Day-To-Day", "detail": "Fracture"}, {"player": "Donovan Mitchell", "status": "Out", "detail": "Strain"}, {"player": "Max Strus", "status": "Out", "detail": "Surgery"}], "Dallas Mavericks": [{"player": "Caleb Martin", "status": "Day-To-Day", "detail": "Soreness"}, {"player": "P.J. Washington", "status": "Out", "detail": "Sprain"}, {"player": "Marvin Bagley III", "status": "Out", "detail": "Sprain"}, {"player": "Naji Marshall", "status": "Day-To-Day", "detail": "Bruise"}, {"player": "Cooper Flagg", "status": "Out", "detail": "Sprain"}], "Denver Nuggets": [{"player": "Spencer Jones", "status": "Day-To-Day", "detail": "Strain"}, {"player": "Aaron Gordon", "status": "Out", "detail": "Strain"}, {"player": "Cameron Johnson", "status": "Day-To-Day", "detail": "Inflammation"}, {"player": "Peyton Watson", "status": "Out", "detail": "Strain"}, {"player": "Tamar Bates", "status": "Out", "detail": "Surgery"}], "Golden State Warriors": [{"player": "Jimmy Butler III", "status": "Out", "detail": "Knee"}, {"player": "Kristaps Porzingis", "status": "Out", "detail": ""}, {"player": "Stephen Curry", "status": "Out", "detail": "Knee"}, {"player": "Seth Curry", "status": "Out", "detail": "Pinched Nerve"}, {"player": "L.J. Cryer", "status": "Out", "detail": "Hamstring"}, {"player": "Will Richard", "status": "Day-To-Day", "detail": "Sprain"}], "Houston Rockets": [{"player": "Jabari Smith Jr.", "status": "Out", "detail": "Sprain"}, {"player": "Jae'Sean Tate", "status": "Out", "detail": "Sprain"}, {"player": "Steven Adams", "status": "Out", "detail": "Surgery"}, {"player": "Fred VanVleet", "status": "Out", "detail": "Surgery"}], "Indiana Pacers": [{"player": "Aaron Nesmith", "status": "Out", "detail": "Sprain"}, {"player": "Obi Toppin", "status": "Day-To-Day", "detail": ""}, {"player": "Ivica Zubac", "status": "Out", "detail": "Sprain"}, {"player": "Pascal Siakam", "status": "Day-To-Day", "detail": "Sprain"}, {"player": "Andrew Nembhard", "status": "Day-To-Day", "detail": ""}], "LA Clippers": [{"player": "Kawhi Leonard", "status": "Day-To-Day", "detail": "Ankle"}, {"player": "Darius Garland", "status": "Out", "detail": "Toe"}, {"player": "John Collins", "status": "Day-To-Day", "detail": "Head"}, {"player": "Bradley Beal", "status": "Out", "detail": "Surgery"}], "Los Angeles Lakers": [{"player": "Rui Hachimura", "status": "Day-To-Day", "detail": ""}], "Memphis Grizzlies": [{"player": "Taj Gibson", "status": "Out", "detail": ""}, {"player": "Ty Jerome", "status": "Day-To-Day", "detail": "Bruise"}, {"player": "Santi Aldama", "status": "Out", "detail": ""}, {"player": "Cedric Coward", "status": "Out", "detail": "Sprain"}, {"player": "Brandon Clarke", "status": "Out", "detail": "Strain"}], "Miami Heat": [{"player": "Nikola Jovic", "status": "Out", "detail": ""}, {"player": "Norman Powell", "status": "Out", "detail": "Strain"}, {"player": "Terry Rozier", "status": "Out", "detail": ""}], "Milwaukee Bucks": [{"player": "Giannis Antetokounmpo", "status": "Out", "detail": "Strain"}, {"player": "Taurean Prince", "status": "Out", "detail": "Surgery"}], "Minnesota Timberwolves": [{"player": "Julius Randle", "status": "Day-To-Day", "detail": "Spasms"}], "New Orleans Pelicans": [{"player": "Dejounte Murray", "status": "Day-To-Day", "detail": ""}, {"player": "Zion Williamson", "status": "Day-To-Day", "detail": ""}, {"player": "Trey Murphy III", "status": "Out", "detail": "Bruise"}], "New York Knicks": [{"player": "Miles McBride", "status": "Out", "detail": "Surgery"}], "Oklahoma City Thunder": [{"player": "Branden Carlson", "status": "Out", "detail": "Strain"}, {"player": "Ajay Mitchell", "status": "Out", "detail": "Sprain"}, {"player": "Jalen Williams", "status": "Out", "detail": "Strain"}, {"player": "Thomas Sorber", "status": "Out", "detail": "Surgery"}], "Orlando Magic": [{"player": "Franz Wagner", "status": "Out", "detail": "Sprain"}], "Philadelphia 76ers": [{"player": "Johni Broome", "status": "Out", "detail": "Surgery"}, {"player": "Joel Embiid", "status": "Out", "detail": "Strain"}], "Phoenix Suns": [{"player": "Devin Booker", "status": "Out", "detail": "Strain"}, {"player": "Jordan Goodwin", "status": "Out", "detail": "Strain"}, {"player": "Dillon Brooks", "status": "Out", "detail": "Surgery"}, {"player": "Haywood Highsmith", "status": "Out", "detail": "Surgery"}], "Portland Trail Blazers": [{"player": "Deni Avdija", "status": "Out", "detail": ""}, {"player": "Shaedon Sharpe", "status": "Out", "detail": "Fracture"}, {"player": "Damian Lillard", "status": "Out", "detail": "Surgery"}], "Sacramento Kings": [{"player": "Keegan Murray", "status": "Out", "detail": "Sprain"}, {"player": "De'Andre Hunter", "status": "Out", "detail": "Surgery"}, {"player": "Dylan Cardwell", "status": "Out", "detail": "Sprain"}, {"player": "Domantas Sabonis", "status": "Out", "detail": "Surgery"}, {"player": "Zach LaVine", "status": "Out", "detail": "Surgery"}], "San Antonio Spurs": [{"player": "Mason Plumlee", "status": "Out", "detail": ""}, {"player": "Harrison Ingram", "status": "Day-To-Day", "detail": ""}, {"player": "David Jones Garcia", "status": "Out", "detail": "Surgery"}], "Toronto Raptors": [{"player": "Collin Murray-Boyles", "status": "Day-To-Day", "detail": "Sprain"}, {"player": "Chucky Hepburn", "status": "Out", "detail": "Surgery"}], "Utah Jazz": [{"player": "Lauri Markkanen", "status": "Out", "detail": "Pinched Nerve"}, {"player": "Vince Williams Jr.", "status": "Out", "detail": ""}, {"player": "Jusuf Nurkic", "status": "Out", "detail": "Surgery"}, {"player": "Jaren Jackson Jr.", "status": "Out", "detail": "Surgery"}, {"player": "Walker Kessler", "status": "Out", "detail": "Surgery"}], "Washington Wizards": [{"player": "Trae Young", "status": "Out", "detail": "Sprain"}, {"player": "D'Angelo Russell", "status": "Out", "detail": ""}, {"player": "Alex Sarr", "status": "Out", "detail": "Strain"}, {"player": "Anthony Davis", "status": "Out", "detail": "Sprain"}, {"player": "Cam Whitmore", "status": "Out", "detail": ""}], "Anaheim Ducks": [{"player": "Ryan Strome", "status": "Day-To-Day", "detail": ""}, {"player": "Mikael Granlund", "status": "Day-To-Day", "detail": ""}, {"player": "Troy Terry", "status": "Day-To-Day", "detail": ""}, {"player": "Petr Mrazek", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Frank Vatrano", "status": "Injured Reserve", "detail": ""}], "Boston Bruins": [{"player": "Dans Locmelis", "status": "Out", "detail": "Surgery"}], "Buffalo Sabres": [{"player": "Jordan Greenway", "status": "Injured Reserve", "detail": ""}, {"player": "Justin Danforth", "status": "Injured Reserve", "detail": ""}], "Calgary Flames": [{"player": "Jonathan Huberdeau", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Cullen Potter", "status": "Out", "detail": "Surgery"}], "Carolina Hurricanes": [{"player": "Pyotr Kochetkov", "status": "Injured Reserve", "detail": ""}], "Chicago Blackhawks": [{"player": "Sam Rinzel", "status": "Out", "detail": ""}, {"player": "Wyatt Kaiser", "status": "Injured Reserve", "detail": ""}, {"player": "Ryan Ellis", "status": "Injured Reserve", "detail": ""}, {"player": "Shea Weber", "status": "Injured Reserve", "detail": ""}], "Colorado Avalanche": [{"player": "Joel Kiviranta", "status": "Out", "detail": ""}], "Dallas Stars": [{"player": "Roope Hintz", "status": "Out", "detail": ""}, {"player": "Mikko Rantanen", "status": "Injured Reserve", "detail": ""}, {"player": "Tyler Seguin", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Radek Faksa", "status": "Injured Reserve", "detail": ""}], "Edmonton Oilers": [{"player": "Mattias Janmark", "status": "Out", "detail": ""}], "Florida Panthers": [{"player": "Uvis Balinskis", "status": "Day-To-Day", "detail": ""}, {"player": "Cole Schwindt", "status": "Out", "detail": ""}, {"player": "Seth Jones", "status": "Injured Reserve", "detail": ""}, {"player": "Jonah Gadjovich", "status": "Injured Reserve", "detail": "Surgery"}], "Los Angeles Kings": [{"player": "Joel Armia", "status": "Out", "detail": ""}, {"player": "Drew Doughty", "status": "Out", "detail": ""}, {"player": "Andrei Kuzmenko", "status": "Injured Reserve", "detail": ""}, {"player": "Kevin Fiala", "status": "Injured Reserve", "detail": "Surgery"}], "Minnesota Wild": [{"player": "Jonas Brodin", "status": "Injured Reserve", "detail": ""}], "Montreal Canadiens": [{"player": "Patrik Laine", "status": "Injured Reserve", "detail": ""}], "New Jersey Devils": [{"player": "Zack MacEwen", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Stefan Noesen", "status": "Injured Reserve", "detail": "Surgery"}], "New York Islanders": [{"player": "Kyle Palmieri", "status": "Injured Reserve", "detail": "Surgery"}], "New York Rangers": [{"player": "Igor Shesterkin", "status": "Injured Reserve", "detail": ""}, {"player": "Adam Fox", "status": "Injured Reserve", "detail": "Lower Body"}, {"player": "Adam Edstrom", "status": "Injured Reserve", "detail": ""}, {"player": "Matt Rempe", "status": "Injured Reserve", "detail": "Surgery"}], "Ottawa Senators": [{"player": "Nikolas Matinpalo", "status": "Out", "detail": ""}, {"player": "David Perron", "status": "Injured Reserve", "detail": "Surgery"}], "Philadelphia Flyers": [{"player": "Ty Murchison", "status": "Out", "detail": ""}, {"player": "Rodrigo Abols", "status": "Injured Reserve", "detail": "Fracture"}], "Pittsburgh Penguins": [{"player": "Filip Hallander", "status": "Injured Reserve", "detail": ""}, {"player": "Sidney Crosby", "status": "Injured Reserve", "detail": ""}, {"player": "Caleb Jones", "status": "Injured Reserve", "detail": ""}, {"player": "Jack St. Ivany", "status": "Injured Reserve", "detail": ""}, {"player": "Peyton Kettles", "status": "Out", "detail": ""}], "San Jose Sharks": [{"player": "Ty Dellandrea", "status": "Injured Reserve", "detail": ""}, {"player": "Logan Couture", "status": "Injured Reserve", "detail": ""}], "Seattle Kraken": [{"player": "Ryan Lindgren", "status": "Out", "detail": ""}, {"player": "Max McCormick", "status": "Out", "detail": "Surgery"}], "St. Louis Blues": [{"player": "Colton Parayko", "status": "Out", "detail": ""}, {"player": "Robert Thomas", "status": "Injured Reserve", "detail": "Surgery"}], "Tampa Bay Lightning": [{"player": "Dominic James", "status": "Day-To-Day", "detail": ""}, {"player": "Gage Goncalves", "status": "Day-To-Day", "detail": ""}, {"player": "Nick Paul", "status": "Injured Reserve", "detail": ""}], "Toronto Maple Leafs": [{"player": "Chris Tanev", "status": "Injured Reserve", "detail": ""}], "Vancouver Canucks": [{"player": "Tyler Myers", "status": "Out", "detail": ""}, {"player": "Jonathan Lekkerimaki", "status": "Out", "detail": "Surgery"}, {"player": "Filip Chytil", "status": "Injured Reserve", "detail": "Fracture"}, {"player": "Thatcher Demko", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Derek Forbort", "status": "Injured Reserve", "detail": ""}], "Washington Capitals": [{"player": "John Carlson", "status": "Out", "detail": ""}, {"player": "Eriks Mateiko", "status": "Out", "detail": "Surgery"}], "Winnipeg Jets": [{"player": "Nino Niederreiter", "status": "Injured Reserve", "detail": "Surgery"}, {"player": "Vladislav Namestnikov", "status": "Out", "detail": ""}, {"player": "Neal Pionk", "status": "Injured Reserve", "detail": ""}, {"player": "Josh Morrissey", "status": "Injured Reserve", "detail": ""}, {"player": "Colin Miller", "status": "Injured Reserve", "detail": ""}]};
 // ── DATA ─────────────────────────────────────────────────────────────────────
 // NFL: name,conf,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,ppg,papg,offRk,defRk
 const NFL=[
-["Kansas City Chiefs","AFC","West",6,11,0,11,0,3,5,3,6,6,9,2,28.4,21.3,19.3,8,0,0,0,0],
+["Kansas City Chiefs","AFC","West",6,11,6,11,0,3,5,3,6,6,9,2,28.4,20.1,4,8,0,0,0,0],
 
-["Philadelphia Eagles","NFC","East",11,6,0,6,2,5,2,4,4,8,8,1,30.2,22.3,19.1,10,0,0,0,0],
+["Philadelphia Eagles","NFC","East",11,6,9,6,2,5,2,4,4,8,8,1,30.2,20.4,2,10,0,0,0,0],
 
-["Detroit Lions","NFC","North",9,8,0,8,0,5,3,4,5,8,7,2,32.1,28.3,24.3,15,0,0,0,0],
+["Detroit Lions","NFC","North",9,8,9,8,0,5,3,4,5,8,7,2,32.1,22.6,1,15,0,0,0,0],
 
-["Buffalo Bills","AFC","East",12,5,0,5,2,6,2,4,3,10,7,0,29.8,28.3,21.5,12,0,0,0,0],
+["Buffalo Bills","AFC","East",12,5,10,5,2,6,2,4,3,10,7,0,29.8,22.3,3,12,0,0,0,0],
 
-["Baltimore Ravens","AFC","North",8,9,0,9,1,4,4,3,5,7,8,2,27.6,24.9,23.4,9,0,0,0,0],
+["Baltimore Ravens","AFC","North",8,9,7,9,1,4,4,3,5,7,8,2,27.6,21.4,6,9,0,0,0,0],
 
-["Green Bay Packers","NFC","North",9,7,1,7,2,4,3,3,4,7,8,1,26.8,23.0,21.2,11,0,0,0,0],
+["Green Bay Packers","NFC","North",9,7,7,7,2,4,3,3,4,7,8,1,26.8,21.2,7,11,0,0,0,0],
 
-["Minnesota Vikings","NFC","North",9,8,0,9,0,4,4,4,5,7,8,2,25.4,20.2,19.6,14,0,0,0,0],
+["Minnesota Vikings","NFC","North",9,8,8,9,0,4,4,4,5,7,8,2,25.4,22.8,9,14,0,0,0,0],
 
-["Los Angeles Rams","NFC","West",12,5,0,5,2,6,2,4,3,10,7,0,28.6,30.5,20.4,18,0,0,0,0],
+["Los Angeles Rams","NFC","West",12,5,10,5,2,6,2,4,3,10,7,0,28.6,24.2,5,18,0,0,0,0],
 
-["Houston Texans","AFC","South",12,5,0,5,2,6,2,4,3,10,7,0,24.8,23.8,17.4,16,0,0,0,0],
+["Houston Texans","AFC","South",12,5,10,5,2,6,2,4,3,10,7,0,24.8,22.6,11,16,0,0,0,0],
 
-["Washington Commanders","NFC","East",5,12,0,9,2,3,4,3,5,8,9,0,27.2,20.9,26.5,17,0,0,0,0],
+["Washington Commanders","NFC","East",5,12,6,9,2,3,4,3,5,8,9,0,27.2,23.4,8,17,0,0,0,0],
 
-["San Francisco 49ers","NFC","West",12,5,0,6,0,6,2,5,4,8,7,2,26.4,25.7,21.8,13,0,0,0,0],
+["San Francisco 49ers","NFC","West",12,5,11,6,0,6,2,5,4,8,7,2,26.4,24.6,10,13,0,0,0,0],
 
-["Denver Broncos","AFC","West",14,3,0,4,2,6,2,5,2,9,7,1,25.2,23.6,18.3,19,0,0,0,0],
+["Denver Broncos","AFC","West",14,3,11,4,2,6,2,5,2,9,7,1,25.2,23.8,12,19,0,0,0,0],
 
-["Pittsburgh Steelers","AFC","North",10,7,0,8,2,4,4,3,4,7,9,1,22.4,23.4,22.8,7,0,0,0,0],
+["Pittsburgh Steelers","AFC","North",10,7,7,8,2,4,4,3,4,7,9,1,22.4,21.6,18,7,0,0,0,0],
 
-["Tampa Bay Buccaneers","NFC","South",8,9,0,8,2,3,4,4,4,7,9,1,24.6,22.4,24.2,20,0,0,0,0],
+["Tampa Bay Buccaneers","NFC","South",8,9,7,8,2,3,4,4,4,7,9,1,24.6,24.8,13,20,0,0,0,0],
 
-["Indianapolis Colts","AFC","South",8,9,0,8,0,5,3,4,5,9,7,1,23.4,27.4,24.2,21,0,0,0,0],
+["Indianapolis Colts","AFC","South",8,9,9,8,0,5,3,4,5,9,7,1,23.4,24.2,14,21,0,0,0,0],
 
-["Los Angeles Chargers","AFC","West",11,6,0,6,0,6,2,5,4,9,7,1,26.8,21.6,20.0,22,0,0,0,0],
+["Los Angeles Chargers","AFC","West",11,6,11,6,0,6,2,5,4,9,7,1,26.8,25.4,7,22,0,0,0,0],
 
-["Cincinnati Bengals","AFC","North",6,11,0,9,2,3,4,3,5,8,8,1,28.2,24.4,28.9,25,0,0,0,0],
+["Cincinnati Bengals","AFC","North",6,11,6,9,2,3,4,3,5,8,8,1,28.2,27.4,5,25,0,0,0,0],
 
-["Seattle Seahawks","NFC","West",14,3,0,5,0,6,2,6,3,9,7,1,25.6,28.4,17.2,23,0,0,0,0],
+["Seattle Seahawks","NFC","West",14,3,12,5,0,6,2,6,3,9,7,1,25.6,25.2,11,23,0,0,0,0],
 
-["Atlanta Falcons","NFC","South",8,9,0,8,2,4,3,3,5,8,9,0,23.8,20.8,23.6,24,0,0,0,0],
+["Atlanta Falcons","NFC","South",8,9,7,8,2,4,3,3,5,8,9,0,23.8,24.4,15,24,0,0,0,0],
 
-["Arizona Cardinals","NFC","West",3,14,0,12,0,3,5,2,7,7,9,1,22.8,20.9,28.7,22,0,0,0,0],
+["Arizona Cardinals","NFC","West",3,14,5,12,0,3,5,2,7,7,9,1,22.8,25.8,16,22,0,0,0,0],
 
-["Miami Dolphins","AFC","East",7,10,0,8,0,5,3,4,5,9,7,1,26.4,20.4,24.9,20,0,0,0,0],
+["Miami Dolphins","AFC","East",7,10,9,8,0,5,3,4,5,9,7,1,26.4,26.2,10,20,0,0,0,0],
 
-["Dallas Cowboys","NFC","East",7,9,1,8,1,4,3,3,5,8,8,0,24.2,27.7,30.1,26,0,0,0,0],
+["Dallas Cowboys","NFC","East",7,9,7,8,1,4,3,3,5,8,8,0,24.2,26.6,13,26,0,0,0,0],
 
-["Chicago Bears","NFC","North",11,6,0,6,2,6,2,3,4,9,7,1,21.6,25.9,24.4,27,0,0,0,0],
+["Chicago Bears","NFC","North",11,6,9,6,2,6,2,3,4,9,7,1,21.6,26.8,19,27,0,0,0,0],
 
-["New Orleans Saints","NFC","South",6,11,0,9,2,3,4,3,5,8,8,1,19.4,18.0,22.5,29,0,0,0,0],
+["New Orleans Saints","NFC","South",6,11,6,9,2,3,4,3,5,8,8,1,19.4,28.6,22,29,0,0,0,0],
 
-["New England Patriots","AFC","East",14,3,0,5,2,5,3,5,2,8,9,0,18.2,28.8,18.8,28,0,0,0,0],
+["New England Patriots","AFC","East",14,3,10,5,2,5,3,5,2,8,9,0,18.2,28.4,24,28,0,0,0,0],
 
-["Las Vegas Raiders","AFC","West",3,14,0,9,2,4,4,2,5,9,7,1,17.8,14.2,25.4,30,0,0,0,0],
+["Las Vegas Raiders","AFC","West",3,14,6,9,2,4,4,2,5,9,7,1,17.8,30.2,26,30,0,0,0,0],
 
-["New York Giants","NFC","East",4,13,0,12,0,3,5,2,7,7,8,2,16.4,22.4,25.8,31,0,0,0,0],
+["New York Giants","NFC","East",4,13,5,12,0,3,5,2,7,7,8,2,16.4,29.8,28,31,0,0,0,0],
 
-["Carolina Panthers","NFC","South",8,9,0,10,0,4,4,3,6,7,9,1,17.2,18.3,22.4,32,0,0,0,0],
+["Carolina Panthers","NFC","South",8,9,7,10,0,4,4,3,6,7,9,1,17.2,31.4,27,32,0,0,0,0],
 
-["Tennessee Titans","AFC","South",3,14,0,11,0,3,5,3,6,8,8,1,18.6,16.7,28.1,27,0,0,0,0],
+["Tennessee Titans","AFC","South",3,14,6,11,0,3,5,3,6,8,8,1,18.6,27.8,23,27,0,0,0,0],
 
-["Jacksonville Jaguars","AFC","South",13,4,0,5,1,6,2,5,3,9,8,0,21.4,27.9,19.8,25,0,0,0,0],
+["Jacksonville Jaguars","AFC","South",13,4,11,5,1,6,2,5,3,9,8,0,21.4,26.2,20,25,0,0,0,0],
 
-["Cleveland Browns","AFC","North",5,12,0,10,1,3,4,3,6,8,9,0,16.8,16.4,22.3,31,0,0,0,0],
+["Cleveland Browns","AFC","North",5,12,6,10,1,3,4,3,6,8,9,0,16.8,31.6,29,31,0,0,0,0],
 
-["New York Jets","AFC","East",3,14,0,9,2,4,4,2,5,10,7,0,19.8,17.6,29.6,28,0,0,0,0]
+["New York Jets","AFC","East",3,14,6,9,2,4,4,2,5,10,7,0,19.8,27.6,21,28,0,0,0,0]
 
 ];
 // CFB: rank,name,conf,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,spOff,spDef,ppg,papg
@@ -1800,65 +1705,65 @@ const CFB=[
 // NBA: name,conf,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,ppg,papg,pace,ortg,drtg
 const NBA=[
 // NBA W/L/ATS/O-U updated 2026-04-10 from ESPN (BettingPros NBA ATS skipped - 2024-25 data only)
-["Oklahoma City Thunder","West","Northwest",64,18,4,5,1,3,3,1,2,7,2,2,119.0,107.9,101.8,119.9,107.6,6,3,120.3,112.7],
+["Oklahoma City Thunder","West","Northwest",64,16,39,40,1,19,22,20,18,42,38,2,119.4,107.3,101.8,119.9,107.6,0,0,0,0],
 
-["San Antonio Spurs","West","Southwest",62,20,3,2,1,1,2,2,0,4,2,2,119.8,111.5,99.1,112.0,113.9,7,2,127.9,112.7],
+["San Antonio Spurs","West","Southwest",61,19,47,32,1,21,16,26,16,32,48,2,119.6,111.2,99.1,112.0,113.9,0,0,0,0],
 
-["Houston Rockets","West","Southwest",52,30,5,6,1,4,2,1,4,8,3,2,115.2,110.0,100.3,115.3,111.6,8,2,122.5,108.9],
+["Houston Rockets","West","Southwest",51,29,34,44,1,15,22,19,22,37,42,2,114.8,109.8,100.3,115.3,111.6,0,0,0,0],
 
-["Minnesota Timberwolves","West","Northwest",49,33,6,3,1,2,2,4,1,3,6,0,118.0,114.6,99.7,115.6,112.1,5,4,112.2,112.3],
+["Minnesota Timberwolves","West","Northwest",47,33,36,43,1,17,23,19,20,35,45,0,117.6,114.3,99.7,115.6,112.1,0,0,0,0],
 
-["Denver Nuggets","West","Northwest",54,28,4,4,1,3,2,1,2,5,3,0,122.1,116.9,99.6,116.2,111.1,9,0,129.7,118.7],
+["Denver Nuggets","West","Northwest",52,28,41,38,1,18,22,23,16,49,31,0,121.9,117.0,99.6,116.2,111.1,0,0,0,0],
 
-["Los Angeles Lakers","West","Pacific",53,29,5,5,0,4,1,1,4,6,4,2,116.3,114.6,98.8,114.7,111.6,7,3,118.5,111.2],
+["Los Angeles Lakers","West","Pacific",51,29,41,38,0,22,17,19,21,42,37,2,116.4,115.2,98.8,114.7,111.6,0,0,0,0],
 
-["Phoenix Suns","West","Pacific",45,37,5,4,1,3,1,2,3,7,2,1,112.6,111.1,100.2,113.5,113.7,5,5,116.4,110.7],
+["Phoenix Suns","West","Pacific",44,36,47,32,1,24,16,23,16,37,43,1,112.8,111.4,100.2,113.5,113.7,0,0,0,0],
 
-["Golden State Warriors","West","Pacific",37,45,3,5,2,2,3,1,2,6,3,2,114.6,115.2,99.4,113.4,112.1,3,7,114.1,119.9],
+["Golden State Warriors","West","Pacific",37,43,35,42,2,18,22,17,20,45,34,2,114.6,115.1,99.4,113.4,112.1,0,0,0,0],
 
 ["Los Angeles Clippers","West","Pacific",41,39,40,38,2,20,18,20,20,40,40,0,114.0,112.6,100.0,113.6,111.0,0,0,0,0],
 
-["Portland Trail Blazers","West","Northwest",42,40,5,3,1,4,2,1,1,4,4,2,115.5,115.8,99.6,111.7,114.6,8,2,117.6,104.1],
+["Portland Trail Blazers","West","Northwest",40,40,43,36,1,24,15,19,21,42,38,2,115.4,116.1,99.6,111.7,114.6,0,0,0,0],
 
-["Memphis Grizzlies","West","Southwest",25,57,3,6,2,3,3,0,3,6,3,3,114.7,120.7,100.4,112.4,113.5,1,9,107.6,131.1],
+["Memphis Grizzlies","West","Southwest",25,55,35,43,2,18,22,17,21,40,40,3,115.0,120.2,100.4,112.4,113.5,0,0,0,0],
 
-["Dallas Mavericks","West","Southwest",26,56,4,5,0,2,3,2,2,6,3,1,114.1,119.6,100.5,113.5,114.3,3,6,121.0,128.0],
+["Dallas Mavericks","West","Southwest",25,55,36,44,0,19,21,17,23,36,44,1,113.6,119.3,100.5,113.5,114.3,0,0,0,0],
 
-["New Orleans Pelicans","West","Southwest",26,56,2,7,2,1,1,1,6,5,4,0,115.5,120.0,98.7,111.9,115.4,0,9,111.4,125.1],
+["New Orleans Pelicans","West","Southwest",26,54,43,35,2,24,17,19,18,38,42,0,115.4,119.6,98.7,111.9,115.4,0,0,0,0],
 
-["Utah Jazz","West","Northwest",22,60,4,6,0,3,2,1,4,7,3,0,117.6,126.0,97.9,109.6,117.1,1,9,117.6,131.5],
+["Utah Jazz","West","Northwest",21,59,40,40,0,21,19,19,21,49,31,0,117.3,126.3,97.9,109.6,117.1,0,0,0,0],
 
-["Sacramento Kings","West","Pacific",22,60,6,3,2,2,1,4,2,7,2,2,111.0,121.0,98.6,111.4,116.2,4,6,112.8,122.2],
+["Sacramento Kings","West","Pacific",21,59,34,44,2,17,21,17,23,38,42,2,110.9,121.0,98.6,111.4,116.2,0,0,0,0],
 
-["Detroit Pistons","East","Central",60,22,7,3,0,3,2,4,1,5,5,0,117.8,109.6,98.9,112.0,115.5,8,2,119.7,108.7],
+["Detroit Pistons","East","Central",58,22,43,37,0,21,20,22,17,39,41,0,117.6,109.6,98.9,112.0,115.5,0,0,0,0],
 
-["Boston Celtics","East","Atlantic",56,26,7,3,1,4,1,3,2,5,5,3,114.9,107.2,101.1,117.2,107.7,8,2,120.2,109.1],
+["Boston Celtics","East","Atlantic",54,26,48,30,1,21,18,27,12,30,49,3,114.5,107.0,101.1,117.2,107.7,0,0,0,0],
 
-["New York Knicks","East","Atlantic",53,29,5,5,1,5,1,0,4,4,6,1,116.5,110.1,99.5,115.6,109.2,6,4,114.9,109.1],
+["New York Knicks","East","Atlantic",52,28,38,40,1,23,13,15,27,35,44,1,116.8,110.3,99.5,115.6,109.2,0,0,0,0],
 
-["Cleveland Cavaliers","East","Central",52,30,3,6,2,3,2,0,4,4,5,1,119.5,115.4,100.3,118.3,106.8,6,3,121.1,119.9],
+["Cleveland Cavaliers","East","Central",51,29,31,47,2,15,24,16,23,40,40,1,119.6,115.3,100.3,118.3,106.8,0,0,0,0],
 
-["Toronto Raptors","East","Atlantic",46,36,6,4,1,4,1,2,3,6,4,1,114.6,111.8,98.3,110.8,116.5,5,5,117.1,110.0],
+["Toronto Raptors","East","Atlantic",45,35,40,38,1,18,20,22,18,29,50,1,114.6,111.9,98.3,110.8,116.5,0,0,0,0],
 
-["Philadelphia 76ers","East","Atlantic",45,37,5,5,39,3,2,2,3,3,7,41,115.9,116.1,114.0,99.2,113.0,6,4,118.1,115.6],
+["Philadelphia 76ers","East","Atlantic",43,37,36,39,39,1,16,24,23,15,38,41,115.9,116.5,114.0,99.2,113.0,0,0,0,0],
 
-["Miami Heat","East","Southeast",43,39,5,5,0,2,2,3,3,7,3,0,120.9,118.5,99.2,114.1,113.3,5,5,128.9,126.8],
+["Miami Heat","East","Southeast",41,39,44,35,0,22,18,22,17,44,35,0,120.4,118.6,99.2,114.1,113.3,0,0,0,0],
 
-["Orlando Magic","East","Southeast",45,37,4,6,1,1,3,3,3,6,4,3,115.7,115.1,99.2,114.0,113.6,5,5,116.6,121.2],
+["Orlando Magic","East","Southeast",44,36,36,43,1,20,22,16,21,44,36,3,115.7,115.3,99.2,114.0,113.6,0,0,0,0],
 
-["Atlanta Hawks","East","Southeast",46,36,6,3,0,3,1,3,2,5,4,0,118.5,116.0,99.6,111.1,113.6,7,2,125.0,112.6],
+["Atlanta Hawks","East","Southeast",45,35,43,37,0,20,20,23,17,39,41,0,118.4,115.9,99.6,111.1,113.6,0,0,0,0],
 
-["Charlotte Hornets","East","Southeast",44,38,6,5,1,4,4,2,1,4,7,0,116.0,111.2,99.3,110.3,114.3,7,3,115.9,108.4],
+["Charlotte Hornets","East","Southeast",43,37,49,30,1,25,14,24,16,31,49,0,116.3,111.3,99.3,110.3,114.3,0,0,0,0],
 
-["Milwaukee Bucks","East","Central",32,50,3,3,1,2,1,1,2,5,1,1,110.6,116.8,99.8,111.6,112.9,3,7,110.2,121.3],
+["Milwaukee Bucks","East","Central",31,49,34,45,1,18,21,16,24,35,45,1,110.5,116.8,99.8,111.6,112.9,0,0,0,0],
 
-["Chicago Bulls","East","Central",31,51,4,6,0,1,2,3,4,6,4,3,116.3,121.5,98.8,112.1,115.2,1,9,117.0,132.7],
+["Chicago Bulls","East","Central",31,49,37,42,0,20,20,17,22,38,41,3,116.3,121.1,98.8,112.1,115.2,0,0,0,0],
 
-["Washington Wizards","East","Southeast",17,65,2,7,0,0,3,2,4,6,3,1,112.9,124.9,98.2,107.9,117.6,1,9,117.2,129.9],
+["Washington Wizards","East","Southeast",17,63,33,46,0,18,21,15,25,45,34,1,112.8,124.6,98.2,107.9,117.6,0,0,0,0],
 
-["Brooklyn Nets","East","Atlantic",20,62,4,6,0,1,3,3,3,6,4,3,105.9,115.9,98.6,110.4,117.5,2,8,103.7,121.5],
+["Brooklyn Nets","East","Atlantic",20,60,38,41,0,19,21,19,20,34,45,3,106.0,115.6,98.6,110.4,117.5,0,0,0,0],
 
-["Indiana Pacers","East","Central",19,63,7,2,0,4,0,3,2,5,4,1,112.4,120.4,100.4,114.9,112.0,4,6,120.5,119.9],
+["Indiana Pacers","East","Central",19,61,37,42,0,22,17,15,25,41,38,1,112.6,120.5,100.4,114.9,112.0,0,0,0,0],
 
 ];
 // CBB: name,conf,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,adjOE,adjDE,tempo,ppg,papg
@@ -2062,181 +1967,138 @@ const CBB=[
 
 ["Wyoming","Mountain West",13,16,12,15,0,7,7,5,8,12,16,0,104.6,109.2,67.4,65.8,68.4,0,0,0,0],
 
-// ── NCAA Tournament mid-majors (2025 bracket additions) ──────────────────
-["Akron","MAC",22,11,13,14,0,7,7,6,7,14,15,0,107.8,105.4,70.2,72.4,69.6,0,0,0,0],
-
-["CA Baptist","Big West",26,8,15,11,0,8,6,7,5,15,14,0,108.6,106.2,69.4,74.8,68.2,0,0,0,0],
-
-["Furman","Southern",27,8,14,12,0,8,6,6,6,14,14,0,109.4,105.8,70.6,76.2,67.4,0,0,0,0],
-
-["Hawai'i","Big West",24,10,14,12,0,8,6,6,6,16,12,0,108.2,106.4,70.8,73.6,68.8,0,0,0,0],
-
-["Hofstra","CAA",25,10,14,12,0,8,6,6,6,14,14,0,108.4,106.8,69.6,74.2,69.4,0,0,0,0],
-
-["Howard","MEAC",20,14,12,14,0,7,7,5,7,13,15,0,104.6,108.4,68.2,68.8,70.2,0,0,0,0],
-
-["Idaho","Big Sky",21,12,12,14,0,7,7,5,7,13,14,0,106.4,107.8,70.4,70.6,70.8,0,0,0,0],
-
-["Kennesaw State","ASUN",23,11,13,13,0,7,7,6,6,14,14,0,107.2,107.4,70.2,72.8,71.6,0,0,0,0],
-
-["Lehigh","Patriot",25,8,14,11,0,8,6,6,5,14,13,0,108.6,105.6,68.8,75.4,68.4,0,0,0,0],
-
-["Long Island","Northeast",22,12,13,13,0,7,7,5,7,13,14,0,104.8,108.6,71.2,69.4,70.6,0,0,0,0],
-
-["N Dakota State","Summit",24,10,13,12,0,8,6,6,6,15,13,0,108.2,106.4,69.8,73.6,69.2,0,0,0,0],
-
-["Northern Iowa","MVC",23,11,13,13,0,7,7,6,6,14,14,0,109.4,105.2,67.6,73.8,68.4,0,0,0,0],
-
-["Penn","Ivy",22,8,13,11,0,7,6,6,5,12,14,0,108.6,106.2,68.4,74.2,69.6,0,0,0,0],
-
-["Queens","ASUN",22,12,13,13,0,7,7,6,6,13,14,0,106.8,107.2,70.4,71.6,71.2,0,0,0,0],
-
-["SMU","ACC",24,9,14,11,0,8,6,6,5,14,12,0,114.8,107.4,70.6,78.2,71.8,0,0,0,0],
-
-["Saint Louis","Atlantic 10",24,10,14,12,0,8,6,6,6,14,14,0,111.4,106.8,69.2,75.6,70.4,0,0,0,0],
-
-["Santa Clara","WCC",24,10,13,12,0,7,7,6,6,14,14,0,109.2,107.2,68.6,74.4,70.2,0,0,0,0],
-
-["Siena","MAAC",22,12,13,13,0,7,7,6,6,14,14,0,106.6,108.4,70.6,71.2,71.8,0,0,0,0],
-
-["South Florida","American Athletic",22,12,13,13,0,7,7,6,6,14,13,0,110.2,107.6,70.4,74.6,72.2,0,0,0,0],
-
-["Tennessee State","OVC",20,14,11,13,0,7,7,5,7,12,15,0,104.2,109.6,71.4,67.8,71.4,0,0,0,0],
-
-["Wright State","Horizon",24,10,13,12,0,8,6,6,6,14,14,0,108.8,106.2,70.2,73.6,69.2,0,0,0,0]
-
 ];
 // NHL: name,conf,div,W,L,OTL,plW,plL,plP,hW,hL,aW,aL,over,under,ouP,gf,ga,ppPct,pkPct
 const NHL=[
 // NHL W/L/ATS/O-U updated 2026-04-10 from BettingPros + ESPN
-["Florida Panthers","Eastern","Atlantic",39,38,4,6,2,0,20,7,15,7,4,4,2,243,275,19.2,80.7,4,6,2.90,3.80,0.877,3.07],
+["Florida Panthers","Eastern","Atlantic",37,38,4,27,52,0,20,7,15,7,44,34,2,178,142,23.4,82.6,0,0,0,0,0,0],
 
-["Winnipeg Jets","Western","Central",35,34,12,4,5,0,20,6,16,9,4,4,1,230,254,18.8,77.9,5,5,2.50,3.30,0.895,2.86],
+["Winnipeg Jets","Western","Central",35,31,12,40,38,0,20,6,16,9,38,39,1,176,138,21.8,83.4,0,0,0,0,0,0],
 
-["Washington Capitals","Eastern","Metropolitan",43,30,9,7,2,0,19,7,15,9,7,2,1,263,244,17.8,80.1,7,3,3.90,3.60,0.912,2.44],
+["Washington Capitals","Eastern","Metropolitan",40,30,9,41,38,0,19,7,15,9,36,43,1,174,148,22.6,81.8,0,0,0,0,0,0],
 
-["Colorado Avalanche","Western","Central",54,16,11,4,5,0,19,7,14,11,3,5,2,300,203,17.4,84.5,6,4,3.40,2.50,0.920,2.07],
+["Colorado Avalanche","Western","Central",52,16,10,40,38,0,19,7,14,11,32,45,2,182,158,24.2,80.4,0,0,0,0,0,0],
 
-["Tampa Bay Lightning","Eastern","Atlantic",50,25,6,4,4,0,18,8,13,12,7,1,1,288,227,21.0,82.7,7,3,3.30,2.50,0.912,2.31],
+["Tampa Bay Lightning","Eastern","Atlantic",48,25,6,38,41,0,18,8,13,12,40,38,1,170,154,22.8,81.2,0,0,0,0,0,0],
 
-["Carolina Hurricanes","Eastern","Metropolitan",53,22,7,7,2,0,18,8,14,11,5,4,1,296,240,24.9,80.5,7,3,3.80,2.40,0.895,2.46],
+["Carolina Hurricanes","Eastern","Metropolitan",51,22,6,30,49,0,18,8,14,11,43,35,1,162,144,21.4,83.6,0,0,0,0,0,0],
 
-["Toronto Maple Leafs","Eastern","Atlantic",32,35,14,5,3,0,18,8,13,12,6,2,3,252,296,21.5,81.9,3,6,3.40,4.70,0.899,3.34],
+["Toronto Maple Leafs","Eastern","Atlantic",32,33,14,32,47,0,18,8,13,12,45,33,3,178,162,23.6,80.8,0,0,0,0,0,0],
 
-["Edmonton Oilers","Western","Pacific",40,30,11,6,1,0,18,8,14,11,2,5,0,276,268,30.1,77.7,5,3,2.60,2.00,0.888,2.92],
+["Edmonton Oilers","Western","Pacific",40,29,10,34,45,0,18,8,14,11,45,34,0,184,166,25.2,79.6,0,0,0,0,0,0],
 
-["Vegas Golden Knights","Western","Pacific",38,26,17,6,4,0,17,9,13,12,5,5,1,261,249,24.8,81.4,6,4,3.80,2.90,0.892,2.59],
+["Vegas Golden Knights","Western","Pacific",36,26,17,30,49,0,17,9,13,12,38,40,1,166,152,22.2,81.4,0,0,0,0,0,0],
 
-["Dallas Stars","Western","Central",49,20,12,3,7,0,17,9,13,12,5,5,2,275,223,28.6,80.1,5,5,3.10,3.00,0.900,2.59],
+["Dallas Stars","Western","Central",47,20,12,30,49,0,17,9,13,12,38,40,2,158,148,21.6,82.2,0,0,0,0,0,0],
 
-["Boston Bruins","Eastern","Atlantic",45,27,10,6,4,0,17,9,13,12,5,5,0,272,250,23.4,77.0,6,4,3.10,2.30,0.908,2.71],
+["Boston Bruins","Eastern","Atlantic",43,26,10,51,28,0,17,9,13,12,43,36,0,158,146,21.2,83.8,0,0,0,0,0,0],
 
-["New York Rangers","Eastern","Metropolitan",33,39,9,4,3,0,16,10,13,12,3,4,3,234,248,24.5,79.7,5,5,3.30,1.90,0.912,2.50],
+["New York Rangers","Eastern","Metropolitan",33,37,9,41,38,0,16,10,13,12,36,43,3,166,156,22.4,81.6,0,0,0,0,0,0],
 
-["Vancouver Canucks","Western","Pacific",25,48,8,4,7,0,16,10,12,12,8,3,1,215,310,21.9,72.0,4,6,3.20,4.60,0.877,3.65],
+["Vancouver Canucks","Western","Pacific",22,48,8,33,45,0,16,10,12,12,46,31,1,168,158,22.8,80.6,0,0,0,0,0,0],
 
-["Nashville Predators","Western","Central",38,33,10,5,3,0,16,10,12,13,4,3,0,243,264,22.6,81.7,5,5,3.00,3.10,0.894,3.13],
+["Nashville Predators","Western","Central",37,32,10,45,34,0,16,10,12,13,36,42,0,154,150,20.8,82.4,0,0,0,0,0,0],
 
-["Ottawa Senators","Eastern","Atlantic",43,27,11,5,4,0,15,11,12,12,4,5,1,275,245,23.5,75.5,5,5,3.30,2.90,0.891,2.73],
+["Ottawa Senators","Eastern","Atlantic",42,27,10,40,39,0,15,11,12,12,41,37,1,170,162,22.6,81.2,0,0,0,0,0,0],
 
-["Minnesota Wild","Western","Central",46,24,12,3,5,0,15,11,12,13,5,3,0,272,240,25.2,79.8,5,5,3.40,3.60,0.904,2.69],
+["Minnesota Wild","Western","Central",45,22,12,39,40,0,15,11,12,13,43,35,0,156,152,21.4,82.6,0,0,0,0,0,0],
 
-["New Jersey Devils","Eastern","Metropolitan",42,37,3,6,4,0,14,12,12,12,7,2,3,230,254,22.0,79.3,5,5,3.20,3.40,0.883,3.07],
+["New Jersey Devils","Eastern","Metropolitan",40,36,3,31,48,0,14,12,12,12,35,43,3,164,158,22.2,81.8,0,0,0,0,0,0],
 
-["Seattle Kraken","Western","Pacific",34,35,11,4,5,0,14,12,12,13,6,2,2,225,257,19.7,71.4,3,6,2.80,3.70,0.897,3.03],
+["Seattle Kraken","Western","Pacific",33,34,11,47,31,0,14,12,12,13,35,42,2,158,156,21.6,82.4,0,0,0,0,0,0],
 
-["Pittsburgh Penguins","Eastern","Metropolitan",41,25,16,4,7,0,13,13,11,13,9,2,1,293,268,24.1,81.4,5,5,4.60,4.00,0.888,3.07],
+["Pittsburgh Penguins","Eastern","Metropolitan",41,22,16,47,32,0,13,13,11,13,45,33,1,156,162,20.8,81.4,0,0,0,0,0,0],
 
-["New York Islanders","Eastern","Metropolitan",43,34,5,5,6,0,13,13,11,14,5,6,2,233,241,16.5,80.8,3,7,2.40,3.50,0.906,2.68],
+["New York Islanders","Eastern","Metropolitan",43,31,5,41,38,0,13,13,11,14,38,40,2,148,158,20.4,82.8,0,0,0,0,0,0],
 
-["Calgary Flames","Western","Pacific",33,39,9,6,5,0,13,13,11,14,5,6,3,209,258,15.9,80.2,4,6,2.90,3.70,0.899,3.01],
+["Calgary Flames","Western","Pacific",32,37,9,43,35,0,13,13,11,14,40,37,3,154,162,21.2,81.6,0,0,0,0,0,0],
 
-["Detroit Red Wings","Eastern","Atlantic",41,30,10,4,4,0,12,14,11,13,5,2,2,240,250,22.9,77.5,3,7,3.20,3.80,0.903,2.67],
+["Detroit Red Wings","Eastern","Atlantic",41,29,9,39,40,0,12,14,11,13,37,41,2,150,164,20.6,82.2,0,0,0,0,0,0],
 
-["St. Louis Blues","Western","Central",36,33,12,3,0,0,12,14,11,14,3,0,0,226,255,17.7,76.7,7,3,4.10,2.70,0.910,2.60],
+["St. Louis Blues","Western","Central",33,33,12,43,35,0,12,14,11,14,34,43,0,146,162,20.4,82.4,0,0,0,0,0,0],
 
-["Buffalo Sabres","Eastern","Atlantic",50,23,8,3,6,0,11,15,11,13,6,3,3,285,237,19.8,82.1,4,5,3.30,3.40,0.907,2.77],
+["Buffalo Sabres","Eastern","Atlantic",49,23,8,46,34,0,11,15,11,13,37,42,3,158,172,21.8,80.8,0,0,0,0,0,0],
 
-["Los Angeles Kings","Western","Pacific",35,26,20,4,6,0,13,13,11,13,6,4,1,224,244,17.1,74.7,6,4,3.40,2.90,0.891,2.78],
+["Los Angeles Kings","Western","Pacific",33,26,19,30,48,0,13,13,11,13,33,44,1,154,158,21.4,81.8,0,0,0,0,0,0],
 
-["Anaheim Ducks","Western","Pacific",42,33,6,3,6,0,9,18,9,16,6,2,3,268,284,18.6,76.9,3,7,3.30,3.70,0.888,3.10],
+["Anaheim Ducks","Western","Pacific",42,32,5,36,43,0,9,18,9,16,46,32,3,138,174,19.6,80.2,0,0,0,0,0,0],
 
-["Utah Mammoth","Western","Central",43,32,6,5,5,0,10,17,10,15,7,3,0,265,235,20.0,78.0,6,4,4.00,3.50,0.897,2.73],
+["Utah Mammoth","Western","Central",42,30,6,36,42,0,10,17,10,15,38,39,0,142,168,20.2,81.4,0,0,0,0,0,0],
 
-["Philadelphia Flyers","Eastern","Metropolitan",43,27,12,7,4,0,11,16,10,14,5,5,0,250,243,15.7,77.6,7,3,3.60,2.70,0.906,2.42],
+["Philadelphia Flyers","Eastern","Metropolitan",40,27,12,50,29,0,11,16,10,14,37,41,0,144,166,20.8,81.2,0,0,0,0,0,0],
 
-["Columbus Blue Jackets","Eastern","Metropolitan",40,30,12,1,10,0,9,18,10,14,3,8,3,253,253,18.9,76.0,1,9,1.80,3.30,0.908,2.60],
+["Columbus Blue Jackets","Eastern","Metropolitan",39,28,12,42,37,0,9,18,10,14,37,41,3,140,170,20.2,81.6,0,0,0,0,0,0],
 
-["Montreal Canadiens","Eastern","Atlantic",48,24,10,1,2,0,10,17,10,14,1,2,0,283,256,23.1,78.2,7,3,2.80,2.20,0.901,2.78],
+["Montreal Canadiens","Eastern","Atlantic",47,22,10,44,35,0,10,17,10,14,43,35,0,148,170,21.4,80.8,0,0,0,0,0,0],
 
-["Chicago Blackhawks","Western","Central",28,39,14,3,7,0,8,20,9,16,7,2,3,208,273,17.2,83.8,2,8,2.30,4.50,0.902,2.84],
+["Chicago Blackhawks","Western","Central",28,37,14,48,31,0,8,20,9,16,31,47,3,132,178,19.4,80.4,0,0,0,0,0,0],
 
-["San Jose Sharks","Western","Pacific",38,34,8,4,4,0,7,21,7,17,4,3,3,243,286,20.9,75.8,5,5,3.00,3.60,0.885,3.60],
+["San Jose Sharks","Western","Pacific",37,34,7,46,32,0,7,21,7,17,38,39,3,124,184,18.8,79.8,0,0,0,0,0,0],
 
 ];
 // MLB: name,lg,div,W,L,atsW,atsL,atsP,hAtsW,hAtsL,aAtsW,aAtsL,over,under,ouP,rs,ra,era,avg
 const MLB=[
 // MLB W/L/ATS/O-U updated 2026-04-10 from BettingPros + ESPN + MLB Stats API
 // schema: name,lg,div, W,L, atsW,atsL,atsP, hAtsW,hAtsL, aAtsW,aAtsL, over,under,ouP, rs,ra, era,avg, r10w,r10l,r10ppg,r10papg, ops,whip
-["Los Angeles Dodgers","NL","West",13,4,7,7,0,4,7,3,0,5,9,0,97,57,3.36,3.42,8,2,5.80,3.80,0.838,1.10],
+["Los Angeles Dodgers","NL","West",9,3,7,5,0,2,4,5,1,6,6,0,75,41,3.36,3.42,0,0,0,0,0,0],
 
-["Atlanta Braves","NL","East",11,7,8,5,0,5,4,3,1,5,8,0,100,59,2.02,3.68,6,4,6.40,3.80,0.781,1.09],
+["Atlanta Braves","NL","East",8,5,8,5,0,4,2,4,3,5,8,0,66,32,2.02,3.68,0,0,0,0,0,0],
 
-["New York Yankees","AL","East",9,8,7,7,0,2,3,5,4,7,6,0,77,61,2.34,3.72,4,6,5.10,5.20,0.687,1.19],
+["New York Yankees","AL","East",8,4,8,4,0,3,3,5,1,4,8,0,54,29,2.34,3.72,0,0,0,0,0,0],
 
-["Philadelphia Phillies","NL","East",8,9,5,6,0,4,5,1,1,6,5,0,70,86,4.09,3.78,6,4,5.00,4.20,0.697,1.36],
+["Philadelphia Phillies","NL","East",6,6,3,9,0,1,5,2,4,6,6,0,42,57,4.09,3.78,0,0,0,0,0,0],
 
-["Milwaukee Brewers","NL","Central",8,8,3,6,0,2,5,1,1,5,4,0,87,73,3.77,3.82,4,6,4.80,4.90,0.736,1.39],
+["Milwaukee Brewers","NL","Central",8,4,9,3,0,5,1,4,2,7,5,0,70,46,3.77,3.82,0,0,0,0,0,0],
 
-["Houston Astros","AL","West",7,11,5,8,0,3,3,2,5,8,4,0,102,113,6.05,3.86,4,6,6.30,6.40,0.801,1.71],
+["Houston Astros","AL","West",6,7,6,7,0,5,2,1,5,9,4,0,79,78,6.05,3.86,0,0,0,0,0,0],
 
-["Baltimore Orioles","AL","East",9,8,4,6,0,3,5,1,1,5,4,0,72,70,3.98,3.94,4,6,4.80,4.80,0.734,1.33],
+["Baltimore Orioles","AL","East",6,6,4,8,0,2,4,2,4,6,6,0,45,49,3.98,3.94,0,0,0,0,0,0],
 
-["Texas Rangers","AL","West",9,8,6,5,0,0,2,6,3,5,5,0,68,58,2.94,4.02,3,7,3.90,4.10,0.685,1.21],
+["Texas Rangers","AL","West",7,5,7,5,0,3,3,4,2,4,8,0,44,39,2.94,4.02,0,0,0,0,0,0],
 
-["Cleveland Guardians","AL","Central",10,8,9,6,0,3,0,6,6,8,7,0,72,76,3.13,3.88,5,5,4.10,4.50,0.698,1.28],
+["Cleveland Guardians","AL","Central",8,5,8,5,0,4,2,4,3,5,8,0,46,43,3.13,3.88,0,0,0,0,0,0],
 
-["Arizona Diamondbacks","NL","West",10,8,8,7,0,3,3,5,4,8,7,0,75,82,3.91,4.08,6,4,4.00,4.90,0.674,1.23],
+["Arizona Diamondbacks","NL","West",7,6,10,3,0,5,2,5,1,8,5,0,52,59,3.91,4.08,0,0,0,0,0,0],
 
-["San Diego Padres","NL","West",11,6,9,4,0,8,3,1,1,4,9,0,78,61,3.51,3.96,8,2,5.50,3.60,0.698,1.19],
+["San Diego Padres","NL","West",7,6,8,5,0,4,3,4,2,6,7,0,53,51,3.51,3.96,0,0,0,0,0,0],
 
-["Seattle Mariners","AL","West",8,10,8,7,0,6,5,2,2,6,8,0,70,62,2.62,3.76,5,5,4.30,4.00,0.645,1.06],
+["Seattle Mariners","AL","West",4,9,4,9,0,3,4,1,5,5,8,0,40,42,2.62,3.76,0,0,0,0,0,0],
 
-["New York Mets","NL","East",7,11,6,7,0,1,4,5,3,6,7,0,63,71,3.18,4.12,3,7,3.40,4.10,0.625,1.24],
+["New York Mets","NL","East",7,6,6,7,0,2,4,4,3,6,7,0,56,49,3.18,4.12,0,0,0,0,0,0],
 
-["Minnesota Twins","AL","Central",11,7,6,3,0,3,1,3,2,7,2,0,98,77,3.87,4.04,7,3,5.80,3.90,0.737,1.38],
+["Minnesota Twins","AL","Central",7,6,8,5,0,5,2,3,3,5,8,0,60,55,3.87,4.04,0,0,0,0,0,0],
 
-["Toronto Blue Jays","AL","East",7,9,3,7,0,2,5,1,2,7,3,0,66,89,4.64,4.14,3,7,4.30,5.70,0.708,1.34],
+["Toronto Blue Jays","AL","East",5,7,3,9,0,3,6,0,3,5,7,0,41,63,4.64,4.14,0,0,0,0,0,0],
 
-["Boston Red Sox","AL","East",6,11,5,6,0,1,1,4,5,5,5,0,68,81,4.19,4.22,3,7,4.30,5.40,0.660,1.36],
+["Boston Red Sox","AL","East",4,8,3,9,0,2,4,1,5,6,6,0,44,55,4.19,4.22,0,0,0,0,0,0],
 
-["San Francisco Giants","NL","West",6,11,3,11,0,1,6,2,5,6,7,0,52,74,4.03,4.18,3,7,3.30,5.30,0.641,1.37],
+["San Francisco Giants","NL","West",5,8,4,9,0,3,7,1,2,5,8,0,41,57,4.03,4.18,0,0,0,0,0,0],
 
-["Chicago Cubs","NL","Central",8,9,3,8,0,2,4,1,4,6,5,0,83,73,3.32,4.24,4,6,4.00,4.30,0.707,1.18],
+["Chicago Cubs","NL","Central",6,7,5,8,0,3,4,2,4,6,7,0,56,46,3.32,4.24,0,0,0,0,0,0],
 
-["Detroit Tigers","AL","Central",8,9,7,5,0,5,2,2,3,4,7,0,72,61,4.24,4.32,6,4,4.20,2.60,0.689,1.27],
+["Detroit Tigers","AL","Central",4,9,4,9,0,2,1,2,8,6,7,0,54,57,4.24,4.32,0,0,0,0,0,0],
 
-["Tampa Bay Rays","AL","East",9,7,6,4,0,3,0,3,4,8,2,0,78,85,5.08,4.28,7,3,4.50,4.40,0.723,1.23],
+["Tampa Bay Rays","AL","East",5,7,5,7,0,1,2,4,5,8,4,0,55,69,5.08,4.28,0,0,0,0,0,0],
 
-["Pittsburgh Pirates","NL","Central",10,7,6,4,0,2,2,4,2,6,3,0,86,68,3.08,4.44,8,2,6.40,3.40,0.734,1.35],
+["Pittsburgh Pirates","NL","Central",8,5,8,5,0,4,2,4,3,7,6,0,56,48,3.08,4.44,0,0,0,0,0,0],
 
-["Miami Marlins","NL","East",9,9,5,7,0,2,2,3,5,8,4,0,85,80,3.58,4.48,4,6,5.20,5.00,0.731,1.24],
+["Miami Marlins","NL","East",8,5,5,8,0,4,6,1,2,9,4,0,67,54,3.58,4.48,0,0,0,0,0,0],
 
-["Los Angeles Angels","AL","West",9,9,8,5,0,1,2,7,3,6,7,0,90,89,3.74,4.52,6,4,5.30,4.30,0.724,1.43],
+["Los Angeles Angels","AL","West",6,7,6,7,0,3,3,3,4,7,6,0,51,62,3.74,4.52,0,0,0,0,0,0],
 
-["Washington Nationals","NL","East",8,9,6,5,0,0,3,6,2,6,5,0,99,108,6.06,4.56,4,6,5.20,7.00,0.772,1.59],
+["Washington Nationals","NL","East",4,8,7,5,0,2,4,5,1,9,3,0,71,78,6.06,4.56,0,0,0,0,0,0],
 
-["Cincinnati Reds","NL","Central",10,7,5,5,0,3,5,2,0,5,5,0,56,71,3.37,4.62,5,5,3.30,5.10,0.624,1.37],
+["Cincinnati Reds","NL","Central",8,5,8,5,0,3,3,5,2,6,7,0,39,48,3.37,4.62,0,0,0,0,0,0],
 
-["Kansas City Royals","AL","Central",7,10,5,5,0,4,3,1,2,3,7,0,55,67,4.35,4.66,4,6,3.90,3.90,0.635,1.29],
+["Kansas City Royals","AL","Central",5,8,6,7,0,3,4,3,3,4,9,0,45,59,4.35,4.66,0,0,0,0,0,0],
 
-["Athletics","AL","West",9,8,9,3,0,3,2,6,1,3,8,0,66,74,4.71,4.78,7,3,4.40,4.50,0.651,1.46],
+["Athletics","AL","West",5,7,7,5,0,2,1,5,4,4,8,0,47,59,4.71,4.78,0,0,0,0,0,0],
 
-["Colorado Rockies","NL","West",6,11,4,7,0,1,1,3,6,5,6,0,71,78,3.62,5.24,2,8,2.70,5.40,0.695,1.36],
+["Colorado Rockies","NL","West",6,7,10,3,0,5,1,5,2,4,9,0,56,50,3.62,5.24,0,0,0,0,0,0],
 
-["Chicago White Sox","AL","Central",6,11,5,5,0,2,1,3,4,6,4,0,54,87,5.02,5.38,5,5,2.90,4.30,0.587,1.46],
+["Chicago White Sox","AL","Central",5,8,6,7,0,4,2,2,5,8,5,0,43,70,5.02,5.38,0,0,0,0,0,0],
 
-["St. Louis Cardinals","NL","Central",9,8,6,6,0,5,4,1,2,5,5,0,75,94,4.95,4.26,5,5,3.20,5.10,0.689,1.47],
+["St. Louis Cardinals","NL","Central",7,5,6,6,0,4,2,2,4,6,6,0,59,62,4.95,4.26,0,0,0,0,0,0],
 
 ];
 // ── UTILS ────────────────────────────────────────────────────────────────────
@@ -5314,27 +5176,148 @@ function fuzzyTeam(sport,name){
 }
 
 // ── OVERVIEW ──────────────────────────────────────────────────────────────────
+// ── OVERVIEW LEADERBOARDS ────────────────────────────────────────────────────
+function renderOvLeaderboards(){
+  const el=document.getElementById('ov-leaderboards');
+  const badge=document.getElementById('ov-lb-badge');
+  if(!el)return;
+
+  // Season detection — only show sports currently playing
+  const mon=new Date().getMonth(); // 0-indexed
+  const inSeason={
+    nfl:mon>=8||mon<=1,     // Sep-Feb
+    cfb:mon>=7||mon<=0,     // Aug-Jan
+    nba:mon>=9||mon<=5,     // Oct-Jun
+    cbb:mon>=10||mon<=3,    // Nov-Apr
+    nhl:mon>=9||mon<=5,     // Oct-Jun
+    mlb:mon>=2&&mon<=9      // Mar-Oct
+  };
+
+  // Sport configs: array, name index, ATS-W index, ATS-L index, tab id, icon, label
+  const SPORTS=[
+    {key:'nfl',arr:NFL,ni:0,aw:8,al:9, tab:'nfl', icon:'🏈',label:'NFL',atsLabel:'Home ATS'},
+    {key:'cfb',arr:CFB,ni:1,aw:5,al:6, tab:'cfb', icon:'🎓',label:'CFB',atsLabel:'ATS'},
+    {key:'nba',arr:NBA,ni:0,aw:5,al:6, tab:'nba', icon:'🏀',label:'NBA',atsLabel:'ATS'},
+    {key:'cbb',arr:CBB,ni:0,aw:4,al:5, tab:'cbb', icon:'🏀',label:'CBB',atsLabel:'ATS'},
+    {key:'nhl',arr:NHL,ni:0,aw:6,al:7, tab:'nhl', icon:'🏒',label:'NHL',atsLabel:'Puck Line'},
+    {key:'mlb',arr:MLB,ni:0,aw:5,al:6, tab:'mlb', icon:'⚾',label:'MLB',atsLabel:'Run Line'},
+  ];
+
+  const active=SPORTS.filter(s=>inSeason[s.key]&&s.arr.length>0);
+  if(badge)badge.textContent=active.map(s=>s.label).join(' · ');
+
+  // ── HOT / COLD across all in-season sports ──
+  const allTeams=[];
+  active.forEach(s=>{
+    const ix=SIDX[s.key];
+    s.arr.forEach(t=>{
+      const aw=t[s.aw]||0,al=t[s.al]||0,tot=aw+al;
+      if(tot<8)return; // min sample
+      const name=t[s.ni];
+      // Last 10 record if available
+      const r10w=ix.r10w!=null?(t[ix.r10w]||0):0;
+      const r10l=ix.r10l!=null?(t[ix.r10l]||0):0;
+      const r10tot=r10w+r10l;
+      // O/U record
+      const ov=ix.ov!=null?(t[ix.ov]||0):0;
+      const un=ix.un!=null?(t[ix.un]||0):0;
+      allTeams.push({name,sport:s.key,icon:s.icon,label:s.label,tab:s.tab,
+        aw,al,pct:aw/tot,
+        r10w,r10l,r10pct:r10tot>=5?r10w/r10tot:null,
+        ov,un,ouTot:ov+un,ouPct:(ov+un)>=5?ov/(ov+un):null
+      });
+    });
+  });
+
+  // Top 3 hottest + coldest by ATS%
+  const hottest=[...allTeams].sort((a,b)=>b.pct-a.pct).slice(0,3);
+  const coldest=[...allTeams].sort((a,b)=>a.pct-b.pct).slice(0,3);
+
+  const teamRow=(t,type)=>{
+    const pct=Math.round(t.pct*100);
+    const c=type==='hot'?'#4ade80':'#f87171';
+    const arrow=type==='hot'?'▲':'▼';
+    const r10=t.r10pct!=null?` · L10: ${t.r10w}-${t.r10l}`:'';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer" onclick="showTab('${t.tab}')">
+      <span style="font-size:12px">${t.icon}</span>
+      <span style="flex:1;font-size:12px;color:var(--text);font-weight:600">${t.name}</span>
+      <span style="font-size:11px;color:var(--muted)">${t.aw}-${t.al}${r10}</span>
+      <span style="font-size:12px;font-weight:700;color:${c}">${arrow} ${pct}%</span>
+    </div>`;
+  };
+
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Hottest ATS</div>
+      ${hottest.map(t=>teamRow(t,'hot')).join('')}
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+      <div style="font-size:10px;font-weight:700;color:#f87171;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Coldest ATS</div>
+      ${coldest.map(t=>teamRow(t,'cold')).join('')}
+    </div>
+  </div>`;
+
+  // ── Per-sport cards (in-season only) with ATS, O/U leaders, last-10 hot ──
+  html+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
+  active.forEach(s=>{
+    const ix=SIDX[s.key];
+    const teams=allTeams.filter(t=>t.sport===s.key);
+
+    // Best ATS (top 3)
+    const bestATS=[...teams].sort((a,b)=>b.pct-a.pct).slice(0,3);
+    let atsRows=bestATS.map(t=>{
+      const pct=Math.round(t.pct*100);
+      const c=pct>=57?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.aw}-${t.al}</span>
+        <span style="font-size:11px;font-weight:700;color:${c}">${pct}%</span>
+      </div>`;
+    }).join('');
+
+    // Best O/U overs (top 3 by over%)
+    const bestOU=[...teams].filter(t=>t.ouTot>=5).sort((a,b)=>(b.ouPct||0)-(a.ouPct||0)).slice(0,3);
+    let ouRows=bestOU.map(t=>{
+      const pct=Math.round((t.ouPct||0)*100);
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.ov}-${t.un}</span>
+        <span style="font-size:11px;font-weight:700;color:#60a5fa">${pct}% Over</span>
+      </div>`;
+    }).join('');
+
+    // Hottest last-10 (top 3 by recent form)
+    const hotL10=[...teams].filter(t=>t.r10pct!=null).sort((a,b)=>(b.r10pct||0)-(a.r10pct||0)).slice(0,3);
+    let l10Rows=hotL10.length?hotL10.map(t=>{
+      const pct=Math.round((t.r10pct||0)*100);
+      const c=pct>=70?'#4ade80':pct>=50?'var(--gold)':'#f87171';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer" onclick="showTab('${s.tab}')">
+        <span style="flex:1;font-size:11px;color:var(--text)">${t.name}</span>
+        <span style="font-size:11px;color:var(--muted)">${t.r10w}-${t.r10l}</span>
+        <span style="font-size:11px;font-weight:700;color:${c}">${pct}%</span>
+      </div>`;
+    }).join(''):'<div style="font-size:10px;color:var(--muted)">Not enough data</div>';
+
+    html+=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer" onclick="showTab('${s.tab}')">
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px">${s.icon} ${s.label}</div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Best ${s.atsLabel}</div>
+      ${atsRows}
+      <div style="height:1px;background:var(--border);margin:8px 0"></div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Most Overs</div>
+      ${ouRows||'<div style="font-size:10px;color:var(--muted)">No data</div>'}
+      <div style="height:1px;background:var(--border);margin:8px 0"></div>
+      <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Hottest Last 10</div>
+      ${l10Rows}
+    </div>`;
+  });
+  html+='</div>';
+
+  el.innerHTML=html;
+}
+
 function renderOverview(){
-  // ── LEADERBOARDS (always rendered) ────────────────────────────────────────
-  const miRow=(nm,val)=>`<div class="mi"><span class="tn">${nm}</span><span style="color:var(--gold);font-weight:700">${val}</span></div>`;
-  const nflTop=[...NFL].sort((a,b)=>(b[8]/(b[8]+b[9]||1))-(a[8]/(a[8]+a[9]||1))).slice(0,5);
-  const ovNfl=document.getElementById('ov-nfl');
-  if(ovNfl)ovNfl.innerHTML=nflTop.map(t=>miRow(t[0],`${t[8]}-${t[9]} (${(t[8]/(t[8]+t[9]||1)*100).toFixed(0)}%)`)).join('');
-  const cfbTop=[...CFB].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovCfb=document.getElementById('ov-cfb');
-  if(ovCfb)ovCfb.innerHTML=cfbTop.map(t=>miRow(t[1],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
-  const nbaTop=[...NBA].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovNba=document.getElementById('ov-nba');
-  if(ovNba)ovNba.innerHTML=nbaTop.map(t=>miRow(t[0],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
-  const cbbTop=[...CBB].sort((a,b)=>(b[4]/(b[4]+b[5]||1))-(a[4]/(a[4]+a[5]||1))).slice(0,5);
-  const ovCbb=document.getElementById('ov-cbb');
-  if(ovCbb)ovCbb.innerHTML=cbbTop.map(t=>miRow(t[0],`${t[4]}-${t[5]} (${(t[4]/(t[4]+t[5]||1)*100).toFixed(0)}%)`)).join('');
-  const nhlTop=[...NHL].sort((a,b)=>(b[6]/(b[6]+b[7]||1))-(a[6]/(a[6]+a[7]||1))).slice(0,5);
-  const ovNhl=document.getElementById('ov-nhl');
-  if(ovNhl)ovNhl.innerHTML=nhlTop.map(t=>miRow(t[0],`${t[6]}-${t[7]} (${(t[6]/(t[6]+t[7]||1)*100).toFixed(0)}%)`)).join('');
-  const mlbTop=[...MLB].sort((a,b)=>(b[5]/(b[5]+b[6]||1))-(a[5]/(a[5]+a[6]||1))).slice(0,5);
-  const ovMlb=document.getElementById('ov-mlb');
-  if(ovMlb)ovMlb.innerHTML=mlbTop.map(t=>miRow(t[0],`${t[5]}-${t[6]} (${(t[5]/(t[5]+t[6]||1)*100).toFixed(0)}%)`)).join('');
+  // ── LEADERBOARDS ──────────────────────────────────────────────────────────
+  renderOvLeaderboards();
 
   // ── GENERATE PICKS ────────────────────────────────────────────────────────
   const bbEl=document.getElementById('ov-bestbets');
@@ -5766,11 +5749,6 @@ const EVENT_GAMES=[
   {event:'Conference Tournaments',round:'SEC Semis',sport:'cbb',away:'Auburn Tigers',home:'Arkansas Razorbacks',time:'Mar 15 · 1:00 PM ET',spread:-7.5,total:141,mlHome:280,mlAway:-340},
   {event:'Conference Tournaments',round:'Big 12 Semis',sport:'cbb',away:'Kansas Jayhawks',home:"Baylor Bears",time:'Mar 15 · 3:30 PM ET',spread:-4.5,total:143,mlHome:175,mlAway:-210},
   {event:'Conference Tournaments',round:'Big East Semis',sport:'cbb',away:"St. John's Red Storm",home:'UConn Huskies',time:'Mar 15 · 6:00 PM ET',spread:3,total:136.5,mlHome:-148,mlAway:125},
-  // March Madness Sweet 16 Projections
-  {event:'March Madness',round:'Sweet 16 · East',sport:'cbb',away:'Duke Blue Devils',home:'Tennessee Volunteers',time:'Mar 28 · 7:09 PM ET',spread:-3.5,total:141.5,mlHome:148,mlAway:-175},
-  {event:'March Madness',round:'Sweet 16 · West',sport:'cbb',away:'Gonzaga Bulldogs',home:'Arizona Wildcats',time:'Mar 28 · 9:39 PM ET',spread:-3,total:152.5,mlHome:128,mlAway:-152},
-  {event:'March Madness',round:'Sweet 16 · South',sport:'cbb',away:'Auburn Tigers',home:'Michigan Wolverines',time:'Mar 29 · 7:09 PM ET',spread:-6,total:136.5,mlHome:225,mlAway:-270},
-  {event:'March Madness',round:'Sweet 16 · Midwest',sport:'cbb',away:'Houston Cougars',home:'Iowa State Cyclones',time:'Mar 29 · 9:39 PM ET',spread:-3,total:131.5,mlHome:128,mlAway:-152},
   // NBA High-Stakes Regular Season
   {event:'NBA Playoff Race',round:'Top Seed Showdown',sport:'nba',away:'Oklahoma City Thunder',home:'Cleveland Cavaliers',time:'Mar 5 · 8:00 PM ET',spread:2,total:232,mlHome:-108,mlAway:-112},
   {event:'NBA Playoff Race',round:'East Battle',sport:'nba',away:'Milwaukee Bucks',home:'Boston Celtics',time:'Mar 7 · 7:30 PM ET',spread:-7,total:225,mlHome:260,mlAway:-320},
@@ -8310,477 +8288,14 @@ function hbGoAnalyze(home,away,sport){
   },100);
 }
 
-// ── MARCH MADNESS 2026 BRACKET ANALYZER ──────────────────────────────────────
+// ── SHOWtab HOOK ────────────────────────────────────────────────────────────
 
-// 2026 Tournament bracket — order per region: 1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15
-// First Four winners slotted: West 11=Texas, Midwest 11=SMU, Midwest 16=Howard, South 16=Lehigh
-// ── MM Live Results from ESPN ──────────────────────────────────────────────
-let MM_ACTUAL_RESULTS={};
-let _mmFetchStatus='idle';
-let _mmFetchTime=null;
-let _mmFetchCount=0;
-
-function mmNorm(espnName){
-  if(!espnName)return'';
-  const all=Object.values(MM_BRACKET).flat().map(t=>t[1]);
-  const low=espnName.toLowerCase();
-  for(const t of all){if(low.includes(t.toLowerCase()))return t;}
-  for(const t of all){if(t.toLowerCase().includes(low))return t;}
-  return'';
-}
-
-async function fetchMMActualResults(){
-  const btn=document.getElementById('mm-refresh-btn');
-  if(btn)btn.disabled=true;
-  _mmFetchStatus='loading';
-  updateMMStatus();
-  try{
-    const today=new Date().toISOString().slice(0,10).replace(/-/g,'');
-    let events=[];
-    const urls=[
-      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?groups=100&limit=300&dates=20260318-${today}`,
-      `${ESPN_BASE}/basketball/mens-college-basketball/scoreboard?limit=300&dates=20260318-${today}`
-    ];
-    for(const url of urls){
-      const d=await espnGet(url);
-      if(d?.events?.length){events=d.events;break;}
-    }
-    const bracketSet=new Set(Object.values(MM_BRACKET).flat().map(t=>t[1]));
-    const results={};
-    let count=0;
-    for(const ev of events){
-      if(!ev.status?.type?.completed)continue;
-      const comp=ev.competitions?.[0];
-      if(!comp)continue;
-      let winner=null,loser=null;
-      for(const c of(comp.competitors||[])){
-        const bn=mmNorm(c.team?.displayName||c.team?.shortDisplayName||c.team?.name||'');
-        if(!bn||!bracketSet.has(bn))continue;
-        if(c.winner)winner=bn; else loser=bn;
-      }
-      if(winner&&loser){
-        const key=[winner,loser].sort().join('|');
-        results[key]=winner;
-        count++;
-      }
-    }
-    MM_ACTUAL_RESULTS=results;
-    _mmFetchCount=count;
-    _mmFetchStatus=count>0?'done':'empty';
-    _mmFetchTime=new Date();
-    _mmSimCache={};
-    updateMMStatus();
-    const el=document.getElementById('mm-content');
-    if(el)el.innerHTML=_mmActiveRegion==='FF'?mmRenderFF():mmRenderRegion(_mmActiveRegion);
-  }catch(e){
-    console.warn('[MM fetch]',e);
-    _mmFetchStatus='error';
-    updateMMStatus();
-  }
-  if(btn)btn.disabled=false;
-}
-
-function updateMMStatus(){
-  const el=document.getElementById('mm-fetch-status');
-  if(!el)return;
-  if(_mmFetchStatus==='loading'){
-    el.innerHTML='<span style="color:var(--muted)">⟳ Fetching live results…</span>';
-  } else if(_mmFetchStatus==='done'){
-    const t=_mmFetchTime?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    el.innerHTML=`<span style="color:#4ade80">✓ ${_mmFetchCount} result${_mmFetchCount!==1?'s':''} loaded · Updated ${t}</span>`;
-  } else if(_mmFetchStatus==='empty'){
-    el.innerHTML='<span style="color:var(--muted)">No completed games found — showing model predictions</span>';
-  } else if(_mmFetchStatus==='error'){
-    el.innerHTML='<span style="color:#f87171">⚠ Could not load live results — showing predictions</span>';
-  } else {
-    el.innerHTML='<span style="color:var(--muted)">Tap Refresh to load live results</span>';
-  }
-}
-
-const MM_BRACKET={
-  EAST:[[1,'Duke'],[16,'Siena'],[8,'Ohio State'],[9,'TCU'],[5,"St. John's"],[12,'Northern Iowa'],
-        [4,'Kansas'],[13,'CA Baptist'],[6,'Louisville'],[11,'South Florida'],[3,'Michigan State'],[14,'N Dakota State'],
-        [7,'UCLA'],[10,'UCF'],[2,'UConn'],[15,'Furman']],
-  WEST:[[1,'Arizona'],[16,'Long Island'],[8,'Villanova'],[9,'Utah State'],[5,'Wisconsin'],[12,'High Point'],
-        [4,'Arkansas'],[13,"Hawai'i"],[6,'BYU'],[11,'Texas'],[3,'Gonzaga'],[14,'Kennesaw State'],
-        [7,'Miami FL'],[10,'Missouri'],[2,'Purdue'],[15,'Queens']],
-  SOUTH:[[1,'Florida'],[16,'Lehigh'],[8,'Clemson'],[9,'Iowa'],[5,'Vanderbilt'],[12,'McNeese'],
-         [4,'Nebraska'],[13,'Troy'],[6,'UNC'],[11,'VCU'],[3,'Illinois'],[14,'Penn'],
-         [7,"Saint Mary's"],[10,'Texas A&M'],[2,'Houston'],[15,'Idaho']],
-  MIDWEST:[[1,'Michigan'],[16,'Howard'],[8,'Georgia'],[9,'Saint Louis'],[5,'Texas Tech'],[12,'Akron'],
-           [4,'Alabama'],[13,'Hofstra'],[6,'Tennessee'],[11,'SMU'],[3,'Virginia'],[14,'Wright State'],
-           [7,'Kentucky'],[10,'Santa Clara'],[2,'Iowa State'],[15,'Tennessee State']],
-};
-// Final Four: East champion plays South champion; West plays Midwest
-const MM_FF_PAIRS=[['EAST','SOUTH'],['WEST','MIDWEST']];
-// Historical seed-matchup win rates for the better (lower-numbered) seed
-const MM_SEED_RATE={1:0.988,2:0.941,3:0.853,4:0.791,5:0.647,6:0.620,7:0.602,8:0.513,9:0.487,10:0.398,11:0.380,12:0.353};
-
-// ── Play-in results (First Four) ─────────────────────────────────────────────
-// Teams confirmed in the main bracket via play-in win
-const MM_PLAYIN_WINNERS=new Set(['Howard','Texas']);
-
-// ── Style data for all 64 bracket teams ──────────────────────────────────────
-// pace: 1=slow, 2=avg, 3=fast (relative to D1 avg ~70 poss/40min)
-// threePt: 1=low, 2=avg, 3=high (3PA as % of FGA: low<28%, high>38%)
-// bigMan: null or string — dominant interior presence (matchup advantage factor)
-// zone: true if team uses zone defense heavily (disrupts 3PT rhythm offenses)
-// note: scouting note shown on card
-const MM_STYLE={
-  // ── EAST ──────────────────────────────────────────────────────────────────
-  'Duke':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Elite guard play, versatile bigs, blue-blood depth'},
-  'Siena':         {pace:2,threePt:3,bigMan:null,       zone:true, note:'MAAC; zone D + 3PT heavy — classic mid-major chaos style'},
-  'Ohio State':    {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten balanced; solid interior'},
-  'TCU':           {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big 12; guard-driven 3PT offense'},
-  "St. John's":    {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big East; press defense, fast transition game'},
-  'Northern Iowa': {pace:1,threePt:2,bigMan:null,       zone:false,note:'MVC grinder — half-court, physical interior, hard to score on'},
-  'Kansas':        {pace:2,threePt:2,bigMan:null,       zone:false,note:'Blue-blood; disciplined, deep roster'},
-  'CA Baptist':    {pace:3,threePt:3,bigMan:null,       zone:false,note:'WAC; pace-and-space, lives and dies by the 3PT'},
-  'Louisville':    {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; athletic wings, transition offense'},
-  'South Florida': {pace:3,threePt:2,bigMan:null,       zone:false,note:'American; length-based defense, fast break'},
-  'Michigan State':{pace:1,threePt:2,bigMan:null,       zone:false,note:'Izzo system: half-court, physical, tournament-tested'},
-  'N Dakota State':{pace:2,threePt:3,bigMan:null,       zone:false,note:'Summit League; 3PT reliant — if they\'re hot, watch out'},
-  'UCLA':          {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big Ten; perimeter-oriented, skilled guards'},
-  'UCF':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big 12; athletic bigs + transition, improving program'},
-  'UConn':         {pace:1,threePt:2,bigMan:'7ft interior tradition — always has an NBA-caliber big',zone:false,note:'Back-to-back champs system; dominant paint + elite defense'},
-  'Furman':        {pace:3,threePt:3,bigMan:null,       zone:false,note:'SoCon; run-and-gun, 3PT heavy — upset Virginia in 2023 via this style'},
-  // ── WEST ──────────────────────────────────────────────────────────────────
-  'Arizona':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'Big 12; up-tempo, athletic across all positions'},
-  'Long Island':   {pace:3,threePt:3,bigMan:null,       zone:true, note:'CAA; pace-and-3, zone heavy — small school that needs shooters to go off'},
-  'Villanova':     {pace:1,threePt:3,bigMan:null,       zone:false,note:'Big East; 3PT program identity — very high volume, very slow pace'},
-  'Utah State':    {pace:1,threePt:3,bigMan:null,       zone:false,note:'MWC; Princeton-style system, very deliberate + 3PT reliant'},
-  'Wisconsin':     {pace:1,threePt:2,bigMan:null,       zone:false,note:'Badger motion offense; methodical, hard to outscore'},
-  'High Point':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big South; shooter-heavy roster, pace varies by matchup'},
-  'Arkansas':      {pace:3,threePt:2,bigMan:null,       zone:false,note:'SEC; 40-min press defense, forces chaos & turnovers'},
-  "Hawai'i":       {pace:2,threePt:3,bigMan:null,       zone:true, note:'Big West; zone D + 3PT offense, classic disruptive combo'},
-  'BYU':           {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big 12; physical, disciplined, experienced'},
-  'Texas':         {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big 12; play-in winner — athletic wings, versatile defense'},
-  'Gonzaga':       {pace:3,threePt:2,bigMan:'Elite frontcourt tradition — consistently has NBA-caliber 7-footer',zone:false,note:'WCC dominant; always has a dominant big + skilled shooters around him'},
-  'Kennesaw State':{pace:1,threePt:2,bigMan:null,       zone:true, note:'ASUN; physical, zone-heavy — upset Kansas State in 2023 with this formula'},
-  'Miami FL':      {pace:3,threePt:3,bigMan:null,       zone:false,note:'ACC; perimeter-oriented, 3PT heavy, athletic'},
-  'Missouri':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; balanced, athletic, improving program'},
-  'Purdue':        {pace:1,threePt:2,bigMan:'7ft+ center tradition (Edey lineage) — massive paint presence',zone:false,note:'Big Ten; methodical pace but elite big man creates absolute mismatch vs small teams'},
-  'Queens':        {pace:3,threePt:3,bigMan:null,       zone:false,note:'ASUN; pace-and-space, 3PT-or-bust — needs shooters hot to pull upset'},
-  // ── SOUTH ─────────────────────────────────────────────────────────────────
-  'Florida':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'SEC; athletic, transition-oriented, high energy'},
-  'Lehigh':        {pace:2,threePt:3,bigMan:null,       zone:false,note:'Patriot; smart 3PT offense — historic upset program (beat Duke in 2012)'},
-  'Clemson':       {pace:2,threePt:2,bigMan:null,       zone:false,note:'ACC; balanced, strong defensive identity'},
-  'Iowa':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; physical interior, evolving system'},
-  'Vanderbilt':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'SEC; perimeter-heavy, 3PT reliant'},
-  'McNeese':       {pace:3,threePt:2,bigMan:null,       zone:false,note:'Southland; physical guards, in-your-face defense — in our DB with real efficiency data'},
-  'Nebraska':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; size-oriented frontcourt, methodical'},
-  'Troy':          {pace:2,threePt:2,bigMan:null,       zone:false,note:'Sun Belt; balanced, consistent — in our DB'},
-  'UNC':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; run-and-gun, athletic wings, high-pace pressure'},
-  'VCU':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'A-10; HAVOC press defense — forces 20+ turnovers, pace disruptor'},
-  'Illinois':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; versatile, balanced attack'},
-  'Penn':          {pace:1,threePt:3,bigMan:null,       zone:false,note:'Ivy; motion offense, high IQ but athleticism gap is real vs power teams'},
-  "Saint Mary's":  {pace:1,threePt:2,bigMan:null,       zone:false,note:'WCC; Princeton-style, deliberate, very smart basketball'},
-  'Texas A&M':     {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; physical frontcourt, methodical half-court'},
-  'Houston':       {pace:1,threePt:2,bigMan:null,       zone:false,note:'Big 12; elite Kelvin Sampson defense — allows least efficient shots in country'},
-  'Idaho':         {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Sky; average metrics, seed-based prediction only'},
-  // ── MIDWEST ───────────────────────────────────────────────────────────────
-  'Michigan':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'Big Ten; disciplined, versatile roster'},
-  'Howard':        {pace:1,threePt:2,bigMan:null,       zone:false,note:'MEAC play-in winner; disciplined HBCU program — tends to play below-tempo and limit possessions to stay close'},
-  'Georgia':       {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; athletic, improved program under Mike White'},
-  'Saint Louis':   {pace:2,threePt:2,bigMan:null,       zone:false,note:'A-10; fundamentally sound, experienced'},
-  'Texas Tech':    {pace:1,threePt:2,bigMan:null,       zone:false,note:'Big 12; elite suffocating defense — allows very few quality looks'},
-  'Akron':         {pace:3,threePt:2,bigMan:null,       zone:false,note:'MAC; aggressive defense + transition — solid mid-major'},
-  'Alabama':       {pace:3,threePt:3,bigMan:null,       zone:false,note:'SEC; Nate Oats system — extreme pace + extreme 3PT volume, highest variance team in field'},
-  'Hofstra':       {pace:2,threePt:3,bigMan:null,       zone:true, note:'CAA; 3PT heavy + zone defense — classic disruptive combo for upsets'},
-  'Tennessee':     {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; elite physical defense, tough to score on'},
-  'SMU':           {pace:3,threePt:2,bigMan:null,       zone:false,note:'ACC; athletic guards, transition-oriented'},
-  'Virginia':      {pace:1,threePt:2,bigMan:null,       zone:false,note:'ACC; PACK line defense — slowest tempo in college basketball, suffocating'},
-  'Wright State':  {pace:2,threePt:3,bigMan:null,       zone:false,note:'Horizon; 3PT volume offense — in-tournament can light it up from deep'},
-  'Kentucky':      {pace:2,threePt:2,bigMan:null,       zone:false,note:'SEC; raw athleticism, one-and-done talent'},
-  'Santa Clara':   {pace:2,threePt:3,bigMan:null,       zone:false,note:'WCC; Gonzaga-adjacent style, system-based 3PT offense'},
-  'Iowa State':    {pace:2,threePt:3,bigMan:null,       zone:false,note:'Big 12; perimeter-dominant, elite 3PT offense + zone-busting ability'},
-  'Tennessee State':{pace:3,threePt:2,bigMan:null,      zone:false,note:'OVC; athletic, transition-heavy'},
-};
-
-// ── Style-based matchup adjustment ────────────────────────────────────────────
-// Returns float adjustment to team1 win probability based on stylistic clash
-// Keeps adjustments small (max ±8%) so style is a tiebreaker, not an override
-function mmStyleAdj(name1, name2){
-  const s1=MM_STYLE[name1], s2=MM_STYLE[name2];
-  if(!s1||!s2)return{adj:0,notes:[]};
-  let adj=0;
-  const notes=[];
-  // Pace mismatch — faster team tends to get their style of game
-  const paceDiff=s1.pace-s2.pace; // positive = team1 is faster
-  if(Math.abs(paceDiff)>=2){
-    const paceAdj=paceDiff*0.015; // ±1.5% per tier
-    adj+=paceAdj;
-    const faster=paceAdj>0?name1:name2, slower=paceAdj>0?name2:name1;
-    notes.push(`⚡ Pace clash: ${faster} wants to run, ${slower} wants to grind`);
-  }
-  // Big man advantage — dominant interior player vs team without one
-  const big1=s1.bigMan?1:0, big2=s2.bigMan?1:0;
-  if(big1!==big2){
-    const bigAdj=(big1-big2)*0.045; // 4.5% for having dominant big
-    adj+=bigAdj;
-    const bigTeam=bigAdj>0?name1:name2;
-    const smallTeam=bigAdj>0?name2:name1;
-    const bigNote=bigAdj>0?s1.bigMan:s2.bigMan;
-    notes.push(`🏔 Size edge: ${bigTeam} — ${bigNote}`);
-  }
-  // 3PT heavy offense vs zone defense — zone can disrupt 3PT rhythm
-  if(s2.zone&&s1.threePt===3){
-    adj-=0.025; // team1's 3PT offense will be disrupted by team2's zone
-    notes.push(`🎯 Zone risk: ${name2} zone D will challenge ${name1}'s 3PT offense`);
-  }
-  if(s1.zone&&s2.threePt===3){
-    adj+=0.025; // team1's zone will disrupt team2's 3PT offense
-    notes.push(`🎯 Zone risk: ${name1} zone D will challenge ${name2}'s 3PT offense`);
-  }
-  // Both teams are 3PT heavy — high variance game, slight edge to bigger program
-  if(s1.threePt===3&&s2.threePt===3){
-    notes.push(`🎲 High-variance: both teams 3PT reliant — coin-flip potential`);
-  }
-  // Alabama-style chaos boost — extreme pace + extreme 3PT is genuinely unpredictable
-  if((s1.pace===3&&s1.threePt===3)||(s2.pace===3&&s2.threePt===3)){
-    const chaosTeam=s1.pace===3&&s1.threePt===3?name1:name2;
-    notes.push(`💥 ${chaosTeam}: extreme pace + 3PT volume = maximum variance`);
-  }
-  adj=Math.max(-0.08,Math.min(0.08,adj));
-  return{adj,notes};
-}
-
-let _mmActiveRegion='EAST';
-let _mmSimCache={};
-
-function mmTeamData(name){
-  const row=fuzzyTeam('cbb',name);
-  if(!row)return null;
-  const ix=SIDX.cbb;
-  const adjOE=parseFloat(row[ix.adjoe])||100;
-  const adjDE=parseFloat(row[ix.adjde])||100;
-  const w=parseFloat(row[ix.w])||0, l=parseFloat(row[ix.l])||0;
-  return{adjOE,adjDE,net:adjOE-adjDE,winPct:(w+l)>0?w/(w+l):0.5,w,l};
-}
-
-function mmPredict(name1,seed1,name2,seed2){
-  // ── Use actual ESPN result if available ───────────────────────────────────
-  const _ak=[name1,name2].sort().join('|');
-  if(MM_ACTUAL_RESULTS[_ak]){
-    const _aw=MM_ACTUAL_RESULTS[_ak];
-    const _t1w=_aw===name1;
-    const _d1=mmTeamData(name1),_d2=mmTeamData(name2);
-    const _sty=mmStyleAdj(name1,name2);
-    return{winner:_aw,winnerSeed:_t1w?seed1:seed2,prob:1.0,
-      isUpset:(_t1w?seed1:seed2)>Math.min(seed1,seed2),isActual:true,
-      t1:{name:name1,seed:seed1,data:_d1,style:MM_STYLE[name1]||null},
-      t2:{name:name2,seed:seed2,data:_d2,style:MM_STYLE[name2]||null},
-      bothInDB:!!(_d1&&_d2),styleNotes:_sty.notes,styleAdj:_sty.adj};
-  }
-  const d1=mmTeamData(name1), d2=mmTeamData(name2);
-  // Seed-based base rate: always from perspective of the lower (better) seed
-  const betterSeed=Math.min(seed1,seed2);
-  const baseRate=MM_SEED_RATE[betterSeed]??0.5;
-  const seedProb=(seed1<seed2)?baseRate:1-baseRate; // prob that team1 wins
-
-  let baseProb;
-  if(d1&&d2){
-    // Both in DB — use KenPom net efficiency logit (70%) + seed history (30%)
-    const netDiff=d1.net-d2.net;
-    const effProb=1/(1+Math.exp(-0.15*netDiff));
-    baseProb=effProb*0.70+seedProb*0.30;
-  } else if(d1){
-    // Team1 in DB, team2 not — efficiency nudge on top of seed base
-    const boost=d1.net>22?0.04:d1.net>16?0.02:0;
-    baseProb=seed1<seed2?seedProb+boost:seedProb-boost;
-  } else if(d2){
-    const boost=d2.net>22?0.04:d2.net>16?0.02:0;
-    baseProb=seed1<seed2?seedProb-boost:seedProb+boost;
-  } else {
-    baseProb=seedProb;
-  }
-  // Apply style-based matchup adjustment (max ±8%)
-  const styleResult=mmStyleAdj(name1,name2);
-  let finalProb=Math.max(0.04,Math.min(0.97,baseProb+styleResult.adj));
-  const winner=finalProb>=0.5?name1:name2;
-  const winnerSeed=finalProb>=0.5?seed1:seed2;
-  const prob=finalProb>=0.5?finalProb:1-finalProb;
-  const isUpset=winnerSeed>Math.min(seed1,seed2);
-  return{winner,winnerSeed,prob,isUpset,
-    t1:{name:name1,seed:seed1,data:d1,style:MM_STYLE[name1]||null},
-    t2:{name:name2,seed:seed2,data:d2,style:MM_STYLE[name2]||null},
-    bothInDB:!!(d1&&d2),
-    styleNotes:styleResult.notes,styleAdj:styleResult.adj};
-}
-
-function mmSimRegion(regionKey){
-  if(_mmSimCache[regionKey])return _mmSimCache[regionKey];
-  const teams=MM_BRACKET[regionKey];
-  const r64=[];
-  for(let i=0;i<16;i+=2) r64.push(mmPredict(teams[i][1],teams[i][0],teams[i+1][1],teams[i+1][0]));
-  const r32=[];
-  for(let i=0;i<8;i+=2) r32.push(mmPredict(r64[i].winner,r64[i].winnerSeed,r64[i+1].winner,r64[i+1].winnerSeed));
-  const s16=[
-    mmPredict(r32[0].winner,r32[0].winnerSeed,r32[1].winner,r32[1].winnerSeed),
-    mmPredict(r32[2].winner,r32[2].winnerSeed,r32[3].winner,r32[3].winnerSeed),
-  ];
-  const e8=mmPredict(s16[0].winner,s16[0].winnerSeed,s16[1].winner,s16[1].winnerSeed);
-  const result={r64,r32,s16,e8};
-  _mmSimCache[regionKey]=result;
-  return result;
-}
-
-function mmGameCard(game,showEff){
-  const{t1,t2,winner,winnerSeed,prob,isUpset,isActual,bothInDB,styleNotes,styleAdj}=game;
-  const conf=prob>=0.80?'high':prob>=0.65?'med':'low';
-  const confLabel=isActual?'Final':`${(prob*100).toFixed(0)}%`;
-  const t1win=winner===t1.name;
-
-  // Build style badges for one team
-  const styleBadges=(t)=>{
-    if(!t.style)return'';
-    const badges=[];
-    if(t.style.pace===3) badges.push('<span class="mm-sbadge pace-fast">🏃 FAST</span>');
-    if(t.style.pace===1) badges.push('<span class="mm-sbadge pace-slow">🐢 SLOW</span>');
-    if(t.style.threePt===3) badges.push('<span class="mm-sbadge three-high">🎯 3PT</span>');
-    if(t.style.bigMan) badges.push(`<span class="mm-sbadge big-man" title="${t.style.bigMan}">🏔 BIG</span>`);
-    if(t.style.zone) badges.push('<span class="mm-sbadge zone">▣ ZONE</span>');
-    if(MM_PLAYIN_WINNERS.has(t.name)) badges.push('<span class="mm-sbadge playin">▶ PLAY-IN</span>');
-    return badges.length?`<div class="mm-style-row">${badges.join('')}</div>`:'';
-  };
-
-  const teamRow=(t,isWinner)=>{
-    const upsetWin=isWinner&&isUpset;
-    const cls=isWinner?(upsetWin?'upset-winner':'winner'):'';
-    const dbBadge=t.data?'<span class="mm-db in">DB</span>':'<span class="mm-db out">—</span>';
-    const icon=isWinner?(upsetWin?'🔥 ':'✓ '):'';
-    return `<div class="mm-team ${cls}">
-      <span class="mm-seed ${t.seed<=4?'fav':''}">${t.seed}</span>
-      <span class="mm-name">${icon}${t.name}</span>
-      ${dbBadge}
-    </div>
-    ${styleBadges(t)}`;
-  };
-
-  // Efficiency + scouting note line
-  let effLine='';
-  if(showEff&&bothInDB){
-    const nd1=t1.data.net.toFixed(1),nd2=t2.data.net.toFixed(1);
-    const n1=t1.name.split(' ').pop(), n2=t2.name.split(' ').pop();
-    effLine=`<div class="mm-eff">Net eff: ${n1} ${nd1>0?'+':''}${nd1} vs ${n2} ${nd2>0?'+':''}${nd2}</div>`;
-  } else if(showEff&&!bothInDB){
-    const inDB=t1.data?t1.name:t2.data?t2.name:null;
-    effLine=`<div class="mm-eff">⚪ Seed-based${inDB?' ('+inDB.split(' ').pop()+' in DB)':''}</div>`;
-  }
-  // Scouting notes for non-DB teams (helps explain small school strengths)
-  const scoutNote=(t)=>{
-    if(!t.style||!t.style.note||t.data)return''; // skip if in DB (eff line covers it)
-    return`<div class="mm-eff" style="color:var(--muted);margin-top:1px">📋 ${t.name}: ${t.style.note}</div>`;
-  };
-
-  // Style matchup note(s) — show if any notable clash exists
-  const matchupHtml=styleNotes&&styleNotes.length
-    ?`<div class="mm-matchup-note">${styleNotes.join(' · ')}</div>`:'';
-
-  // Style adjustment indicator
-  const adjHtml=styleAdj&&Math.abs(styleAdj)>=0.01
-    ?`<div class="mm-style-adj">Style adj: ${styleAdj>0?'+':''}${(styleAdj*100).toFixed(1)}% → ${t1.name}</div>`:'';
-
-  const hasStyleEdge=styleNotes&&styleNotes.length>0;
-  return `<div class="mm-game${isUpset?' upset':bothInDB?' all-data':hasStyleEdge?' style-edge':''}">
-    ${teamRow(t1,t1win)}
-    <div class="mm-divider"></div>
-    ${teamRow(t2,!t1win)}
-    <div class="mm-game-footer">
-      <span class="mm-pick-label">${isUpset?'🔥 Upset pick':'Model pick'}</span>
-      <span class="mm-conf ${conf}">${confLabel}</span>
-    </div>
-    ${effLine}
-    ${scoutNote(t1)}${scoutNote(t2)}
-    ${matchupHtml}
-    ${adjHtml}
-  </div>`;
-}
-
-function mmRenderRegion(regionKey){
-  const sim=mmSimRegion(regionKey);
-  const teams=MM_BRACKET[regionKey];
-
-  const r64Col=sim.r64.map(g=>mmGameCard(g,true)).join('');
-  const r32Col=sim.r32.map(g=>mmGameCard(g,false)).join('');
-  const s16Col=sim.s16.map(g=>mmGameCard(g,false)).join('');
-  const champCard=mmGameCard(sim.e8,false);
-  const champDiv=`<div class="mm-region-champion">🏆 ${regionKey} Champion: ${sim.e8.winner} (${sim.e8.winnerSeed} seed)</div>`;
-
-  return `<div class="mm-bracket-grid">
-    <div class="mm-round-col"><div class="mm-round-title">Round of 64</div>${r64Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Round of 32</div>${r32Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Sweet 16 → Elite 8</div>${s16Col}</div>
-    <div class="mm-round-col"><div class="mm-round-title">Elite 8</div>${champCard}${champDiv}</div>
-  </div>`;
-}
-
-function mmRenderFF(){
-  // Simulate all 4 regions first
-  const champs={};
-  ['EAST','WEST','SOUTH','MIDWEST'].forEach(r=>{champs[r]=mmSimRegion(r).e8;});
-
-  const sf1=mmPredict(champs.EAST.winner,champs.EAST.winnerSeed,champs.SOUTH.winner,champs.SOUTH.winnerSeed);
-  const sf2=mmPredict(champs.WEST.winner,champs.WEST.winnerSeed,champs.MIDWEST.winner,champs.MIDWEST.winnerSeed);
-  const title=mmPredict(sf1.winner,sf1.winnerSeed,sf2.winner,sf2.winnerSeed);
-
-  const regionCards=['EAST','WEST','SOUTH','MIDWEST'].map(r=>{
-    const c=champs[r];
-    const d=mmTeamData(c.winner);
-    const netStr=d?` · Net eff: ${d.net>0?'+':''}${d.net.toFixed(1)}`:'';
-    return `<div class="mm-game"><div class="mm-team winner"><span class="mm-seed fav">${c.winnerSeed}</span><span class="mm-name">🏆 ${c.winner}</span></div><div class="mm-eff">${r} Champion${netStr}</div></div>`;
-  });
-
-  return `<div style="margin-bottom:16px">
-    <div class="mm-round-title" style="margin-bottom:10px">Regional Champions</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${regionCards.join('')}</div>
-  </div>
-  <div class="mm-ff-grid">
-    <div class="mm-ff-game">
-      <div class="mm-ff-title">Semifinal 1 — East vs South (Apr 5)</div>
-      ${mmGameCard(sf1,true)}
-    </div>
-    <div class="mm-ff-game">
-      <div class="mm-ff-title">Semifinal 2 — West vs Midwest (Apr 5)</div>
-      ${mmGameCard(sf2,true)}
-    </div>
-  </div>
-  <div class="mm-champ-game">
-    <div class="mm-champ-title">🏆 National Championship — Apr 7</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
-      <div>
-        <div class="mm-champ-team">${sf1.winner}</div>
-        <div class="mm-champ-conf">(${sf1.winnerSeed} seed · ${sf1.prob>=0.5?sf1.winner===title.winner?'✓ Advancing':'':''} East/South)</div>
-      </div>
-      <div style="font-size:20px;font-weight:900;color:var(--gold)">vs</div>
-      <div>
-        <div class="mm-champ-team">${sf2.winner}</div>
-        <div class="mm-champ-conf">(${sf2.winnerSeed} seed · West/Midwest)</div>
-      </div>
-    </div>
-    <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(201,168,76,.2)">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Predicted Champion</div>
-      <div style="font-size:24px;font-weight:900;color:var(--gold)">🏆 ${title.winner}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px">${title.winnerSeed} seed · ${(title.prob*100).toFixed(0)}% model confidence · Total: 141 pts</div>
-    </div>
-  </div>`;
-}
-
-function mmSetRegion(region,btn){
-  _mmActiveRegion=region;
-  document.querySelectorAll('.mm-pill').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  const el=document.getElementById('mm-content');
-  if(!el)return;
-  el.innerHTML=region==='FF'?mmRenderFF():mmRenderRegion(region);
-}
-
+// (March Madness 2026 bracket removed — tournament complete)
 // Hook into showTab to render MM on first visit
 const _origShowTab=showTab;
 showTab=function(id,btn){
   _origShowTab(id,btn);
   if(id==='hotbets')hbRender();
-  if(id==='mm2026'){_mmSimCache={};mmSetRegion(_mmActiveRegion,document.querySelector('.mm-pill.active'));fetchMMActualResults();}
 };
 // Re-render Hot Bets when odds refresh completes
 window.addEventListener('btf-odds-refreshed',()=>{
@@ -9089,25 +8604,61 @@ function vrParseEvent(ev, sport){
   const isFinal = st.type&&st.type.completed;
   const detail = (st.type&&st.type.shortDetail)||'';
 
-  // Spread from ESPN odds if available
-  let espnSpread = null;
+  // Odds: spread, total, detail line
+  let espnSpread=null, espnTotal=null, espnOddsDetail=null;
   if(comp.odds&&comp.odds[0]){
-    const odd = comp.odds[0];
-    espnSpread = odd.spread!=null ? odd.spread : null; // positive = home favored by X
+    const odd=comp.odds[0];
+    espnSpread=odd.spread!=null?odd.spread:null;
+    espnTotal=odd.overUnder!=null?odd.overUnder:null;
+    espnOddsDetail=odd.details||null;
   }
 
+  // TV broadcast
+  let broadcast=null;
+  if(comp.broadcasts&&comp.broadcasts[0]&&comp.broadcasts[0].names){
+    broadcast=comp.broadcasts[0].names.join(', ');
+  }
+
+  // Venue
+  let venue=null;
+  if(comp.venue){
+    const v=comp.venue;
+    venue=v.fullName||(v.address?.city)||null;
+  }
+
+  // Team records (overall)
+  const homeRec=(home.records||[]).find(r=>r.name==='overall')?.summary||null;
+  const awayRec=(away.records||[]).find(r=>r.name==='overall')?.summary||null;
+
+  // Leaders (top performer per team — points leader)
+  let homeLeader=null,awayLeader=null;
+  const extractLeader=(c)=>{
+    const cats=c.leaders||[];
+    // Prefer points leader, fall back to first category
+    const ptsCat=cats.find(l=>l.name==='pointsPerGame'||l.name==='points')||cats[0];
+    if(!ptsCat?.leaders?.length)return null;
+    const top=ptsCat.leaders[0];
+    return{name:top.athlete?.shortName||top.athlete?.displayName||'',
+      value:top.displayValue||'',stat:ptsCat.displayName||ptsCat.name||''};
+  };
+  homeLeader=extractLeader(home);
+  awayLeader=extractLeader(away);
+
   return {
-    id: ev.id,
-    sport,
+    id: ev.id, sport,
     home: home.team.displayName||home.team.shortDisplayName||'Home',
     away: away.team.displayName||away.team.shortDisplayName||'Away',
+    homeAbbr: home.team.abbreviation||'',
+    awayAbbr: away.team.abbreviation||'',
     homeScore: isLive||isFinal ? (parseInt(home.score)||0) : null,
     awayScore: isLive||isFinal ? (parseInt(away.score)||0) : null,
     homeWinning: isLive && parseInt(home.score||0) > parseInt(away.score||0),
     awayWinning: isLive && parseInt(away.score||0) > parseInt(home.score||0),
-    isLive, isFinal,
-    detail,      // "Q4 2:14", "Bot 7th", "Final", "7:30 PM ET"
-    espnSpread,
+    isLive, isFinal, detail,
+    espnSpread, espnTotal, espnOddsDetail,
+    broadcast, venue,
+    homeRec, awayRec,
+    homeLeader, awayLeader,
     date: (ev.date||'').slice(0,10),
   };
 }
@@ -9214,24 +8765,74 @@ function vrRenderCard(game, isPinned, bet){
   const pinActive = (isPinned||isManPinned) ? 'active' : '';
   const cardClass = `vr-card${game.isLive?' live':''}${isPinned?' pinned-card':''}`;
 
+  // Records row
+  const recHtml=(game.homeRec||game.awayRec)?`<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:0 2px">
+    <span>${game.awayAbbr} ${game.awayRec||''}</span><span>${game.homeAbbr} ${game.homeRec||''}</span>
+  </div>`:'';
+
+  // Odds row (spread + total)
+  let oddsHtml='';
+  if(game.espnSpread!=null||game.espnTotal!=null){
+    const parts=[];
+    if(game.espnOddsDetail)parts.push(game.espnOddsDetail);
+    else if(game.espnSpread!=null)parts.push(`Spread: ${game.espnSpread>0?'+':''}${game.espnSpread}`);
+    if(game.espnTotal!=null)parts.push(`O/U ${game.espnTotal}`);
+    oddsHtml=`<div style="font-size:10px;color:var(--gold);padding:2px 2px 0;display:flex;justify-content:center;gap:10px">${parts.map(p=>`<span>${p}</span>`).join('')}</div>`;
+  }
+
+  // O/U tracker for live/final games
+  let ouHtml='';
+  if((game.isLive||game.isFinal)&&game.espnTotal!=null){
+    const totalScore=game.homeScore+game.awayScore;
+    const diff=totalScore-game.espnTotal;
+    const pace=game.isLive?(diff>0?'Over pace':'Under pace'):(diff>0?'Over':'Under');
+    const c=diff>0?'#4ade80':'#60a5fa';
+    ouHtml=`<div style="font-size:10px;text-align:center;padding:2px 0">
+      <span style="color:var(--muted)">Combined: ${totalScore}</span>
+      <span style="color:${c};font-weight:700;margin-left:6px">${pace} (${diff>0?'+':''}${diff.toFixed(1)})</span>
+    </div>`;
+  }
+
+  // Broadcast + venue info row
+  let infoHtml='';
+  const infoParts=[];
+  if(game.broadcast)infoParts.push(`📺 ${game.broadcast}`);
+  if(game.venue)infoParts.push(game.venue);
+  if(infoParts.length)infoHtml=`<div style="font-size:9px;color:var(--muted);text-align:center;padding:1px 0">${infoParts.join(' · ')}</div>`;
+
+  // Leaders row (for pre-game / upcoming)
+  let leadersHtml='';
+  if(!game.isLive&&!game.isFinal&&(game.homeLeader||game.awayLeader)){
+    const fmtL=(l,abbr)=>l?`<span>${abbr}: ${l.name} ${l.value}</span>`:'';
+    leadersHtml=`<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);padding:2px 2px 0">
+      ${fmtL(game.awayLeader,game.awayAbbr)}${fmtL(game.homeLeader,game.homeAbbr)}
+    </div>`;
+  }
+
   return `<div class="${cardClass}" id="vr-card-${game.id}">
     <div class="vr-card-top">
       <span class="vr-sport-tag">${VR_SPORT_ICON[game.sport]||''} ${VR_SPORT_LABEL[game.sport]||game.sport.toUpperCase()}</span>
       ${statusHtml}
     </div>
+    ${recHtml}
     <div class="vr-score-row">
       <div class="vr-team">
         <div class="vr-team-name">${game.away}</div>
         <div class="${aClass}">${aScore}</div>
       </div>
-      <div class="vr-score-sep">·</div>
+      <div class="vr-score-sep">@</div>
       <div class="vr-team">
         <div class="vr-team-name">${game.home}</div>
         <div class="${hClass}">${hScore}</div>
       </div>
     </div>
+    ${oddsHtml}
+    ${ouHtml}
+    ${infoHtml}
+    ${leadersHtml}
+    ${betBarHtml?`<div style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px">${betBarHtml}</div>`:''}
     <div class="vr-card-footer">
-      ${betBarHtml || '<div style="flex:1"></div>'}
+      <div style="flex:1"></div>
       <button class="vr-pin-btn ${pinActive}" onclick="vrTogglePin('${game.id}')" title="${isManPinned?'Unpin':'Pin game'}">${pinIcon}</button>
     </div>
   </div>`;
