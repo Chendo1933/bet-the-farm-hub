@@ -7126,6 +7126,21 @@ function hbScoreOU(g, ht, at, ix){
   if(sport==='mlb'&&histSignal===null&&projSignal===null&&pitcherOUSignal!==null){
     if(pitcherOUSignal>0.30&&pitcherOUSignal<0.70)return null;
   }
+  // NBA pace-only: above/below average pace alone isn't enough — require extreme pace
+  // matchup (both fast or both slow, ≤0.35 or ≥0.65) when hist/proj data is missing.
+  // Prevents phantom Over picks on early-season games with no O/U track record.
+  if(sport==='nba'&&histSignal===null&&projSignal===null&&nbaPaceSignal!==null){
+    if(nbaPaceSignal>0.35&&nbaPaceSignal<0.65)return null;
+  }
+  // NHL solo signals: a single secondary signal (ST or goalie alone) needs to be extreme.
+  // If both fire together, they must agree in direction — conflicting ST vs goalie signals
+  // on a game with no hist/proj data is unreliable (one says Over, other says Under).
+  if(sport==='nhl'&&histSignal===null&&projSignal===null){
+    const hasST=nhlSTSignal!==null, hasGoalie=nhlGoalieSignal!==null;
+    if(hasST&&!hasGoalie&&nhlSTSignal>0.35&&nhlSTSignal<0.65)return null;
+    if(!hasST&&hasGoalie&&nhlGoalieSignal>0.35&&nhlGoalieSignal<0.65)return null;
+    if(hasST&&hasGoalie&&(nhlSTSignal>0.5)!==(nhlGoalieSignal>0.5))return null;
+  }
 
   // Blend: history carries more weight (it's less noisy than season-avg projection).
   let overSum=0, wt=0;
@@ -7184,13 +7199,19 @@ function hbScoreML(g, ht, at, ix){
   const vigTotal=hImpl+aImpl;
   const hNoVig=hImpl/vigTotal, aNoVig=aImpl/vigTotal;
 
-  // Win rates (need ≥ 8 games for meaningful signal)
+  // Win rates (need ≥ 8 games), Bayesian-shrunk toward 0.5.
+  // Shrinkage prevents small-sample overconfidence: an 8-0 start shouldn't read as 100% win
+  // rate when projecting forward — it's ~75% after pulling toward the 0.5 prior.
+  // Full confidence at n=20 (matches F1's shrinkage in the spread scorer).
   const hw=ht[ix.w]||0, hl=ht[ix.l]||0;
   const aw=at[ix.w]||0, al=at[ix.l]||0;
-  const hWinPct=(hw+hl)>=8?hw/(hw+hl):null;
-  const aWinPct=(aw+al)>=8?aw/(aw+al):null;
+  const hN=hw+hl, aN=aw+al;
+  const shrink=(w,n)=>{const conf=Math.min(1,n/20);return (w/n)*conf+0.5*(1-conf);};
+  const hWinPct=hN>=8?shrink(hw,hN):null;
+  const aWinPct=aN>=8?shrink(aw,aN):null;
 
-  // Efficiency differential (NBA net rating, CBB adjusted efficiency)
+  // Efficiency differential — scaled into NBA-equivalent range so shared thresholds work.
+  // NBA/CBB use native efficiency; MLB/NHL/NFL/CFB derive per-game scoring differential.
   let effEdgeH=0;
   if(sport==='nba'&&ix.ortg!=null&&ix.drtg!=null){
     const hNet=(ht[ix.ortg]||100)-(ht[ix.drtg]||100);
@@ -7200,6 +7221,27 @@ function hbScoreML(g, ht, at, ix){
     const hNet=(ht[ix.adjoe]||100)-(ht[ix.adjde]||100);
     const aNet=(at[ix.adjoe]||100)-(at[ix.adjde]||100);
     effEdgeH=hNet-aNet;
+  } else if(sport==='mlb'){
+    // Run differential per game — meaningful ±1.5 RPG. Scale ×3 → ±4.5 (NBA-like range)
+    const hsc=getScorePerGame(ht,ix,sport);
+    const asc=getScorePerGame(at,ix,sport);
+    if(hsc&&asc){
+      effEdgeH=((hsc.ppg-hsc.papg)-(asc.ppg-asc.papg))*3;
+    }
+  } else if(sport==='nhl'){
+    // Goals per game differential — meaningful ±0.5 GPG. Scale ×10 → ±5
+    const hsc=getScorePerGame(ht,ix,sport);
+    const asc=getScorePerGame(at,ix,sport);
+    if(hsc&&asc){
+      effEdgeH=((hsc.ppg-hsc.papg)-(asc.ppg-asc.papg))*10;
+    }
+  } else if(sport==='nfl'||sport==='cfb'){
+    // Points per game differential — meaningful ±7 PPG. Scale ×0.7 → ±5
+    const hsc=getScorePerGame(ht,ix,sport);
+    const asc=getScorePerGame(at,ix,sport);
+    if(hsc&&asc){
+      effEdgeH=((hsc.ppg-hsc.papg)-(asc.ppg-asc.papg))*0.7;
+    }
   }
 
   // Score a single side and return a pick or null
@@ -7589,7 +7631,12 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
     const pickedML=(atsPick==='home')?g.mlHome:g.mlAway;
     const oppML=(atsPick==='home')?g.mlAway:g.mlHome;
     if((pickedWins+pickedLosses)>=8){
-      const winPct=pickedWins/(pickedWins+pickedLosses);
+      // Bayesian-shrunk win rate (matches F1 and hbScoreML treatment).
+      // Raw winPct on 8-10 games overstates true win probability; shrinkage toward 0.5
+      // caps the F9 boost on thin records (e.g., 6-2 reads as 65%, not 75%).
+      const _n=pickedWins+pickedLosses;
+      const _conf=Math.min(1,_n/20);
+      const winPct=(pickedWins/_n)*_conf+0.5*(1-_conf);
       // Strip vig: no-vig implied win probability from live ML odds
       const rawImpl=impliedProb(pickedML)??0.5;
       const rawOpp=impliedProb(oppML)??0.5;
@@ -8018,6 +8065,7 @@ function hbRender(){
       total:typeof p.total==='number'?p.total:null,
       pickedTeam:p.pickedTeam||null,
       pickLabel:p.pickLabel,score100:s,
+      odds:typeof p.odds==='number'?p.odds:null,
       tier:s>=68?'elite':s>=62?'strong':s>=57?'good':'lean',
       date:p.date||'',time:p.time||''};
   });

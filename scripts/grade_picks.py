@@ -166,26 +166,64 @@ def conf_band(score100) -> str | None:
     return None
 
 
+_BET_TYPES = ("spread", "ml", "ou")
+_MARGINS_DEFAULT = {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0}
+# ROI tracking: "units_won" is net units (+ on wins, − on losses, 0 on pushes).
+# Assumes 1 unit risked per pick. Uses "roi_count" (not "count") so it doesn't collide
+# with _MARGINS_DEFAULT's "count" when both dicts are merged into the same record.
+# ROI% = units_won / roi_count.
+_ROI_DEFAULT = {"units_won": 0.0, "roi_count": 0}
+
+
+def _empty_wlp() -> dict:
+    return {"w": 0, "l": 0, "p": 0}
+
+
+def _empty_bet_type_dict() -> dict:
+    """A full per-bet-type breakdown with W/L/P, margins+Brier, and ROI."""
+    return {
+        bt: {**_empty_wlp(), **dict(_MARGINS_DEFAULT), **dict(_ROI_DEFAULT)}
+        for bt in _BET_TYPES
+    }
+
+
+def american_odds_to_units(odds: float | int | None, outcome: str) -> float:
+    """
+    Return net units won/lost on a 1-unit bet at the given American odds.
+      Win at -110 → +0.909 · Win at +150 → +1.50 · Loss → −1.00 · Push → 0
+    Falls back to -110 (typical spread/total juice) when odds is None.
+    """
+    if outcome == "push":
+        return 0.0
+    if outcome not in ("win", "loss"):
+        return 0.0
+    price = -110 if odds is None else float(odds)
+    if outcome == "loss":
+        return -1.0
+    # Win: payoff depends on sign of the odds
+    if price > 0:
+        return price / 100.0      # +150 → +1.50 units
+    else:
+        return 100.0 / abs(price)  # -110 → +0.909 units
+
+
 def load_performance() -> dict:
     """
     Load existing performance.json, or return a fresh default.
     Uses the hub-compatible schema: tiers / w / l / p / last_updated.
-    Also maintains by_conf for confidence-band hit-rate breakdown.
+    Also maintains by_conf for confidence-band hit-rate breakdown,
+    by_sport_bet_type crosstab, ROI tracking, and margins/Brier per bet type and sport.
     """
-    _MARGINS_DEFAULT = {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0}
-
-    _BET_TYPES = ("spread", "ml", "ou")
-
     existing = load_json(PERF_FILE)
     if existing and "tiers" in existing:
         for tier in ALL_TIERS:
-            existing["tiers"].setdefault(tier, {"w": 0, "l": 0, "p": 0})
+            existing["tiers"].setdefault(tier, _empty_wlp())
         existing.setdefault("by_sport", {})
         existing.setdefault("graded_dates", [])
         # Backfill by_conf for files written before this field existed
-        existing.setdefault("by_conf", {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS})
+        existing.setdefault("by_conf", {band: _empty_wlp() for band in CONF_BANDS})
         for band in CONF_BANDS:
-            existing["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
+            existing["by_conf"].setdefault(band, _empty_wlp())
         # Backfill margins tracking
         existing.setdefault("margins", dict(_MARGINS_DEFAULT))
         existing.setdefault("margins_by_tier", {tier: dict(_MARGINS_DEFAULT) for tier in ALL_TIERS})
@@ -194,20 +232,39 @@ def load_performance() -> dict:
         existing.setdefault("margins_by_conf", {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS})
         for band in CONF_BANDS:
             existing["margins_by_conf"].setdefault(band, dict(_MARGINS_DEFAULT))
-        # Backfill by_bet_type
-        existing.setdefault("by_bet_type", {bt: {"w": 0, "l": 0, "p": 0} for bt in _BET_TYPES})
+        # Backfill by_bet_type — now enriched with margins + Brier + ROI.
+        # Order matters: MARGINS_DEFAULT first, then ROI_DEFAULT, so "roi_count"
+        # lands on legacy entries that already have margin fields.
+        existing.setdefault("by_bet_type", _empty_bet_type_dict())
         for bt in _BET_TYPES:
-            existing["by_bet_type"].setdefault(bt, {"w": 0, "l": 0, "p": 0})
+            existing["by_bet_type"].setdefault(bt, _empty_wlp())
+            for k, v in _MARGINS_DEFAULT.items():
+                existing["by_bet_type"][bt].setdefault(k, v)
+            for k, v in _ROI_DEFAULT.items():
+                existing["by_bet_type"][bt].setdefault(k, v)
+        # NEW — margins + Brier + ROI breakdown per sport
+        existing.setdefault("margins_by_sport", {})
+        # NEW — crosstab: per sport → per bet type → full WLP + margins + Brier + ROI
+        existing.setdefault("by_sport_bet_type", {})
+        # NEW — top-level ROI accumulator
+        existing.setdefault("roi", dict(_ROI_DEFAULT))
+        existing.setdefault("roi_by_tier", {tier: dict(_ROI_DEFAULT) for tier in ALL_TIERS})
+        for tier in ALL_TIERS:
+            existing["roi_by_tier"].setdefault(tier, dict(_ROI_DEFAULT))
         return existing
     return {
         "last_updated": "",
-        "tiers": {tier: {"w": 0, "l": 0, "p": 0} for tier in ALL_TIERS},
+        "tiers": {tier: _empty_wlp() for tier in ALL_TIERS},
         "by_sport": {},
-        "by_conf":  {band: {"w": 0, "l": 0, "p": 0} for band in CONF_BANDS},
-        "by_bet_type": {bt: {"w": 0, "l": 0, "p": 0} for bt in _BET_TYPES},
+        "by_conf":  {band: _empty_wlp() for band in CONF_BANDS},
+        "by_bet_type": _empty_bet_type_dict(),
+        "by_sport_bet_type": {},
         "margins": dict(_MARGINS_DEFAULT),
         "margins_by_tier": {tier: dict(_MARGINS_DEFAULT) for tier in ALL_TIERS},
         "margins_by_conf": {band: dict(_MARGINS_DEFAULT) for band in CONF_BANDS},
+        "margins_by_sport": {},
+        "roi": dict(_ROI_DEFAULT),
+        "roi_by_tier": {tier: dict(_ROI_DEFAULT) for tier in ALL_TIERS},
         "graded_dates": [],
     }
 
@@ -281,10 +338,10 @@ def main():
             elif outcome == "loss": rec["l"] += 1
             else:                  rec["p"] += 1
 
-        # Track by sport
+        # Track by sport (tier breakdown)
         sport_key = pick["sport"].lower()
         sp_tiers  = perf["by_sport"].setdefault(sport_key, {})
-        sp_rec    = sp_tiers.setdefault(tier, {"w": 0, "l": 0, "p": 0})
+        sp_rec    = sp_tiers.setdefault(tier, _empty_wlp())
         if outcome == "win":   sp_rec["w"] += 1
         elif outcome == "loss": sp_rec["l"] += 1
         else:                  sp_rec["p"] += 1
@@ -292,16 +349,30 @@ def main():
         # Track by confidence band — the key question: do 65s hit more than 58s?
         band = conf_band(pick.get("score100"))
         if band:
-            br = perf["by_conf"].setdefault(band, {"w": 0, "l": 0, "p": 0})
+            br = perf["by_conf"].setdefault(band, _empty_wlp())
             if outcome == "win":   br["w"] += 1
             elif outcome == "loss": br["l"] += 1
             else:                  br["p"] += 1
 
-        # Track by bet type (spread / ml / ou)
-        bt_rec = perf["by_bet_type"].setdefault(bet_type, {"w": 0, "l": 0, "p": 0})
+        # Track by bet type (spread / ml / ou) — W/L/P only at this level
+        bt_rec = perf["by_bet_type"].setdefault(bet_type, _empty_wlp())
         if outcome == "win":   bt_rec["w"] += 1
         elif outcome == "loss": bt_rec["l"] += 1
         else:                  bt_rec["p"] += 1
+
+        # NEW — crosstab: per sport → per bet type (full WLP + margins + ROI)
+        sp_bt = perf.setdefault("by_sport_bet_type", {}).setdefault(sport_key, {})
+        sbt_rec = sp_bt.setdefault(bet_type, {**_empty_wlp(), **dict(_MARGINS_DEFAULT), **dict(_ROI_DEFAULT)})
+        if outcome == "win":   sbt_rec["w"] += 1
+        elif outcome == "loss": sbt_rec["l"] += 1
+        else:                  sbt_rec["p"] += 1
+
+        # Resolve the odds used for ROI calc.
+        # Spread/O/U: use pick.odds if present else -110. ML: always uses pick.odds (varies widely).
+        pick_odds = pick.get("odds")
+        units = american_odds_to_units(pick_odds, outcome)
+        # For legacy picks without odds on ML bets, skip ROI update (would be misleading at -110).
+        has_odds_or_standard = (pick_odds is not None) or (bet_type in ("spread", "ou"))
 
         # Append to pick history log
         history["picks"].append({
@@ -315,13 +386,15 @@ def main():
             "spread": pick.get("spread"),
             "total": pick.get("total"),
             "score100": pick.get("score100"),
+            "odds": pick_odds,
             "outcome": outcome,
             "margin": round(margin, 1) if margin is not None else None,
+            "units": round(units, 4) if has_odds_or_standard else None,
             "homeScore": result.get("home_score"),
             "awayScore": result.get("away_score"),
         })
 
-        # Accumulate margins and Brier scores (skip pushes)
+        # Accumulate margins and Brier scores (skip pushes — no signal)
         if outcome != "push":
             predicted = pick.get("score100", 50) / 100.0
             actual = 1.0 if outcome == "win" else 0.0
@@ -334,17 +407,48 @@ def main():
             m["brier_sum"] += brier; m["brier_n"] += 1
 
             # By tier
-            mt = perf["margins_by_tier"].setdefault(tier, {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0})
+            mt = perf["margins_by_tier"].setdefault(tier, dict(_MARGINS_DEFAULT))
             if margin is not None:
                 mt["total"] += margin; mt["count"] += 1
             mt["brier_sum"] += brier; mt["brier_n"] += 1
 
             # By confidence band
             if band:
-                mb = perf["margins_by_conf"].setdefault(band, {"total": 0.0, "count": 0, "brier_sum": 0.0, "brier_n": 0})
+                mb = perf["margins_by_conf"].setdefault(band, dict(_MARGINS_DEFAULT))
                 if margin is not None:
                     mb["total"] += margin; mb["count"] += 1
                 mb["brier_sum"] += brier; mb["brier_n"] += 1
+
+            # NEW — margins + Brier on by_bet_type (shared dict already has these keys)
+            bt_margins = perf["by_bet_type"][bet_type]
+            if margin is not None:
+                bt_margins["total"] += margin; bt_margins["count"] += 1
+            bt_margins["brier_sum"] += brier; bt_margins["brier_n"] += 1
+
+            # NEW — margins + Brier by sport
+            ms = perf.setdefault("margins_by_sport", {}).setdefault(sport_key, dict(_MARGINS_DEFAULT))
+            if margin is not None:
+                ms["total"] += margin; ms["count"] += 1
+            ms["brier_sum"] += brier; ms["brier_n"] += 1
+
+            # Crosstab margins + Brier
+            if margin is not None:
+                sbt_rec["total"] += margin; sbt_rec["count"] += 1
+            sbt_rec["brier_sum"] += brier; sbt_rec["brier_n"] += 1
+
+        # NEW — ROI tracking (wins, losses, AND pushes all count toward exposure).
+        # Uses roi_count to avoid colliding with margin "count" in shared records.
+        if has_odds_or_standard:
+            perf["roi"]["units_won"] += units
+            perf["roi"]["roi_count"] += 1
+            rt = perf.setdefault("roi_by_tier", {}).setdefault(tier, dict(_ROI_DEFAULT))
+            rt["units_won"] += units; rt["roi_count"] += 1
+            # bet-type ROI lives inside by_bet_type (same dict as margins)
+            perf["by_bet_type"][bet_type]["units_won"] += units
+            perf["by_bet_type"][bet_type]["roi_count"] += 1
+            # Crosstab ROI (same dict as margins)
+            sbt_rec["units_won"] += units
+            sbt_rec["roi_count"] += 1
 
         icon = "✅" if outcome == "win" else "❌" if outcome == "loss" else "🔁"
         band_str = f" [{band}]" if band else ""
@@ -384,25 +488,79 @@ def main():
         bar      = "█" * rec["w"] + "░" * rec["l"]
         print(f"  {band}  {rec['w']}-{rec['l']}{push_str}  →  {pct}  {bar}")
 
-    print(f"\n── Performance by Bet Type ──────────────────────────────────────")
+    print(f"\n── Performance by Bet Type (W-L-P · Brier · ROI) ────────────────")
     for bt in ("spread", "ml", "ou"):
-        rec   = perf["by_bet_type"].get(bt, {"w": 0, "l": 0, "p": 0})
-        total = rec["w"] + rec["l"]
+        rec   = perf["by_bet_type"].get(bt, {})
+        total = rec.get("w", 0) + rec.get("l", 0)
         if total == 0:
             continue
         pct      = f"{rec['w']/total*100:.1f}%"
-        push_str = f" ({rec['p']}P)" if rec["p"] else ""
-        print(f"  {bt.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}")
+        push_str = f" ({rec['p']}P)" if rec.get("p") else ""
+        brier_str = ""
+        if rec.get("brier_n", 0) > 0:
+            brier_str = f" · Brier {rec['brier_sum']/rec['brier_n']:.3f}"
+        roi_str = ""
+        if rec.get("roi_count", 0) > 0:
+            roi_pct = (rec["units_won"] / rec["roi_count"]) * 100
+            roi_str = f" · ROI {roi_pct:+.1f}% ({rec['units_won']:+.2f}u/{rec['roi_count']})"
+        print(f"  {bt.upper():8} {rec['w']}-{rec['l']}{push_str}  →  {pct}{brier_str}{roi_str}")
+
+    print(f"\n── Performance by Sport ─────────────────────────────────────────")
+    for sport_key in sorted(perf.get("by_sport", {}).keys()):
+        s_tiers = perf["by_sport"][sport_key]
+        w = sum(t.get("w", 0) for t in s_tiers.values())
+        l = sum(t.get("l", 0) for t in s_tiers.values())
+        p = sum(t.get("p", 0) for t in s_tiers.values())
+        total = w + l
+        if total == 0:
+            continue
+        pct = f"{w/total*100:.1f}%"
+        push_str = f" ({p}P)" if p else ""
+        ms = perf.get("margins_by_sport", {}).get(sport_key, {})
+        brier_str = ""
+        if ms.get("brier_n", 0) > 0:
+            brier_str = f" · Brier {ms['brier_sum']/ms['brier_n']:.3f}"
+        print(f"  {sport_key.upper():4} {w}-{l}{push_str}  →  {pct}{brier_str}")
+
+    print(f"\n── Sport × Bet Type Crosstab ────────────────────────────────────")
+    for sport_key in sorted(perf.get("by_sport_bet_type", {}).keys()):
+        sp_bts = perf["by_sport_bet_type"][sport_key]
+        for bt in ("spread", "ml", "ou"):
+            rec = sp_bts.get(bt)
+            if not rec:
+                continue
+            total = rec.get("w", 0) + rec.get("l", 0)
+            if total == 0:
+                continue
+            pct = f"{rec['w']/total*100:.1f}%"
+            roi_str = ""
+            if rec.get("roi_count", 0) > 0:
+                roi_pct = (rec["units_won"] / rec["roi_count"]) * 100
+                roi_str = f" · ROI {roi_pct:+.1f}% ({rec['units_won']:+.2f}u)"
+            print(f"  {sport_key.upper():4} {bt.upper():6} {rec['w']}-{rec['l']}  →  {pct}{roi_str}")
 
     # Margin and Brier summary
     m = perf.get("margins", {})
     if m.get("count", 0) > 0:
         avg_margin = m["total"] / m["count"]
-        print(f"\n── Margins & Calibration ────────────────────────────────────────")
+        print(f"\n── Overall Margins & Calibration ────────────────────────────────")
         print(f"  Avg cover/miss margin: {avg_margin:.1f} pts ({m['count']} graded)")
     if m.get("brier_n", 0) > 0:
         brier = m["brier_sum"] / m["brier_n"]
         print(f"  Brier score: {brier:.4f} (lower is better, 0.25 = coin flip)")
+
+    # ROI summary
+    roi = perf.get("roi", {})
+    if roi.get("roi_count", 0) > 0:
+        roi_pct = (roi["units_won"] / roi["roi_count"]) * 100
+        units = roi["units_won"]
+        print(f"\n── ROI (units at -110 default, ML at live odds) ─────────────────")
+        print(f"  Overall: {units:+.2f} units over {roi['roi_count']} picks  →  ROI {roi_pct:+.1f}%")
+        for tier in ALL_TIERS:
+            rt = perf.get("roi_by_tier", {}).get(tier, {})
+            if rt.get("roi_count", 0) > 0:
+                tpct = (rt["units_won"] / rt["roi_count"]) * 100
+                print(f"  {tier.upper():6} {rt['units_won']:+.2f}u over {rt['roi_count']} picks  →  ROI {tpct:+.1f}%")
 
     # Validate schema before writing — crash loudly rather than silently corrupt
     try:
