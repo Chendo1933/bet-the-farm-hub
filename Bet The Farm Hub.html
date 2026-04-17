@@ -3134,13 +3134,27 @@ function getETOffsetHours(utcMs){
 function importGamesFromAPI(apiData,sport){
   // Strip existing entries for this sport — they'll be replaced by live data
   TODAY_GAMES=TODAY_GAMES.filter(g=>g.sport!==sport);
-  // Only show games starting within the next 36 hours (covers today + tomorrow)
+  // Only include games whose commence time falls on TODAY'S ET calendar date.
+  // Previous behavior was a 36h rolling window (today + tomorrow) — that was
+  // convenient for "see what's coming" but bled tomorrow's games into today's
+  // Hot Bets and the logged picks file, causing orphans at grading time.
+  // Filter is per-game DST-aware (computes offset off each game's UTC time)
+  // so the ET day boundary is correct across the March/November transitions.
   const now=Date.now();
-  const window=36*3600*1000;
+  const etOff=getETOffsetHours(now)*3600*1000;
+  const etNowDate=new Date(now+etOff);
+  const todayY=etNowDate.getUTCFullYear();
+  const todayM=etNowDate.getUTCMonth();
+  const todayD=etNowDate.getUTCDate();
   const upcoming=apiData
     .filter(ag=>{
       const t=new Date(ag.commence_time).getTime();
-      return t>=now-3600*1000&&t<=now+window; // allow 1h grace for in-progress
+      // Keep in-progress games (commenced up to 1h ago) so live lines still render
+      if(t<now-3600*1000)return false;
+      const gameEt=new Date(t+getETOffsetHours(t)*3600*1000);
+      return gameEt.getUTCFullYear()===todayY
+          && gameEt.getUTCMonth()===todayM
+          && gameEt.getUTCDate()===todayD;
     })
     .sort((a,b)=>new Date(a.commence_time)-new Date(b.commence_time));
   // 🔍 Log raw API team names to console so we can catch mismatches (e.g. Arizona vs Arizona State)
