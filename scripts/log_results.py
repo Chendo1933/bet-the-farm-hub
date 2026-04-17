@@ -142,7 +142,10 @@ def fetch_completed_games(espn_sport, espn_league, date_str):
 
 def main():
     now_utc = datetime.now(timezone.utc)
-    # Log yesterday's games — run at 03:00 UTC so all US games are finished
+    # Log yesterday's games — scheduled at 08:00 UTC (= 4am ET / 1am PT) so all US
+    # games are final. "Yesterday" in UTC == "yesterday" in ET here (the workflow
+    # only runs once per day well after midnight UTC), so UTC-based date math is
+    # safe and stays consistent with log_picks.py's ET-based filenames.
     target = now_utc - timedelta(days=1)
     date_str  = target.strftime("%Y%m%d")   # ESPN format: 20260322
     date_key  = target.strftime("%Y-%m-%d") # file/JSON key: 2026-03-22

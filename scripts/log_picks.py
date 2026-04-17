@@ -21,6 +21,13 @@ import subprocess
 import sys
 import time
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+# Eastern Time is the reference timezone for game scheduling — MLB/NBA/NHL
+# schedules, and the hub's TODAY_GAMES `date` strings ("Apr 17"), are all ET-based.
+# Using ET for our filename + filter avoids UTC-drift bugs where the logger
+# runs before midnight ET but after midnight UTC and tags picks with the wrong day.
+ET_ZONE = ZoneInfo("America/New_York")
 
 DATA_DIR   = "data/picks"
 SCHED_DIR  = "data/schedules"
@@ -135,10 +142,16 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
 
 def main():
     now_utc  = datetime.now(timezone.utc)
-    date_key = now_utc.strftime("%Y-%m-%d")
+    now_et   = now_utc.astimezone(ET_ZONE)
+    # Filename uses ET date so picks for "today's games in ET" land in the ET-labeled file.
+    date_key = now_et.strftime("%Y-%m-%d")
+    # Hub formats game dates like "Apr 17" (no zero-pad). Build the exact string to
+    # filter against TODAY_GAMES[].date and pick[].date so we drop tomorrow's games.
+    today_label = f"{now_et.strftime('%b')} {now_et.day}"
     api_key  = os.environ.get("ODDS_API_KEY", "").strip() or None
 
-    print(f"[log_picks] {now_utc.strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"[log_picks] {now_utc.strftime('%Y-%m-%d %H:%M UTC')} "
+          f"(ET: {now_et.strftime('%Y-%m-%d %H:%M')} — filtering for '{today_label}')")
     os.makedirs(DATA_DIR, exist_ok=True)
 
     # Start a local HTTP server so the hub can make same-origin API calls
@@ -153,6 +166,16 @@ def main():
         picks, today_games = asyncio.run(scrape_picks(api_key))
     finally:
         server.terminate()
+
+    # The hub's TODAY_GAMES window is 36h (today + tomorrow) so the UI can preview
+    # upcoming slates. For our persistent day-labeled log we only want games on ET-today —
+    # otherwise tomorrow's picks land in today's file and can never be matched against
+    # today's results file.
+    tomorrow_games = [g for g in today_games if g.get("date") != today_label]
+    today_games    = [g for g in today_games if g.get("date") == today_label]
+    if tomorrow_games:
+        print(f"  ℹ  Filtered out {len(tomorrow_games)} game(s) scheduled for future dates "
+              f"(kept only '{today_label}')")
 
     # Save schedule snapshot so log_results.py can pair scores with spreads later
     if today_games:
@@ -175,10 +198,21 @@ def main():
     # Spread/ML picks have atsPick set; O/U picks have betType='ou' + pickedTeam.
     # ATS-trend picks have away="" and atsPick=None — those are ungradeable and excluded.
     # We no longer filter by tier so every scored game gets tracked for calibration.
+    #
+    # Also drop picks whose game is NOT today in ET (the hub's 36h TODAY_GAMES window
+    # bleeds tomorrow's games into today's pick list). Without this filter, tomorrow's
+    # games get saved in today's picks file and then orphan at grading time because
+    # today's results file only has today's games.
+    future_picks = [p for p in picks if p.get("date") and p.get("date") != today_label]
+    if future_picks:
+        print(f"  ℹ  Filtered out {len(future_picks)} pick(s) on future-date games "
+              f"(hub's 36h preview window — not today's slate)")
+
     tracked = [
         p for p in picks
         if p.get("away", "").strip() != ""
         and (p.get("atsPick") is not None or p.get("betType") == "ou")
+        and p.get("date") == today_label
     ]
 
     if not tracked:

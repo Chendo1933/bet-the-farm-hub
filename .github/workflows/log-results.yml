@@ -1,9 +1,12 @@
 name: Nightly Results Logger
 
 # Runs every night after US games finish + can be triggered manually
+# 08:00 UTC chosen so Pacific late-start games (10pm PT first pitch / puck drop)
+# plus extra innings / OT are all final. Previous 03:00 UTC was ~11pm ET /
+# 8pm PT — too early for West Coast slates, which orphaned late-game picks.
 on:
   schedule:
-    - cron: "0 3 * * *"   # 03:00 UTC = ~11:00 PM ET (after West Coast games end)
+    - cron: "0 8 * * *"   # 08:00 UTC = 4:00 AM ET / 1:00 AM PT — all US games final
   workflow_dispatch:        # "Run workflow" button in GitHub Actions tab
 
 permissions:

@@ -1,9 +1,11 @@
 name: Nightly Pick Grader
 
-# Runs at 03:30 UTC (~11:30 PM ET) — after log-results.yml finishes at 03:00
+# Runs 30min after log-results.yml (08:00 UTC) so the day's results file is
+# committed and on-disk before grading kicks off. 08:30 UTC = 4:30 AM ET —
+# graded picks are ready before Cole's morning review.
 on:
   schedule:
-    - cron: "30 3 * * *"   # 03:30 UTC = ~11:30 PM ET
+    - cron: "30 8 * * *"   # 08:30 UTC = 4:30 AM ET / 1:30 AM PT
   workflow_dispatch:
 
 permissions:
