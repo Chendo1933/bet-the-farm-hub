@@ -1,6 +1,6 @@
 {
   "date": "2026-04-18",
-  "logged": "2026-04-18T16:37:23.135440+00:00",
+  "logged": "2026-04-18T17:55:29.230877+00:00",
   "has_odds": true,
   "games": [
     {
@@ -8,11 +8,11 @@
       "home": "Cleveland Cavaliers",
       "away": "Toronto Raptors",
       "date": "Apr 18",
-      "time": "1:10 PM ET",
-      "spread": -8.5,
-      "total": 220.5,
-      "spreadMove": -0.5,
-      "totalMove": 1
+      "time": "1:09 PM ET",
+      "spread": -9.5,
+      "total": 227.5,
+      "spreadMove": -1.5,
+      "totalMove": 8
     },
     {
       "sport": "nba",
@@ -31,9 +31,9 @@
       "away": "Atlanta Hawks",
       "date": "Apr 18",
       "time": "6:10 PM ET",
-      "spread": -5.5,
+      "spread": -6.5,
       "total": 218.5,
-      "spreadMove": 0,
+      "spreadMove": -1,
       "totalMove": 2
     },
     {
@@ -87,9 +87,9 @@
       "date": "Apr 18",
       "time": "1:36 PM ET",
       "spread": -1.5,
-      "total": 8,
+      "total": 6.5,
       "spreadMove": 0,
-      "totalMove": 0
+      "totalMove": -1.5
     },
     {
       "sport": "mlb",
@@ -115,6 +115,17 @@
     },
     {
       "sport": "mlb",
+      "home": "Pittsburgh Pirates",
+      "away": "Tampa Bay Rays",
+      "date": "Apr 18",
+      "time": "3:31 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
       "home": "Athletics",
       "away": "Chicago White Sox",
       "date": "Apr 18",
@@ -123,17 +134,6 @@
       "total": 9,
       "spreadMove": 0,
       "totalMove": -0.5
-    },
-    {
-      "sport": "mlb",
-      "home": "Pittsburgh Pirates",
-      "away": "Tampa Bay Rays",
-      "date": "Apr 18",
-      "time": "4:06 PM ET",
-      "spread": -1.5,
-      "total": 7,
-      "spreadMove": 0,
-      "totalMove": 0
     },
     {
       "sport": "mlb",

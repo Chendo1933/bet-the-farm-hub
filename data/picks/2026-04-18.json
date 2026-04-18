@@ -1,6 +1,6 @@
 {
   "date": "2026-04-18",
-  "logged": "2026-04-18T16:37:23.135440+00:00",
+  "logged": "2026-04-18T17:55:29.230877+00:00",
   "has_live_odds": true,
   "picks": [
     {
@@ -9,31 +9,15 @@
       "home": "Cleveland Cavaliers",
       "away": "Toronto Raptors",
       "atsPick": "home",
-      "spread": -8.5,
+      "spread": -9.5,
       "total": null,
       "pickedTeam": "Cleveland Cavaliers",
-      "pickLabel": "Cleveland Cavaliers -8.5",
+      "pickLabel": "Cleveland Cavaliers -9.5",
       "score100": 55,
-      "odds": -115,
+      "odds": -120,
       "tier": "lean",
       "date": "Apr 18",
-      "time": "1:10 PM ET"
-    },
-    {
-      "sport": "NBA",
-      "betType": "ou",
-      "home": "Cleveland Cavaliers",
-      "away": "Toronto Raptors",
-      "atsPick": null,
-      "spread": null,
-      "total": 220.5,
-      "pickedTeam": "Over",
-      "pickLabel": "Over 220.5",
-      "score100": 65,
-      "odds": -110,
-      "tier": "strong",
-      "date": "Apr 18",
-      "time": "1:10 PM ET"
+      "time": "1:09 PM ET"
     },
     {
       "sport": "NBA",
@@ -73,12 +57,12 @@
       "home": "New York Knicks",
       "away": "Atlanta Hawks",
       "atsPick": "home",
-      "spread": -5.5,
+      "spread": -6.5,
       "total": null,
       "pickedTeam": "New York Knicks",
-      "pickLabel": "New York Knicks -5.5",
+      "pickLabel": "New York Knicks -6.5",
       "score100": 59,
-      "odds": -118,
+      "odds": -108,
       "tier": "good",
       "date": "Apr 18",
       "time": "6:10 PM ET"
@@ -174,7 +158,7 @@
       "pickedTeam": "Over",
       "pickLabel": "Over 6.5",
       "score100": 59,
-      "odds": 110,
+      "odds": 114,
       "tier": "good",
       "date": "Apr 18",
       "time": "3:20 PM ET"
@@ -266,11 +250,11 @@
       "away": "Kansas City Royals",
       "atsPick": null,
       "spread": null,
-      "total": 8,
+      "total": 6.5,
       "pickedTeam": "Under",
-      "pickLabel": "Under 8",
+      "pickLabel": "Under 6.5",
       "score100": 61,
-      "odds": -108,
+      "odds": 110,
       "tier": "good",
       "date": "Apr 18",
       "time": "1:36 PM ET"
@@ -286,7 +270,7 @@
       "pickedTeam": "Minnesota Twins",
       "pickLabel": "Minnesota Twins -1.5",
       "score100": 60,
-      "odds": 153,
+      "odds": 159,
       "tier": "good",
       "date": "Apr 18",
       "time": "2:11 PM ET"
@@ -300,9 +284,9 @@
       "spread": null,
       "total": null,
       "pickedTeam": "Chicago Cubs",
-      "pickLabel": "Chicago Cubs ML (-120)",
-      "score100": 59,
-      "odds": -120,
+      "pickLabel": "Chicago Cubs ML (-118)",
+      "score100": 61,
+      "odds": -118,
       "tier": "good",
       "date": "Apr 18",
       "time": "2:21 PM ET"
@@ -334,10 +318,10 @@
       "pickedTeam": "Pittsburgh Pirates",
       "pickLabel": "Pittsburgh Pirates -1.5",
       "score100": 58,
-      "odds": 139,
+      "odds": 137,
       "tier": "good",
       "date": "Apr 18",
-      "time": "4:06 PM ET"
+      "time": "3:31 PM ET"
     },
     {
       "sport": "MLB",
@@ -346,30 +330,14 @@
       "away": "Tampa Bay Rays",
       "atsPick": null,
       "spread": null,
-      "total": 7,
+      "total": 7.5,
       "pickedTeam": "Over",
-      "pickLabel": "Over 7",
-      "score100": 60,
-      "odds": -122,
-      "tier": "good",
+      "pickLabel": "Over 7.5",
+      "score100": 62,
+      "odds": -102,
+      "tier": "strong",
       "date": "Apr 18",
-      "time": "4:06 PM ET"
-    },
-    {
-      "sport": "MLB",
-      "betType": "ml",
-      "home": "Boston Red Sox",
-      "away": "Detroit Tigers",
-      "atsPick": "home",
-      "spread": null,
-      "total": null,
-      "pickedTeam": "Boston Red Sox",
-      "pickLabel": "Boston Red Sox ML (+129)",
-      "score100": 52,
-      "odds": 129,
-      "tier": "lean",
-      "date": "Apr 18",
-      "time": "4:11 PM ET"
+      "time": "3:31 PM ET"
     },
     {
       "sport": "MLB",
@@ -398,7 +366,7 @@
       "pickedTeam": "Over",
       "pickLabel": "Over 7.5",
       "score100": 62,
-      "odds": -102,
+      "odds": -108,
       "tier": "strong",
       "date": "Apr 18",
       "time": "4:11 PM ET"
@@ -510,7 +478,7 @@
       "pickedTeam": "Atlanta Braves",
       "pickLabel": "Atlanta Braves -1.5",
       "score100": 64,
-      "odds": 168,
+      "odds": 169,
       "tier": "strong",
       "date": "Apr 18",
       "time": "7:16 PM ET"
@@ -676,5 +644,5 @@
       "time": "9:39 PM ET"
     }
   ],
-  "all_picks_count": 42
+  "all_picks_count": 40
 }
