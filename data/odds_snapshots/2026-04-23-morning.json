@@ -1,0 +1,238 @@
+{
+  "date": "2026-04-23",
+  "snapshot_time": "2026-04-23T11:54:51.941051+00:00",
+  "type": "morning",
+  "games": {
+    "nba": [
+      {
+        "home": "Atlanta Hawks",
+        "away": "New York Knicks",
+        "commence": "2026-04-23T23:10:00Z",
+        "spread": -1.5,
+        "total": 216.5,
+        "ml_home": -110,
+        "ml_away": -110
+      },
+      {
+        "home": "Toronto Raptors",
+        "away": "Cleveland Cavaliers",
+        "commence": "2026-04-24T00:10:00Z",
+        "spread": 2.5,
+        "total": 219.5,
+        "ml_home": 130,
+        "ml_away": -155
+      },
+      {
+        "home": "Minnesota Timberwolves",
+        "away": "Denver Nuggets",
+        "commence": "2026-04-24T01:30:00Z",
+        "spread": 1.5,
+        "total": 234.5,
+        "ml_home": 110,
+        "ml_away": -130
+      },
+      {
+        "home": "Philadelphia 76ers",
+        "away": "Boston Celtics",
+        "commence": "2026-04-24T23:10:00Z",
+        "spread": 7.5,
+        "total": 215.5,
+        "ml_home": 240,
+        "ml_away": -298
+      },
+      {
+        "home": "Houston Rockets",
+        "away": "Los Angeles Lakers",
+        "commence": "2026-04-25T00:10:00Z",
+        "spread": -9.5,
+        "total": 205.5,
+        "ml_home": -395,
+        "ml_away": 310
+      },
+      {
+        "home": "Portland Trail Blazers",
+        "away": "San Antonio Spurs",
+        "commence": "2026-04-25T02:40:00Z",
+        "spread": 1.5,
+        "total": 220.5,
+        "ml_home": 110,
+        "ml_away": -130
+      },
+      {
+        "home": "Orlando Magic",
+        "away": "Detroit Pistons",
+        "commence": "2026-04-25T17:10:00Z",
+        "spread": 2.5,
+        "total": 213.5,
+        "ml_home": 114,
+        "ml_away": -135
+      },
+      {
+        "home": "Phoenix Suns",
+        "away": "Oklahoma City Thunder",
+        "commence": "2026-04-25T19:30:00Z",
+        "spread": 9.5,
+        "total": 214.5,
+        "ml_home": 330,
+        "ml_away": -420
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Boston Bruins",
+        "away": "Buffalo Sabres",
+        "commence": "2026-04-23T23:10:08Z",
+        "spread": -1.5,
+        "total": 6.5,
+        "ml_home": -110,
+        "ml_away": -110
+      },
+      {
+        "home": "Ottawa Senators",
+        "away": "Carolina Hurricanes",
+        "commence": "2026-04-23T23:40:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -122,
+        "ml_away": 102
+      },
+      {
+        "home": "Los Angeles Kings",
+        "away": "Colorado Avalanche",
+        "commence": "2026-04-24T02:10:00Z",
+        "spread": 1.5,
+        "total": 5.5,
+        "ml_home": 134,
+        "ml_away": -162
+      },
+      {
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Tampa Bay Lightning",
+        "commence": "2026-04-24T23:10:00Z",
+        "spread": 1.5,
+        "total": 5.5,
+        "ml_home": 102,
+        "ml_away": -122
+      },
+      {
+        "home": "Utah Mammoth",
+        "away": "Vegas Golden Knights",
+        "commence": "2026-04-25T01:40:00Z",
+        "spread": 1.5,
+        "total": 5.5,
+        "ml_home": -108,
+        "ml_away": -112
+      },
+      {
+        "home": "Anaheim Ducks",
+        "away": "Edmonton Oilers",
+        "commence": "2026-04-25T02:10:00Z",
+        "spread": 1.5,
+        "total": 6.5,
+        "ml_home": 110,
+        "ml_away": -130
+      },
+      {
+        "home": "Minnesota Wild",
+        "away": "Dallas Stars",
+        "commence": "2026-04-25T21:40:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -135,
+        "ml_away": 114
+      },
+      {
+        "home": "Philadelphia Flyers",
+        "away": "Pittsburgh Penguins",
+        "commence": "2026-04-26T00:00:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -114,
+        "ml_away": -105
+      }
+    ],
+    "mlb": [
+      {
+        "home": "Washington Nationals",
+        "away": "Atlanta Braves",
+        "commence": "2026-04-23T17:06:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": 112,
+        "ml_away": -132
+      },
+      {
+        "home": "Detroit Tigers",
+        "away": "Milwaukee Brewers",
+        "commence": "2026-04-23T17:11:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -230,
+        "ml_away": 190
+      },
+      {
+        "home": "Chicago Cubs",
+        "away": "Philadelphia Phillies",
+        "commence": "2026-04-23T18:21:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": 106,
+        "ml_away": -124
+      },
+      {
+        "home": "Colorado Rockies",
+        "away": "San Diego Padres",
+        "commence": "2026-04-23T19:11:00Z",
+        "spread": 1.5,
+        "total": 11.0,
+        "ml_home": 129,
+        "ml_away": -156
+      },
+      {
+        "home": "Arizona Diamondbacks",
+        "away": "Chicago White Sox",
+        "commence": "2026-04-23T19:41:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -156,
+        "ml_away": 132
+      },
+      {
+        "home": "San Francisco Giants",
+        "away": "Los Angeles Dodgers",
+        "commence": "2026-04-23T19:46:00Z",
+        "spread": 1.5,
+        "total": 7.0,
+        "ml_home": 130,
+        "ml_away": -154
+      },
+      {
+        "home": "Boston Red Sox",
+        "away": "New York Yankees",
+        "commence": "2026-04-23T22:11:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": 130,
+        "ml_away": -154
+      },
+      {
+        "home": "New York Mets",
+        "away": "Minnesota Twins",
+        "commence": "2026-04-23T23:11:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 100,
+        "ml_away": -118
+      },
+      {
+        "home": "Texas Rangers",
+        "away": "Pittsburgh Pirates",
+        "commence": "2026-04-24T00:06:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -166,
+        "ml_away": 140
+      }
+    ]
+  }
+}
