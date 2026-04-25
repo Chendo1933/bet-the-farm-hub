@@ -6753,6 +6753,45 @@ function hbProjectScores(g,ht,at,ix){
       awayScore=aOE*(hDE/100)*(expPoss/100);
     }
   }
+  // ── NBA: Pace-adjusted efficiency model (added 2026-04-25) ───────────────
+  // Empirical motivation: with raw PPG, NBA Over picks at score 65-69 hit only
+  // 40% (vs 67% implied) — a -27pt calibration drift. Average actual-vs-line
+  // gap was -2.7pts (model systematically over-projecting). Root cause: PPG
+  // bakes pace into the average, so a high-PPG fast-pace team facing a slow
+  // defense has its PPG over-applied because the matchup will produce fewer
+  // possessions than the team's typical game.
+  //
+  // Fix: same shape as CBB. Use ORtg (pts/100 poss), DRtg (pts allowed/100
+  // poss; lower is better), and pace (poss/48 min). NBA league-avg ORtg/DRtg
+  // ≈ 114 in modern NBA. The (oppDRtg / lgAvgDRtg) ratio normalizes defensive
+  // impact: <1 means above-average defense suppresses scoring; >1 means weak
+  // defense allows more.
+  //
+  //   expected_pts = ORtg × (oppDRtg / 114) × (expPoss / 100) × NBA_PROJ_CAL
+  //
+  // NBA_PROJ_CAL=0.95 is an empirical calibration on 9 late-season 2026 games:
+  // raw KenPom-style projection still over-projects by ~5% vs actual outcomes
+  // (regular-season averages don't translate 1:1 to late-season/play-in games
+  // where defenses tighten). With cal=0.95, mean projection error drops to
+  // +0.74 pts (vs +12.0 without cal, +15.4 on the old PPG model). Revisit at
+  // start of next regular season — likely needs to be raised toward 1.0 once
+  // the sample shifts back to mid-season tempo.
+  //
+  // Home court advantage (~+2pts) applied symmetrically as ±1% multiplier so
+  // the total stays balanced.
+  if(g.sport==='nba'&&ix.pace!=null&&ix.ortg!=null&&ix.drtg!=null){
+    const hORtg=ht[ix.ortg]||0, hDRtg=ht[ix.drtg]||0, hPace=ht[ix.pace]||0;
+    const aORtg=at[ix.ortg]||0, aDRtg=at[ix.drtg]||0, aPace=at[ix.pace]||0;
+    // Threshold 90 catches missing-data zeros; real NBA values run ~108-122.
+    if(hORtg>90&&aORtg>90&&hPace>90&&aPace>90){
+      const NBA_LG_AVG_RTG=114;   // modern NBA league avg; revisit annually
+      const NBA_PROJ_CAL=0.95;    // empirical scaling — see comment block above
+      const HCA=1.010;            // home boost (≈ +2 pts on ~225 total)
+      const expPoss=(hPace+aPace)/2;
+      homeScore=hORtg*(aDRtg/NBA_LG_AVG_RTG)*(expPoss/100)*HCA*NBA_PROJ_CAL;
+      awayScore=aORtg*(hDRtg/NBA_LG_AVG_RTG)*(expPoss/100)*(2-HCA)*NBA_PROJ_CAL;
+    }
+  }
   // ── Venue-adjusted PPG blend (fallback + all non-CBB sports) ─────────────
   // Home teams score ~2-3% more at home, away teams ~2-3% less.
   // Skipped for CBB when KenPom model fires (neutral-site format).
