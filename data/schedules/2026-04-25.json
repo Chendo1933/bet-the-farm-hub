@@ -1,6 +1,6 @@
 {
   "date": "2026-04-25",
-  "logged": "2026-04-25T16:08:34.619749+00:00",
+  "logged": "2026-04-25T16:24:26.892622+00:00",
   "has_odds": true,
   "games": [
     {
@@ -86,10 +86,10 @@
       "away": "Boston Red Sox",
       "date": "Apr 25",
       "time": "12:06 PM ET",
-      "spread": -1.5,
-      "total": 7.5,
-      "spreadMove": -3,
-      "totalMove": 0
+      "spread": 1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": -1
     },
     {
       "sport": "mlb",
@@ -175,9 +175,9 @@
       "date": "Apr 25",
       "time": "7:11 PM ET",
       "spread": 1.5,
-      "total": 9,
+      "total": 9.5,
       "spreadMove": 0,
-      "totalMove": 0
+      "totalMove": 0.5
     },
     {
       "sport": "mlb",

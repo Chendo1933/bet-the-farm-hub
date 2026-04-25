@@ -1,6 +1,6 @@
 {
   "date": "2026-04-25",
-  "logged": "2026-04-25T16:08:34.619749+00:00",
+  "logged": "2026-04-25T16:24:26.892622+00:00",
   "has_live_odds": true,
   "picks": [
     {
@@ -181,6 +181,22 @@
     },
     {
       "sport": "MLB",
+      "betType": "ou",
+      "home": "Baltimore Orioles",
+      "away": "Boston Red Sox",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 65,
+      "odds": -113,
+      "tier": "strong",
+      "date": "Apr 25",
+      "time": "12:06 PM ET"
+    },
+    {
+      "sport": "MLB",
       "betType": "ml",
       "home": "Toronto Blue Jays",
       "away": "Cleveland Guardians",
@@ -326,6 +342,22 @@
     {
       "sport": "MLB",
       "betType": "ou",
+      "home": "Houston Astros",
+      "away": "New York Yankees",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9.5",
+      "score100": 60,
+      "odds": 101,
+      "tier": "good",
+      "date": "Apr 25",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
       "home": "Kansas City Royals",
       "away": "Los Angeles Angels",
       "atsPick": null,
@@ -404,5 +436,5 @@
       "time": "7:16 PM ET"
     }
   ],
-  "all_picks_count": 25
+  "all_picks_count": 27
 }
