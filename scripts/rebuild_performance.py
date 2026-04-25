@@ -332,6 +332,25 @@ def main():
         picks   = picks_data.get("picks", [])
         sports  = results_data.get("sports", {})
 
+        # Dedupe within the day. The hub had a bug (fixed in commit d3446b6 on 2026-04-19,
+        # the TODAY_GAMES 36h→ET-today narrowing) that emitted the same pick twice for some
+        # MLB games when the 36h window included a tomorrow-game with same matchup. Pre-fix
+        # daily files (4/10–4/15) carry these dupes. Match by (sport, home, away, pickLabel,
+        # atsPick) so we keep both sides of a real symmetric pick (e.g. ML vs Spread vs O/U
+        # on the same game) but drop exact duplicates.
+        seen = set()
+        deduped = []
+        for p in picks:
+            key = (p.get("sport",""), p.get("home",""), p.get("away",""),
+                   p.get("pickLabel",""), p.get("atsPick"), p.get("betType"))
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(p)
+        if len(deduped) != len(picks):
+            print(f"  · {date_key}: removed {len(picks)-len(deduped)} duplicate(s)")
+        picks = deduped
+
         date_graded = 0
         for pick in picks:
             result = find_result(pick, sports)

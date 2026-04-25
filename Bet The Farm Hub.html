@@ -8069,7 +8069,7 @@ function hbRender(){
   if(!wrap)return;
   let picks=hbGeneratePicks();
   // ── Calibration filters (added 2026-04-25) ───────────────────────────────
-  // Driven by data/performance.json analysis on 256 graded picks. Two leaks:
+  // Driven by data/performance.json analysis on 489 graded picks. Three leaks:
   //
   //   (1) Sub-60 score noise — the 56-58 band hits only 39.4% (vs 57% implied,
   //       -17.6pt drift) and 50-55 hits 44.2% (vs 52.5%, -8.3pt). Picks 60+ are
@@ -8081,9 +8081,18 @@ function hbRender(){
   //       fav losses, 17 were "model picked the wrong team outright" — not bad
   //       cover variance, just wrong predictions. Suppress fav side, keep dog.
   //
-  // Both filters intentionally run BEFORE BTF_PICKS export so the GitHub Actions
-  // logger (log_picks.py) only saves picks the model is calibrated on.
-  // Revisit if a future calibration audit shows the leaks have stabilized.
+  //   (3) Coors Field MLB picks — Colorado Rockies home games destroy the model.
+  //       The Elite tier (68-70 score) has 3-of-3 Coors losses across LAD@COL
+  //       Unders + a Dodgers ML -308 outright loss, dragging Elite-tier overall
+  //       from a calibrated ~62% down to 41.7%. Coors' altitude makes runs
+  //       bimodal: scores blow up (overs hit) or get suppressed by lineup
+  //       fatigue, defying the model's totals projection. Until we add a
+  //       proper park-factor adjustment to the MLB scoring, suppress all MLB
+  //       picks where COL is home.
+  //
+  // All filters run BEFORE BTF_PICKS export so the GitHub Actions logger only
+  // saves picks the model is calibrated on. Revisit if a future calibration
+  // audit shows the leaks have stabilized.
   const MIN_DISPLAY_SCORE = 60;
   picks = picks.filter(p => {
     const s = p.score100 || Math.round((p.score||0)*100);
@@ -8094,6 +8103,7 @@ function hbRender(){
                         (p.atsPick === 'away' && !homeIsFav);
       if (pickedFav) return false;
     }
+    if (p.sport === 'MLB' && p.home === 'Colorado Rockies') return false;
     return true;
   });
   // ── Machine-readable export for automated pick tracker ───────────────────
