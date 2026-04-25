@@ -8068,6 +8068,34 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
+  // ── Calibration filters (added 2026-04-25) ───────────────────────────────
+  // Driven by data/performance.json analysis on 256 graded picks. Two leaks:
+  //
+  //   (1) Sub-60 score noise — the 56-58 band hits only 39.4% (vs 57% implied,
+  //       -17.6pt drift) and 50-55 hits 44.2% (vs 52.5%, -8.3pt). Picks 60+ are
+  //       break-even (52.7%) or better; 62+ wins outright (59.5%+).
+  //
+  //   (2) MLB FAV -1.5 leak — picking the favorite at -1.5 hits only 32.3%
+  //       overall (10-21) and 12.5% (1-7) at score≥60, while picking the
+  //       underdog at +1.5 hits 64.3% overall and 70% at score≥60. Of the 21
+  //       fav losses, 17 were "model picked the wrong team outright" — not bad
+  //       cover variance, just wrong predictions. Suppress fav side, keep dog.
+  //
+  // Both filters intentionally run BEFORE BTF_PICKS export so the GitHub Actions
+  // logger (log_picks.py) only saves picks the model is calibrated on.
+  // Revisit if a future calibration audit shows the leaks have stabilized.
+  const MIN_DISPLAY_SCORE = 60;
+  picks = picks.filter(p => {
+    const s = p.score100 || Math.round((p.score||0)*100);
+    if (s < MIN_DISPLAY_SCORE) return false;
+    if (p.sport === 'MLB' && p.betType === 'spread') {
+      const homeIsFav = (typeof p.spread === 'number') && p.spread < 0;
+      const pickedFav = (p.atsPick === 'home' && homeIsFav) ||
+                        (p.atsPick === 'away' && !homeIsFav);
+      if (pickedFav) return false;
+    }
+    return true;
+  });
   // ── Machine-readable export for automated pick tracker ───────────────────
   // log_picks.py (GitHub Action) reads window.BTF_PICKS via Playwright to log
   // today's Elite/Strong picks for performance grading after games finish.

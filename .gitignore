@@ -4,6 +4,7 @@
 # Backup files
 *.backup
 *.backup.html
+*.bak.*
 
 # Eval/dev artifacts
 skill-eval-review.html
