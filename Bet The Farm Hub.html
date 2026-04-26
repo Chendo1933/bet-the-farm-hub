@@ -8107,6 +8107,62 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
+  // ── Per-bet-type calibration (added 2026-04-25) ──────────────────────────
+  // Empirical analysis on 489 graded picks revealed the score→hit-rate mapping
+  // diverges sharply by bet type at the high end:
+  //   SPREAD: at 60-64 hits 51.7%, at 65-69 hits 71.4%
+  //   ML:     at 60-64 hits 61.3%, at 65-69 hits 93.3% (under-priced!)
+  //   OU:     at 60-64 hits 54.5%, at 65-69 hits 40.7% (over-priced!)
+  //
+  // The hub previously treated all bet types identically (raw score → tier),
+  // which under-rewarded ML signal and over-trusted OU signal. This block
+  // applies piecewise-linear calibration tables that map raw scores to
+  // calibrated scores reflecting actual hit rates.
+  //
+  // Conservative anchors used (50% empirical correction, not full):
+  //   - Sample sizes per cell are 15-50 picks — wide error bars
+  //   - The NBA pace-adjusted projection (added same day) reduces OU
+  //     overconfidence at the source, so aggressive OU shrinkage may
+  //     over-correct once the post-fix sample accumulates
+  //
+  // Revisit anchors after 2-3 weeks of post-fix data with a fresh audit.
+  // Original raw scores preserved in p.rawScore100 for diagnostics.
+  const CAL_ANCHORS = {
+    // Format: [raw, calibrated]. Linear interpolation between anchors;
+    // linear extrapolation beyond endpoints.
+    spread: [[55, 50], [60, 55], [62, 58], [65, 65], [70, 72], [75, 78]],
+    ml:     [[55, 55], [60, 60], [62, 62], [65, 75], [70, 85], [75, 92]],
+    ou:     [[55, 53], [60, 58], [62, 60], [65, 62], [70, 63], [75, 64]],
+  };
+  function calibrateScore(raw, betType) {
+    const anchors = CAL_ANCHORS[betType] || CAL_ANCHORS.spread;
+    // Below first anchor — extrapolate using first segment's slope
+    if (raw <= anchors[0][0]) {
+      const [x0, y0] = anchors[0], [x1, y1] = anchors[1];
+      return y0 + (raw - x0) * (y1 - y0) / (x1 - x0);
+    }
+    // Above last anchor — extrapolate using last segment's slope
+    if (raw >= anchors[anchors.length - 1][0]) {
+      const [x0, y0] = anchors[anchors.length - 2];
+      const [x1, y1] = anchors[anchors.length - 1];
+      return y1 + (raw - x1) * (y1 - y0) / (x1 - x0);
+    }
+    // Find segment and interpolate
+    for (let i = 0; i < anchors.length - 1; i++) {
+      const [x0, y0] = anchors[i], [x1, y1] = anchors[i + 1];
+      if (raw >= x0 && raw <= x1) {
+        return y0 + (raw - x0) * (y1 - y0) / (x1 - x0);
+      }
+    }
+    return raw;
+  }
+  picks.forEach(p => {
+    const raw = p.score100 || Math.round((p.score||0)*100);
+    p.rawScore100 = raw;
+    const cal = Math.round(calibrateScore(raw, p.betType || 'spread'));
+    p.score100 = Math.max(0, Math.min(100, cal));
+    p.score = p.score100 / 100;
+  });
   // ── Calibration filters (added 2026-04-25) ───────────────────────────────
   // Driven by data/performance.json analysis on 489 graded picks. Three leaks:
   //
@@ -8156,6 +8212,9 @@ function hbRender(){
       total:typeof p.total==='number'?p.total:null,
       pickedTeam:p.pickedTeam||null,
       pickLabel:p.pickLabel,score100:s,
+      // rawScore100 = pre-calibration raw model score (see CAL_ANCHORS above).
+      // Lets us compare raw vs calibrated hit rates in future audits.
+      rawScore100:typeof p.rawScore100==='number'?p.rawScore100:s,
       odds:typeof p.odds==='number'?p.odds:null,
       tier:s>=68?'elite':s>=62?'strong':s>=57?'good':'lean',
       date:p.date||'',time:p.time||''};
