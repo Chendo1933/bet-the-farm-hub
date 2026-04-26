@@ -6691,6 +6691,9 @@ function init(){
   setTimeout(()=>autoSyncOnLoad(),800);
   // Auto-pull live injury reports from ESPN (non-blocking, ~2s delay to let page render first)
   setTimeout(()=>autoFetchInjuries(),2000);
+  // Load morning odds snapshot for line-movement scoring (F12). Must fire
+  // BEFORE any refreshAllOdds() call so importGamesFromAPI sees the data.
+  setTimeout(()=>loadMorningOdds(),50);
   // Load exotic-venue config (Mexico City series, London games, Field of Dreams,
   // outdoor NHL games, etc.) — these break park-factor assumptions. Loaded EARLY
   // (100ms) so it's ready before any hbRender call from the Hot Bets tab.
@@ -6701,6 +6704,45 @@ function init(){
   setTimeout(()=>hbLoadLockedSlate(),300);
 }
 window.addEventListener('DOMContentLoaded',init);
+
+// ── Morning odds snapshot (line-movement signal F12) ─────────────────────────
+// Fetches data/odds_snapshots/{ET-today}-morning.json (written by 7 AM ET cron
+// in daily-update.yml via scripts/snapshot_odds.py) and sets it on
+// window.BTF_MORNING_ODDS. The hub's importGamesFromAPI() reads this when
+// building TODAY_GAMES and computes spreadMove/totalMove = current − morning.
+//
+// hbScoreSpread() then fires F12 (~line 7895): if the line moved toward our
+// pick by ≥0.5pt, treat as sharp-money confirmation (boost); if it moved
+// against, treat as market-correcting-against-us (penalty). Weight 0.08.
+//
+// Why this matters now: the snapshot has been collected daily since 4/12 but
+// the live hub never loaded it — only log_picks.py was injecting it during
+// the morning logger run. So F12 was firing for the GitHub Actions logger
+// but NOT for any picks rendered when you opened the hub yourself. This
+// closes that gap so live cards see the same line-movement signal.
+//
+// Loaded EARLY (50ms) so it's set before the first refreshAllOdds() call
+// (which builds TODAY_GAMES) reads window.BTF_MORNING_ODDS.
+async function loadMorningOdds(){
+  try{
+    const nowMs=Date.now();
+    const etOff=getETOffsetHours(nowMs)*3600*1000;
+    const etNow=new Date(nowMs+etOff);
+    const y=etNow.getUTCFullYear();
+    const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+    const d=String(etNow.getUTCDate()).padStart(2,'0');
+    const dateKey=`${y}-${m}-${d}`;
+    const r=await fetch(`data/odds_snapshots/${dateKey}-morning.json`);
+    if(!r.ok)return; // no snapshot yet today (will exist after 7 AM ET cron)
+    const data=await r.json();
+    if(!data||!data.games)return;
+    window.BTF_MORNING_ODDS=data;
+    const sportCounts=Object.entries(data.games).map(([s,g])=>`${s}:${g.length}`).join(' ');
+    console.log(`[BTF] Morning odds snapshot loaded (${data.snapshot_time||'?'}) — ${sportCounts}`);
+  }catch(e){
+    console.warn('[BTF] morning odds fetch failed:',e.message);
+  }
+}
 
 // ── Exotic venue detection ────────────────────────────────────────────────────
 // Reads data/exotic_venues.json — a static list of MLB/NFL/NBA/NHL games
