@@ -374,7 +374,12 @@ def main():
         # For legacy picks without odds on ML bets, skip ROI update (would be misleading at -110).
         has_odds_or_standard = (pick_odds is not None) or (bet_type in ("spread", "ou"))
 
-        # Append to pick history log
+        # Append to pick history log. Carry through:
+        #   - rawScore100: pre-calibration model score (added 2026-04-25).
+        #   - factors: array of {t,l} factor descriptors captured at log time.
+        # Both are forward-looking — older picks won't have these fields, but
+        # going forward they'll be present and let us regress outcomes against
+        # specific factors that fired.
         history["picks"].append({
             "date": date_key,
             "sport": pick.get("sport", ""),
@@ -386,12 +391,14 @@ def main():
             "spread": pick.get("spread"),
             "total": pick.get("total"),
             "score100": pick.get("score100"),
+            "rawScore100": pick.get("rawScore100"),
             "odds": pick_odds,
             "outcome": outcome,
             "margin": round(margin, 1) if margin is not None else None,
             "units": round(units, 4) if has_odds_or_standard else None,
             "homeScore": result.get("home_score"),
             "awayScore": result.get("away_score"),
+            "factors": pick.get("factors", []),
         })
 
         # Accumulate margins and Brier scores (skip pushes — no signal)

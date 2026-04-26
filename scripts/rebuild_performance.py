@@ -182,6 +182,10 @@ def grade_one_pick(pick: dict, result: dict, date_key: str) -> tuple[dict | None
     units = american_odds_to_units(pick_odds, outcome)
     has_odds_or_standard = (pick_odds is not None) or (bet_type in ("spread", "ou"))
 
+    # rawScore100 + factors are forward-looking fields (added 2026-04-25).
+    # They'll be empty/missing on pre-existing daily files but populated on
+    # all picks logged after that. Preserved here so future audits can compare
+    # raw-vs-calibrated hit rates and regress outcomes against fired factors.
     history_entry = {
         "date":      date_key,
         "sport":     pick.get("sport", ""),
@@ -193,12 +197,14 @@ def grade_one_pick(pick: dict, result: dict, date_key: str) -> tuple[dict | None
         "spread":    pick.get("spread"),
         "total":     pick.get("total"),
         "score100":  pick.get("score100"),
+        "rawScore100": pick.get("rawScore100"),
         "odds":      pick_odds,
         "outcome":   outcome,
         "margin":    round(margin, 1) if margin is not None else None,
         "units":     round(units, 4) if has_odds_or_standard else None,
         "homeScore": result.get("home_score"),
         "awayScore": result.get("away_score"),
+        "factors":   pick.get("factors", []),
     }
     return history_entry, {
         "outcome": outcome,

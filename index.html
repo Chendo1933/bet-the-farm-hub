@@ -8200,32 +8200,40 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
-  // ── Per-bet-type calibration (added 2026-04-25) ──────────────────────────
-  // Empirical analysis on 489 graded picks revealed the score→hit-rate mapping
-  // diverges sharply by bet type at the high end:
-  //   SPREAD: at 60-64 hits 51.7%, at 65-69 hits 71.4%
-  //   ML:     at 60-64 hits 61.3%, at 65-69 hits 93.3% (under-priced!)
-  //   OU:     at 60-64 hits 54.5%, at 65-69 hits 40.7% (over-priced!)
+  // ── Per-bet-type calibration (added 2026-04-25, revisited same day) ─────
+  // Empirical analysis on 489 graded picks (then 241 post-filter) showed
+  // score→hit-rate diverges sharply by bet type. Initial conservative anchors
+  // were revised after running the audit on the cleaned post-filter dataset:
+  //
+  //   SPREAD: 60-61 hits 36.4% (n=11), 62-63 hits 70% (n=10), 64-65 hits 65% (n=23)
+  //   ML:     60-61 hits 58.9% (n=56), 64-65 hits 81.8% (n=11), 66-67 hits 90.9% (n=11)
+  //   OU:     60-61 hits 61.9% (n=21), 62-65 hits 36-42%, 66-67 hits 53.3% (n=15)
   //
   // The hub previously treated all bet types identically (raw score → tier),
   // which under-rewarded ML signal and over-trusted OU signal. This block
-  // applies piecewise-linear calibration tables that map raw scores to
-  // calibrated scores reflecting actual hit rates.
+  // applies piecewise-linear calibration that maps raw scores to calibrated
+  // scores reflecting actual hit rates.
   //
-  // Conservative anchors used (50% empirical correction, not full):
-  //   - Sample sizes per cell are 15-50 picks — wide error bars
-  //   - The NBA pace-adjusted projection (added same day) reduces OU
-  //     overconfidence at the source, so aggressive OU shrinkage may
-  //     over-correct once the post-fix sample accumulates
+  // Key empirical findings driving the v2 anchors:
+  //   (1) ML at 65+ severely under-priced → boosted (raw 65→80, raw 70→92)
+  //   (2) OU at 62-67 anti-predictive (37-53% hit rate) → calibrated below
+  //       filter so they drop out of the slate
+  //   (3) SPREAD 60-61 hits 36% → calibrated below filter
   //
-  // Revisit anchors after 2-3 weeks of post-fix data with a fresh audit.
+  // Caveats:
+  //   - Per-cell N is 10-25 picks → meaningful but wide error bars
+  //   - Same-day NBA pace-adjusted projection reduces OU overconfidence at
+  //     the source, so OU calibration may need to soften once post-fix
+  //     sample accumulates
+  //   - Re-run the audit after 2-3 weeks of post-fix data
+  //
   // Original raw scores preserved in p.rawScore100 for diagnostics.
   const CAL_ANCHORS = {
     // Format: [raw, calibrated]. Linear interpolation between anchors;
     // linear extrapolation beyond endpoints.
-    spread: [[55, 50], [60, 55], [62, 58], [65, 65], [70, 72], [75, 78]],
-    ml:     [[55, 55], [60, 60], [62, 62], [65, 75], [70, 85], [75, 92]],
-    ou:     [[55, 53], [60, 58], [62, 60], [65, 62], [70, 63], [75, 64]],
+    spread: [[55, 47], [60, 52], [62, 62], [65, 65], [70, 72], [75, 78]],
+    ml:     [[55, 55], [60, 60], [62, 65], [65, 80], [70, 92], [75, 96]],
+    ou:     [[55, 53], [60, 60], [62, 55], [65, 55], [70, 60], [75, 62]],
   };
   function calibrateScore(raw, betType) {
     const anchors = CAL_ANCHORS[betType] || CAL_ANCHORS.spread;
@@ -8310,6 +8318,14 @@ function hbRender(){
       rawScore100:typeof p.rawScore100==='number'?p.rawScore100:s,
       odds:typeof p.odds==='number'?p.odds:null,
       tier:s>=68?'elite':s>=62?'strong':s>=57?'good':'lean',
+      // factors = which signals fired and in which direction (pos/neg/neu).
+      // Captured at LOG TIME so we can later regress outcomes against the
+      // factors that contributed to each pick. Format: [{t,l},...] where
+      // t='pos'|'neg'|'neu' and l is a human-readable label like
+      // "📈 Both teams Over-heavy" or "🚑 2 out (QB/RB)". Strings are display-
+      // formatted but parseable by emoji/keyword for grouping. ~5-15 items
+      // per pick, ~1KB serialized — fits easily in pick_history.json.
+      factors:Array.isArray(p.factors)?p.factors:[],
       date:p.date||'',time:p.time||''};
   });
   window.BTF_PICKS_READY=true;
