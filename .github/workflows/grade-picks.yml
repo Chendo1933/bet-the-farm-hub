@@ -1,11 +1,24 @@
 name: Nightly Pick Grader
 
-# Runs 30min after log-results.yml (08:00 UTC) so the day's results file is
-# committed and on-disk before grading kicks off. 08:30 UTC = 4:30 AM ET —
-# graded picks are ready before Cole's morning review.
+# Triggered automatically when log-results.yml completes successfully
+# (chained via workflow_run). The previous design relied on a 30-min cron
+# offset (08:30 UTC = log-results' 08:00 UTC + 30 min), which had two
+# failure modes:
+#   1. log-results runs late or fails → grade-picks runs anyway with
+#      stale/missing results
+#   2. log-results commits a new results file but git race conditions
+#      delay propagation → grade-picks checks out before the file lands
+#
+# workflow_run fixes both: this fires only AFTER log-results finishes,
+# uses the head_sha of the triggering run (so the just-committed results
+# file is guaranteed present), and the success-conclusion guard ensures
+# we don't grade on broken upstream output.
+#
+# workflow_dispatch is preserved for manual one-off grading runs.
 on:
-  schedule:
-    - cron: "30 8 * * *"   # 08:30 UTC = 4:30 AM ET / 1:30 AM PT
+  workflow_run:
+    workflows: ["Nightly Results Logger"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -13,10 +26,17 @@ permissions:
 
 jobs:
   grade-picks:
+    # Skip if upstream log-results failed/cancelled. Manual dispatch always proceeds.
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        # For workflow_run triggers, default is the head_sha of the triggering
+        # workflow run — which includes log-results' fresh results commit.
+        # No explicit ref needed.
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,6 +55,9 @@ jobs:
             echo "No grading changes to commit"
           else
             git commit -m "perf: grade picks $(date -d 'yesterday' +'%Y-%m-%d')"
+            # Pull latest before push since log-results just committed and
+            # other workflows may have raced. --rebase preserves our commit.
+            git pull --rebase origin main || true
             git push --force-with-lease
             echo "✅ Performance log updated"
           fi
