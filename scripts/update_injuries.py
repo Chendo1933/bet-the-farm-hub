@@ -23,11 +23,20 @@ SPORT_ENDPOINTS = {
     "mlb": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries",
 }
 
-# ESPN team display name → hub DB team name (only non-exact matches needed)
+# ESPN team display name → hub DB team name. Only non-exact matches.
+# Validated against parsed hub team rows on 2026-04-26.
+#
+# Removed/fixed (2026-04-26):
+#   "Los Angeles Clippers" → "LA Clippers"  — hub row is "Los Angeles Clippers"
+#     since scrape-ats ran. Old map was writing INJURIES["LA Clippers"] which
+#     the hub's pick scoring (which looks up INJURIES[team_row_name]) never
+#     found, so Clippers were treated as injury-free for weeks.
+#   "Utah Hockey Club" → "Utah Hockey Club"  — was a no-op identity, but Utah
+#     renamed mid-season and the hub row is now "Utah Mammoth". ESPN still
+#     returns "Utah Hockey Club" so we remap to the new hub name.
 ESPN_NAME_MAP = {
-    "Los Angeles Clippers":  "LA Clippers",
     "Montréal Canadiens":    "Montreal Canadiens",
-    "Utah Hockey Club":      "Utah Hockey Club",
+    "Utah Hockey Club":      "Utah Mammoth",
     "Oakland Athletics":     "Athletics",
 }
 

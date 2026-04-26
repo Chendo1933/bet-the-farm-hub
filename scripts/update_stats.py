@@ -26,17 +26,24 @@ HUB_FILE = "index.html"
 TIMEOUT  = 15
 HEADERS  = {"User-Agent": "Mozilla/5.0 (BetTheFarm/1.0 daily-updater)"}
 
-# ESPN name → hub name corrections (only non-exact matches needed)
+# ESPN name → hub DB name corrections.
+# Only entries where ESPN's displayName differs from our team-row's first column
+# need to be here. Validated against parsed hub team rows on 2026-04-26.
+#
+# Removed (2026-04-26):
+#   "Los Angeles Clippers" → "LA Clippers"  — wrong direction; hub row is now
+#     "Los Angeles Clippers" since scrape-ats.yml ran in early April. Old map
+#     was leaving Clippers ATS stale (40-38 frozen since 4/12) because
+#     patch_rows looked for "LA Clippers" and never found it.
+#
+# Fixed (2026-04-26):
+#   "Oakland Athletics" → "Oakland Athletics"  was a no-op identity remap, but
+#   the hub row is just "Athletics" (no city). Now correctly remaps.
 ESPN_NAME_MAP = {
-    # NBA
-    "Los Angeles Clippers": "LA Clippers",
     # NHL
     "Montréal Canadiens":   "Montreal Canadiens",
-    # MLB
-    "Cleveland Guardians":  "Cleveland Guardians",   # exact, just in case
-    "Oakland Athletics":    "Oakland Athletics",
-    # NFL
-    "Washington Commanders":"Washington Commanders",
+    # MLB — hub uses just "Athletics", ESPN returns "Oakland Athletics"
+    "Oakland Athletics":    "Athletics",
 }
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -605,10 +612,31 @@ def update_ats_ou(html_lines):
         return 0
 
     total = 0
+    # Some results files use older team-name conventions (e.g. "LA Clippers"
+    # before the hub row got renamed to "Los Angeles Clippers" by scrape-ats).
+    # Normalize to the current hub-row name when patching so historical results
+    # data still feeds the right team's ATS slot. Add new entries here if a
+    # team rename leaves orphaned records.
+    ATS_NAME_FIXES = {
+        "LA Clippers":       "Los Angeles Clippers",
+        "Utah Hockey Club":  "Utah Mammoth",
+    }
     for sport, teams in records.items():
         idx = ATS_INDICES[sport]
         sport_total = 0
+        # Merge orphan-name records into their canonical bucket before patching.
+        # E.g., results files have both "LA Clippers" and "Los Angeles Clippers"
+        # entries → sum into "Los Angeles Clippers" so patch_rows sees the full
+        # season's ATS record.
+        merged = {}
         for team_name, stats in teams.items():
+            canonical = ATS_NAME_FIXES.get(team_name, team_name)
+            if canonical not in merged:
+                merged[canonical] = dict(stats)
+            else:
+                for k, v in stats.items():
+                    merged[canonical][k] = merged[canonical].get(k, 0) + v
+        for team_name, stats in merged.items():
             updates = {}
             updates[idx["aw"]]  = stats.get("aw",  0)
             updates[idx["al"]]  = stats.get("al",  0)
@@ -735,13 +763,28 @@ def update_recent_form(html_lines):
         print("  · No recent form data computed")
         return 0
 
+    # Same orphan-name normalization as update_ats_ou — see comment there.
+    R10_NAME_FIXES = {
+        "LA Clippers":       "Los Angeles Clippers",
+        "Utah Hockey Club":  "Utah Mammoth",
+    }
     total = 0
     for sport, teams in form.items():
         idx = R10_INDICES.get(sport)
         if not idx:
             continue
-        sport_total = 0
+        # Merge orphan-name buckets into canonical names. We only keep the
+        # most-recent 10 entries during compute_recent_form, so merging just
+        # combines two partial buckets — for teams with both old + new names
+        # in results files, the canonical bucket gets the union of games.
+        merged = {}
         for team_name, stats in teams.items():
+            canonical = R10_NAME_FIXES.get(team_name, team_name)
+            if canonical not in merged:
+                merged[canonical] = dict(stats)
+            # if both existed, keep the later one (compute already capped at 10)
+        sport_total = 0
+        for team_name, stats in merged.items():
             updates = {
                 idx["r10w"]:    stats["r10w"],
                 idx["r10l"]:    stats["r10l"],
