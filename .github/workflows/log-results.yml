@@ -42,3 +42,13 @@ jobs:
             git push --force-with-lease
             echo "✅ Results committed"
           fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      log-results
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Nightly results logger — grade-picks chain will be skipped, no grading update tonight"

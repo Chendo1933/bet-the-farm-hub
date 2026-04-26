@@ -61,3 +61,13 @@ jobs:
             git push --force-with-lease
             echo "✅ Performance log updated"
           fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      grade-picks
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Nightly pick grader — yesterday's picks not graded, performance.json stale until rerun"

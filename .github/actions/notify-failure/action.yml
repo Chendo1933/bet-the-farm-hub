@@ -1,0 +1,58 @@
+name: 'Notify on workflow failure'
+description: 'POST a Discord-compatible JSON payload to a webhook URL when a workflow step fails. Silent no-op if WEBHOOK_URL secret is not set.'
+
+inputs:
+  webhook:
+    description: 'Webhook URL (Discord, Slack, or generic JSON-receiving endpoint).'
+    required: true
+  workflow:
+    description: 'Workflow name (typically github.workflow).'
+    required: true
+  job:
+    description: 'Job name (optional — included if provided).'
+    required: false
+    default: ''
+  run-url:
+    description: 'Direct link to the failing run on github.com.'
+    required: true
+  context:
+    description: 'Optional one-line context for what was being attempted (e.g., "Picks logger" / "Nightly grader").'
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Send failure notification
+      shell: bash
+      env:
+        WEBHOOK:  ${{ inputs.webhook }}
+        WORKFLOW: ${{ inputs.workflow }}
+        JOB:      ${{ inputs.job }}
+        RUN_URL:  ${{ inputs.run-url }}
+        CONTEXT:  ${{ inputs.context }}
+      run: |
+        # Silent skip if the secret isn't wired up yet — lets us land this
+        # composite action before the WEBHOOK_URL secret is added in repo
+        # settings, without breaking workflow runs in the meantime.
+        if [ -z "$WEBHOOK" ]; then
+          echo "WEBHOOK_URL not set — notification skipped"
+          exit 0
+        fi
+        # Build a Discord-compatible payload (Slack also accepts simple JSON
+        # if you switch "content" → "text"). jq used for safe JSON quoting:
+        # workflow names with backticks/quotes/newlines won't break the body.
+        TITLE_LINE="🚨 **BTF workflow failed**: \`$WORKFLOW\`"
+        if [ -n "$JOB" ]; then TITLE_LINE="$TITLE_LINE / \`$JOB\`"; fi
+        BODY="$TITLE_LINE"
+        if [ -n "$CONTEXT" ]; then BODY="$BODY"$'\n'"_${CONTEXT}_"; fi
+        BODY="$BODY"$'\n'"$RUN_URL"
+        PAYLOAD=$(jq -n --arg msg "$BODY" '{content: $msg}')
+        # Don't propagate notification failures — the original workflow has
+        # already failed; a flaky webhook should not compound the problem.
+        if curl -sS -f -X POST -H 'Content-Type: application/json' \
+             -d "$PAYLOAD" "$WEBHOOK" -o /dev/null; then
+          echo "✅ Failure notification sent"
+        else
+          echo "⚠ Notification POST returned non-2xx (continuing anyway)"
+        fi

@@ -43,3 +43,13 @@ jobs:
             git push --force-with-lease
             echo "✅ Picks and schedule snapshot committed"
           fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      log-picks
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Primary 11:50 AM ET pick logger — today's slate may be missing or stale"
