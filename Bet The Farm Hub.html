@@ -6691,12 +6691,53 @@ function init(){
   setTimeout(()=>autoSyncOnLoad(),800);
   // Auto-pull live injury reports from ESPN (non-blocking, ~2s delay to let page render first)
   setTimeout(()=>autoFetchInjuries(),2000);
+  // Load exotic-venue config (Mexico City series, London games, Field of Dreams,
+  // outdoor NHL games, etc.) — these break park-factor assumptions. Loaded EARLY
+  // (100ms) so it's ready before any hbRender call from the Hot Bets tab.
+  setTimeout(()=>loadExoticVenues(),100);
   // Load today's locked slate panel — what was captured by the morning logger
   // (data/picks/{ET-today}.json). Read-only snapshot; lets the user see what's
   // being graded today separate from the live UI which keeps shifting as odds drift.
   setTimeout(()=>hbLoadLockedSlate(),300);
 }
 window.addEventListener('DOMContentLoaded',init);
+
+// ── Exotic venue detection ────────────────────────────────────────────────────
+// Reads data/exotic_venues.json — a static list of MLB/NFL/NBA/NHL games
+// played at venues OTHER than the home team's normal park (Mexico City series,
+// London games, Field of Dreams, outdoor NHL Stadium Series, etc).
+//
+// The hub's projection engine uses the home team's home-park factor, which is
+// wrong for these games. Until we have proper venue-aware projection, we
+// suppress picks for exotic-venue games at the calibration filter step.
+//
+// Loaded once at init; consulted by hbRender via the EXOTIC_VENUE_KEYS set.
+let EXOTIC_VENUE_KEYS=new Set();
+async function loadExoticVenues(){
+  try{
+    const r=await fetch('data/exotic_venues.json');
+    if(!r.ok)return;
+    const data=await r.json();
+    if(!Array.isArray(data.events))return;
+    // Compute ET today's date as YYYY-MM-DD (matches the JSON 'date' field)
+    const nowMs=Date.now();
+    const etOff=getETOffsetHours(nowMs)*3600*1000;
+    const etNow=new Date(nowMs+etOff);
+    const y=etNow.getUTCFullYear();
+    const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+    const d=String(etNow.getUTCDate()).padStart(2,'0');
+    const todayKey=`${y}-${m}-${d}`;
+    // Index only entries dated today; key by sport|home|away for O(1) lookup
+    for(const e of (data.events||[])){
+      if(e.date!==todayKey)continue;
+      const sport=(e.sport||'').toLowerCase();
+      EXOTIC_VENUE_KEYS.add(`${sport}|${e.home}|${e.away}`);
+      console.log(`[BTF] Exotic venue today: ${sport.toUpperCase()} ${e.away} @ ${e.home} → ${e.venue||'?'}`);
+    }
+  }catch(e){
+    console.warn('[BTF] exotic_venues fetch failed:',e.message);
+  }
+}
 
 // ── Today's Locked Slate ──────────────────────────────────────────────────────
 // Fetches data/picks/{today-ET}.json (the morning logger snapshot) and renders
@@ -8300,6 +8341,12 @@ function hbRender(){
       if (pickedFav) return false;
     }
     if (p.sport === 'MLB' && p.home === 'Colorado Rockies') return false;
+    // Exotic-venue suppression — see loadExoticVenues() above. EXOTIC_VENUE_KEYS
+    // contains 'sport|home|away' for any game today played at a non-home park.
+    // Model's projection uses wrong park factor for these → suppress entirely
+    // until proper venue-aware scoring lands.
+    const venueKey = `${(p.sport||'').toLowerCase()}|${p.home}|${p.away}`;
+    if (EXOTIC_VENUE_KEYS.has(venueKey)) return false;
     return true;
   });
   // ── Machine-readable export for automated pick tracker ───────────────────

@@ -1,0 +1,41 @@
+{
+  "_doc": [
+    "Games played at venues OTHER than the home team's normal park.",
+    "These break our model's park-factor assumptions and produce wrong projections.",
+    "",
+    "Match key = (sport, date, home, away). When a generated pick matches an entry,",
+    "the hub's calibration filter drops it from BTF_PICKS export and the live UI.",
+    "",
+    "When to add an entry:",
+    "  - MLB Mexico City series, London series, Field of Dreams game, etc.",
+    "  - NFL international games (London, Munich, Sao Paulo)",
+    "  - NBA Paris Game, NBA Mexico City games",
+    "  - NHL outdoor games (Stadium Series, Winter Classic)",
+    "  - Any neutral-site CFB/CBB tournament games",
+    "",
+    "Date format: YYYY-MM-DD (ET-local). Sport: lowercase. Names match hub DB.",
+    "'reason' is for documentation; not used by code.",
+    "'factor' (optional) is the venue's run/scoring multiplier vs typical park.",
+    "  Used in future for projection adjustment instead of hard suppression."
+  ],
+  "events": [
+    {
+      "sport": "mlb",
+      "date": "2026-04-26",
+      "home": "Arizona Diamondbacks",
+      "away": "San Diego Padres",
+      "venue": "Estadio Alfredo Harp Helú, Mexico City",
+      "factor": 1.45,
+      "reason": "7,400 ft elevation — extreme run environment. Historical MX City games go OVER consistently."
+    },
+    {
+      "sport": "mlb",
+      "date": "2026-04-27",
+      "home": "Arizona Diamondbacks",
+      "away": "San Diego Padres",
+      "venue": "Estadio Alfredo Harp Helú, Mexico City",
+      "factor": 1.45,
+      "reason": "Game 2 of MX City series."
+    }
+  ]
+}
