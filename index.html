@@ -472,6 +472,15 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
 .hb-tier-legend{display:flex;gap:12px;margin-left:auto;align-items:center;flex-wrap:wrap;}
 .hb-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
 .hb-legend-dot{width:10px;height:10px;border-radius:50%;}
+.hb-locked{background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+.hb-locked-hdr{padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;color:var(--fg);user-select:none;transition:background .12s;}
+.hb-locked-hdr:hover{background:rgba(255,255,255,.03);}
+.hb-locked-toggle{color:var(--muted);font-size:14px;}
+.hb-locked-body{padding:8px 14px 14px;border-top:1px solid var(--border);font-size:12px;}
+.hb-locked-pick{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed var(--border);gap:8px;}
+.hb-locked-pick:last-child{border-bottom:none;}
+.hb-locked-tier{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:1px 6px;border-radius:3px;display:inline-block;margin-right:6px;}
+.hb-locked-score{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums;}
 .hb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;margin-bottom:24px;}
 .hb-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .2s;position:relative;}
 .hb-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4);}
@@ -887,6 +896,18 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
       <div class="hb-legend-item"><div class="hb-legend-dot" style="background:#22c55e"></div>Good (57-61)</div>
       <div class="hb-legend-item"><div class="hb-legend-dot" style="background:var(--muted)"></div>Lean (&lt;57)</div>
     </div>
+  </div>
+  <!-- ── Today's Locked Slate ─────────────────────────────────────────────
+       Reads data/picks/{today}.json (the morning logger snapshot) and shows
+       what was captured for grading. Live Hot Bets cards keep updating as
+       odds drift; this panel stays frozen so you can see exactly what's
+       being graded today. -->
+  <div id="hb-locked-slate" class="hb-locked" style="display:none">
+    <div class="hb-locked-hdr" onclick="hbToggleLocked()">
+      <span id="hb-locked-summary">🔒 Loading today's locked slate…</span>
+      <span class="hb-locked-toggle" id="hb-locked-toggle">▾</span>
+    </div>
+    <div class="hb-locked-body" id="hb-locked-body" style="display:none"></div>
   </div>
   <div id="hb-grid-wrap"></div>
 </div>
@@ -6670,8 +6691,80 @@ function init(){
   setTimeout(()=>autoSyncOnLoad(),800);
   // Auto-pull live injury reports from ESPN (non-blocking, ~2s delay to let page render first)
   setTimeout(()=>autoFetchInjuries(),2000);
+  // Load today's locked slate panel — what was captured by the morning logger
+  // (data/picks/{ET-today}.json). Read-only snapshot; lets the user see what's
+  // being graded today separate from the live UI which keeps shifting as odds drift.
+  setTimeout(()=>hbLoadLockedSlate(),300);
 }
 window.addEventListener('DOMContentLoaded',init);
+
+// ── Today's Locked Slate ──────────────────────────────────────────────────────
+// Fetches data/picks/{today-ET}.json (the morning logger snapshot) and renders
+// a collapsible panel above the Hot Bets grid showing the locked picks. The
+// live cards keep updating as odds drift; this panel stays frozen so you can
+// always see what's actually being tracked for tonight's grading.
+let _lockedSlateLoaded=false;
+async function hbLoadLockedSlate(){
+  if(_lockedSlateLoaded)return;
+  // Match the logger's filename convention (ET-today, not UTC).
+  const nowMs=Date.now();
+  const etOffMs=getETOffsetHours(nowMs)*3600*1000;
+  const etNow=new Date(nowMs+etOffMs);
+  const y=etNow.getUTCFullYear();
+  const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+  const d=String(etNow.getUTCDate()).padStart(2,'0');
+  const dateKey=`${y}-${m}-${d}`;
+  let data;
+  try{
+    const r=await fetch(`data/picks/${dateKey}.json`);
+    if(!r.ok)return;   // no file yet today — silently hide panel
+    data=await r.json();
+  }catch(e){return;}
+  const picks=data.picks||[];
+  if(!picks.length)return;
+  const wrap=document.getElementById('hb-locked-slate');
+  if(!wrap)return;
+  wrap.style.display='';
+  _lockedSlateLoaded=true;
+  // Summary line — counts by tier + log time in ET
+  const tiers={elite:0,strong:0,good:0,lean:0};
+  picks.forEach(p=>{tiers[p.tier]=(tiers[p.tier]||0)+1;});
+  const t=new Date(data.logged);
+  const timeStr=t.toLocaleString('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit',hour12:true})+' ET';
+  const parts=[`${picks.length} picks locked at ${timeStr}`];
+  if(tiers.elite)  parts.push(`${tiers.elite} Elite`);
+  if(tiers.strong) parts.push(`${tiers.strong} Strong`);
+  if(tiers.good)   parts.push(`${tiers.good} Good`);
+  if(tiers.lean)   parts.push(`${tiers.lean} Lean`);
+  document.getElementById('hb-locked-summary').textContent=`🔒 ${parts.join(' · ')}`;
+  // Body — sorted by tier desc then score desc, with tier-colored badges
+  const tierOrder=['elite','strong','good','lean'];
+  const sorted=picks.slice().sort((a,b)=>
+    tierOrder.indexOf(a.tier)-tierOrder.indexOf(b.tier)||((b.score100||0)-(a.score100||0)));
+  const tierBg={elite:'rgba(239,68,68,.18)',strong:'rgba(201,168,76,.18)',good:'rgba(34,197,94,.16)',lean:'rgba(140,140,140,.18)'};
+  const tierFg={elite:'#ef4444',strong:'#c9a84c',good:'#22c55e',lean:'var(--muted)'};
+  const escapeHtml=s=>String(s||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+  document.getElementById('hb-locked-body').innerHTML=sorted.map(p=>{
+    const bg=tierBg[p.tier]||'transparent';
+    const fg=tierFg[p.tier]||'var(--muted)';
+    return `<div class="hb-locked-pick">
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">
+        <span class="hb-locked-tier" style="background:${bg};color:${fg}">${escapeHtml(p.tier)}</span>
+        <span style="color:var(--muted);font-size:10px;margin-right:4px">${escapeHtml(p.sport)}</span>
+        ${escapeHtml(p.pickLabel)}
+        <span style="color:var(--muted);font-size:10px"> — ${escapeHtml(p.away)} @ ${escapeHtml(p.home)}</span>
+      </span>
+      <span class="hb-locked-score">${p.score100}</span>
+    </div>`;
+  }).join('');
+}
+function hbToggleLocked(){
+  const body=document.getElementById('hb-locked-body');
+  const tog=document.getElementById('hb-locked-toggle');
+  if(!body)return;
+  if(body.style.display==='none'){body.style.display='';tog.textContent='▴';}
+  else{body.style.display='none';tog.textContent='▾';}
+}
 
 // ── HOT BETS ENGINE ───────────────────────────────────────────────────────────
 // Multi-factor composite confidence scorer for ATS picks
