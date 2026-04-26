@@ -141,6 +141,16 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
 
 
 def main():
+    # ── Optional --out-suffix flag ────────────────────────────────────────────
+    # When set, picks are written to data/picks/{date}-{suffix}.json instead of
+    # the canonical {date}.json. Used by the 12:30 PM ET backup logger to write
+    # a comparison snapshot without overwriting the primary slate (which is
+    # what gets graded tomorrow). Schedule snapshot uses the same suffix.
+    out_suffix = ""
+    for arg in sys.argv[1:]:
+        if arg.startswith("--out-suffix="):
+            out_suffix = "-" + arg.split("=", 1)[1].strip()
+
     now_utc  = datetime.now(timezone.utc)
     now_et   = now_utc.astimezone(ET_ZONE)
     # Filename uses ET date so picks for "today's games in ET" land in the ET-labeled file.
@@ -180,7 +190,7 @@ def main():
     # Save schedule snapshot so log_results.py can pair scores with spreads later
     if today_games:
         os.makedirs(SCHED_DIR, exist_ok=True)
-        sched_path = os.path.join(SCHED_DIR, f"{date_key}.json")
+        sched_path = os.path.join(SCHED_DIR, f"{date_key}{out_suffix}.json")
         with open(sched_path, "w") as f:
             json.dump({
                 "date":      date_key,
@@ -232,7 +242,7 @@ def main():
         "all_picks_count": len(picks),
     }
 
-    out_path = os.path.join(DATA_DIR, f"{date_key}.json")
+    out_path = os.path.join(DATA_DIR, f"{date_key}{out_suffix}.json")
     with open(out_path, "w") as f:
         json.dump(out, f, indent=2)
     print(f"\n✅ {len(tracked)} pick(s) saved → {out_path}")

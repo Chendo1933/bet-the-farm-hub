@@ -1,0 +1,67 @@
+name: Daily Pick Logger — Backup/Verify
+
+# Runs ~40 minutes after the primary log-picks.yml (which fires at 11:50 AM ET).
+# Purpose:
+#   (1) Defense in depth — if the primary run failed silently or was delayed
+#       past first pitch, this gives us a fallback slate. The verify file is
+#       saved with a -confirm suffix; grade-picks reads the canonical file
+#       so primary stays authoritative when it exists.
+#   (2) Drift detection — compares this slate to the primary one and prints
+#       a diff (added/dropped picks, score drift, tier flips). Currently
+#       informational; later this can feed a Slack alert.
+#
+# Why 12:30 PM ET specifically:
+#   - Most MLB day-game first pitches are 1:00-2:00 PM ET; this is the latest
+#     we can run before lines start in-game.
+#   - Most NBA/NHL playoff afternoon games tip 1:00-3:30 PM ET; same logic.
+#   - 40 min after primary is enough for major lineup news (scratched
+#     starters, weather updates) to have propagated to the books.
+on:
+  schedule:
+    - cron: "30 16 * * *"   # 16:30 UTC = 12:30 PM ET
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-picks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+
+      - name: Re-log today's slate to a -confirm file
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/log_picks.py --out-suffix=confirm
+
+      - name: Compare primary vs confirm slate
+        run: |
+          DATE=$(TZ=America/New_York date +'%Y-%m-%d')
+          python scripts/compare_picks_files.py \
+            "data/picks/${DATE}.json" \
+            "data/picks/${DATE}-confirm.json"
+
+      - name: Commit -confirm files for the audit trail
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/picks/ data/schedules/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No verify-snapshot changes to commit"
+          else
+            git commit -m "verify: backup picks snapshot $(date +'%Y-%m-%d')"
+            git push --force-with-lease
+            echo "✅ Backup snapshot committed"
+          fi

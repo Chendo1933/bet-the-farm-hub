@@ -312,8 +312,13 @@ def main():
                 print(f"  📦 backed up {src} → {bak}")
 
     # ── 2. Discover pick/result file pairs ──────────────────────────────────
+    # Match canonical {YYYY-MM-DD}.json only. log-picks-verify.yml writes
+    # {YYYY-MM-DD}-confirm.json as a backup snapshot; including it here would
+    # double-count graded picks. Reject anything with a suffix.
+    import re as _re
+    canonical = _re.compile(r"^\d{4}-\d{2}-\d{2}\.json$")
     pick_files = sorted(glob.glob(os.path.join(PICKS_DIR, "*.json")))
-    pick_files = [p for p in pick_files if not p.endswith("index.json")]
+    pick_files = [p for p in pick_files if canonical.match(os.path.basename(p))]
 
     pairs = []
     for pf in pick_files:
