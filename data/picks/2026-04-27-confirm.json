@@ -1,0 +1,35 @@
+{
+  "date": "2026-04-27",
+  "logged": "2026-04-27T17:49:38.853905+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Diego Padres",
+      "away": "Chicago Cubs",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "San Diego Padres",
+      "pickLabel": "San Diego Padres ML (-115)",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -115,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ],
+      "date": "Apr 27",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 1
+}
