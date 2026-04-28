@@ -9547,6 +9547,35 @@
       "homeScore": 6,
       "awayScore": 0,
       "factors": []
+    },
+    {
+      "date": "2026-04-27",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "San Diego Padres ML (-118)",
+      "home": "San Diego Padres",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.8475,
+      "homeScore": 9,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -118"
+        }
+      ]
     }
   ]
 }
