@@ -126,6 +126,18 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
         picks = await page.evaluate("window.BTF_PICKS")
         print(f"  ✓ {len(picks)} total picks generated")
 
+        # Capture filter stats so we can track how aggressive the calibration
+        # filter chain has been over time. Set in hbRender alongside BTF_PICKS.
+        filter_stats = await page.evaluate(
+            "window.BTF_FILTER_STATS || null"
+        )
+        if filter_stats:
+            print(f"  ℹ  Filter stats: {filter_stats.get('kept')}/{filter_stats.get('prefilter')} kept "
+                  f"(sub60: {filter_stats.get('sub60', 0)}, "
+                  f"mlbFav: {filter_stats.get('mlbFav', 0)}, "
+                  f"coors: {filter_stats.get('coors', 0)}, "
+                  f"exotic: {filter_stats.get('exotic', 0)})")
+
         # Capture schedule snapshot — ALL today's games with spread/total
         # TODAY_GAMES is a `let` variable (not a window property) — access without window.
         # Guard with ||[] so a timeout/empty-odds run returns [] instead of crashing.
@@ -137,7 +149,7 @@ async def scrape_picks(api_key: str | None) -> tuple[list[dict], list[dict]]:
         print(f"  ✓ {len(today_games)} game(s) in today's schedule snapshot")
 
         await browser.close()
-        return picks, today_games
+        return picks, today_games, filter_stats
 
 
 def main():
@@ -173,7 +185,7 @@ def main():
     time.sleep(1.5)
 
     try:
-        picks, today_games = asyncio.run(scrape_picks(api_key))
+        picks, today_games, filter_stats = asyncio.run(scrape_picks(api_key))
     finally:
         server.terminate()
 
@@ -240,6 +252,10 @@ def main():
         "has_live_odds": api_key is not None,
         "picks":   tracked,
         "all_picks_count": len(picks),
+        # filter_stats: how the hub's calibration filters trimmed the slate.
+        # Lets us trend filter aggressiveness over time and catch over-pruning.
+        # Keys: prefilter, kept, dropped, sub60, mlbFav, coors, exotic.
+        "filter_stats": filter_stats,
     }
 
     out_path = os.path.join(DATA_DIR, f"{date_key}{out_suffix}.json")

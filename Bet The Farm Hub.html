@@ -8283,40 +8283,39 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
-  // ── Per-bet-type calibration (added 2026-04-25, revisited same day) ─────
-  // Empirical analysis on 489 graded picks (then 241 post-filter) showed
-  // score→hit-rate diverges sharply by bet type. Initial conservative anchors
-  // were revised after running the audit on the cleaned post-filter dataset:
+  // ── Per-bet-type calibration (v2.5, softened 2026-04-30) ────────────────
+  // v2 (4/25) was too aggressive on OU + SPREAD low-end based on small-N
+  // empirical drift. Slate dropped from typical 12-18 picks to 6-8/day; on
+  // 4/27 (Mexico City exotic) it was 1 pick. v2.5 keeps the strong ML boost
+  // (validated, large sample) but softens OU + SPREAD so borderline picks
+  // remain visible at "Good" tier rather than being filtered entirely.
   //
-  //   SPREAD: 60-61 hits 36.4% (n=11), 62-63 hits 70% (n=10), 64-65 hits 65% (n=23)
-  //   ML:     60-61 hits 58.9% (n=56), 64-65 hits 81.8% (n=11), 66-67 hits 90.9% (n=11)
+  // Empirical drift that drove anchors (489 graded → 241 post-filter):
+  //   SPREAD: 60-61 hits 36.4% (n=11), 62-63 hits 70% (n=10), 64-65 65% (n=23)
+  //   ML:     60-61 hits 58.9% (n=56), 64-65 hits 81.8% (n=11), 66-67 90.9% (n=11)
   //   OU:     60-61 hits 61.9% (n=21), 62-65 hits 36-42%, 66-67 hits 53.3% (n=15)
   //
-  // The hub previously treated all bet types identically (raw score → tier),
-  // which under-rewarded ML signal and over-trusted OU signal. This block
-  // applies piecewise-linear calibration that maps raw scores to calibrated
-  // scores reflecting actual hit rates.
+  // v2.5 changes vs v2:
+  //   SPREAD raw 60: 52 → 56  (still filtered but closer to boundary; recall
+  //          empirical 36% IS bad but n=11 is too thin to filter aggressively)
+  //   OU raw 62-67:  55 → 60  (was filtered, now shown as Good 60)
+  //          → empirical 41% is a real signal but small N + NBA pace fix may
+  //          have already addressed root cause; user can decide on the 60s
+  //   OU raw 70+:    60 → 62  (slight recovery — Good not Strong)
+  //   ML kept identical to v2 — under-pricing signal is strong + well-sampled
   //
-  // Key empirical findings driving the v2 anchors:
-  //   (1) ML at 65+ severely under-priced → boosted (raw 65→80, raw 70→92)
-  //   (2) OU at 62-67 anti-predictive (37-53% hit rate) → calibrated below
-  //       filter so they drop out of the slate
-  //   (3) SPREAD 60-61 hits 36% → calibrated below filter
-  //
-  // Caveats:
-  //   - Per-cell N is 10-25 picks → meaningful but wide error bars
-  //   - Same-day NBA pace-adjusted projection reduces OU overconfidence at
-  //     the source, so OU calibration may need to soften once post-fix
-  //     sample accumulates
-  //   - Re-run the audit after 2-3 weeks of post-fix data
+  // Net effect: previously-filtered OU and borderline SPREAD picks return
+  // as "Good" tier. ML still gets its full Elite-tier boost. Filter drops
+  // far fewer picks → typical slate goes from 6-8/day back to 12-18/day.
   //
   // Original raw scores preserved in p.rawScore100 for diagnostics.
+  // Filter rates exported in window.BTF_FILTER_STATS for daily monitoring.
   const CAL_ANCHORS = {
     // Format: [raw, calibrated]. Linear interpolation between anchors;
     // linear extrapolation beyond endpoints.
-    spread: [[55, 47], [60, 52], [62, 62], [65, 65], [70, 72], [75, 78]],
+    spread: [[55, 50], [60, 56], [62, 62], [65, 65], [70, 72], [75, 78]],
     ml:     [[55, 55], [60, 60], [62, 65], [65, 80], [70, 92], [75, 96]],
-    ou:     [[55, 53], [60, 60], [62, 55], [65, 55], [70, 60], [75, 62]],
+    ou:     [[55, 55], [60, 60], [62, 60], [65, 60], [67, 60], [70, 62], [75, 64]],
   };
   function calibrateScore(raw, betType) {
     const anchors = CAL_ANCHORS[betType] || CAL_ANCHORS.spread;
@@ -8373,24 +8372,35 @@ function hbRender(){
   // saves picks the model is calibrated on. Revisit if a future calibration
   // audit shows the leaks have stabilized.
   const MIN_DISPLAY_SCORE = 60;
+  // Track filter rates so we can spot over-aggressive filtering. Exposed on
+  // window.BTF_FILTER_STATS for the logger / live console.
+  const _filterStats = {prefilter: picks.length, sub60: 0, mlbFav: 0, coors: 0, exotic: 0};
   picks = picks.filter(p => {
     const s = p.score100 || Math.round((p.score||0)*100);
-    if (s < MIN_DISPLAY_SCORE) return false;
+    if (s < MIN_DISPLAY_SCORE) { _filterStats.sub60++; return false; }
     if (p.sport === 'MLB' && p.betType === 'spread') {
       const homeIsFav = (typeof p.spread === 'number') && p.spread < 0;
       const pickedFav = (p.atsPick === 'home' && homeIsFav) ||
                         (p.atsPick === 'away' && !homeIsFav);
-      if (pickedFav) return false;
+      if (pickedFav) { _filterStats.mlbFav++; return false; }
     }
-    if (p.sport === 'MLB' && p.home === 'Colorado Rockies') return false;
+    if (p.sport === 'MLB' && p.home === 'Colorado Rockies') { _filterStats.coors++; return false; }
     // Exotic-venue suppression — see loadExoticVenues() above. EXOTIC_VENUE_KEYS
     // contains 'sport|home|away' for any game today played at a non-home park.
     // Model's projection uses wrong park factor for these → suppress entirely
     // until proper venue-aware scoring lands.
     const venueKey = `${(p.sport||'').toLowerCase()}|${p.home}|${p.away}`;
-    if (EXOTIC_VENUE_KEYS.has(venueKey)) return false;
+    if (EXOTIC_VENUE_KEYS.has(venueKey)) { _filterStats.exotic++; return false; }
     return true;
   });
+  _filterStats.kept = picks.length;
+  _filterStats.dropped = _filterStats.prefilter - picks.length;
+  window.BTF_FILTER_STATS = _filterStats;
+  if (_filterStats.dropped > 0) {
+    console.log(`[BTF] Filter stats: ${_filterStats.kept}/${_filterStats.prefilter} kept`,
+                `(sub60: ${_filterStats.sub60}, mlbFav: ${_filterStats.mlbFav},`,
+                `coors: ${_filterStats.coors}, exotic: ${_filterStats.exotic})`);
+  }
   // ── Machine-readable export for automated pick tracker ───────────────────
   // log_picks.py (GitHub Action) reads window.BTF_PICKS via Playwright to log
   // today's Elite/Strong picks for performance grading after games finish.
