@@ -10051,6 +10051,298 @@
           "l": "\ud83d\udcb0 Good value at +100"
         }
       ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Pittsburgh Penguins ML (+102)",
+      "home": "Philadelphia Flyers",
+      "away": "Pittsburgh Penguins",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 102,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "NHL",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "Pittsburgh Penguins +1.5",
+      "home": "Philadelphia Flyers",
+      "away": "Pittsburgh Penguins",
+      "spread": -1.5,
+      "total": null,
+      "score100": 64,
+      "rawScore100": 64,
+      "odds": -250,
+      "outcome": "win",
+      "margin": 0.5,
+      "units": 0.4,
+      "homeScore": 1,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+102) \u2192 auto-covers spread"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Tampa Bay Rays ML (-102)",
+      "home": "Cleveland Guardians",
+      "away": "Tampa Bay Rays",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -102,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -102"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "New York Yankees ML (-113)",
+      "home": "Texas Rangers",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 65,
+      "odds": -113,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -113"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 8.5",
+      "home": "Texas Rangers",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": 8.5,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -105,
+      "outcome": "win",
+      "margin": 5.5,
+      "units": 0.9524,
+      "homeScore": 3,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Texas Rangers 43% / New York Yankees 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.4% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Chicago Cubs ML (-105)",
+      "home": "San Diego Padres",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -105,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.9524,
+      "homeScore": 4,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 58% vs implied 49%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -105"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (+123)",
+      "home": "Atlanta Braves",
+      "away": "Detroit Tigers",
+      "spread": null,
+      "total": null,
+      "score100": 70,
+      "rawScore100": 63,
+      "odds": 123,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.23,
+      "homeScore": 4,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 72% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "elite",
+      "pick": "Atlanta Braves +1.5",
+      "home": "Atlanta Braves",
+      "away": "Detroit Tigers",
+      "spread": 1.5,
+      "total": null,
+      "score100": 68,
+      "rawScore100": 67,
+      "odds": -136,
+      "outcome": "win",
+      "margin": 2.5,
+      "units": 0.7353,
+      "homeScore": 4,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home ATS 64%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca +4.9% edge"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 72%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +1.91/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.795 / WHIP 1.13 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 1 out (?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home dog (+54% hist.)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 72% vs 43% implied (+123) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 80% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +123 dog \u2192 auto-covers if wins"
+        }
+      ]
     }
   ]
 }
