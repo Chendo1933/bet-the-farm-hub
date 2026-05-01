@@ -1,0 +1,334 @@
+{
+  "date": "2026-05-01",
+  "logged": "2026-05-01T17:33:05.216402+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Montreal Canadiens",
+      "away": "Tampa Bay Lightning",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Lightning",
+      "pickLabel": "Tampa Bay Lightning ML (-115)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -115,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ],
+      "date": "May 1",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Boston Bruins",
+      "away": "Buffalo Sabres",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres ML (-118)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -118,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -118"
+        }
+      ],
+      "date": "May 1",
+      "time": "7:40 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Utah Mammoth",
+      "away": "Vegas Golden Knights",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Vegas Golden Knights",
+      "pickLabel": "Vegas Golden Knights ML (-115)",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -115,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ],
+      "date": "May 1",
+      "time": "10:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ou",
+      "home": "Utah Mammoth",
+      "away": "Vegas Golden Knights",
+      "atsPick": null,
+      "spread": null,
+      "total": 5.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 5.5",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -130,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Utah Mammoth 69% / Vegas Golden Knights 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83e\udd45 Below-avg goaltending (avg SV% 89.5%) \u2192 slight Over"
+        }
+      ],
+      "date": "May 1",
+      "time": "10:10 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Chicago Cubs",
+      "away": "Arizona Diamondbacks",
+      "atsPick": null,
+      "spread": null,
+      "total": 7,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 7",
+      "score100": 62,
+      "rawScore100": 70,
+      "odds": -115,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Chicago Cubs 63% \u00b7 Arizona Diamondbacks 58%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.6 > line 7 (+2.6 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +16.0% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "2:21 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Cincinnati Reds",
+      "pickLabel": "Cincinnati Reds ML (+113)",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 113,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ],
+      "date": "May 1",
+      "time": "6:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8",
+      "score100": 60,
+      "rawScore100": 63,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Pittsburgh Pirates 59% \u00b7 Cincinnati Reds 62%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.4% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "6:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Washington Nationals",
+      "away": "Milwaukee Brewers",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8",
+      "score100": 61,
+      "rawScore100": 68,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Washington Nationals 64% / Milwaukee Brewers 52% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.5 > line 8 (+1.5 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +16.8% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "6:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Boston Red Sox",
+      "away": "Houston Astros",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9.5",
+      "score100": 60,
+      "rawScore100": 62,
+      "odds": 100,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Boston Red Sox 45% / Houston Astros 72% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.7% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Minnesota Twins",
+      "away": "Toronto Blue Jays",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 60,
+      "rawScore100": 67,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Minnesota Twins 71% \u00b7 Toronto Blue Jays 61%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.0% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "8:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "Cleveland Guardians",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 42% / Cleveland Guardians 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.6 < line 9.5 (+1.9 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.2% edge vs implied"
+        }
+      ],
+      "date": "May 1",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 11,
+  "filter_stats": {
+    "prefilter": 32,
+    "sub60": 15,
+    "mlbFav": 4,
+    "coors": 2,
+    "exotic": 0,
+    "kept": 11,
+    "dropped": 21
+  }
+}
