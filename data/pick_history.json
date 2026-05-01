@@ -10343,6 +10343,216 @@
           "l": "\ud83d\udca1 ML confirms: +123 dog \u2192 auto-covers if wins"
         }
       ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "NBA",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "New York Knicks ML (-155)",
+      "home": "Atlanta Hawks",
+      "away": "New York Knicks",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -155,
+      "outcome": "win",
+      "margin": 51,
+      "units": 0.6452,
+      "homeScore": 89,
+      "awayScore": 140,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 65% win rate vs 58% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.9"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "NBA",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "Boston Celtics -6.5",
+      "home": "Philadelphia 76ers",
+      "away": "Boston Celtics",
+      "spread": 6.5,
+      "total": null,
+      "score100": 62,
+      "rawScore100": 62,
+      "odds": -110,
+      "outcome": "loss",
+      "margin": 19.5,
+      "units": -1.0,
+      "homeScore": 106,
+      "awayScore": 93,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 71% (5-2)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.5% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 67%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +23.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 70% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Line moved 1.0 pts toward pick"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "NBA",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 212.5",
+      "home": "Philadelphia 76ers",
+      "away": "Boston Celtics",
+      "spread": null,
+      "total": 212.5,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -110,
+      "outcome": "win",
+      "margin": 13.5,
+      "units": 0.9091,
+      "homeScore": 106,
+      "awayScore": 93,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Both teams Under-heavy (Philadelphia 76ers 75% \u00b7 Boston Celtics 60%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfc3 Both fast-paced (114.0/101.1) \u2192 Over lean"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.6% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Dallas Stars ML (+102)",
+      "home": "Minnesota Wild",
+      "away": "Dallas Stars",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": 102,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "NHL",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "Dallas Stars +1.5",
+      "home": "Minnesota Wild",
+      "away": "Dallas Stars",
+      "spread": -1.5,
+      "total": null,
+      "score100": 64,
+      "rawScore100": 64,
+      "odds": -245,
+      "outcome": "loss",
+      "margin": 1.5,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+102) \u2192 auto-covers spread"
+        }
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "strong",
+      "pick": "Over 7.5",
+      "home": "Baltimore Orioles",
+      "away": "Houston Astros",
+      "spread": null,
+      "total": 7.5,
+      "score100": 62,
+      "rawScore100": 74,
+      "odds": 110,
+      "outcome": "win",
+      "margin": 5.5,
+      "units": 1.1,
+      "homeScore": 10,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Baltimore Orioles 65% \u00b7 Houston Astros 70%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.9 > line 7.5 (+2.4 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +26.8% edge vs implied"
+        }
+      ]
     }
   ]
 }
