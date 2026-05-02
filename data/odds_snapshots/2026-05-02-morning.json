@@ -1,0 +1,238 @@
+{
+  "date": "2026-05-02",
+  "snapshot_time": "2026-05-02T11:37:48.432349+00:00",
+  "type": "morning",
+  "games": {
+    "nba": [
+      {
+        "home": "Boston Celtics",
+        "away": "Philadelphia 76ers",
+        "commence": "2026-05-02T23:40:00Z",
+        "spread": -7.5,
+        "total": 205.5,
+        "ml_home": -290,
+        "ml_away": 235
+      },
+      {
+        "home": "Detroit Pistons",
+        "away": "Orlando Magic",
+        "commence": "2026-05-03T19:40:00Z",
+        "spread": -8.5,
+        "total": 203.5,
+        "ml_home": -355,
+        "ml_away": 280
+      },
+      {
+        "home": "Cleveland Cavaliers",
+        "away": "Toronto Raptors",
+        "commence": "2026-05-03T23:40:00Z",
+        "spread": -7.5,
+        "total": 210.5,
+        "ml_home": -285,
+        "ml_away": 230
+      },
+      {
+        "home": "San Antonio Spurs",
+        "away": "Minnesota Timberwolves",
+        "commence": "2026-05-05T01:40:00Z",
+        "spread": -13.5,
+        "total": 217.5,
+        "ml_home": -900,
+        "ml_away": 600
+      },
+      {
+        "home": "Oklahoma City Thunder",
+        "away": "Los Angeles Lakers",
+        "commence": "2026-05-06T01:40:00Z",
+        "spread": -14.5,
+        "total": 213.5,
+        "ml_home": -900,
+        "ml_away": 600
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Carolina Hurricanes",
+        "away": "Philadelphia Flyers",
+        "commence": "2026-05-03T00:10:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -210,
+        "ml_away": 172
+      },
+      {
+        "home": "Tampa Bay Lightning",
+        "away": "Montr\u00e9al Canadiens",
+        "commence": "2026-05-03T22:10:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -166,
+        "ml_away": 140
+      },
+      {
+        "home": "Colorado Avalanche",
+        "away": "Minnesota Wild",
+        "commence": "2026-05-04T01:10:15Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -184,
+        "ml_away": 150
+      },
+      {
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "commence": "2026-05-05T01:40:18Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -166,
+        "ml_away": 138
+      },
+      {
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "commence": "2026-05-05T23:00:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -182,
+        "ml_away": 148
+      }
+    ],
+    "mlb": [
+      {
+        "home": "New York Yankees",
+        "away": "Baltimore Orioles",
+        "commence": "2026-05-02T17:36:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -162,
+        "ml_away": 136
+      },
+      {
+        "home": "Minnesota Twins",
+        "away": "Toronto Blue Jays",
+        "commence": "2026-05-02T18:11:00Z",
+        "spread": 1.5,
+        "total": 8.0,
+        "ml_home": 108,
+        "ml_away": -126
+      },
+      {
+        "home": "Chicago Cubs",
+        "away": "Arizona Diamondbacks",
+        "commence": "2026-05-02T18:21:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -174,
+        "ml_away": 146
+      },
+      {
+        "home": "Pittsburgh Pirates",
+        "away": "Cincinnati Reds",
+        "commence": "2026-05-02T20:05:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -138,
+        "ml_away": 118
+      },
+      {
+        "home": "Athletics",
+        "away": "Cleveland Guardians",
+        "commence": "2026-05-02T20:06:00Z",
+        "spread": -1.5,
+        "total": 10.0,
+        "ml_home": -138,
+        "ml_away": 118
+      },
+      {
+        "home": "Washington Nationals",
+        "away": "Milwaukee Brewers",
+        "commence": "2026-05-02T20:06:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 114,
+        "ml_away": -134
+      },
+      {
+        "home": "Boston Red Sox",
+        "away": "Houston Astros",
+        "commence": "2026-05-02T20:11:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -124,
+        "ml_away": 106
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "Philadelphia Phillies",
+        "commence": "2026-05-02T20:11:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -112,
+        "ml_away": -104
+      },
+      {
+        "home": "Tampa Bay Rays",
+        "away": "San Francisco Giants",
+        "commence": "2026-05-02T22:11:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -106,
+        "ml_away": -110
+      },
+      {
+        "home": "Detroit Tigers",
+        "away": "Texas Rangers",
+        "commence": "2026-05-02T23:16:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -136,
+        "ml_away": 116
+      },
+      {
+        "home": "St. Louis Cardinals",
+        "away": "Los Angeles Dodgers",
+        "commence": "2026-05-02T23:16:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": 122,
+        "ml_away": -144
+      },
+      {
+        "home": "Colorado Rockies",
+        "away": "Atlanta Braves",
+        "commence": "2026-05-03T00:11:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": 190,
+        "ml_away": -230
+      },
+      {
+        "home": "San Diego Padres",
+        "away": "Chicago White Sox",
+        "commence": "2026-05-03T00:41:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -196,
+        "ml_away": 164
+      },
+      {
+        "home": "Los Angeles Angels",
+        "away": "New York Mets",
+        "commence": "2026-05-03T01:39:00Z",
+        "spread": 1.5,
+        "total": 8.0,
+        "ml_home": 106,
+        "ml_away": -124
+      },
+      {
+        "home": "Seattle Mariners",
+        "away": "Kansas City Royals",
+        "commence": "2026-05-03T01:41:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -146,
+        "ml_away": 124
+      }
+    ]
+  }
+}
