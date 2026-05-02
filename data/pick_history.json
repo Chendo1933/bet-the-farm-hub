@@ -10553,6 +10553,345 @@
           "l": "\ud83d\udcc8 +26.8% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Tampa Bay Lightning ML (-115)",
+      "home": "Montreal Canadiens",
+      "away": "Tampa Bay Lightning",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -115,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.8696,
+      "homeScore": 0,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Buffalo Sabres ML (-118)",
+      "home": "Boston Bruins",
+      "away": "Buffalo Sabres",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 3,
+      "units": 0.8475,
+      "homeScore": 1,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -118"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Vegas Golden Knights ML (-115)",
+      "home": "Utah Mammoth",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -115,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.8696,
+      "homeScore": 1,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "NHL",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 5.5",
+      "home": "Utah Mammoth",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": 5.5,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -130,
+      "outcome": "win",
+      "margin": 0.5,
+      "units": 0.7692,
+      "homeScore": 1,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Utah Mammoth 69% / Vegas Golden Knights 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83e\udd45 Below-avg goaltending (avg SV% 89.5%) \u2192 slight Over"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "strong",
+      "pick": "Over 7",
+      "home": "Chicago Cubs",
+      "away": "Arizona Diamondbacks",
+      "spread": null,
+      "total": 7,
+      "score100": 62,
+      "rawScore100": 70,
+      "odds": -108,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.9259,
+      "homeScore": 6,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Chicago Cubs 63% \u00b7 Arizona Diamondbacks 58%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.6 > line 7 (+2.6 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +17.5% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Cincinnati Reds ML (+113)",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": null,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 113,
+      "outcome": "loss",
+      "margin": 8,
+      "units": -1.0,
+      "homeScore": 9,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": 8,
+      "score100": 60,
+      "rawScore100": 63,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.8475,
+      "homeScore": 9,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Pittsburgh Pirates 59% \u00b7 Cincinnati Reds 62%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.4% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Washington Nationals",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": 8,
+      "score100": 61,
+      "rawScore100": 68,
+      "odds": -105,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Washington Nationals 64% / Milwaukee Brewers 52% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.5 > line 8 (+1.5 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +16.8% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 9.5",
+      "home": "Boston Red Sox",
+      "away": "Houston Astros",
+      "spread": null,
+      "total": 9.5,
+      "score100": 60,
+      "rawScore100": 62,
+      "odds": 100,
+      "outcome": "loss",
+      "margin": 5.5,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Boston Red Sox 45% / Houston Astros 72% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.7% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8.5",
+      "home": "Minnesota Twins",
+      "away": "Toronto Blue Jays",
+      "spread": null,
+      "total": 8.5,
+      "score100": 60,
+      "rawScore100": 67,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 1.5,
+      "units": 0.8475,
+      "homeScore": 3,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Minnesota Twins 71% \u00b7 Toronto Blue Jays 61%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.0% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 9.5",
+      "home": "Athletics",
+      "away": "Cleveland Guardians",
+      "spread": null,
+      "total": 9.5,
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -118,
+      "outcome": "loss",
+      "margin": 3.5,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 8,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 42% / Cleveland Guardians 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.6 < line 9.5 (+1.9 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.2% edge vs implied"
+        }
+      ]
     }
   ]
 }
