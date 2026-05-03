@@ -10892,6 +10892,225 @@
           "l": "\ud83d\udcc8 +11.2% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Minnesota Twins",
+      "away": "Toronto Blue Jays",
+      "spread": null,
+      "total": 8,
+      "score100": 61,
+      "rawScore100": 68,
+      "odds": -102,
+      "outcome": "win",
+      "margin": 7,
+      "units": 0.9804,
+      "homeScore": 4,
+      "awayScore": 11,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Minnesota Twins 73% \u00b7 Toronto Blue Jays 63%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +17.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "strong",
+      "pick": "Over 7",
+      "home": "Chicago Cubs",
+      "away": "Arizona Diamondbacks",
+      "spread": null,
+      "total": 7,
+      "score100": 62,
+      "rawScore100": 70,
+      "odds": -122,
+      "outcome": "loss",
+      "margin": 5,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Chicago Cubs 64% \u00b7 Arizona Diamondbacks 59%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.7 > line 7 (+2.7 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +15.5% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": 8,
+      "score100": 60,
+      "rawScore100": 64,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 16,
+      "units": 0.8475,
+      "homeScore": 17,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Pittsburgh Pirates 61% \u00b7 Cincinnati Reds 64%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 10.5",
+      "home": "Athletics",
+      "away": "Cleveland Guardians",
+      "spread": null,
+      "total": 10.5,
+      "score100": 60,
+      "rawScore100": 65,
+      "odds": -112,
+      "outcome": "loss",
+      "margin": 9.5,
+      "units": -1.0,
+      "homeScore": 6,
+      "awayScore": 14,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 44% / Cleveland Guardians 52% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.7 < line 10.5 (+2.8 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 7.5",
+      "home": "Washington Nationals",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": 7.5,
+      "score100": 60,
+      "rawScore100": 67,
+      "odds": -118,
+      "outcome": "loss",
+      "margin": 2.5,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Washington Nationals 61% / Milwaukee Brewers 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.4 > line 7.5 (+1.9 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 9",
+      "home": "Boston Red Sox",
+      "away": "Houston Astros",
+      "spread": null,
+      "total": 9,
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -108,
+      "outcome": "push",
+      "margin": 0.0,
+      "units": 0.0,
+      "homeScore": 3,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Boston Red Sox 43% / Houston Astros 69% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.4% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Tampa Bay Rays ML (-105)",
+      "home": "Tampa Bay Rays",
+      "away": "San Francisco Giants",
+      "spread": null,
+      "total": null,
+      "score100": 70,
+      "rawScore100": 63,
+      "odds": -105,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.9524,
+      "homeScore": 5,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 49%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -105"
+        }
+      ]
     }
   ]
 }
