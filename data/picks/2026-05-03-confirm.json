@@ -1,0 +1,276 @@
+{
+  "date": "2026-05-03",
+  "logged": "2026-05-03T17:25:06.523069+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Colorado Avalanche",
+      "away": "Minnesota Wild",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Colorado Avalanche",
+      "pickLabel": "Colorado Avalanche ML (-205)",
+      "score100": 82,
+      "rawScore100": 66,
+      "odds": -205,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 77% vs implied 64%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -205"
+        }
+      ],
+      "date": "May 3",
+      "time": "9:10 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Minnesota Twins",
+      "away": "Toronto Blue Jays",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 61,
+      "rawScore100": 69,
+      "odds": 102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Minnesota Twins 74% \u00b7 Toronto Blue Jays 64%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +19.5% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "12:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "New York Yankees",
+      "away": "Baltimore Orioles",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9",
+      "score100": 60,
+      "rawScore100": 62,
+      "odds": -110,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: New York Yankees 46% / Baltimore Orioles 71% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.3% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Boston Red Sox",
+      "away": "Houston Astros",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 100,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Boston Red Sox 43% / Houston Astros 69% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.4% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Pittsburgh Pirates",
+      "away": "Cincinnati Reds",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 7.5",
+      "score100": 63,
+      "rawScore100": 72,
+      "odds": -108,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Pittsburgh Pirates 63% \u00b7 Cincinnati Reds 65%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.7 > line 7.5 (+1.2 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +20.1% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Tampa Bay Rays",
+      "away": "San Francisco Giants",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-128)",
+      "score100": 75,
+      "rawScore100": 64,
+      "odds": -128,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -128"
+        }
+      ],
+      "date": "May 3",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago Cubs",
+      "away": "Arizona Diamondbacks",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs ML (-163)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -163,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 66% win rate vs 59% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.6"
+        }
+      ],
+      "date": "May 3",
+      "time": "2:21 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "Cleveland Guardians",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 60,
+      "rawScore100": 64,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 46% / Cleveland Guardians 53% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 8.1 < line 9.5 (+1.4 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.5% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "4:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Los Angeles Angels",
+      "away": "New York Mets",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -112,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Angels 41% / New York Mets 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.6% edge vs implied"
+        }
+      ],
+      "date": "May 3",
+      "time": "4:08 PM ET"
+    }
+  ],
+  "all_picks_count": 9,
+  "filter_stats": {
+    "prefilter": 29,
+    "sub60": 15,
+    "mlbFav": 4,
+    "coors": 1,
+    "exotic": 0,
+    "kept": 9,
+    "dropped": 20
+  }
+}
