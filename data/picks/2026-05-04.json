@@ -1,0 +1,347 @@
+{
+  "date": "2026-05-04",
+  "logged": "2026-05-04T17:17:30.656588+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NBA",
+      "betType": "ou",
+      "home": "San Antonio Spurs",
+      "away": "Minnesota Timberwolves",
+      "atsPick": null,
+      "spread": null,
+      "total": 218.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 218.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: San Antonio Spurs 45% / Minnesota Timberwolves 33% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.3% edge vs implied"
+        }
+      ],
+      "date": "May 4",
+      "time": "9:40 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "spread",
+      "home": "Carolina Hurricanes",
+      "away": "Philadelphia Flyers",
+      "atsPick": "home",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Carolina Hurricanes",
+      "pickLabel": "Carolina Hurricanes -1.5",
+      "score100": 62,
+      "rawScore100": 62,
+      "odds": 110,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home ATS 79% (11-3)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +24.3% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 79%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Special teams edge: PP 24.9% vs PK 77.6%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83e\udd45 Opp goalie edge: SV% 90.6% vs 89.5%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 1 out (?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 2"
+        }
+      ],
+      "date": "May 4",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ou",
+      "home": "Vegas Golden Knights",
+      "away": "Anaheim Ducks",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 60,
+      "rawScore100": 63,
+      "odds": -108,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Vegas Golden Knights 53% \u00b7 Anaheim Ducks 73%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83e\udd45 Below-avg goaltending (avg SV% 89.0%) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.7% edge vs implied"
+        }
+      ],
+      "date": "May 4",
+      "time": "9:40 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Tampa Bay Rays",
+      "away": "Toronto Blue Jays",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-126)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -126,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -126"
+        }
+      ],
+      "date": "May 4",
+      "time": "6:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Yankees",
+      "away": "Baltimore Orioles",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (-219)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -219,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +7.7"
+        }
+      ],
+      "date": "May 4",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "New York Yankees",
+      "away": "Baltimore Orioles",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 60,
+      "rawScore100": 63,
+      "odds": -108,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (New York Yankees 48% \u00b7 Baltimore Orioles 72%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.2% edge vs implied"
+        }
+      ],
+      "date": "May 4",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Kansas City Royals",
+      "away": "Cleveland Guardians",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9",
+      "score100": 60,
+      "rawScore100": 65,
+      "odds": -108,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 44% / Cleveland Guardians 52% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.7 < line 9 (+1.3 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.1% edge vs implied"
+        }
+      ],
+      "date": "May 4",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (+119)",
+      "score100": 80,
+      "rawScore100": 65,
+      "odds": 119,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 74% vs implied 44%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +119"
+        }
+      ],
+      "date": "May 4",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Seattle Mariners",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves +1.5",
+      "score100": 71,
+      "rawScore100": 69,
+      "odds": -171,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 86% (12-2)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +14.7% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 73%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +2.08/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.806 / WHIP 1.17 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 1 out (?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 74% vs 44% implied (+119) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 80% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +119 dog \u2192 auto-covers if wins"
+        }
+      ],
+      "date": "May 4",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "San Francisco Giants",
+      "away": "San Diego Padres",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8",
+      "score100": 62,
+      "rawScore100": 70,
+      "odds": -108,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Both teams Under-heavy (San Francisco Giants 57% \u00b7 San Diego Padres 63%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 6.8 < line 8 (+1.2 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +17.5% edge vs implied"
+        }
+      ],
+      "date": "May 4",
+      "time": "9:46 PM ET"
+    }
+  ],
+  "all_picks_count": 10,
+  "filter_stats": {
+    "prefilter": 26,
+    "sub60": 14,
+    "mlbFav": 2,
+    "coors": 0,
+    "exotic": 0,
+    "kept": 10,
+    "dropped": 16
+  }
+}
