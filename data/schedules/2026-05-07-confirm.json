@@ -1,0 +1,128 @@
+{
+  "date": "2026-05-07",
+  "logged": "2026-05-07T18:08:09.267584+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "Detroit Pistons",
+      "away": "Cleveland Cavaliers",
+      "date": "May 7",
+      "time": "7:10 PM ET",
+      "spread": -3.5,
+      "total": 215.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "nba",
+      "home": "Oklahoma City Thunder",
+      "away": "Los Angeles Lakers",
+      "date": "May 7",
+      "time": "9:40 PM ET",
+      "spread": -15.5,
+      "total": 210.5,
+      "spreadMove": 0,
+      "totalMove": 1
+    },
+    {
+      "sport": "nhl",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "date": "May 7",
+      "time": "8:10 PM ET",
+      "spread": 1.5,
+      "total": 5.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Kansas City Royals",
+      "away": "Cleveland Guardians",
+      "date": "May 7",
+      "time": "2:11 PM ET",
+      "spread": -1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Chicago Cubs",
+      "away": "Cincinnati Reds",
+      "date": "May 7",
+      "time": "2:21 PM ET",
+      "spread": -1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Colorado Rockies",
+      "away": "New York Mets",
+      "date": "May 7",
+      "time": "3:11 PM ET",
+      "spread": 1.5,
+      "total": 11,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Arizona Diamondbacks",
+      "away": "Pittsburgh Pirates",
+      "date": "May 7",
+      "time": "3:41 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Philadelphia Phillies",
+      "away": "Athletics",
+      "date": "May 7",
+      "time": "6:41 PM ET",
+      "spread": -1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Miami Marlins",
+      "away": "Baltimore Orioles",
+      "date": "May 7",
+      "time": "6:41 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": -3,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "date": "May 7",
+      "time": "7:11 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "San Diego Padres",
+      "away": "St. Louis Cardinals",
+      "date": "May 7",
+      "time": "10:11 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
