@@ -1,0 +1,529 @@
+{
+  "date": "2026-05-08",
+  "logged": "2026-05-08T16:57:20.722328+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NBA",
+      "betType": "ml",
+      "home": "Philadelphia 76ers",
+      "away": "New York Knicks",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Knicks",
+      "pickLabel": "New York Knicks ML (+102)",
+      "score100": 70,
+      "rawScore100": 63,
+      "odds": 102,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +20.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NBA",
+      "betType": "spread",
+      "home": "Philadelphia 76ers",
+      "away": "New York Knicks",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "New York Knicks",
+      "pickLabel": "New York Knicks +1.5",
+      "score100": 68,
+      "rawScore100": 67,
+      "odds": -108,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +20.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+102) \u2192 auto-covers spread"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NBA",
+      "betType": "ou",
+      "home": "Minnesota Timberwolves",
+      "away": "San Antonio Spurs",
+      "atsPick": null,
+      "spread": null,
+      "total": 216.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 216.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -110,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Timberwolves 35% / San Antonio Spurs 46% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.1% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "9:40 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Buffalo Sabres",
+      "away": "Montreal Canadiens",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres ML (-135)",
+      "score100": 65,
+      "rawScore100": 62,
+      "odds": -135,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -135"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Vegas Golden Knights",
+      "pickLabel": "Vegas Golden Knights ML (-112)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -112,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 59% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ],
+      "date": "May 8",
+      "time": "9:50 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ou",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Anaheim Ducks 65% / Vegas Golden Knights 47% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83e\udd45 Below-avg goaltending (avg SV% 89.0%) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.7% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "9:50 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cincinnati Reds",
+      "away": "Houston Astros",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9",
+      "score100": 60,
+      "rawScore100": 65,
+      "odds": -108,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cincinnati Reds 61% \u00b7 Houston Astros 67%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.8% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "6:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Athletics",
+      "pickLabel": "Athletics +1.5",
+      "score100": 66,
+      "rawScore100": 66,
+      "odds": -175,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 81% (13-3)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +14.2% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 61%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.734 / WHIP 1.46 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 3 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog ML edge: 50% win rate vs 45% implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9.5",
+      "score100": 60,
+      "rawScore100": 64,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Baltimore Orioles 72% \u00b7 Athletics 50%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +10.7% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (+113)",
+      "score100": 65,
+      "rawScore100": 62,
+      "odds": 113,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays +1.5",
+      "score100": 66,
+      "rawScore100": 66,
+      "odds": -181,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\u2708\ufe0f Away ATS 50%"
+        },
+        {
+          "t": "neg",
+          "l": "\u26a0\ufe0f -11.6% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.709 / WHIP 1.17 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 17 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 70% vs 45% implied (+113) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 90% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +113 dog \u2192 auto-covers if wins"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Miami Marlins",
+      "away": "Washington Nationals",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Miami Marlins 55% / Washington Nationals 61% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.3% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cleveland Guardians",
+      "away": "Minnesota Twins",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 7.5",
+      "score100": 60,
+      "rawScore100": 65,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cleveland Guardians 51% \u00b7 Minnesota Twins 74%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.5% edge vs implied"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Milwaukee Brewers",
+      "away": "New York Yankees",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (-126)",
+      "score100": 65,
+      "rawScore100": 62,
+      "odds": -126,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -126"
+        }
+      ],
+      "date": "May 8",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs ML (-136)",
+      "score100": 82,
+      "rawScore100": 66,
+      "odds": -136,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -136"
+        }
+      ],
+      "date": "May 8",
+      "time": "8:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Francisco Giants",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Pittsburgh Pirates",
+      "pickLabel": "Pittsburgh Pirates ML (-108)",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": -108,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 56% win rate vs 50% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.1"
+        }
+      ],
+      "date": "May 8",
+      "time": "10:16 PM ET"
+    }
+  ],
+  "all_picks_count": 16,
+  "filter_stats": {
+    "prefilter": 33,
+    "sub60": 15,
+    "mlbFav": 2,
+    "coors": 0,
+    "exotic": 0,
+    "kept": 16,
+    "dropped": 17
+  }
+}
