@@ -1,19 +1,19 @@
 {
-  "last_updated": "2026-05-07",
+  "last_updated": "2026-05-08",
   "tiers": {
     "elite": {
-      "w": 30,
+      "w": 33,
       "l": 18,
       "p": 0
     },
     "strong": {
-      "w": 113,
-      "l": 81,
+      "w": 115,
+      "l": 85,
       "p": 1
     },
     "good": {
-      "w": 149,
-      "l": 134,
+      "w": 152,
+      "l": 138,
       "p": 2
     },
     "lean": {
@@ -26,7 +26,7 @@
     "nba": {
       "good": {
         "w": 20,
-        "l": 13,
+        "l": 14,
         "p": 0
       },
       "strong": {
@@ -40,7 +40,7 @@
         "p": 0
       },
       "elite": {
-        "w": 2,
+        "w": 4,
         "l": 2,
         "p": 0
       }
@@ -52,30 +52,30 @@
         "p": 1
       },
       "good": {
-        "w": 100,
-        "l": 86,
+        "w": 102,
+        "l": 89,
         "p": 2
       },
       "strong": {
-        "w": 75,
-        "l": 52,
+        "w": 76,
+        "l": 55,
         "p": 1
       },
       "elite": {
-        "w": 22,
+        "w": 23,
         "l": 16,
         "p": 0
       }
     },
     "nhl": {
       "good": {
-        "w": 29,
+        "w": 30,
         "l": 35,
         "p": 0
       },
       "strong": {
-        "w": 26,
-        "l": 15,
+        "w": 27,
+        "l": 16,
         "p": 0
       },
       "lean": {
@@ -92,7 +92,7 @@
   },
   "by_conf": {
     "80+": {
-      "w": 6,
+      "w": 7,
       "l": 3,
       "p": 0
     },
@@ -107,23 +107,23 @@
       "p": 0
     },
     "68-70": {
-      "w": 15,
+      "w": 17,
       "l": 11,
       "p": 0
     },
     "65-67": {
-      "w": 39,
-      "l": 24,
+      "w": 40,
+      "l": 28,
       "p": 0
     },
     "62-64": {
-      "w": 74,
+      "w": 75,
       "l": 57,
       "p": 1
     },
     "59-61": {
-      "w": 112,
-      "l": 95,
+      "w": 115,
+      "l": 99,
       "p": 2
     },
     "56-58": {
@@ -139,121 +139,121 @@
   },
   "by_bet_type": {
     "spread": {
-      "w": 96,
-      "l": 72,
+      "w": 98,
+      "l": 73,
       "p": 0,
-      "total": 793.0,
-      "count": 168,
-      "brier_sum": 41.4604,
-      "brier_n": 168,
-      "units_won": 18.784006250230952,
-      "roi_count": 168
+      "total": 811.5,
+      "count": 171,
+      "brier_sum": 42.114000000000004,
+      "brier_n": 171,
+      "units_won": 19.281360747585452,
+      "roi_count": 171
     },
     "ml": {
-      "w": 162,
-      "l": 129,
+      "w": 165,
+      "l": 133,
       "p": 0,
-      "total": 1294.0,
-      "count": 291,
-      "brier_sum": 70.40719999999997,
-      "brier_n": 291,
-      "units_won": 38.738606763555815,
-      "roi_count": 161
+      "total": 1333.0,
+      "count": 298,
+      "brier_sum": 72.29399999999997,
+      "brier_n": 298,
+      "units_won": 37.38675802406002,
+      "roi_count": 168
     },
     "ou": {
-      "w": 90,
-      "l": 89,
+      "w": 93,
+      "l": 92,
       "p": 4,
-      "total": 753.5,
-      "count": 179,
-      "brier_sum": 47.50389999999991,
-      "brier_n": 179,
-      "units_won": -8.046211745994711,
-      "roi_count": 183
+      "total": 771.0,
+      "count": 185,
+      "brier_sum": 49.0638999999999,
+      "brier_n": 185,
+      "units_won": -8.147904867687833,
+      "roi_count": 189
     }
   },
   "by_sport_bet_type": {
     "nba": {
       "ml": {
-        "w": 17,
+        "w": 18,
         "l": 16,
         "p": 0,
-        "total": 477.0,
-        "count": 33,
-        "brier_sum": 8.2753,
-        "brier_n": 33,
-        "units_won": 10.48509205955335,
-        "roi_count": 18
+        "total": 491.0,
+        "count": 34,
+        "brier_sum": 8.3653,
+        "brier_n": 34,
+        "units_won": 11.50509205955335,
+        "roi_count": 19
       },
       "spread": {
-        "w": 22,
+        "w": 23,
         "l": 13,
         "p": 0,
-        "total": 403.5,
-        "count": 35,
-        "brier_sum": 8.5169,
-        "brier_n": 35,
-        "units_won": 6.9009,
-        "roi_count": 35
+        "total": 419.0,
+        "count": 36,
+        "brier_sum": 8.619299999999999,
+        "brier_n": 36,
+        "units_won": 7.826825925925926,
+        "roi_count": 36
       },
       "ou": {
         "w": 8,
-        "l": 9,
+        "l": 10,
         "p": 0,
-        "total": 192.5,
-        "count": 17,
-        "brier_sum": 4.8127,
-        "brier_n": 17,
-        "units_won": -1.6497541606541604,
-        "roi_count": 17
+        "total": 199.0,
+        "count": 18,
+        "brier_sum": 5.172700000000001,
+        "brier_n": 18,
+        "units_won": -2.6497541606541604,
+        "roi_count": 18
       }
     },
     "mlb": {
       "ml": {
-        "w": 107,
-        "l": 81,
+        "w": 108,
+        "l": 84,
         "p": 0,
-        "total": 669.0,
-        "count": 188,
-        "brier_sum": 45.57470000000001,
-        "brier_n": 188,
-        "units_won": 16.631990816268477,
-        "roi_count": 107
+        "total": 686.0,
+        "count": 192,
+        "brier_sum": 46.81210000000001,
+        "brier_n": 192,
+        "units_won": 14.367284933915535,
+        "roi_count": 111
       },
       "spread": {
-        "w": 55,
-        "l": 39,
+        "w": 56,
+        "l": 40,
         "p": 0,
-        "total": 300.0,
-        "count": 94,
-        "brier_sum": 22.978899999999996,
-        "brier_n": 94,
-        "units_won": 14.622593754675872,
-        "roi_count": 94
+        "total": 303.0,
+        "count": 96,
+        "brier_sum": 23.530099999999997,
+        "brier_n": 96,
+        "units_won": 14.194022326104443,
+        "roi_count": 96
       },
       "ou": {
-        "w": 67,
-        "l": 66,
+        "w": 69,
+        "l": 68,
         "p": 4,
-        "total": 516.5,
-        "count": 133,
-        "brier_sum": 35.16679999999997,
-        "brier_n": 133,
-        "units_won": -5.109860485718858,
-        "roi_count": 137
+        "total": 526.0,
+        "count": 137,
+        "brier_sum": 36.20679999999996,
+        "brier_n": 137,
+        "units_won": -5.23155360741198,
+        "roi_count": 141
       }
     },
     "nhl": {
       "ml": {
-        "w": 38,
-        "l": 32,
+        "w": 39,
+        "l": 33,
         "p": 0,
-        "total": 148.0,
-        "count": 70,
-        "brier_sum": 16.557199999999998,
-        "brier_n": 70,
-        "units_won": 11.621523887734002,
-        "roi_count": 36
+        "total": 156.0,
+        "count": 72,
+        "brier_sum": 17.1166,
+        "brier_n": 72,
+        "units_won": 11.514381030591144,
+        "roi_count": 38
       },
       "spread": {
         "w": 19,
@@ -267,42 +267,42 @@
         "roi_count": 39
       },
       "ou": {
-        "w": 15,
+        "w": 16,
         "l": 14,
         "p": 0,
-        "total": 44.5,
-        "count": 29,
-        "brier_sum": 7.524400000000002,
-        "brier_n": 29,
-        "units_won": -1.2865970996216896,
-        "roi_count": 29
+        "total": 46.0,
+        "count": 30,
+        "brier_sum": 7.684400000000002,
+        "brier_n": 30,
+        "units_won": -0.26659709962168954,
+        "roi_count": 30
       }
     }
   },
   "margins": {
-    "total": 2840.5,
-    "count": 638,
-    "brier_sum": 159.37150000000003,
-    "brier_n": 638
+    "total": 2915.5,
+    "count": 654,
+    "brier_sum": 163.4719000000001,
+    "brier_n": 654
   },
   "margins_by_tier": {
     "elite": {
-      "total": 165.5,
-      "count": 48,
-      "brier_sum": 11.700600000000001,
-      "brier_n": 48
+      "total": 201.0,
+      "count": 51,
+      "brier_sum": 11.925400000000002,
+      "brier_n": 51
     },
     "strong": {
-      "total": 891.5,
-      "count": 194,
-      "brier_sum": 47.59579999999998,
-      "brier_n": 194
+      "total": 910.5,
+      "count": 200,
+      "brier_sum": 49.55139999999998,
+      "brier_n": 200
     },
     "good": {
-      "total": 1221.0,
-      "count": 283,
-      "brier_sum": 71.68359999999988,
-      "brier_n": 283
+      "total": 1241.5,
+      "count": 290,
+      "brier_sum": 73.60359999999987,
+      "brier_n": 290
     },
     "lean": {
       "total": 562.5,
@@ -313,10 +313,10 @@
   },
   "margins_by_conf": {
     "80+": {
-      "total": 23.0,
-      "count": 9,
-      "brier_sum": 2.1772,
-      "brier_n": 9
+      "total": 29.0,
+      "count": 10,
+      "brier_sum": 2.2096,
+      "brier_n": 10
     },
     "75-79": {
       "total": 16.0,
@@ -331,28 +331,28 @@
       "brier_n": 5
     },
     "68-70": {
-      "total": 111.0,
-      "count": 26,
-      "brier_sum": 6.687799999999998,
-      "brier_n": 26
+      "total": 140.5,
+      "count": 28,
+      "brier_sum": 6.8801999999999985,
+      "brier_n": 28
     },
     "65-67": {
-      "total": 274.0,
-      "count": 63,
-      "brier_sum": 14.9358,
-      "brier_n": 63
+      "total": 289.0,
+      "count": 68,
+      "brier_sum": 16.7545,
+      "brier_n": 68
     },
     "62-64": {
-      "total": 617.5,
-      "count": 131,
-      "brier_sum": 32.65999999999999,
-      "brier_n": 131
+      "total": 621.5,
+      "count": 132,
+      "brier_sum": 32.79689999999999,
+      "brier_n": 132
     },
     "59-61": {
-      "total": 899.5,
-      "count": 207,
-      "brier_sum": 52.15369999999988,
-      "brier_n": 207
+      "total": 920.0,
+      "count": 214,
+      "brier_sum": 54.07369999999987,
+      "brier_n": 214
     },
     "56-58": {
       "total": 509.0,
@@ -369,40 +369,40 @@
   },
   "margins_by_sport": {
     "nba": {
-      "total": 1073.0,
-      "count": 85,
-      "brier_sum": 21.604899999999997,
-      "brier_n": 85
+      "total": 1109.0,
+      "count": 88,
+      "brier_sum": 22.157299999999996,
+      "brier_n": 88
     },
     "mlb": {
-      "total": 1485.5,
-      "count": 415,
-      "brier_sum": 103.72040000000001,
-      "brier_n": 415
+      "total": 1515.0,
+      "count": 425,
+      "brier_sum": 106.54899999999999,
+      "brier_n": 425
     },
     "nhl": {
-      "total": 282.0,
-      "count": 138,
-      "brier_sum": 34.046199999999985,
-      "brier_n": 138
+      "total": 291.5,
+      "count": 141,
+      "brier_sum": 34.76559999999998,
+      "brier_n": 141
     }
   },
   "roi": {
-    "units_won": 49.47650126779199,
-    "roi_count": 512
+    "units_won": 48.520313903957565,
+    "roi_count": 528
   },
   "roi_by_tier": {
     "elite": {
-      "units_won": 5.060307553994888,
-      "roi_count": 48
+      "units_won": 7.741527597567873,
+      "roi_count": 51
     },
     "strong": {
-      "units_won": 8.559663536640207,
-      "roi_count": 181
+      "units_won": 6.02394925092592,
+      "roi_count": 187
     },
     "good": {
-      "units_won": 16.78563017715699,
-      "roi_count": 212
+      "units_won": 15.683937055463868,
+      "roi_count": 219
     },
     "lean": {
       "units_won": 19.0709,
@@ -410,6 +410,7 @@
     }
   },
   "graded_dates": [
+    "2026-05-08",
     "2026-05-07",
     "2026-05-06",
     "2026-05-05",
