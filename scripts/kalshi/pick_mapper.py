@@ -242,6 +242,11 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
         return {"status": "no_event", "reason": f"No Kalshi event matched {away} @ {home}",
                 "pick": pick, "candidates_scanned": len(events)}
 
+    # Kalshi events have field 'event_ticker' (not 'ticker' — that's only on
+    # markets). Use a helper to grab the right field consistently.
+    def _evt_ticker(e):
+        return e.get("event_ticker") or e.get("ticker") or ""
+
     # If multiple strong event matches exist (typically MLB doubleheaders),
     # disambiguate by comparing the pick's game time against each candidate's
     # ticker-encoded start time. Kalshi MLB tickers embed the time as HHMM,
@@ -253,7 +258,7 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
         if pick_hhmm:
             timed_candidates = []
             for e in strong:
-                evt_hhmm = _ticker_game_hhmm(e.get("ticker", ""))
+                evt_hhmm = _ticker_game_hhmm(_evt_ticker(e))
                 if evt_hhmm:
                     timed_candidates.append((e, _hhmm_diff_minutes(pick_hhmm, evt_hhmm)))
             timed_candidates.sort(key=lambda x: x[1])
@@ -267,14 +272,14 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
             return {"status": "ambiguous",
                     "reason": f"{len(strong)} strong event matches and time disambiguation didn't resolve",
                     "pick": pick,
-                    "candidates": [{"ticker": e.get("ticker"), "title": e.get("title")} for e in strong]}
+                    "candidates": [{"ticker": _evt_ticker(e), "title": e.get("title")} for e in strong]}
     event = strong[0] if strong else (weak[0] if len(weak) == 1 else None)
     if event is None:
         return {"status": "ambiguous", "reason": "Multiple weak event matches",
                 "pick": pick,
-                "candidates": [{"ticker": e.get("ticker"), "title": e.get("title")} for e in weak]}
+                "candidates": [{"ticker": _evt_ticker(e), "title": e.get("title")} for e in weak]}
 
-    event_ticker = event.get("ticker") or event.get("event_ticker")
+    event_ticker = _evt_ticker(event)
     if not event_ticker:
         return {"status": "no_event", "reason": "Event has no ticker field", "pick": pick}
 
