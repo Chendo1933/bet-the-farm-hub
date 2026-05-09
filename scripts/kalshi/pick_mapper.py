@@ -343,11 +343,19 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict,
 
     # Capture the full price profile — dry-run/live order placement need to
     # fall back through (ask → last_price → bid + spread estimate) when the
-    # orderbook is thin. Kalshi market schema:
-    #   yes_ask, yes_bid: current best ask/bid in cents (None if no order)
-    #   last_price:       cents of last trade (good proxy when book is empty)
-    #   previous_yes_ask: prior tick's ask (older but still informative)
-    #   volume_24h:       liquidity signal
+    # orderbook is thin.
+    #
+    # Kalshi has TWO field naming schemes in the wild:
+    #   New (live as of 2026-05): yes_ask_dollars="0.6500" (string in dollars)
+    #   Old (some demo responses):  yes_ask=65            (int in cents)
+    # _price_cents() tries new first, falls back to old, normalizes to int cents.
+    yes_ask = _price_cents(matched_market, "yes_ask_dollars", "yes_ask")
+    yes_bid = _price_cents(matched_market, "yes_bid_dollars", "yes_bid")
+    last_price = _price_cents(matched_market, "last_price_dollars", "last_price")
+    prev_ask = _price_cents(matched_market, "previous_yes_ask_dollars", "previous_yes_ask")
+    volume = (matched_market.get("volume_24h_fp") or matched_market.get("volume_fp")
+              or matched_market.get("volume_24h") or matched_market.get("volume"))
+
     return {
         "status": "matched",
         "pick": pick,
@@ -355,12 +363,30 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict,
         "market_ticker": matched_market.get("ticker"),
         "market_title": matched_market.get("title"),
         "yes_side": matched_side,  # 'YES' = bet YES contract, 'NO' = bet NO contract
-        "current_yes_bid_cents":   matched_market.get("yes_bid"),
-        "current_yes_ask_cents":   matched_market.get("yes_ask"),
-        "last_price_cents":        matched_market.get("last_price"),
-        "previous_yes_ask_cents":  matched_market.get("previous_yes_ask"),
-        "volume_24h":              matched_market.get("volume_24h") or matched_market.get("volume"),
+        "current_yes_bid_cents":   yes_bid,
+        "current_yes_ask_cents":   yes_ask,
+        "last_price_cents":        last_price,
+        "previous_yes_ask_cents":  prev_ask,
+        "volume_24h":              volume,
     }
+
+
+def _price_cents(market: dict, key_dollars: str, key_cents: str) -> int | None:
+    """
+    Read a price field as integer cents, trying the new '_dollars' string field
+    (e.g., 'yes_ask_dollars': '0.6500') first, falling back to the old '_cents'
+    integer field. Returns None if neither is present or values are unparseable.
+    """
+    v = market.get(key_dollars)
+    if v is not None and v != "":
+        try:
+            return round(float(v) * 100)
+        except (TypeError, ValueError):
+            pass
+    v = market.get(key_cents)
+    if isinstance(v, (int, float)):
+        return int(v)
+    return None
 
 
 def map_picks(client: KalshiClient, picks: list[dict]) -> list[dict]:
