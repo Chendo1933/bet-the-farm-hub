@@ -40,6 +40,53 @@ def _normalize(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", (s or "").lower())
 
 
+def _ticker_game_hhmm(ticker: str) -> str:
+    """
+    Extract the HHMM start-time embedded in a Kalshi sports ticker.
+    Kalshi formats MLB tickers like 'KXMLBGAME-26MAY112210SFLAD' where 2210
+    means 10:10 PM ET. Used to disambiguate doubleheaders (same teams play
+    twice in one day at different times).
+
+    Returns the 4-digit HHMM string, or '' if the ticker doesn't include
+    a time component (NHL/NBA/NFL tickers typically don't).
+    """
+    if not ticker:
+        return ""
+    # Pattern: -DDMMM-YY-followed-by-HHMM-followed-by-team-letters
+    # e.g., '-26MAY112210SFLAD' → captures '2210'
+    m = re.search(r"-\d{2}[A-Z]{3}\d{2}(\d{4})[A-Z]", ticker)
+    if m:
+        return m.group(1)
+    return ""
+
+
+def _pick_time_to_hhmm(time_str: str) -> str:
+    """
+    Convert a hub time string like '7:11 PM ET' to '1911' (24-hour HHMM).
+    Returns '' if the format isn't recognized (so the caller can fall back
+    to other disambiguation strategies).
+    """
+    if not time_str:
+        return ""
+    m = re.match(r"(\d{1,2}):(\d{2})\s*(AM|PM)", time_str.upper())
+    if not m:
+        return ""
+    h, mn, ampm = int(m.group(1)), int(m.group(2)), m.group(3)
+    if ampm == "PM" and h != 12:
+        h += 12
+    if ampm == "AM" and h == 12:
+        h = 0
+    return f"{h:02d}{mn:02d}"
+
+
+def _hhmm_diff_minutes(a: str, b: str) -> int:
+    """Absolute difference between two HHMM strings, in minutes."""
+    if not a or not b: return 9999
+    am = int(a[:2]) * 60 + int(a[2:])
+    bm = int(b[:2]) * 60 + int(b[2:])
+    return abs(am - bm)
+
+
 # Hub team-name → Kalshi ticker abbreviation. Used as a backup signal when
 # yes_sub_title doesn't disambiguate. Add new entries when a `no_market`
 # result surfaces a market we can verify by suffix.
@@ -194,11 +241,33 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
     if not strong and not weak:
         return {"status": "no_event", "reason": f"No Kalshi event matched {away} @ {home}",
                 "pick": pick, "candidates_scanned": len(events)}
+
+    # If multiple strong event matches exist (typically MLB doubleheaders),
+    # disambiguate by comparing the pick's game time against each candidate's
+    # ticker-encoded start time. Kalshi MLB tickers embed the time as HHMM,
+    # e.g., 'KXMLBGAME-26MAY112210SFLAD' = 22:10 (10:10 PM). Pick the one
+    # within 30 minutes of the pick's stated time. If no clear winner,
+    # surface the ambiguity for human review.
     if len(strong) > 1:
-        return {"status": "ambiguous",
-                "reason": f"{len(strong)} strong event matches — manual review",
-                "pick": pick,
-                "candidates": [{"ticker": e.get("ticker"), "title": e.get("title")} for e in strong]}
+        pick_hhmm = _pick_time_to_hhmm(pick.get("time", ""))
+        if pick_hhmm:
+            timed_candidates = []
+            for e in strong:
+                evt_hhmm = _ticker_game_hhmm(e.get("ticker", ""))
+                if evt_hhmm:
+                    timed_candidates.append((e, _hhmm_diff_minutes(pick_hhmm, evt_hhmm)))
+            timed_candidates.sort(key=lambda x: x[1])
+            # Accept the closest if it's within 30 min AND clearly closer
+            # than the next-best option (gap > 30 min). This avoids picking
+            # one of two ~equally-close events when we shouldn't.
+            if timed_candidates and timed_candidates[0][1] <= 30:
+                if len(timed_candidates) == 1 or (timed_candidates[1][1] - timed_candidates[0][1] > 30):
+                    strong = [timed_candidates[0][0]]
+        if len(strong) > 1:
+            return {"status": "ambiguous",
+                    "reason": f"{len(strong)} strong event matches and time disambiguation didn't resolve",
+                    "pick": pick,
+                    "candidates": [{"ticker": e.get("ticker"), "title": e.get("title")} for e in strong]}
     event = strong[0] if strong else (weak[0] if len(weak) == 1 else None)
     if event is None:
         return {"status": "ambiguous", "reason": "Multiple weak event matches",
