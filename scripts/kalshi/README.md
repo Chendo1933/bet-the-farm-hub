@@ -102,6 +102,83 @@ Statuses:
 
 Those come in Phase 2 (dry-run simulation) and Phase 3 (live with kill switches).
 
+---
+
+## Phase 2 — Dry-run order simulation (paper trading)
+
+Once Phase 1 is verified working, Phase 2 simulates what auto-placement
+would have done WITHOUT any real money moving. After 1-2 weeks of dry-run
+data we'll know whether Kalshi's effective ROI matches our sportsbook
+results once slippage and the YES/NO price model are factored in.
+
+### How it works
+
+1. **Daily**: `dry_run.py` reads today's picks file, maps each ML pick
+   to a Kalshi market, fetches the current YES ask price, computes a
+   fractional-Kelly stake against config caps, and writes a "would-have-
+   placed" record to `data/kalshi_dryrun/{date}.json`.
+
+2. **Nightly** (after grading runs): `reconcile.py` walks every dry-run
+   file, looks up each order's outcome in `data/pick_history.json`, and
+   computes theoretical PnL. Annotated orders are written back into the
+   dry-run file; aggregate stats land in `data/kalshi_dryrun_perf.json`.
+
+### Run once to test
+
+```bash
+# Generate today's dry-run orders (real Kalshi prices, no orders placed)
+python3 scripts/kalshi/dry_run.py
+
+# Reconcile any past dry-run files against grading data
+python3 scripts/kalshi/reconcile.py
+```
+
+You'll see output like:
+
+```
+Kalshi dry-run · 2026-05-09 · environment=demo
+  4 pick(s) in file
+  3 eligible after score≥65 + bet-type filter
+
+── Dry-run summary ──────────────────────────────────────
+  Picks: 4 total, 3 eligible, 2 would place
+  Total stake: $12.45  ·  daily cap remaining: $37.55
+
+── Would-place orders ───────────────────────────────────
+  $ 7.20 on KXNHLGAME-26MAY09CARPHI-CAR  (12 contracts @ 60¢)
+        pick: NHL Carolina Hurricanes ML (-192)
+  $ 5.25 on KXMLBGAME-26MAY091905CHCTEX-CHC (7 contracts @ 75¢)
+        pick: MLB Chicago Cubs ML (-136)
+```
+
+After a few days, run reconcile and you'll see daily PnL and a running
+aggregate ROI to compare against the +16% you've been seeing on sportsbooks.
+
+### Risk parameters (data/kalshi_config.json)
+
+These bound what Phase 2 will simulate (and Phase 3 will actually place):
+
+- `bankroll_dollars` — used for Kelly sizing math
+- `kelly_fraction` — 0.25 = quarter-Kelly (conservative)
+- `min_calibrated_score` — only consider picks at this score or above
+- `supported_bet_types` — `["ml"]` for now
+- `max_stake_per_pick_dollars` — hard cap on a single order
+- `max_daily_exposure_dollars` — total stake cap across the day
+- `skip_if_yes_ask_above_cents` — skip heavy favorites where edge × cost is bad RoR
+
+Edit the file, re-run `dry_run.py`, see the impact immediately.
+
+### What dry-run won't tell you yet
+
+- **Real fills**: dry-run assumes you'd get filled at the current ask. In
+  practice on a thin market, your order may never fill or fill partial.
+  Phase 3 handles this with limit orders + fill tracking.
+- **NO-side picks**: Phase 2 only places YES on the picked-team's market.
+  In rare cases the mapper finds the team on a NO market only — those
+  show as `skip_reason: no_side_unsupported`.
+- **Spread/total picks**: Phase 2 still ML-only. Spread on Kalshi is
+  thinly covered; total contracts exist but mapping needs different logic.
+
 ## Common issues
 
 **`401 Unauthorized` on balance check**
