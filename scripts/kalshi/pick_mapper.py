@@ -331,8 +331,13 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
                 "pick": pick, "event_ticker": event_ticker,
                 "available_markets": [m.get("ticker") for m in markets]}
 
-    yes_bid = matched_market.get("yes_bid")
-    yes_ask = matched_market.get("yes_ask")
+    # Capture the full price profile — dry-run/live order placement need to
+    # fall back through (ask → last_price → bid + spread estimate) when the
+    # orderbook is thin. Kalshi market schema:
+    #   yes_ask, yes_bid: current best ask/bid in cents (None if no order)
+    #   last_price:       cents of last trade (good proxy when book is empty)
+    #   previous_yes_ask: prior tick's ask (older but still informative)
+    #   volume_24h:       liquidity signal
     return {
         "status": "matched",
         "pick": pick,
@@ -340,8 +345,11 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
         "market_ticker": matched_market.get("ticker"),
         "market_title": matched_market.get("title"),
         "yes_side": matched_side,  # 'YES' = bet YES contract, 'NO' = bet NO contract
-        "current_yes_bid_cents": yes_bid,
-        "current_yes_ask_cents": yes_ask,
+        "current_yes_bid_cents":   matched_market.get("yes_bid"),
+        "current_yes_ask_cents":   matched_market.get("yes_ask"),
+        "last_price_cents":        matched_market.get("last_price"),
+        "previous_yes_ask_cents":  matched_market.get("previous_yes_ask"),
+        "volume_24h":              matched_market.get("volume_24h") or matched_market.get("volume"),
     }
 
 

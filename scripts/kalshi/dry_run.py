@@ -93,6 +93,31 @@ def _model_prob_from_pick(pick: dict) -> float | None:
     return max(0.01, min(0.99, s / 100.0))
 
 
+def _resolve_use_price(mapping: dict) -> tuple[int | None, str]:
+    """
+    Pick a price to simulate against, in priority order.
+    Returns (price_in_cents, source_label) or (None, 'no_price').
+
+    Priority:
+      1. yes_ask           — current ask (what a market buy would cost)
+      2. last_price        — most recent trade (good proxy on thin books)
+      3. previous_yes_ask  — last tick's ask (stale but still informative)
+      4. yes_bid + 2       — estimate from current bid (spread proxy)
+
+    Demo environment frequently has only #2 or #4 available; live should
+    usually have #1.
+    """
+    if (a := mapping.get("current_yes_ask_cents")) is not None:
+        return a, "yes_ask"
+    if (lp := mapping.get("last_price_cents")) is not None:
+        return lp, "last_price"
+    if (pa := mapping.get("previous_yes_ask_cents")) is not None:
+        return pa, "previous_yes_ask"
+    if (b := mapping.get("current_yes_bid_cents")) is not None and 0 < b < 99:
+        return b + 2, "bid+2"
+    return None, "no_price"
+
+
 def _today_et_date() -> str:
     return datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
 
@@ -133,15 +158,27 @@ def main():
 
     for pick in eligible:
         mapping = find_market_for_ml_pick(client, pick)
+        # Resolve price using fallback chain (yes_ask → last_price → bid+2)
+        # so a thin demo orderbook doesn't kill the simulation.
+        use_price, price_source = _resolve_use_price(mapping)
+
         order = {
             "pick": pick,
-            "market_ticker": mapping.get("market_ticker"),
-            "market_title":  mapping.get("market_title"),
-            "yes_side":      mapping.get("yes_side"),
-            "yes_ask_cents": mapping.get("current_yes_ask_cents"),
-            "model_prob":    _model_prob_from_pick(pick),
-            "would_place":   False,
-            "skip_reason":   None,
+            "market_ticker":  mapping.get("market_ticker"),
+            "market_title":   mapping.get("market_title"),
+            "yes_side":       mapping.get("yes_side"),
+            # Snapshot all available prices for replay/audit
+            "yes_ask_cents":      mapping.get("current_yes_ask_cents"),
+            "yes_bid_cents":      mapping.get("current_yes_bid_cents"),
+            "last_price_cents":   mapping.get("last_price_cents"),
+            "previous_yes_ask_cents": mapping.get("previous_yes_ask_cents"),
+            "volume_24h":         mapping.get("volume_24h"),
+            # The price stake math actually used
+            "use_price_cents": use_price,
+            "use_price_source": price_source,
+            "model_prob":     _model_prob_from_pick(pick),
+            "would_place":    False,
+            "skip_reason":    None,
         }
 
         # Map status checks — only 'matched' status means we can size a stake.
@@ -162,11 +199,13 @@ def main():
             skipped["no_side_unsupported"] = skipped.get("no_side_unsupported", 0) + 1
             continue
 
+        # Stake math uses the resolved use_price (with fallback chain) rather
+        # than yes_ask alone, so thin orderbooks don't always block sizing.
         sized = kelly_stake_dollars(
             bankroll_dollars            = float(cfg.get("bankroll_dollars") or 0),
             kelly_fraction              = float(cfg.get("kelly_fraction") or 0.25),
             model_prob                  = order["model_prob"],
-            yes_ask_cents               = order["yes_ask_cents"],
+            yes_ask_cents               = order["use_price_cents"],
             max_stake_dollars           = float(cfg.get("max_stake_per_pick_dollars") or 0),
             skip_if_yes_ask_above_cents = cfg.get("skip_if_yes_ask_above_cents"),
         )
@@ -231,8 +270,8 @@ def main():
             if not o["would_place"]: continue
             p = o["pick"]
             print(f"  ${o['stake_dollars']:>5.2f} on {o['market_ticker']:35} "
-                  f"({o['contracts']:>2} contracts @ {o['yes_ask_cents']}¢) "
-                  f"· model {o['model_prob']*100:.0f}% vs ask {o['yes_ask_cents']}¢ "
+                  f"({o['contracts']:>2} contracts @ {o['use_price_cents']}¢ from {o['use_price_source']}) "
+                  f"· model {o['model_prob']*100:.0f}% "
                   f"= edge +{o['edge_pct']*100:.1f}%")
             print(f"        pick: {p.get('sport','?')} {p.get('pickLabel','?')}")
 
