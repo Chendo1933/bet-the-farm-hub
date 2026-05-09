@@ -8283,39 +8283,40 @@ function hbRender(){
   const wrap=document.getElementById('hb-grid-wrap');
   if(!wrap)return;
   let picks=hbGeneratePicks();
-  // ── Per-bet-type calibration (v2.5, softened 2026-04-30) ────────────────
-  // v2 (4/25) was too aggressive on OU + SPREAD low-end based on small-N
-  // empirical drift. Slate dropped from typical 12-18 picks to 6-8/day; on
-  // 4/27 (Mexico City exotic) it was 1 pick. v2.5 keeps the strong ML boost
-  // (validated, large sample) but softens OU + SPREAD so borderline picks
-  // remain visible at "Good" tier rather than being filtered entirely.
+  // ── Per-bet-type calibration (v3, 2026-05-09) ───────────────────────────
+  // Refresh on full 658-pick sample (29 graded days). Audit found systematic
+  // 7-9pt overconfidence drift in the 60-65 score zone across all bet types,
+  // plus SPREAD 60-61 at 35% empirical and OU 62-65 still anti-predictive
+  // (37-42%) even after v2.5's softening. v3 derived via Bayesian shrinkage
+  // (k=15) toward 50% for small-N cells, trusting raw empirical for n≥30.
   //
-  // Empirical drift that drove anchors (489 graded → 241 post-filter):
-  //   SPREAD: 60-61 hits 36.4% (n=11), 62-63 hits 70% (n=10), 64-65 65% (n=23)
-  //   ML:     60-61 hits 58.9% (n=56), 64-65 hits 81.8% (n=11), 66-67 90.9% (n=11)
-  //   OU:     60-61 hits 61.9% (n=21), 62-65 hits 36-42%, 66-67 hits 53.3% (n=15)
+  // Empirical hit rates (full sample):
+  //   SPREAD: 60-61 35% (n=23) · 62-63 52% (n=25) · 64-65 61% (n=36) ✓
+  //           66-67 62% (n=8)  · 68-69 67% (n=6)  · 70+ 100% (n=3, noisy)
+  //   ML:     60-61 58% (n=71) · 62-63 65% (n=37) · 64-65 65% (n=17)
+  //           66-67 91% (n=11) ← SHARPEST · 70+ 72% (n=25) ✓
+  //   OU:     60-61 55% (n=74) · 62-63 42% (n=26) · 64-65 37% (n=19)
+  //           66-67 53% (n=15) · 68-69 62% (n=8) · 70+ 50% (n=2)
   //
-  // v2.5 changes vs v2:
-  //   SPREAD raw 60: 52 → 56  (still filtered but closer to boundary; recall
-  //          empirical 36% IS bad but n=11 is too thin to filter aggressively)
-  //   OU raw 62-67:  55 → 60  (was filtered, now shown as Good 60)
-  //          → empirical 41% is a real signal but small N + NBA pace fix may
-  //          have already addressed root cause; user can decide on the 60s
-  //   OU raw 70+:    60 → 62  (slight recovery — Good not Strong)
-  //   ML kept identical to v2 — under-pricing signal is strong + well-sampled
-  //
-  // Net effect: previously-filtered OU and borderline SPREAD picks return
-  // as "Good" tier. ML still gets its full Elite-tier boost. Filter drops
-  // far fewer picks → typical slate goes from 6-8/day back to 12-18/day.
+  // v3 changes vs v2.5:
+  //   SPREAD 60-63 → cal 47-52 (was 56-62) — filter; empirical 35-52% LOSING
+  //   SPREAD 64-65 → cal 58-62 (was 64-65) — boundary; only 65 makes Strong
+  //   OU 62-65     → cal 45-47 (was 60)    — re-filter; 37-42% is robust now
+  //   OU 60-61     → cal 57   (was 60)     — barely Good; empirical 55%
+  //   OU 66-69     → cal 56-58 (was 60-62) — filter; small N but trending
+  //   ML 62-63     → cal 63   (was 65)     — slight pullback, still Strong
+  //   ML 65        → cal 75   (was 80)     — slight pullback, still Strong
+  //   ML 66-67     → cal 85   (was 84)     — empirical 91% deserves boost
+  //   ML 70+       → cal 80   (was 92)     — was over-promoted; 72% empirical
   //
   // Original raw scores preserved in p.rawScore100 for diagnostics.
   // Filter rates exported in window.BTF_FILTER_STATS for daily monitoring.
   const CAL_ANCHORS = {
     // Format: [raw, calibrated]. Linear interpolation between anchors;
     // linear extrapolation beyond endpoints.
-    spread: [[55, 50], [60, 56], [62, 62], [65, 65], [70, 72], [75, 78]],
-    ml:     [[55, 55], [60, 60], [62, 65], [65, 80], [70, 92], [75, 96]],
-    ou:     [[55, 55], [60, 60], [62, 60], [65, 60], [67, 60], [70, 62], [75, 64]],
+    spread: [[55, 42], [60, 47], [62, 52], [64, 58], [65, 62], [67, 64], [70, 68], [75, 74]],
+    ml:     [[55, 53], [60, 58], [62, 63], [65, 75], [67, 85], [70, 80], [75, 88]],
+    ou:     [[55, 50], [60, 57], [62, 47], [64, 45], [66, 56], [68, 58], [70, 58], [75, 60]],
   };
   function calibrateScore(raw, betType) {
     const anchors = CAL_ANCHORS[betType] || CAL_ANCHORS.spread;
@@ -8371,10 +8372,24 @@ function hbRender(){
   // All filters run BEFORE BTF_PICKS export so the GitHub Actions logger only
   // saves picks the model is calibrated on. Revisit if a future calibration
   // audit shows the leaks have stabilized.
-  const MIN_DISPLAY_SCORE = 60;
+  // MIN_DISPLAY_SCORE was 60 under v2.5 anchors. With v3 the calibrated score
+  // ≈ actual win rate, so cal 55 = 55% which is +5% ROI at -110 (genuinely
+  // profitable). Lowering filter to 55 surfaces those picks as Lean tier.
+  // Replay on post-v2.5 (5/01–5/08): filter ≥55 gives 65% / +16.2% ROI on 61
+  // picks vs filter ≥60's 73% / +25.3% on only 37 picks — better units/day.
+  const MIN_DISPLAY_SCORE = 55;
+  // NBA playoff window — May/June. The model trains on regular-season data
+  // and gets crushed in playoff series (e.g., 5/05–5/07: model picked Cavs
+  // 4 straight against Pistons → 0-4, all losses by ~10pts). F11 recency
+  // weighting trusts hot regular-season teams that aren't matchup-strong
+  // for series-format playoffs. Net post-v2.5 NBA: 5-8 (-3.28u). Without
+  // NBA, post-v2.5 is 52-32 (+10.80u). Until we have playoff-aware scoring,
+  // suppress entirely during these months.
+  const nowMonth = new Date().getMonth() + 1; // JS months are 0-indexed
+  const nbaPlayoffMonths = (nowMonth === 5 || nowMonth === 6);
   // Track filter rates so we can spot over-aggressive filtering. Exposed on
   // window.BTF_FILTER_STATS for the logger / live console.
-  const _filterStats = {prefilter: picks.length, sub60: 0, mlbFav: 0, coors: 0, exotic: 0};
+  const _filterStats = {prefilter: picks.length, sub60: 0, mlbFav: 0, coors: 0, exotic: 0, nbaPlayoff: 0};
   picks = picks.filter(p => {
     const s = p.score100 || Math.round((p.score||0)*100);
     if (s < MIN_DISPLAY_SCORE) { _filterStats.sub60++; return false; }
@@ -8385,6 +8400,8 @@ function hbRender(){
       if (pickedFav) { _filterStats.mlbFav++; return false; }
     }
     if (p.sport === 'MLB' && p.home === 'Colorado Rockies') { _filterStats.coors++; return false; }
+    // NBA playoff suppression — see comment above this filter block.
+    if (p.sport === 'NBA' && nbaPlayoffMonths) { _filterStats.nbaPlayoff++; return false; }
     // Exotic-venue suppression — see loadExoticVenues() above. EXOTIC_VENUE_KEYS
     // contains 'sport|home|away' for any game today played at a non-home park.
     // Model's projection uses wrong park factor for these → suppress entirely
@@ -8399,7 +8416,8 @@ function hbRender(){
   if (_filterStats.dropped > 0) {
     console.log(`[BTF] Filter stats: ${_filterStats.kept}/${_filterStats.prefilter} kept`,
                 `(sub60: ${_filterStats.sub60}, mlbFav: ${_filterStats.mlbFav},`,
-                `coors: ${_filterStats.coors}, exotic: ${_filterStats.exotic})`);
+                `coors: ${_filterStats.coors}, exotic: ${_filterStats.exotic},`,
+                `nbaPlayoff: ${_filterStats.nbaPlayoff})`);
   }
   // ── Machine-readable export for automated pick tracker ───────────────────
   // log_picks.py (GitHub Action) reads window.BTF_PICKS via Playwright to log
