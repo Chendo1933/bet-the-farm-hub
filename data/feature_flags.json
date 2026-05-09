@@ -1,0 +1,26 @@
+{
+  "_doc": [
+    "Feature flags for the Bet The Farm Hub. Hub fetches this file at init",
+    "and exposes it on window.BTF_FEATURE_FLAGS. The GitHub Actions logger",
+    "(scripts/log_picks.py) sees the same state via the live hub it loads,",
+    "so a single file controls both the UI and what gets graded.",
+    "",
+    "To toggle a flag: edit this file, commit, push. Next workflow run picks",
+    "it up automatically; refresh the live hub to see UI changes."
+  ],
+
+  "nba_playoff_enabled": false,
+  "nba_playoff_enabled_doc": [
+    "Default false. NBA model has been -25% ROI during 2026 playoffs",
+    "(5-8 record on May 1–8 sample). The recency factor (F11) trusts hot",
+    "regular-season teams that don't translate to series-format playoffs —",
+    "e.g. Cavaliers picked 4x against Pistons → all 4 lost by ~10pts.",
+    "",
+    "Set to true to:",
+    "  - Show NBA picks in the live hub Hot Bets tab during May/June",
+    "  - Log them in data/picks/{date}.json so they get graded",
+    "  - Display a 🏀⚠️ warning on each NBA pick card",
+    "",
+    "Reset to false (or simply let June end) to re-enable suppression."
+  ]
+}

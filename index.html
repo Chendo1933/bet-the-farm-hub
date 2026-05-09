@@ -6691,6 +6691,9 @@ function init(){
   setTimeout(()=>autoSyncOnLoad(),800);
   // Auto-pull live injury reports from ESPN (non-blocking, ~2s delay to let page render first)
   setTimeout(()=>autoFetchInjuries(),2000);
+  // Load feature flags FIRST (before exotic venues / morning odds / locked
+  // slate) so any flag they depend on is set. Synchronous-style fire 0ms.
+  setTimeout(()=>loadFeatureFlags(),0);
   // Load morning odds snapshot for line-movement scoring (F12). Must fire
   // BEFORE any refreshAllOdds() call so importGamesFromAPI sees the data.
   setTimeout(()=>loadMorningOdds(),50);
@@ -6704,6 +6707,28 @@ function init(){
   setTimeout(()=>hbLoadLockedSlate(),300);
 }
 window.addEventListener('DOMContentLoaded',init);
+
+// ── Feature flags (data/feature_flags.json) ──────────────────────────────────
+// Single source of truth for hub UI behavior + logger behavior. The logger
+// runs Playwright against this same hub, so any flag the hub respects is
+// automatically respected by the logger. Edit data/feature_flags.json to
+// toggle; refresh hub or wait for next workflow run.
+let BTF_FEATURE_FLAGS = {};
+async function loadFeatureFlags(){
+  try{
+    const r=await fetch('data/feature_flags.json');
+    if(!r.ok)return;
+    const data=await r.json();
+    BTF_FEATURE_FLAGS=data;
+    window.BTF_FEATURE_FLAGS=data;
+    const enabled=Object.entries(data).filter(([k,v])=>!k.startsWith('_')&&typeof v==='boolean'&&v).map(([k])=>k);
+    if(enabled.length){
+      console.log('[BTF] Feature flags ON:',enabled.join(', '));
+    }
+  }catch(e){
+    console.warn('[BTF] feature_flags fetch failed:',e.message);
+  }
+}
 
 // ── Morning odds snapshot (line-movement signal F12) ─────────────────────────
 // Fetches data/odds_snapshots/{ET-today}-morning.json (written by 7 AM ET cron
@@ -8383,10 +8408,13 @@ function hbRender(){
   // 4 straight against Pistons → 0-4, all losses by ~10pts). F11 recency
   // weighting trusts hot regular-season teams that aren't matchup-strong
   // for series-format playoffs. Net post-v2.5 NBA: 5-8 (-3.28u). Without
-  // NBA, post-v2.5 is 52-32 (+10.80u). Until we have playoff-aware scoring,
-  // suppress entirely during these months.
+  // NBA, post-v2.5 is 52-32 (+10.80u). Default suppress; opt-in via
+  // data/feature_flags.json `nba_playoff_enabled: true` if you want to bet
+  // them with eyes open and have them tracked.
   const nowMonth = new Date().getMonth() + 1; // JS months are 0-indexed
-  const nbaPlayoffMonths = (nowMonth === 5 || nowMonth === 6);
+  const inNbaPlayoffWindow = (nowMonth === 5 || nowMonth === 6);
+  const nbaPlayoffOptIn = (BTF_FEATURE_FLAGS||{}).nba_playoff_enabled === true;
+  const nbaPlayoffMonths = inNbaPlayoffWindow && !nbaPlayoffOptIn;
   // Track filter rates so we can spot over-aggressive filtering. Exposed on
   // window.BTF_FILTER_STATS for the logger / live console.
   const _filterStats = {prefilter: picks.length, sub60: 0, mlbFav: 0, coors: 0, exotic: 0, nbaPlayoff: 0};
@@ -8564,13 +8592,22 @@ function hbRender(){
       return `<div class="hb-frow hb-frow-${f.t}"><span class="hb-frow-icon">${icon}</span>${f.l}</div>`;
     }).join('');
 
+    // NBA playoff warning badge — when feature flag is on and we're in
+    // May/June, NBA picks pass the filter but display a caution flag so the
+    // user remembers the model is unreliable for series-format playoffs.
+    const _nowMonth = new Date().getMonth() + 1;
+    const _isNbaPlayoff = p.sport === 'NBA' && (_nowMonth === 5 || _nowMonth === 6);
+    const playoffBadge = _isNbaPlayoff
+      ? `<span title="NBA playoffs — model has been -25% ROI on this sample. Eyes open." style="background:rgba(239,68,68,.15);color:#ef4444;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase">🏀⚠️ Playoff</span>`
+      : '';
     html+=`<div class="hb-card hb-card-${tier}">
       <div class="hb-card-top hb-top-${tier}"></div>
       <div class="hb-card-body">
         <div class="hb-card-header">
-          <div style="display:flex;align-items:center;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <span class="hb-sport-tag ${sportClass}">${p.sport}</span>
             <span class="hb-conf-badge hb-conf-${tier}">${confLabel}</span>
+            ${playoffBadge}
           </div>
           ${hbScoreRing(p.score100,tier)}
         </div>
