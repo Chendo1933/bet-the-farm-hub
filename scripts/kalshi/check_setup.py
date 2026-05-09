@@ -144,6 +144,12 @@ def check_pick_mapping(client: KalshiClient) -> bool:
         elif r.get("reason"):
             line += f" — {r['reason']}"
         print(line)
+        # When ambiguous, print the competing candidates so we can see what's
+        # being conflated (real doubleheaders vs futures/alt-line markets vs
+        # season-long props with same teams).
+        if r["status"] == "ambiguous":
+            for c in r.get("candidates", [])[:5]:
+                print(f"      · {c.get('ticker','?'):40} '{c.get('title','?')[:60]}'")
     print(f"\n  Summary: {summary}")
     return summary["matched"] > 0 or len(ml_picks) == 0
 
