@@ -201,7 +201,8 @@ def _event_matches_game(event: dict, sport: str, home: str, away: str) -> int:
     return 0
 
 
-def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
+def find_market_for_ml_pick(client: KalshiClient, pick: dict,
+                            events_cache: dict | None = None) -> dict:
     """
     Try to find the YES side of the picked team's win-contract on Kalshi.
 
@@ -232,8 +233,17 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
         return {"status": "unsupported", "reason": "Could not determine picked team", "pick": pick}
 
     # Step 1: find candidate events matching the (home, away) pair within the series.
-    events_resp = client.list_events(status="open", series_ticker=series, limit=200)
-    events = events_resp.get("events", [])
+    # Cache the full event list per series — most slates have many picks across the
+    # same 1-3 sports, and re-listing 200 events per pick burns through Kalshi's
+    # rate limit (live API has tighter limits than demo). The cache is keyed by
+    # series_ticker and reused across calls in the same session.
+    if events_cache is not None and series in events_cache:
+        events = events_cache[series]
+    else:
+        events_resp = client.list_events(status="open", series_ticker=series, limit=200)
+        events = events_resp.get("events", [])
+        if events_cache is not None:
+            events_cache[series] = events
     scored = [(e, _event_matches_game(e, sport, home, away)) for e in events]
     strong = [e for e, s in scored if s == 2]
     weak   = [e for e, s in scored if s == 1]
@@ -354,5 +364,10 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
 
 
 def map_picks(client: KalshiClient, picks: list[dict]) -> list[dict]:
-    """Run pick→market mapping over a list of picks. Returns one result per pick."""
-    return [find_market_for_ml_pick(client, p) for p in picks]
+    """
+    Run pick→market mapping over a list of picks. Shares an events cache
+    across all calls so list_events fires at most once per sport — critical
+    for staying under live Kalshi rate limits.
+    """
+    cache: dict = {}
+    return [find_market_for_ml_pick(client, p, events_cache=cache) for p in picks]

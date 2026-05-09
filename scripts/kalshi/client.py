@@ -68,28 +68,44 @@ class KalshiClient:
             self._key_id = _auth.get_api_key_id()
 
     def _request(self, method: str, path: str, params: dict | None = None,
-                 require_auth: bool = True) -> dict:
+                 require_auth: bool = True, max_retries: int = 3) -> dict:
         # Path used in signing must match what we send (including query string).
         full_path = path
         if params:
             full_path = f"{path}?{urlencode(params)}"
         url = f"{self.base_url}{full_path}"
-        # Kalshi signs the path WITHOUT the /trade-api/v2 prefix or with — the
-        # docs are inconsistent across versions. The current spec signs the
-        # full path including the prefix exactly as sent. We pass the path
-        # starting from /trade-api/v2/... to match.
-        # Path passed to sign_request must start with the version segment.
+        # Kalshi signs the path including the /trade-api/v2 prefix exactly
+        # as sent. Re-sign each retry so the timestamp stays fresh.
         sign_path = f"/trade-api/v2{full_path}"
-        headers = {"Accept": "application/json"}
-        if require_auth:
-            self._ensure_auth()
-            headers.update(_auth.auth_headers(self._private_key, self._key_id, method, sign_path))
-        resp = requests.request(method.upper(), url, headers=headers, timeout=self.timeout)
-        if resp.status_code >= 400:
-            raise KalshiAPIError(resp.status_code, resp.text, full_path)
-        if not resp.text:
-            return {}
-        return resp.json()
+
+        for attempt in range(max_retries + 1):
+            headers = {"Accept": "application/json"}
+            if require_auth:
+                self._ensure_auth()
+                headers.update(_auth.auth_headers(self._private_key, self._key_id, method, sign_path))
+            resp = requests.request(method.upper(), url, headers=headers, timeout=self.timeout)
+
+            # Retry on 429 (rate limit) with backoff. Kalshi may include a
+            # Retry-After header indicating seconds to wait; if not, fall back
+            # to exponential 1s/2s/4s schedule.
+            if resp.status_code == 429 and attempt < max_retries:
+                ra = resp.headers.get("Retry-After", "")
+                try:
+                    wait = float(ra) if ra else (2 ** attempt)
+                except ValueError:
+                    wait = 2 ** attempt
+                print(f"  [kalshi rate limit] sleeping {wait}s (attempt {attempt+1}/{max_retries})")
+                import time as _time
+                _time.sleep(wait)
+                continue
+
+            if resp.status_code >= 400:
+                raise KalshiAPIError(resp.status_code, resp.text, full_path)
+            if not resp.text:
+                return {}
+            return resp.json()
+        # Should not reach here, but defensive
+        raise KalshiAPIError(429, "Rate limit exceeded after retries", full_path)
 
     # ── Account ─────────────────────────────────────────────────────────────
     def get_balance(self) -> dict:

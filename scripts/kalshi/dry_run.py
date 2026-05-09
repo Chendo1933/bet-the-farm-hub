@@ -135,7 +135,11 @@ def main():
     if not picks_path.exists():
         sys.exit(f"Picks file not found: {picks_path}")
 
-    print(f"Kalshi dry-run · {date_key} · environment={cfg.get('environment','demo')}")
+    # Resolve environment: KALSHI_ENVIRONMENT env var takes precedence over
+    # config file. Lets you switch demo↔live just by re-exporting the var,
+    # without editing kalshi_config.json.
+    active_env = os.environ.get("KALSHI_ENVIRONMENT") or cfg.get("environment", "demo")
+    print(f"Kalshi dry-run · {date_key} · environment={active_env}")
     print(f"  Reading {picks_path}")
     data = json.loads(picks_path.read_text())
     all_picks = data.get("picks", [])
@@ -150,14 +154,17 @@ def main():
     print(f"  {len(eligible)} eligible after score≥{min_score} + bet-type filter")
 
     # Map each eligible pick to a Kalshi market (live API call).
-    client = KalshiClient(environment=cfg.get("environment"))
+    client = KalshiClient(environment=active_env)
+    # Shared events cache across all picks — list_events fires at most once
+    # per sport instead of once per pick. Critical for live rate limits.
+    events_cache: dict = {}
     orders = []
     skipped: dict = {}
     daily_exposure = 0.0
     daily_cap = float(cfg.get("max_daily_exposure_dollars") or 0)
 
     for pick in eligible:
-        mapping = find_market_for_ml_pick(client, pick)
+        mapping = find_market_for_ml_pick(client, pick, events_cache=events_cache)
         # Resolve price using fallback chain (yes_ask → last_price → bid+2)
         # so a thin demo orderbook doesn't kill the simulation.
         use_price, price_source = _resolve_use_price(mapping)
