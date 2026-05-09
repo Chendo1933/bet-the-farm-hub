@@ -1,0 +1,63 @@
+name: Kalshi Reconcile
+
+# Fires automatically after Nightly Pick Grader completes successfully.
+# Walks every dry-run file in data/kalshi_dryrun/, looks up each order's
+# outcome in the freshly-graded pick_history.json, computes theoretical
+# PnL using Kalshi binary-contract math, and commits the aggregated
+# perf snapshot to data/kalshi_dryrun_perf.json.
+#
+# NO API CALLS to Kalshi — pure local file reconciliation. Requires no
+# secrets. Will run even before user has added Kalshi auth secrets,
+# producing 'no_history_match' on any orders that don't line up (which
+# is fine — those just stay unreconciled until grading catches up).
+on:
+  workflow_run:
+    workflows: ["Nightly Pick Grader"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Reconcile dry-run orders against graded picks
+        # No deps needed — reconcile.py uses only stdlib.
+        run: python scripts/kalshi/reconcile.py
+
+      - name: Commit reconciled PnL data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No reconcile changes to commit"
+          else
+            git commit -m "kalshi: reconcile dry-run PnL $(date -d 'yesterday' +'%Y-%m-%d')"
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "✅ Reconcile committed"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      reconcile
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Kalshi PnL reconciliation — kalshi_dryrun_perf.json is stale until manual rerun"

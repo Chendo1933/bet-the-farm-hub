@@ -1,0 +1,82 @@
+name: Kalshi Dry-Run
+
+# Fires automatically after Daily Pick Logger completes successfully.
+# Reads the freshly-committed data/picks/{date}.json, runs Phase 2 dry-run
+# simulator against live Kalshi prices, commits hypothetical orders to
+# data/kalshi_dryrun/{date}.json. NO ORDERS PLACED — purely paper trading.
+#
+# Required secrets (Settings → Secrets and variables → Actions):
+#   KALSHI_API_KEY_ID    — your live Kalshi API key UUID (read-only key)
+#   KALSHI_PRIVATE_KEY   — full PEM contents of your live private key
+#                          (paste the entire `-----BEGIN PRIVATE KEY-----`
+#                           through `-----END PRIVATE KEY-----` block)
+#
+# Optional repository variable:
+#   KALSHI_ENVIRONMENT   — 'live' (default) or 'demo'
+#
+# If secrets aren't set, the workflow runs but skips the simulator step
+# (no auth = no API calls). This lets the workflow file land before
+# the secrets are configured without breaking other automation.
+on:
+  workflow_run:
+    workflows: ["Daily Pick Logger"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  dry-run:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install cryptography requests
+
+      - name: Run dry-run simulator (live Kalshi prices, no orders placed)
+        # Skip cleanly if secrets aren't configured yet — lets the workflow
+        # file land before the user adds KALSHI_API_KEY_ID / KALSHI_PRIVATE_KEY.
+        if: ${{ secrets.KALSHI_API_KEY_ID != '' }}
+        env:
+          KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
+          KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_API_KEY_ID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_PRIVATE_KEY }}
+        run: python scripts/kalshi/dry_run.py
+
+      - name: Commit dry-run snapshot
+        if: ${{ secrets.KALSHI_API_KEY_ID != '' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/kalshi_dryrun/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No dry-run changes to commit"
+          else
+            git commit -m "kalshi: dry-run snapshot $(date +'%Y-%m-%d')"
+            # Race-tolerant push: rebase against any concurrent automated
+            # commits (log-picks-verify, etc.) before pushing.
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "✅ Dry-run snapshot committed"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      dry-run
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Kalshi dry-run logger — paper-trade orders not captured for today"

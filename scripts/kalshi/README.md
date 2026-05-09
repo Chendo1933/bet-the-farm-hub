@@ -179,6 +179,74 @@ Edit the file, re-run `dry_run.py`, see the impact immediately.
 - **Spread/total picks**: Phase 2 still ML-only. Spread on Kalshi is
   thinly covered; total contracts exist but mapping needs different logic.
 
+---
+
+## Phase 2 Automation — runs daily without manual action
+
+Two GitHub Actions workflows automate the full Phase 2 cycle so you don't
+have to remember to run anything manually.
+
+### kalshi-dry-run.yml (fires after morning picks logger)
+
+Trigger chain:
+```
+11:50 AM ET — log-picks.yml fires
+              ↓ commits data/picks/{date}.json
+              ↓ workflow_run trigger on success
+~11:51 AM ET — kalshi-dry-run.yml fires
+              ↓ runs scripts/kalshi/dry_run.py against live Kalshi
+              ↓ commits data/kalshi_dryrun/{date}.json
+```
+
+### kalshi-reconcile.yml (fires after nightly grader)
+
+Trigger chain:
+```
+04:00 AM ET — log-results.yml writes yesterday's results
+              ↓ workflow_run on success
+~04:01 AM — grade-picks.yml grades, updates pick_history.json
+              ↓ workflow_run on success
+~04:02 AM — kalshi-reconcile.yml fires
+              ↓ runs scripts/kalshi/reconcile.py
+              ↓ commits data/kalshi_dryrun_perf.json
+```
+
+### Required setup — three secrets/variables in repo settings
+
+Go to **Settings → Secrets and variables → Actions** in GitHub and add:
+
+**Repository secrets:**
+
+1. `KALSHI_API_KEY_ID` — your live Kalshi API key UUID
+   - Just paste the UUID Kalshi gave you when you uploaded the public key
+
+2. `KALSHI_PRIVATE_KEY` — the FULL contents of your live PEM file
+   ```bash
+   cat ~/.config/kalshi/live.pem
+   ```
+   Copy everything from `-----BEGIN PRIVATE KEY-----` through
+   `-----END PRIVATE KEY-----` (inclusive, all lines). Paste as the
+   secret value. Multi-line is fine — GitHub handles it.
+
+**Optional repository variable** (Variables tab, not Secrets):
+
+3. `KALSHI_ENVIRONMENT` = `live` (defaults to `live` if not set)
+
+That's it. Once secrets are in, the workflows take over automatically:
+- Picks are logged → dry-run runs against live prices → snapshot committed
+- Grading runs → reconcile computes PnL → perf file committed
+- Either fails → Discord/Slack notification fires (if WEBHOOK_URL set)
+
+You can manually trigger either workflow from the Actions tab using the
+"Run workflow" button (workflow_dispatch). Useful for backfilling.
+
+### Monitoring without checking the repo
+
+Once you have a `WEBHOOK_URL` secret configured (any Discord/Slack
+webhook), failures auto-notify your phone. Successes are silent — just
+check `data/kalshi_dryrun_perf.json` weekly to see how Kalshi PnL is
+tracking against your sportsbook ROI.
+
 ## Common issues
 
 **`401 Unauthorized` on balance check**
