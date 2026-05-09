@@ -909,6 +909,19 @@ th.sort-desc::after{content:' ↓';color:var(--gold);font-size:10px;}
     </div>
     <div class="hb-locked-body" id="hb-locked-body" style="display:none"></div>
   </div>
+  <!-- ── Kalshi Paper-Trade Tracker ───────────────────────────────────────
+       Reads data/kalshi_dryrun/{today}.json (today's would-have-placed
+       orders against live Kalshi prices) and data/kalshi_dryrun_perf.json
+       (running aggregate PnL across all reconciled days). Same collapsible
+       pattern as the Locked Slate above.
+       Hidden if no data files exist (e.g., before first auto-run). -->
+  <div id="hb-kalshi-tracker" class="hb-locked" style="display:none">
+    <div class="hb-locked-hdr" onclick="hbToggleKalshi()">
+      <span id="hb-kalshi-summary">🎲 Loading Kalshi paper-trade tracker…</span>
+      <span class="hb-locked-toggle" id="hb-kalshi-toggle">▾</span>
+    </div>
+    <div class="hb-locked-body" id="hb-kalshi-body" style="display:none"></div>
+  </div>
   <div id="hb-grid-wrap"></div>
 </div>
 <!-- ── OVERVIEW ─────────────────────────────────────── -->
@@ -6705,6 +6718,9 @@ function init(){
   // (data/picks/{ET-today}.json). Read-only snapshot; lets the user see what's
   // being graded today separate from the live UI which keeps shifting as odds drift.
   setTimeout(()=>hbLoadLockedSlate(),300);
+  // Kalshi paper-trade tracker — fetches data/kalshi_dryrun/{today}.json +
+  // data/kalshi_dryrun_perf.json. Hidden if neither exists yet.
+  setTimeout(()=>hbLoadKalshiTracker(),350);
 }
 window.addEventListener('DOMContentLoaded',init);
 
@@ -6869,6 +6885,122 @@ async function hbLoadLockedSlate(){
 function hbToggleLocked(){
   const body=document.getElementById('hb-locked-body');
   const tog=document.getElementById('hb-locked-toggle');
+  if(!body)return;
+  if(body.style.display==='none'){body.style.display='';tog.textContent='▴';}
+  else{body.style.display='none';tog.textContent='▾';}
+}
+
+// ── Kalshi Paper-Trade Tracker ────────────────────────────────────────────────
+// Fetches today's dry-run snapshot + the running PnL aggregate and renders a
+// collapsible panel below the Locked Slate. Hidden when neither file exists
+// (e.g., before the first kalshi-dry-run.yml workflow has fired).
+//
+// Data sources written by the auto-pipeline:
+//   data/kalshi_dryrun/{ET-today}.json   — what auto-trader would have placed
+//   data/kalshi_dryrun_perf.json         — running win/loss/PnL across all days
+let _kalshiTrackerLoaded=false;
+async function hbLoadKalshiTracker(){
+  if(_kalshiTrackerLoaded)return;
+  // ET-today date for the per-day file lookup (matches dry_run.py filename)
+  const nowMs=Date.now();
+  const etOff=getETOffsetHours(nowMs)*3600*1000;
+  const etNow=new Date(nowMs+etOff);
+  const y=etNow.getUTCFullYear();
+  const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+  const d=String(etNow.getUTCDate()).padStart(2,'0');
+  const dateKey=`${y}-${m}-${d}`;
+
+  // Both files are optional — fetch in parallel, allow either to fail silently.
+  let today=null,perf=null;
+  try{
+    const r=await fetch(`data/kalshi_dryrun/${dateKey}.json`);
+    if(r.ok)today=await r.json();
+  }catch(_){}
+  try{
+    const r=await fetch('data/kalshi_dryrun_perf.json');
+    if(r.ok)perf=await r.json();
+  }catch(_){}
+  if(!today&&!perf)return;  // neither file exists yet — leave panel hidden
+
+  const wrap=document.getElementById('hb-kalshi-tracker');
+  if(!wrap)return;
+  wrap.style.display='';
+  _kalshiTrackerLoaded=true;
+
+  // Build the one-line summary (visible when collapsed)
+  const parts=['🎲 Kalshi paper-trade'];
+  if(today){
+    const orders=(today.orders||[]).filter(o=>o.would_place);
+    const stake=(today.summary&&today.summary.total_stake_dollars)||0;
+    parts.push(`${orders.length} order${orders.length===1?'':'s'} today ($${stake.toFixed(2)})`);
+  }
+  if(perf&&perf.total_orders_placed){
+    const roi=perf.roi_pct||0;
+    const pnl=perf.total_pnl_dollars||0;
+    const wpct=perf.win_pct||0;
+    const sign=pnl>=0?'+':'';
+    parts.push(`all-time: ${perf.wins||0}-${perf.losses||0} (${wpct.toFixed(1)}%) · ${sign}$${pnl.toFixed(2)} (${sign}${roi.toFixed(1)}%)`);
+  } else {
+    parts.push('all-time: awaiting first reconcile');
+  }
+  document.getElementById('hb-kalshi-summary').textContent=parts.join(' · ');
+
+  // Build expanded body
+  const escapeHtml=s=>String(s||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+  let html='';
+
+  // Today's orders section
+  if(today){
+    const orders=today.orders||[];
+    const placed=orders.filter(o=>o.would_place);
+    const skipped=orders.filter(o=>!o.would_place);
+    html+=`<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:4px 0 6px">Today's paper orders (${placed.length} placed${skipped.length?`, ${skipped.length} skipped`:''})</div>`;
+    if(placed.length){
+      placed.forEach(o=>{
+        const pnl=o.pnl_dollars;  // present after reconcile
+        const outcome=o.outcome;
+        const settledTag=outcome
+          ? (outcome==='win'?'<span style="color:#22c55e;font-weight:700">✓ WIN</span>'
+            : outcome==='loss'?'<span style="color:#ef4444;font-weight:700">✗ LOSS</span>'
+            : `<span style="color:var(--muted)">${escapeHtml(outcome)}</span>`)
+          : '<span style="color:var(--muted);font-size:10px">pending</span>';
+        const pnlStr=(pnl!=null)?` · ${pnl>=0?'+':''}$${pnl.toFixed(2)}`:'';
+        html+=`<div class="hb-locked-pick">
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">
+            <span style="color:var(--gold);font-weight:700">$${(o.stake_dollars||0).toFixed(2)}</span>
+            <span style="color:var(--muted);font-size:10px;margin:0 4px">on</span>
+            <span style="font-size:11px">${escapeHtml(o.market_ticker||'?')}</span>
+            <span style="color:var(--muted);font-size:10px"> — ${escapeHtml(o.pick&&o.pick.pickLabel||'?')}</span>
+          </span>
+          <span style="font-size:11px">${o.contracts||0}× @ ${o.use_price_cents||'?'}¢ · edge ${o.edge_pct!=null?(o.edge_pct*100).toFixed(1)+'%':'?'} · ${settledTag}${pnlStr}</span>
+        </div>`;
+      });
+    } else if(skipped.length){
+      html+=`<div style="font-size:11px;color:var(--muted);padding:5px 0">No orders placed today. Skipped: `+
+        Object.entries(today.summary&&today.summary.skipped_by_reason||{}).map(([k,v])=>`${k}=${v}`).join(', ')+'</div>';
+    }
+  } else {
+    html+=`<div style="font-size:11px;color:var(--muted);padding:5px 0">Today's dry-run hasn't fired yet — runs ~11:51 AM ET after the picks logger.</div>`;
+  }
+
+  // Aggregate PnL section
+  if(perf){
+    html+=`<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 6px">All-time paper PnL (${perf.days||0} day${perf.days===1?'':'s'} reconciled)</div>`;
+    const stat=(label,val,color='var(--fg)')=>`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:12px"><span style="color:var(--muted)">${label}</span><span style="color:${color};font-weight:700">${val}</span></div>`;
+    const pnl=perf.total_pnl_dollars||0;
+    const pnlColor=pnl>0?'#22c55e':(pnl<0?'#ef4444':'var(--fg)');
+    html+=stat('Orders placed',perf.total_orders_placed||0);
+    html+=stat('Record',`${perf.wins||0}-${perf.losses||0} (${(perf.win_pct||0).toFixed(1)}%)`);
+    html+=stat('Total stake',`$${(perf.total_stake_dollars||0).toFixed(2)}`);
+    html+=stat('Total PnL',`${pnl>=0?'+':''}$${pnl.toFixed(2)}`,pnlColor);
+    html+=stat('ROI',`${(perf.roi_pct||0)>=0?'+':''}${(perf.roi_pct||0).toFixed(1)}%`,pnlColor);
+  }
+
+  document.getElementById('hb-kalshi-body').innerHTML=html;
+}
+function hbToggleKalshi(){
+  const body=document.getElementById('hb-kalshi-body');
+  const tog=document.getElementById('hb-kalshi-toggle');
   if(!body)return;
   if(body.style.display==='none'){body.style.display='';tog.textContent='▴';}
   else{body.style.display='none';tog.textContent='▾';}
