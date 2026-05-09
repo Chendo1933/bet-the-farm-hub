@@ -1,0 +1,79 @@
+{
+  "_doc": [
+    "Kalshi auto-trading risk parameters and feature flags.",
+    "Secrets (API key ID + private key) are NEVER stored here — they live in",
+    "environment variables: KALSHI_API_KEY_ID, KALSHI_PRIVATE_KEY_PATH (or",
+    "KALSHI_PRIVATE_KEY for inline PEM), KALSHI_ENVIRONMENT (demo|live).",
+    "",
+    "All caps default to safe values; raise gradually as confidence builds."
+  ],
+
+  "auto_trading_enabled": false,
+  "auto_trading_enabled_doc": [
+    "Master kill switch. Default false. When false, Phase 3 order-placement",
+    "runs are skipped entirely. Even when true, individual safety caps below",
+    "still apply. Flip to true ONLY after Phase 2 dry-run mode has been",
+    "validated for at least 1 week."
+  ],
+
+  "environment": "demo",
+  "environment_doc": [
+    "'demo' → fake-money sandbox at demo-api.kalshi.co.",
+    "'live' → real money at api.elections.kalshi.com.",
+    "Always start in demo. Switch to live only after demo orders match",
+    "expectations for at least a week."
+  ],
+
+  "min_calibrated_score": 65,
+  "min_calibrated_score_doc": [
+    "Only auto-place picks at calibrated score ≥ this value. Empirically:",
+    "  cal 65-67 ML hits 91% (n=11)",
+    "  cal 60-64 ML hits 65% (n=54)",
+    "Set high to start (only chase the sharpest signal). Lower if you want",
+    "more volume."
+  ],
+
+  "supported_bet_types": ["ml"],
+  "supported_bet_types_doc": [
+    "Only ML picks auto-place in Phase 1/2. Spread/total need their own",
+    "mapping logic since Kalshi has limited spread coverage."
+  ],
+
+  "max_stake_per_pick_dollars": 10,
+  "max_stake_per_pick_dollars_doc": [
+    "Hard cap on a single order, regardless of Kelly recommendation.",
+    "Start at $10. Raise after a month of validated demo + live results."
+  ],
+
+  "max_daily_exposure_dollars": 50,
+  "max_daily_exposure_dollars_doc": [
+    "Sum across all auto-placed orders in one ET day. New orders skip if",
+    "this would be exceeded. Defends against runaway bug placing many bets."
+  ],
+
+  "kelly_fraction": 0.25,
+  "kelly_fraction_doc": [
+    "Fractional Kelly multiplier. 1.0 = full Kelly (max growth, max",
+    "variance). 0.25 = quarter Kelly (conservative, recommended).",
+    "stake = bankroll × kelly_fraction × (edge / odds)"
+  ],
+
+  "bankroll_dollars": 500,
+  "bankroll_doc": [
+    "Reference bankroll for Kelly stake calculation. Update manually when",
+    "you deposit/withdraw. Phase 3+ may auto-sync from Kalshi balance."
+  ],
+
+  "kill_switch_daily_loss_dollars": 100,
+  "kill_switch_daily_loss_doc": [
+    "If realized + open losses on a given ET day exceed this, no new orders",
+    "are placed for the rest of the day. Manual reset required."
+  ],
+
+  "skip_if_yes_ask_above_cents": 80,
+  "skip_if_yes_ask_above_cents_doc": [
+    "Don't place if the YES side asking price is ≥ this many cents (≥80%",
+    "implied probability). Even on heavy favorites, low edge × high",
+    "collateral = poor risk-adjusted return."
+  ]
+}
