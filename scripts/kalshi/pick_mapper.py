@@ -40,6 +40,66 @@ def _normalize(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", (s or "").lower())
 
 
+# Hub team-name → Kalshi ticker abbreviation. Used as a backup signal when
+# yes_sub_title doesn't disambiguate. Add new entries when a `no_market`
+# result surfaces a market we can verify by suffix.
+_KALSHI_TEAM_ABBR: dict[str, set[str]] = {
+    # NHL
+    "Anaheim Ducks": {"ANA"}, "Boston Bruins": {"BOS"}, "Buffalo Sabres": {"BUF"},
+    "Calgary Flames": {"CGY"}, "Carolina Hurricanes": {"CAR"}, "Chicago Blackhawks": {"CHI"},
+    "Colorado Avalanche": {"COL"}, "Columbus Blue Jackets": {"CBJ"},
+    "Dallas Stars": {"DAL"}, "Detroit Red Wings": {"DET"}, "Edmonton Oilers": {"EDM"},
+    "Florida Panthers": {"FLA"}, "Los Angeles Kings": {"LAK", "LA"},
+    "Minnesota Wild": {"MIN"}, "Montreal Canadiens": {"MTL"}, "Nashville Predators": {"NSH"},
+    "New Jersey Devils": {"NJD", "NJ"}, "New York Islanders": {"NYI"},
+    "New York Rangers": {"NYR"}, "Ottawa Senators": {"OTT"}, "Philadelphia Flyers": {"PHI"},
+    "Pittsburgh Penguins": {"PIT"}, "San Jose Sharks": {"SJS", "SJ"},
+    "Seattle Kraken": {"SEA"}, "St. Louis Blues": {"STL"},
+    "Tampa Bay Lightning": {"TBL", "TB"}, "Toronto Maple Leafs": {"TOR"},
+    "Utah Mammoth": {"UTA"}, "Vancouver Canucks": {"VAN"},
+    "Vegas Golden Knights": {"VGK"}, "Washington Capitals": {"WSH"},
+    "Winnipeg Jets": {"WPG"},
+    # MLB
+    "Arizona Diamondbacks": {"ARI"}, "Atlanta Braves": {"ATL"}, "Baltimore Orioles": {"BAL"},
+    "Boston Red Sox": {"BOS"}, "Chicago Cubs": {"CHC", "CHI"}, "Chicago White Sox": {"CWS", "CHW"},
+    "Cincinnati Reds": {"CIN"}, "Cleveland Guardians": {"CLE"}, "Colorado Rockies": {"COL"},
+    "Detroit Tigers": {"DET"}, "Houston Astros": {"HOU"}, "Kansas City Royals": {"KC", "KCR"},
+    "Los Angeles Angels": {"LAA"}, "Los Angeles Dodgers": {"LAD"}, "Miami Marlins": {"MIA"},
+    "Milwaukee Brewers": {"MIL"}, "Minnesota Twins": {"MIN"}, "New York Mets": {"NYM"},
+    "New York Yankees": {"NYY"}, "Athletics": {"OAK", "ATH"},
+    "Philadelphia Phillies": {"PHI"}, "Pittsburgh Pirates": {"PIT"},
+    "San Diego Padres": {"SD", "SDP"}, "San Francisco Giants": {"SF", "SFG"},
+    "Seattle Mariners": {"SEA"}, "St. Louis Cardinals": {"STL"},
+    "Tampa Bay Rays": {"TB", "TBR"}, "Texas Rangers": {"TEX"},
+    "Toronto Blue Jays": {"TOR"}, "Washington Nationals": {"WSH", "WAS"},
+    # NBA
+    "Atlanta Hawks": {"ATL"}, "Boston Celtics": {"BOS"}, "Brooklyn Nets": {"BKN"},
+    "Charlotte Hornets": {"CHA"}, "Chicago Bulls": {"CHI"}, "Cleveland Cavaliers": {"CLE"},
+    "Dallas Mavericks": {"DAL"}, "Denver Nuggets": {"DEN"}, "Detroit Pistons": {"DET"},
+    "Golden State Warriors": {"GSW", "GS"}, "Houston Rockets": {"HOU"},
+    "Indiana Pacers": {"IND"}, "LA Clippers": {"LAC"}, "Los Angeles Clippers": {"LAC"},
+    "Los Angeles Lakers": {"LAL"}, "Memphis Grizzlies": {"MEM"}, "Miami Heat": {"MIA"},
+    "Milwaukee Bucks": {"MIL"}, "Minnesota Timberwolves": {"MIN"},
+    "New Orleans Pelicans": {"NOP", "NO"}, "New York Knicks": {"NYK"},
+    "Oklahoma City Thunder": {"OKC"}, "Orlando Magic": {"ORL"},
+    "Philadelphia 76ers": {"PHI"}, "Phoenix Suns": {"PHX"},
+    "Portland Trail Blazers": {"POR"}, "Sacramento Kings": {"SAC"},
+    "San Antonio Spurs": {"SA", "SAS"}, "Toronto Raptors": {"TOR"},
+    "Utah Jazz": {"UTA"}, "Washington Wizards": {"WAS", "WSH"},
+}
+
+
+def _team_abbreviations(team_name: str) -> set[str]:
+    """Look up known Kalshi ticker abbreviations for a hub team name."""
+    if not team_name: return set()
+    abbrs = _KALSHI_TEAM_ABBR.get(team_name, set()).copy()
+    # Also try without 'St.' / 'St ' normalization
+    alt = team_name.replace("St.", "St").replace("St ", "St. ")
+    if alt != team_name:
+        abbrs |= _KALSHI_TEAM_ABBR.get(alt, set())
+    return abbrs
+
+
 def _team_keywords(name: str) -> set[str]:
     """
     Pull useful keywords from a full team name. e.g., 'Atlanta Braves' →
@@ -154,27 +214,46 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict) -> dict:
     markets = markets_resp.get("markets", [])
     picked_kw = _team_keywords(picked)
 
+    # Kalshi creates SEPARATE markets per team for moneyline games, e.g.:
+    #   KXNHLGAME-26MAY09CARPHI-CAR  → YES = Carolina wins
+    #   KXNHLGAME-26MAY09CARPHI-PHI  → YES = Philadelphia wins
+    # We must match the market where YES corresponds to OUR picked team —
+    # never use market title as a fallback (it contains both team names and
+    # always matches, leading to wrong-side bets). Verified manually on
+    # demo.kalshi.co market KXNHLGAME-26MAY09CARPHI-PHI on 2026-05-09.
     matched_market = None
     matched_side = "YES"
-    for m in markets:
-        # Kalshi binary markets typically have YES = "this team wins" or
-        # YES = "outcome X happens". Look for picked team in market title or
-        # yes_sub_title. If found in YES, pick YES; if found in NO, pick NO.
-        title = (m.get("title", "") + " " + m.get("subtitle", "")).lower()
-        yes_sub = (m.get("yes_sub_title", "") + " " + m.get("yes_subtitle", "")).lower()
-        no_sub  = (m.get("no_sub_title", "")  + " " + m.get("no_subtitle", "")).lower()
 
-        if any(kw in yes_sub for kw in picked_kw):
+    # Strongest signal: yes_sub_title explicitly names the team that wins
+    # makes YES resolve true (e.g., "PHI Flyers" or "Carolina Hurricanes").
+    for m in markets:
+        yes_sub = (m.get("yes_sub_title", "") or m.get("yes_subtitle", "") or "").lower()
+        if yes_sub and any(kw in yes_sub for kw in picked_kw):
             matched_market = m; matched_side = "YES"; break
-        if any(kw in no_sub for kw in picked_kw):
-            matched_market = m; matched_side = "NO"; break
-        # Fallback: title mentions picked team
-        if any(kw in title for kw in picked_kw):
-            matched_market = m; matched_side = "YES"; break
+
+    # Backup signal: ticker suffix. Kalshi tickers end in a 2-4 letter team
+    # abbreviation after the last dash (e.g., '-CAR', '-PHI'). If the picked
+    # team's known abbreviation matches a ticker suffix, that's our market.
+    if not matched_market:
+        picked_abbrs = _team_abbreviations(picked)
+        for m in markets:
+            ticker = (m.get("ticker") or "").upper()
+            suffix = ticker.rsplit("-", 1)[-1] if "-" in ticker else ""
+            if suffix and 2 <= len(suffix) <= 4 and suffix in picked_abbrs:
+                matched_market = m; matched_side = "YES"; break
+
+    # NO-side check: rare but possible if Kalshi only listed the opposing
+    # team's market and our picked team appears in its no_sub_title.
+    if not matched_market:
+        for m in markets:
+            no_sub = (m.get("no_sub_title", "") or m.get("no_subtitle", "") or "").lower()
+            if no_sub and any(kw in no_sub for kw in picked_kw):
+                matched_market = m; matched_side = "NO"; break
 
     if not matched_market:
         return {"status": "no_market",
-                "reason": f"Event {event_ticker} has no market mentioning {picked}",
+                "reason": (f"Event {event_ticker} has no market where YES = {picked} wins. "
+                           f"Available markets: {[m.get('ticker') for m in markets]}"),
                 "pick": pick, "event_ticker": event_ticker,
                 "available_markets": [m.get("ticker") for m in markets]}
 

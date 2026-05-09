@@ -34,9 +34,10 @@ except ImportError as e:
 
 from . import auth as _auth
 
-# Kalshi v2 endpoints (subject to change — verify against current docs at
-# https://trading-api.readme.io/ if requests start 404'ing).
-DEMO_BASE = "https://demo-api.kalshi.co/trade-api/v2"
+# Kalshi v2 endpoints. Verified against docs at
+# https://trading-api.readme.io/reference/test-in-the-demo-environment on 2026-05-09.
+# Demo also supports https://demo-api.kalshi.co/trade-api/v2 as fallback.
+DEMO_BASE = "https://external-api.demo.kalshi.co/trade-api/v2"
 LIVE_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 
 
