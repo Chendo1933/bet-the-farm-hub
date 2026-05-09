@@ -1,0 +1,424 @@
+{
+  "date": "2026-05-09",
+  "logged": "2026-05-09T16:36:44.569533+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NBA",
+      "betType": "ou",
+      "home": "Los Angeles Lakers",
+      "away": "Oklahoma City Thunder",
+      "atsPick": null,
+      "spread": null,
+      "total": 211.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 211.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -110,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Lakers 50% / Oklahoma City Thunder 73% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfc3 Above-avg pace (100.3) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.6% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "8:40 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Carolina Hurricanes",
+      "pickLabel": "Carolina Hurricanes ML (-192)",
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -192,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 71% win rate vs 63% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.9"
+        }
+      ],
+      "date": "May 9",
+      "time": "6:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "spread",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "atsPick": "away",
+      "spread": 1.5,
+      "total": null,
+      "pickedTeam": "Carolina Hurricanes",
+      "pickLabel": "Carolina Hurricanes -1.5",
+      "score100": 64,
+      "rawScore100": 64,
+      "odds": 136,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 75% (12-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +29.3% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 75%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Special teams edge: PP 24.9% vs PK 77.6%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83e\udd45 Opp goalie edge: SV% 90.6% vs 89.5%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 90% W)"
+        }
+      ],
+      "date": "May 9",
+      "time": "6:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ou",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "atsPick": null,
+      "spread": null,
+      "total": 5.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 5.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -142,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Both teams Under-heavy (Philadelphia Flyers 63% \u00b7 Carolina Hurricanes 63%)"
+        }
+      ],
+      "date": "May 9",
+      "time": "6:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Minnesota Wild",
+      "away": "Colorado Avalanche",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Colorado Avalanche",
+      "pickLabel": "Colorado Avalanche ML (-130)",
+      "score100": 75,
+      "rawScore100": 64,
+      "odds": -130,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 77% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -130"
+        }
+      ],
+      "date": "May 9",
+      "time": "9:10 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9.5",
+      "score100": 60,
+      "rawScore100": 62,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Baltimore Orioles 70% / Athletics 48% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.0% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "4:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (+129)",
+      "score100": 60,
+      "rawScore100": 60,
+      "odds": 129,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +129"
+        }
+      ],
+      "date": "May 9",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cincinnati Reds",
+      "away": "Houston Astros",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 63,
+      "rawScore100": 72,
+      "odds": -118,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cincinnati Reds 62% \u00b7 Houston Astros 68%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.7 > line 8.5 (+1.2 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +18.6% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cleveland Guardians",
+      "away": "Minnesota Twins",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8",
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cleveland Guardians 53% \u00b7 Minnesota Twins 75%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.7% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "6:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs ML (-136)",
+      "score100": 82,
+      "rawScore100": 66,
+      "odds": -136,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -136"
+        }
+      ],
+      "date": "May 9",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Kansas City Royals",
+      "away": "Detroit Tigers",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 43% / Detroit Tigers 48% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.9 < line 9.5 (+1.6 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.3% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "San Diego Padres",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals +1.5",
+      "score100": 62,
+      "rawScore100": 62,
+      "odds": -175,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 73% (11-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.7% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 66%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 8 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 61% vs 44% implied (+119) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 80% W)"
+        }
+      ],
+      "date": "May 9",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8.5",
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": 100,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Dodgers 40% / Atlanta Braves 43% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.3% edge vs implied"
+        }
+      ],
+      "date": "May 9",
+      "time": "9:11 PM ET"
+    }
+  ],
+  "all_picks_count": 13,
+  "filter_stats": {
+    "prefilter": 33,
+    "sub60": 19,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "kept": 13,
+    "dropped": 20
+  }
+}
