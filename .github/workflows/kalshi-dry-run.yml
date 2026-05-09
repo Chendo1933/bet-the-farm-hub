@@ -44,10 +44,27 @@ jobs:
       - name: Install dependencies
         run: pip install cryptography requests
 
+      - name: Check Kalshi secrets configured
+        id: check_secrets
+        # GitHub Actions doesn't allow `secrets` context in step `if:` —
+        # we read the secret into an env var here, check empty/non-empty,
+        # and emit an output that downstream steps can gate on. This lets
+        # the workflow land before the user has added secrets without
+        # erroring on every run.
+        env:
+          KEY: ${{ secrets.KALSHI_API_KEY_ID }}
+        run: |
+          if [ -n "$KEY" ]; then
+            echo "configured=true" >> $GITHUB_OUTPUT
+            echo "✓ Kalshi secrets present"
+          else
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "::warning::KALSHI_API_KEY_ID secret not set — skipping dry-run"
+            echo "  Add it: Settings → Secrets and variables → Actions → New repository secret"
+          fi
+
       - name: Run dry-run simulator (live Kalshi prices, no orders placed)
-        # Skip cleanly if secrets aren't configured yet — lets the workflow
-        # file land before the user adds KALSHI_API_KEY_ID / KALSHI_PRIVATE_KEY.
-        if: ${{ secrets.KALSHI_API_KEY_ID != '' }}
+        if: steps.check_secrets.outputs.configured == 'true'
         env:
           KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
           KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_API_KEY_ID }}
@@ -55,7 +72,7 @@ jobs:
         run: python scripts/kalshi/dry_run.py
 
       - name: Commit dry-run snapshot
-        if: ${{ secrets.KALSHI_API_KEY_ID != '' }}
+        if: steps.check_secrets.outputs.configured == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
