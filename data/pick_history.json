@@ -13852,6 +13852,410 @@
           "l": "\u26a1 Net RTG edge +5.1"
         }
       ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "NBA",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 211.5",
+      "home": "Los Angeles Lakers",
+      "away": "Oklahoma City Thunder",
+      "spread": null,
+      "total": 211.5,
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -110,
+      "outcome": "win",
+      "margin": 27.5,
+      "units": 0.9091,
+      "homeScore": 108,
+      "awayScore": 131,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Lakers 50% / Oklahoma City Thunder 73% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfc3 Above-avg pace (100.3) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.6% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Carolina Hurricanes ML (-192)",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 61,
+      "odds": -192,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.5208,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 71% win rate vs 63% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.9"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "NHL",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "Carolina Hurricanes -1.5",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "spread": 1.5,
+      "total": null,
+      "score100": 64,
+      "rawScore100": 64,
+      "odds": 136,
+      "outcome": "loss",
+      "margin": 0.5,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 75% (12-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +29.3% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 75%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Special teams edge: PP 24.9% vs PK 77.6%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83e\udd45 Opp goalie edge: SV% 90.6% vs 89.5%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 90% W)"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "NHL",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 5.5",
+      "home": "Philadelphia Flyers",
+      "away": "Carolina Hurricanes",
+      "spread": null,
+      "total": 5.5,
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": -142,
+      "outcome": "win",
+      "margin": 0.5,
+      "units": 0.7042,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Both teams Under-heavy (Philadelphia Flyers 63% \u00b7 Carolina Hurricanes 63%)"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Colorado Avalanche ML (-130)",
+      "home": "Minnesota Wild",
+      "away": "Colorado Avalanche",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 64,
+      "odds": -130,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 77% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -130"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 9.5",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "spread": null,
+      "total": 9.5,
+      "score100": 60,
+      "rawScore100": 62,
+      "odds": -105,
+      "outcome": "loss",
+      "margin": 1.5,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Baltimore Orioles 70% / Athletics 48% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.0% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "strong",
+      "pick": "Over 8.5",
+      "home": "Cincinnati Reds",
+      "away": "Houston Astros",
+      "spread": null,
+      "total": 8.5,
+      "score100": 63,
+      "rawScore100": 72,
+      "odds": -118,
+      "outcome": "loss",
+      "margin": 4.5,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cincinnati Reds 62% \u00b7 Houston Astros 68%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.7 > line 8.5 (+1.2 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +18.6% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Cleveland Guardians",
+      "away": "Minnesota Twins",
+      "spread": null,
+      "total": 8,
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -105,
+      "outcome": "loss",
+      "margin": 5,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cleveland Guardians 53% \u00b7 Minnesota Twins 75%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.7% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Chicago Cubs ML (-136)",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 82,
+      "rawScore100": 66,
+      "odds": -136,
+      "outcome": "loss",
+      "margin": 6,
+      "units": -1.0,
+      "homeScore": 6,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -136"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 9.5",
+      "home": "Kansas City Royals",
+      "away": "Detroit Tigers",
+      "spread": null,
+      "total": 9.5,
+      "score100": 60,
+      "rawScore100": 66,
+      "odds": -118,
+      "outcome": "win",
+      "margin": 3.5,
+      "units": 0.8475,
+      "homeScore": 5,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 43% / Detroit Tigers 48% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.9 < line 9.5 (+1.6 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.3% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "St. Louis Cardinals +1.5",
+      "home": "San Diego Padres",
+      "away": "St. Louis Cardinals",
+      "spread": -1.5,
+      "total": null,
+      "score100": 62,
+      "rawScore100": 62,
+      "odds": -175,
+      "outcome": "loss",
+      "margin": 0.5,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 73% (11-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.7% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 66%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 8 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 61% vs 44% implied (+119) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 80% W)"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 8.5",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "spread": null,
+      "total": 8.5,
+      "score100": 60,
+      "rawScore100": 61,
+      "odds": 100,
+      "outcome": "loss",
+      "margin": 0.5,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Dodgers 40% / Atlanta Braves 43% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.3% edge vs implied"
+        }
+      ]
     }
   ]
 }
