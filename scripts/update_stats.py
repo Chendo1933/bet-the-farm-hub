@@ -94,7 +94,19 @@ def _parse_js_row(line):
 def patch_rows(html_lines, team_name, idx_vals):
     """
     Find the JS row for team_name and update the given {index: value} pairs.
-    Returns number of rows changed (0 or 1).
+
+    Returns a (found, changed) tuple:
+      (False, False) → team's row not present in hub HTML
+      (True,  False) → row found but the new values match what's already there
+      (True,  True)  → row found AND at least one cell was rewritten
+
+    The caller uses `found` for diagnostics (so an unchanged but present row
+    doesn't get falsely reported as "not in hub DB") and `changed` for the
+    "rows modified" total that decides whether to commit. Returning a tuple
+    instead of just an int fixes a long-standing diagnostic bug where any
+    post-season sport (W/L frozen for months) printed "not in hub DB" for
+    all 32 teams because patch_rows returned 0 in both the "not found" and
+    "found but identical" cases.
     """
     for i, line in enumerate(html_lines):
         s = line.strip()
@@ -117,12 +129,12 @@ def patch_rows(html_lines, team_name, idx_vals):
                 else:
                     parts[idx] = str(int(val))
         if parts == before:
-            return 0
+            return (True, False)   # row found, no change needed
         indent   = len(line) - len(line.lstrip())
         trailing = "," if s.endswith(",") else ""
         html_lines[i] = " " * indent + "[" + ",".join(parts) + "]" + trailing + "\n"
-        return 1
-    return 0   # team not found in hub
+        return (True, True)
+    return (False, False)   # team not found in hub
 
 
 def fetch_standings(urls, sport_label):
@@ -170,13 +182,14 @@ def update_nba(html_lines):
         if ppg:  updates[15] = float(ppg)
         if papg: updates[16] = float(papg)
 
-        n = patch_rows(html_lines, name, updates)
-        if n:
-            total += n
+        found, changed = patch_rows(html_lines, name, updates)
+        if changed:
+            total += 1
             print(f"  ✓ {name}: {int(w)}-{int(l)}"
                   + (f" | PPG {ppg}/{papg}" if ppg else ""))
-        else:
+        elif not found:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
+        # found but unchanged → silent (W/L unchanged is normal post-season)
     return total
 
 
@@ -334,23 +347,29 @@ def update_nhl(html_lines):
         if gl.get("gaa") is not None:
             updates[25] = gl["gaa"]
 
-        n = patch_rows(html_lines, name, updates)
-        if n:
-            total += n
+        found, changed = patch_rows(html_lines, name, updates)
+        if changed:
+            total += 1
             pp_str = f" | PP {st['pp']}% PK {st['pk']}%" if st else ""
             gl_str = f" | G: {gl['name'].split()[-1]} SV%{gl['sv']:.3f}" if gl else ""
             print(f"  ✓ {name}: {int(w)}-{int(l)}-{int(otl)}"
                   + (f" | GF/GA {int(gf)}/{int(ga)}" if gf else "")
                   + pp_str + gl_str)
-        else:
+        elif not found:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
     return total
 
 
 # ── MLB ───────────────────────────────────────────────────────────────────────
 #   W=3  L=4  rs=15 (season total)  ra=16 (season total)
-#   era=17 and avg=18 intentionally NOT overwritten — those are pre-season priors
-#   ops=23  whip=24  (from MLB Stats API)
+#   era=17 (team pitching ERA)   avg=18 (team batting average)
+#   ops=23 whip=24 (from MLB Stats API)
+#
+# Note (2026-05-10): era/avg were previously left as pre-season priors. ~40 games
+# in, season-to-date is far more predictive than the prior, so we now overwrite
+# both from the MLB Stats API. ERA in particular feeds Factor 9 (pitching
+# matchup) in hbScoreMatchup — leaving it frozen was silently degrading MLB
+# picks.
 
 MLB_NAME_MAP_STATSAPI = {
     "Arizona Diamondbacks": "Arizona Diamondbacks",
@@ -358,10 +377,21 @@ MLB_NAME_MAP_STATSAPI = {
 }
 
 
+def _safe_float(v):
+    """Parse MLB API's string-or-number stats into float. Returns None on failure."""
+    if v is None:
+        return None
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
 def fetch_mlb_advanced():
     """
-    Fetch team OPS (hitting) and WHIP (pitching) from MLB Stats API (free, no key).
-    Returns {team_full_name: {ops: float, whip: float}} or {} on failure.
+    Fetch team batting (AVG + OPS) and pitching (ERA + WHIP) from MLB Stats API
+    (free, no key). Returns {team_full_name: {avg, ops, era, whip}} (each key
+    optional).
     """
     year = datetime.now().year
     hitting_url = (
@@ -374,34 +404,44 @@ def fetch_mlb_advanced():
     )
     result = {}
     try:
-        # Fetch hitting stats (OPS)
+        # Fetch hitting stats (AVG, OPS)
         resp = requests.get(hitting_url, headers=HEADERS, timeout=TIMEOUT)
         if resp.status_code != 200:
-            print(f"  · MLB Stats API hitting returned {resp.status_code} — OPS skipped")
+            print(f"  · MLB Stats API hitting returned {resp.status_code} — AVG/OPS skipped")
             return {}
         for split in resp.json().get("stats", [{}])[0].get("splits", []):
             name = split.get("team", {}).get("name", "")
             name = MLB_NAME_MAP_STATSAPI.get(name, name)
-            ops = split.get("stat", {}).get("ops")
-            if name and ops is not None:
-                result.setdefault(name, {})["ops"] = float(ops)
+            stat = split.get("stat", {})
+            avg = _safe_float(stat.get("avg"))   # API returns string like ".269"
+            ops = _safe_float(stat.get("ops"))
+            if name:
+                bucket = result.setdefault(name, {})
+                if avg is not None: bucket["avg"] = avg
+                if ops is not None: bucket["ops"] = ops
 
-        # Fetch pitching stats (WHIP)
+        # Fetch pitching stats (ERA, WHIP)
         resp = requests.get(pitching_url, headers=HEADERS, timeout=TIMEOUT)
         if resp.status_code != 200:
-            print(f"  · MLB Stats API pitching returned {resp.status_code} — WHIP skipped")
+            print(f"  · MLB Stats API pitching returned {resp.status_code} — ERA/WHIP skipped")
             return result
         for split in resp.json().get("stats", [{}])[0].get("splits", []):
             name = split.get("team", {}).get("name", "")
             name = MLB_NAME_MAP_STATSAPI.get(name, name)
-            whip = split.get("stat", {}).get("whip")
-            if name and whip is not None:
-                result.setdefault(name, {})["whip"] = float(whip)
+            stat = split.get("stat", {})
+            era  = _safe_float(stat.get("era"))
+            whip = _safe_float(stat.get("whip"))
+            if name:
+                bucket = result.setdefault(name, {})
+                if era  is not None: bucket["era"]  = era
+                if whip is not None: bucket["whip"] = whip
 
-        print(f"  ✓ MLB Stats API: {len(result)} teams with OPS/WHIP")
+        with_era = sum(1 for v in result.values() if "era" in v)
+        with_ops = sum(1 for v in result.values() if "ops" in v)
+        print(f"  ✓ MLB Stats API: {len(result)} teams ({with_ops} OPS/AVG, {with_era} ERA/WHIP)")
         return result
     except Exception as e:
-        print(f"  · MLB Stats API error: {e} — OPS/WHIP skipped")
+        print(f"  · MLB Stats API error: {e} — advanced MLB stats skipped")
         return result
 
 
@@ -431,23 +471,34 @@ def update_mlb(html_lines):
         if rs: updates[15] = rs
         if ra: updates[16] = ra
 
-        # Patch OPS + WHIP from MLB Stats API (indices 23, 24)
+        # Patch ERA + AVG + OPS + WHIP from MLB Stats API
+        #   idx 17 = era, idx 18 = avg, idx 23 = ops, idx 24 = whip
         adv = advanced.get(name, {})
+        if adv.get("era") is not None:
+            updates[17] = round(adv["era"], 2)
+        if adv.get("avg") is not None:
+            updates[18] = round(adv["avg"], 3)
         if adv.get("ops") is not None:
             updates[23] = round(adv["ops"], 3)
         if adv.get("whip") is not None:
             updates[24] = round(adv["whip"], 2)
 
-        n = patch_rows(html_lines, name, updates)
-        if n:
-            total += n
+        found, changed = patch_rows(html_lines, name, updates)
+        if changed:
+            total += 1
             adv_str = ""
-            if adv.get("ops") is not None:
-                adv_str = f" | OPS {adv['ops']:.3f} WHIP {adv.get('whip', 0):.2f}"
+            if adv:
+                bits = []
+                if "era"  in adv: bits.append(f"ERA {adv['era']:.2f}")
+                if "avg"  in adv: bits.append(f"AVG {adv['avg']:.3f}")
+                if "ops"  in adv: bits.append(f"OPS {adv['ops']:.3f}")
+                if "whip" in adv: bits.append(f"WHIP {adv['whip']:.2f}")
+                if bits:
+                    adv_str = " | " + " ".join(bits)
             print(f"  ✓ {name}: {int(w)}-{int(l)}"
                   + (f" | RS/RA {rs}/{ra}" if rs else "")
                   + adv_str)
-        else:
+        elif not found:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
     return total
 
@@ -481,13 +532,14 @@ def update_nfl(html_lines):
         if ppg:  updates[16] = float(ppg)
         if papg: updates[17] = float(papg)
 
-        n = patch_rows(html_lines, name, updates)
-        if n:
-            total += n
+        found, changed = patch_rows(html_lines, name, updates)
+        if changed:
+            total += 1
             print(f"  ✓ {name}: {int(w)}-{int(l)}-{int(t)}"
                   + (f" | PPG {ppg}/{papg}" if ppg else ""))
-        else:
+        elif not found:
             print(f"  · {name}: not in hub DB (ESPN='{raw}')")
+        # found but unchanged → silent (W/L frozen post-season is normal)
     return total
 
 
@@ -624,6 +676,7 @@ def update_ats_ou(html_lines):
     for sport, teams in records.items():
         idx = ATS_INDICES[sport]
         sport_total = 0
+        sport_found_missing = []   # team names whose hub row isn't present
         # Merge orphan-name records into their canonical bucket before patching.
         # E.g., results files have both "LA Clippers" and "Los Angeles Clippers"
         # entries → sum into "Los Angeles Clippers" so patch_rows sees the full
@@ -651,13 +704,19 @@ def update_ats_ou(html_lines):
             if idx.get("un") is not None:
                 updates[idx["un"]] = stats.get("un", 0)
 
-            n = patch_rows(html_lines, team_name, updates)
-            sport_total += n
+            found, changed = patch_rows(html_lines, team_name, updates)
+            if changed:
+                sport_total += 1
+            elif not found:
+                sport_found_missing.append(team_name)
 
         if sport_total:
             print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with ATS/O/U")
+        elif sport_found_missing:
+            print(f"  · {sport.upper()}: {len(sport_found_missing)} team name(s) not in hub DB "
+                  f"(sample: {sport_found_missing[:3]})")
         else:
-            print(f"  · {sport.upper()}: no matching rows found in hub DB")
+            print(f"  · {sport.upper()}: ATS/O/U already in sync with results archive")
         total += sport_total
 
     return total
@@ -784,6 +843,7 @@ def update_recent_form(html_lines):
                 merged[canonical] = dict(stats)
             # if both existed, keep the later one (compute already capped at 10)
         sport_total = 0
+        sport_found_missing = []
         for team_name, stats in merged.items():
             updates = {
                 idx["r10w"]:    stats["r10w"],
@@ -791,10 +851,18 @@ def update_recent_form(html_lines):
                 idx["r10ppg"]:  stats["r10ppg"],
                 idx["r10papg"]: stats["r10papg"],
             }
-            n = patch_rows(html_lines, team_name, updates)
-            sport_total += n
+            found, changed = patch_rows(html_lines, team_name, updates)
+            if changed:
+                sport_total += 1
+            elif not found:
+                sport_found_missing.append(team_name)
         if sport_total:
             print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with last-10 form")
+        elif sport_found_missing:
+            print(f"  · {sport.upper()}: {len(sport_found_missing)} team name(s) not in hub DB "
+                  f"(sample: {sport_found_missing[:3]})")
+        else:
+            print(f"  · {sport.upper()}: last-10 form already in sync")
         total += sport_total
 
     return total
