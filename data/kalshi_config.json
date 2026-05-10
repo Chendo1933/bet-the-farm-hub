@@ -8,7 +8,7 @@
     "All caps default to safe values; raise gradually as confidence builds."
   ],
 
-  "auto_trading_enabled": false,
+  "auto_trading_enabled": true,
   "auto_trading_enabled_doc": [
     "Master kill switch. Default false. When false, Phase 3 order-placement",
     "runs are skipped entirely. Even when true, individual safety caps below",
