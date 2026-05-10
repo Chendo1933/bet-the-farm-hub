@@ -1,429 +1,340 @@
 #!/usr/bin/env python3
 """
-Bet The Farm Hub — BettingPros ATS/O-U scraper
-Scrapes bettingpros.com for all team ATS and O/U records (overall, home, away)
-for NBA and NHL, then writes data/ats_refresh.json and runs refresh_ats.py.
+Bet The Farm Hub — teamrankings.com ATS + O/U scraper
+
+Scrapes season-long ATS (against-the-spread) and O/U (over/under) records
+from teamrankings.com for MLB, NBA, and NFL, then writes
+data/ats_refresh.json in the format refresh_ats.py expects and calls
+refresh_ats.py to patch index.html.
+
+Why this exists (2026-05-10):
+  The previous data flow computed ATS/O-U records from data/results/*.json.
+  That archive missed ~5-10 games per team because log_results.py
+  doesn't capture every daily slate (odds-API gaps, edge cases in
+  schedule fetch). The hub's ATS column drifted further from reality
+  every week. teamrankings publishes the authoritative season totals
+  on a per-team page that's served as plain HTML — no JS, no auth —
+  so we can grab the full slate in one ~30-second HTTP burst per day.
+
+  (Earlier history: a previous version of this script scraped
+  bettingpros.com via Playwright + Chromium. That was disabled in commit
+  a8da932 in favor of the archive-based approach, which has now also
+  proven insufficient. This rewrite drops the browser dependency
+  entirely — plain requests + regex — and uses teamrankings instead.)
+
+Coverage:
+  - MLB: ATS overall + O/U overall  (in-season → tables present)
+  - NBA: same                       (playoffs → tables still served)
+  - NFL: same                       (off-season → last regular season's numbers)
+  - NHL: not exposed by teamrankings during off-season → fall back to
+    update_stats.py's archive-based computation
+
+Output:
+  - data/ats_refresh.json — the same format refresh_ats.py has always
+    consumed. Only fills aw/al (overall ATS) and ov/un (overall O/U).
+    Home/away splits (haw/hal/aaw/aal) are left to update_stats.py's
+    archive-based update_ats_ou(), which is still authoritative for
+    those columns.
 
 Usage:
-    python scripts/scrape_ats.py            # full scrape + patch hub
-    python scripts/scrape_ats.py --dry-run  # scrape only, don't patch
+  python scripts/scrape_ats.py            # full scrape + patch hub
+  python scripts/scrape_ats.py --dry-run  # scrape only, print to stdout
 
-Scraped data per team (NBA):  aw, al, haw, hal, aaw, aal, ov, un
-Scraped data per team (NHL):  plw, pll, ov, un  (puck line; home/away not available)
-
-Disambiguation:
-  "Los Angeles" NBA  → Lakers (48+ wins) vs Clippers (38 wins) by W-L record
-  "New York"    NHL  → Islanders (41+ wins) vs Rangers (29 wins) by W-L record
+Designed to run in a daily GitHub Actions workflow (~30 seconds end-
+to-end). No browser dependency.
 """
+from __future__ import annotations
 
-import asyncio
 import json
-import os
 import re
 import subprocess
 import sys
-from datetime import date
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
 
-# ── Hub DB names ──────────────────────────────────────────────────────────────
-# Maps (sport, bettingpros_display_name) → hub DB team name.
-# For teams that share a city, uses (sport, display_name, wl_wins) to disambiguate.
+OUTPUT_PATH = "data/ats_refresh.json"
+TIMEOUT     = 20
 
-NBA_NAME_MAP = {
-    "Atlanta":       "Atlanta Hawks",
-    "Boston":        "Boston Celtics",
-    "Brooklyn":      "Brooklyn Nets",
-    "Charlotte":     "Charlotte Hornets",
-    "Chicago":       "Chicago Bulls",
-    "Cleveland":     "Cleveland Cavaliers",
-    "Dallas":        "Dallas Mavericks",
-    "Denver":        "Denver Nuggets",
-    "Detroit":       "Detroit Pistons",
-    "Golden State":  "Golden State Warriors",
-    "Houston":       "Houston Rockets",
-    "Indiana":       "Indiana Pacers",
-    "Memphis":       "Memphis Grizzlies",
-    "Miami":         "Miami Heat",
-    "Milwaukee":     "Milwaukee Bucks",
-    "Minnesota":     "Minnesota Timberwolves",
-    "New Orleans":   "New Orleans Pelicans",
-    "New York":      "New York Knicks",       # only one NBA "New York"
-    "Oklahoma City": "Oklahoma City Thunder",
-    "Orlando":       "Orlando Magic",
-    "Philadelphia":  "Philadelphia 76ers",
-    "Phoenix":       "Phoenix Suns",
-    "Portland":      "Portland Trail Blazers",
-    "Sacramento":    "Sacramento Kings",
-    "San Antonio":   "San Antonio Spurs",
-    "Toronto":       "Toronto Raptors",
-    "Utah":          "Utah Jazz",
-    "Washington":    "Washington Wizards",
-    # Ambiguous — resolved by W-L wins below
-    # "Los Angeles"  → Lakers (higher wins) or Clippers (lower wins)
+# Realistic UA — teamrankings serves the same data to any browser-shaped
+# request. Using BetTheFarm/x.x in the UA so the operator can identify
+# our traffic in their logs if they care to look.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36 BetTheFarm/1.0"
+    ),
 }
 
-NHL_NAME_MAP = {
-    "Anaheim":       "Anaheim Ducks",
-    "Boston":        "Boston Bruins",
-    "Buffalo":       "Buffalo Sabres",
-    "Calgary":       "Calgary Flames",
-    "Carolina":      "Carolina Hurricanes",
-    "Chicago":       "Chicago Blackhawks",
-    "Colorado":      "Colorado Avalanche",
-    "Columbus":      "Columbus Blue Jackets",
-    "Dallas":        "Dallas Stars",
-    "Detroit":       "Detroit Red Wings",
-    "Edmonton":      "Edmonton Oilers",
-    "Florida":       "Florida Panthers",
-    "Minnesota":     "Minnesota Wild",
-    "Montreal":      "Montreal Canadiens",
-    "Nashville":     "Nashville Predators",
-    "New Jersey":    "New Jersey Devils",
-    "Ottawa":        "Ottawa Senators",
-    "Philadelphia":  "Philadelphia Flyers",
-    "Pittsburgh":    "Pittsburgh Penguins",
-    "San Jose":      "San Jose Sharks",
-    "Seattle":       "Seattle Kraken",
-    "St. Louis":     "St. Louis Blues",
-    "Tampa Bay":     "Tampa Bay Lightning",
-    "Toronto":       "Toronto Maple Leafs",
-    "Utah":          "Utah Mammoth",
-    "Vancouver":     "Vancouver Canucks",
-    "Vegas":         "Vegas Golden Knights",
-    "Washington":    "Washington Capitals",
-    "Winnipeg":      "Winnipeg Jets",
-    # Ambiguous — resolved by W-L wins below
-    # "Los Angeles"  → Kings (hub name)
-    # "New York"     → Islanders (higher wins) or Rangers (lower wins)
+# Per-sport scraping config:
+#   ats_url / ou_url   - pages with season-long totals
+#   slug_to_hub        - manual overrides for teamrankings slugs that
+#                        don't unambiguously resolve to a hub team name
+#                        via the "last word = mascot" heuristic
+SPORT_CONFIG = {
+    "mlb": {
+        "ats_url": "https://www.teamrankings.com/mlb/trends/ats_trends/",
+        "ou_url":  "https://www.teamrankings.com/mlb/trends/ou_trends/",
+        "slug_to_hub": {
+            "chi-sox-white-sox":     "Chicago White Sox",
+            "chi-cubs-cubs":         "Chicago Cubs",
+            "ny-yankees-yankees":    "New York Yankees",
+            "ny-mets-mets":          "New York Mets",
+            "la-angels-angels":      "Los Angeles Angels",
+            "la-dodgers-dodgers":    "Los Angeles Dodgers",
+            "sf-giants-giants":      "San Francisco Giants",
+            "sacramento-athletics":  "Athletics",
+        },
+    },
+    "nba": {
+        "ats_url": "https://www.teamrankings.com/nba/trends/ats_trends/",
+        "ou_url":  "https://www.teamrankings.com/nba/trends/ou_trends/",
+        "slug_to_hub": {
+            "la-lakers-lakers":       "Los Angeles Lakers",
+            "la-clippers-clippers":   "Los Angeles Clippers",
+            "ny-knicks-knicks":       "New York Knicks",
+        },
+    },
+    "nfl": {
+        "ats_url": "https://www.teamrankings.com/nfl/trends/ats_trends/",
+        "ou_url":  "https://www.teamrankings.com/nfl/trends/ou_trends/",
+        "slug_to_hub": {
+            "la-rams-rams":              "Los Angeles Rams",
+            "la-chargers-chargers":      "Los Angeles Chargers",
+            "ny-giants-giants":          "New York Giants",
+            "ny-jets-jets":              "New York Jets",
+        },
+    },
 }
 
 
-NFL_NAME_MAP = {
-    "Arizona":       "Arizona Cardinals",
-    "Atlanta":       "Atlanta Falcons",
-    "Baltimore":     "Baltimore Ravens",
-    "Buffalo":       "Buffalo Bills",
-    "Carolina":      "Carolina Panthers",
-    "Chicago":       "Chicago Bears",
-    "Cincinnati":    "Cincinnati Bengals",
-    "Cleveland":     "Cleveland Browns",
-    "Dallas":        "Dallas Cowboys",
-    "Denver":        "Denver Broncos",
-    "Detroit":       "Detroit Lions",
-    "Green Bay":     "Green Bay Packers",
-    "Houston":       "Houston Texans",
-    "Indianapolis":  "Indianapolis Colts",
-    "Jacksonville":  "Jacksonville Jaguars",
-    "Kansas City":   "Kansas City Chiefs",
-    "Las Vegas":     "Las Vegas Raiders",
-    "Miami":         "Miami Dolphins",
-    "Minnesota":     "Minnesota Vikings",
-    "New England":   "New England Patriots",
-    "New Orleans":   "New Orleans Saints",
-    "Philadelphia":  "Philadelphia Eagles",
-    "Pittsburgh":    "Pittsburgh Steelers",
-    "San Francisco": "San Francisco 49ers",
-    "Seattle":       "Seattle Seahawks",
-    "Tampa Bay":     "Tampa Bay Buccaneers",
-    "Tennessee":     "Tennessee Titans",
-    "Washington":    "Washington Commanders",
-    # Ambiguous — resolved by display text
-    "Los Angeles Rams":      "Los Angeles Rams",
-    "Los Angeles Chargers":  "Los Angeles Chargers",
-    "New York Giants":       "New York Giants",
-    "New York Jets":         "New York Jets",
+def fetch(url: str) -> str:
+    """Fetch URL, return HTML body. Raises on non-200 or timeout."""
+    req = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        return resp.read().decode("utf-8", errors="ignore")
+
+
+def parse_first_table(html: str) -> list[dict]:
+    """
+    Pull the first <table>'s data rows. Returns a list of dicts:
+      [{slug: "atlanta-braves", text: "Atlanta", cells: [...]}, ...]
+    """
+    m = re.search(r"<table[^>]*>(.+?)</table>", html, re.DOTALL)
+    if not m:
+        return []
+    rows = re.findall(r"<tr[^>]*>(.+?)</tr>", m.group(1), re.DOTALL)
+    out = []
+    for row in rows[1:]:  # skip header
+        cells_html = re.findall(r"<t[hd][^>]*>(.+?)</t[hd]>", row, re.DOTALL)
+        if not cells_html:
+            continue
+        first = cells_html[0]
+        text  = re.sub(r"<[^>]+>", "", first).strip()
+        # Extract slug from /[sport]/team/[slug] link
+        link = re.search(r'href="https?://[^"]*/(?:mlb|nba|nfl|nhl)/team/([^"/]+)', first)
+        slug = link.group(1) if link else None
+        cells = [re.sub(r"<[^>]+>", "", c).strip() for c in cells_html]
+        out.append({"slug": slug, "text": text, "cells": cells})
+    return out
+
+
+def parse_record(s: str) -> tuple[int, int] | None:
+    """
+    Parse '28-13-0' → (28, 13). Ignores pushes/ties (third number).
+    Returns None if the format isn't recognized — caller should skip.
+    """
+    parts = s.strip().split("-")
+    if len(parts) < 2:
+        return None
+    try:
+        return int(parts[0]), int(parts[1])
+    except ValueError:
+        return None
+
+
+# Hub team names per sport — used to validate / disambiguate slug resolution.
+# These are the exact strings sitting in index.html's sport arrays at
+# column 0. If a team gets renamed in the hub, add it here too.
+HUB_TEAMS = {
+    "mlb": {
+        "Arizona Diamondbacks", "Atlanta Braves", "Baltimore Orioles",
+        "Boston Red Sox", "Chicago Cubs", "Chicago White Sox",
+        "Cincinnati Reds", "Cleveland Guardians", "Colorado Rockies",
+        "Detroit Tigers", "Houston Astros", "Kansas City Royals",
+        "Los Angeles Angels", "Los Angeles Dodgers", "Miami Marlins",
+        "Milwaukee Brewers", "Minnesota Twins", "New York Mets",
+        "New York Yankees", "Athletics", "Philadelphia Phillies",
+        "Pittsburgh Pirates", "San Diego Padres", "San Francisco Giants",
+        "Seattle Mariners", "St. Louis Cardinals", "Tampa Bay Rays",
+        "Texas Rangers", "Toronto Blue Jays", "Washington Nationals",
+    },
+    "nba": {
+        "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets",
+        "Charlotte Hornets", "Chicago Bulls", "Cleveland Cavaliers",
+        "Dallas Mavericks", "Denver Nuggets", "Detroit Pistons",
+        "Golden State Warriors", "Houston Rockets", "Indiana Pacers",
+        "Los Angeles Clippers", "Los Angeles Lakers", "Memphis Grizzlies",
+        "Miami Heat", "Milwaukee Bucks", "Minnesota Timberwolves",
+        "New Orleans Pelicans", "New York Knicks", "Oklahoma City Thunder",
+        "Orlando Magic", "Philadelphia 76ers", "Phoenix Suns",
+        "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs",
+        "Toronto Raptors", "Utah Jazz", "Washington Wizards",
+    },
+    "nfl": {
+        "Arizona Cardinals", "Atlanta Falcons", "Baltimore Ravens",
+        "Buffalo Bills", "Carolina Panthers", "Chicago Bears",
+        "Cincinnati Bengals", "Cleveland Browns", "Dallas Cowboys",
+        "Denver Broncos", "Detroit Lions", "Green Bay Packers",
+        "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars",
+        "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers",
+        "Los Angeles Rams", "Miami Dolphins", "Minnesota Vikings",
+        "New England Patriots", "New Orleans Saints", "New York Giants",
+        "New York Jets", "Philadelphia Eagles", "Pittsburgh Steelers",
+        "San Francisco 49ers", "Seattle Seahawks", "Tampa Bay Buccaneers",
+        "Tennessee Titans", "Washington Commanders",
+    },
 }
 
-MLB_NAME_MAP = {
-    "Arizona":       "Arizona Diamondbacks",
-    "Atlanta":       "Atlanta Braves",
-    "Baltimore":     "Baltimore Orioles",
-    "Boston":        "Boston Red Sox",
-    "Cincinnati":    "Cincinnati Reds",
-    "Cleveland":     "Cleveland Guardians",
-    "Colorado":      "Colorado Rockies",
-    "Detroit":       "Detroit Tigers",
-    "Houston":       "Houston Astros",
-    "Kansas City":   "Kansas City Royals",
-    "Miami":         "Miami Marlins",
-    "Milwaukee":     "Milwaukee Brewers",
-    "Minnesota":     "Minnesota Twins",
-    "Oakland":       "Athletics",
-    "Philadelphia":  "Philadelphia Phillies",
-    "Pittsburgh":    "Pittsburgh Pirates",
-    "San Diego":     "San Diego Padres",
-    "San Francisco": "San Francisco Giants",
-    "Seattle":       "Seattle Mariners",
-    "St. Louis":     "St. Louis Cardinals",
-    "Tampa Bay":     "Tampa Bay Rays",
-    "Texas":         "Texas Rangers",
-    "Toronto":       "Toronto Blue Jays",
-    "Washington":    "Washington Nationals",
-    # Ambiguous — resolved by W-L wins below
-    # "Los Angeles" → Dodgers (higher wins) vs Angels (lower wins)
-    # "New York"    → Yankees (higher wins) vs Mets (lower wins)
-    # "Chicago"     → Cubs (higher wins) vs White Sox (lower wins)
-}
 
-
-def resolve_nba_name(display: str, wl_wins: int) -> str | None:
-    if display == "Los Angeles":
-        return "Los Angeles Lakers" if wl_wins >= 45 else "Los Angeles Clippers"
-    return NBA_NAME_MAP.get(display)
-
-
-def resolve_nhl_name(display: str, wl_wins: int) -> str | None:
-    if display == "Los Angeles":
-        return "Los Angeles Kings"
-    if display == "New York":
-        return "New York Islanders" if wl_wins >= 38 else "New York Rangers"
-    return NHL_NAME_MAP.get(display)
-
-
-def resolve_nfl_name(display: str, wl_wins: int) -> str | None:
-    # NFL has full names like "Los Angeles Rams" / "New York Giants" on BettingPros
-    if display in NFL_NAME_MAP:
-        return NFL_NAME_MAP[display]
-    # Try with full display name (handles "Los Angeles Rams", "New York Jets", etc.)
-    for key, val in NFL_NAME_MAP.items():
-        if display.startswith(key):
-            return val
+def resolve_hub_name(slug: str | None, sport_cfg: dict, hub_names: set[str]) -> str | None:
+    """
+    Map a teamrankings slug like 'chi-sox-white-sox' to a hub team name
+    like 'Chicago White Sox'. Uses manual overrides first, then falls
+    back to a "last-word(s) = mascot" heuristic that matches against
+    hub team names ending in the slug's tail.
+    """
+    if not slug:
+        return None
+    overrides = sport_cfg.get("slug_to_hub", {})
+    if slug in overrides:
+        return overrides[slug]
+    # Heuristic: try increasingly long suffixes of the slug as mascot.
+    # 'atlanta-braves' → tries 'braves' → matches "Atlanta Braves"
+    # 'tampa-bay-rays' → tries 'rays'   → matches "Tampa Bay Rays"
+    parts = slug.split("-")
+    for take in range(1, min(4, len(parts) + 1)):
+        mascot = " ".join(parts[-take:]).lower()
+        for hub_name in hub_names:
+            if hub_name.lower().endswith(mascot):
+                return hub_name
     return None
 
 
-def resolve_mlb_name(display: str, wl_wins: int) -> str | None:
-    if display == "Los Angeles":
-        return "Los Angeles Dodgers" if wl_wins >= 40 else "Los Angeles Angels"
-    if display == "New York":
-        return "New York Yankees" if wl_wins >= 40 else "New York Mets"
-    if display == "Chicago":
-        return "Chicago Cubs" if wl_wins >= 35 else "Chicago White Sox"
-    return MLB_NAME_MAP.get(display)
+def scrape_sport(sport: str) -> list[dict]:
+    """
+    Scrape both ATS and O/U pages for one sport, merge by team, return
+    a list of entries ready to drop into ats_refresh.json's sport array.
+    Logs any teams that fail to resolve so we can fix slug_to_hub.
+    """
+    cfg = SPORT_CONFIG[sport]
+    hub_names = HUB_TEAMS[sport]
+    print(f"\n── {sport.upper()} ─────────────────────────────────────────────")
 
-
-# ── JS extractor ──────────────────────────────────────────────────────────────
-EXTRACT_JS = """
-(() => {
-    const rows = [...document.querySelectorAll('tr')].slice(1);
-    return rows.map(tr => {
-        const cells = [...tr.querySelectorAll('td')];
-        return cells.map(td => td.textContent.trim());
-    }).filter(r => r.length >= 2);
-})()
-"""
-
-OPEN_FILTER_JS = """
-() => {
-    // Find the filter pill button (shows current selection: 'All Games', 'Home', etc.)
-    const btns = [...document.querySelectorAll('button')];
-    const filterBtn = btns.find(b =>
-        ['All Games','Home','Away'].includes(b.textContent.trim())
-    );
-    if (filterBtn) { filterBtn.click(); return true; }
-    return false;
-}
-"""
-
-CLICK_FILTER_JS = """
-(filterLabel) => {
-    const items = [...document.querySelectorAll('ul li, li[role="option"]')];
-    const target = items.find(el => el.textContent.trim() === filterLabel);
-    if (target) { target.click(); return true; }
-    return false;
-}
-"""
-
-
-def parse_record(record_str: str) -> tuple[int, int]:
-    """Parse '43-29-1' or '43-29' → (wins, losses), ignoring pushes."""
-    parts = record_str.strip().split("-")
+    # ATS table → {hub_name: (aw, al)}
+    print(f"  fetching {cfg['ats_url']}")
     try:
-        return int(parts[0]), int(parts[1])
-    except (IndexError, ValueError):
-        return 0, 0
+        ats_rows = parse_first_table(fetch(cfg["ats_url"]))
+    except urllib.error.HTTPError as e:
+        print(f"  ✗ HTTP {e.code} on ATS page — skipping {sport.upper()}")
+        return []
+    except Exception as e:
+        print(f"  ✗ Fetch failed: {type(e).__name__}: {e} — skipping {sport.upper()}")
+        return []
+    if not ats_rows:
+        print(f"  ✗ No ATS table found for {sport.upper()} (off-season?)")
+        return []
 
-
-def parse_wl(team_cell: str) -> tuple[str, int]:
-    """Parse 'Charlotte(39-34)' → ('Charlotte', 39)."""
-    m = re.match(r"^(.+?)\((\d+)-\d+\)", team_cell)
-    if m:
-        return m.group(1).strip(), int(m.group(2))
-    return team_cell.strip(), 0
-
-
-def rows_to_dict(rows: list, sport: str, filter_name: str) -> dict:
-    """Convert extracted table rows to {hub_db_name: (wins, losses)}."""
-    result = {}
-    _resolvers = {"nba": resolve_nba_name, "nhl": resolve_nhl_name, "nfl": resolve_nfl_name, "mlb": resolve_mlb_name}
-    resolve = _resolvers.get(sport, resolve_nba_name)
-    for row in rows:
-        if len(row) < 2:
+    ats_by_hub: dict[str, tuple[int, int]] = {}
+    unresolved: list[str] = []
+    for row in ats_rows:
+        hub = resolve_hub_name(row["slug"], cfg, hub_names)
+        if not hub:
+            unresolved.append(row["slug"] or row["text"])
             continue
-        display, wl_wins = parse_wl(row[0])
-        hub_name = resolve(display, wl_wins)
-        if not hub_name:
-            print(f"  [WARN] {sport.upper()} {filter_name}: no DB match for '{display}' (W={wl_wins})")
+        rec = parse_record(row["cells"][1] if len(row["cells"]) > 1 else "")
+        if rec:
+            ats_by_hub[hub] = rec
+    if unresolved:
+        print(f"  ⚠  Unresolved ATS slugs (add to slug_to_hub): {unresolved}")
+    print(f"  ✓ ATS: {len(ats_by_hub)} teams resolved")
+
+    # O/U table → {hub_name: (ov, un)}
+    print(f"  fetching {cfg['ou_url']}")
+    try:
+        ou_rows = parse_first_table(fetch(cfg["ou_url"]))
+    except urllib.error.HTTPError as e:
+        print(f"  ⚠  HTTP {e.code} on O/U page — ATS-only for {sport.upper()}")
+        ou_rows = []
+    except Exception as e:
+        print(f"  ⚠  O/U fetch failed: {type(e).__name__} — ATS-only for {sport.upper()}")
+        ou_rows = []
+
+    ou_by_hub: dict[str, tuple[int, int]] = {}
+    for row in ou_rows:
+        hub = resolve_hub_name(row["slug"], cfg, hub_names)
+        if not hub:
             continue
-        w, l = parse_record(row[1])
-        result[hub_name] = (w, l)
-    return result
+        rec = parse_record(row["cells"][1] if len(row["cells"]) > 1 else "")
+        if rec:
+            ou_by_hub[hub] = rec
+    if ou_rows:
+        print(f"  ✓ O/U: {len(ou_by_hub)} teams resolved")
 
-
-async def apply_filter(page, label: str):
-    """Open the game filter dropdown and select a filter option."""
-    await page.evaluate(OPEN_FILTER_JS)
-    await page.wait_for_timeout(400)
-    await page.evaluate(CLICK_FILTER_JS, label)
-    await page.wait_for_timeout(1200)
-
-
-async def scrape_sport(page, sport: str) -> dict:
-    """Scrape ATS (all/home/away) and O/U (all) for one sport. Returns merged team dict."""
-    base = f"https://www.bettingpros.com/{sport}"
-    teams = {}
-
-    # ── ATS All Games ──
-    # Use "load" instead of "networkidle" — bettingpros has persistent ad traffic
-    # that prevents networkidle from ever firing. Table data is in the initial HTML.
-    await page.goto(f"{base}/against-the-spread-standings/", wait_until="load", timeout=45000)
-    await page.wait_for_selector("tr td", timeout=20000)
-    rows = await page.evaluate(EXTRACT_JS)
-    ats_all = rows_to_dict(rows, sport, "ATS-All")
-    print(f"  {sport.upper()} ATS All:  {len(ats_all)} teams")
-
-    # ── ATS Home ──
-    await apply_filter(page, "Home")
-    rows = await page.evaluate(EXTRACT_JS)
-    ats_home = rows_to_dict(rows, sport, "ATS-Home")
-    print(f"  {sport.upper()} ATS Home: {len(ats_home)} teams")
-
-    # ── ATS Away ──
-    await apply_filter(page, "Away")
-    rows = await page.evaluate(EXTRACT_JS)
-    ats_away = rows_to_dict(rows, sport, "ATS-Away")
-    print(f"  {sport.upper()} ATS Away: {len(ats_away)} teams")
-
-    # ── O/U All Games ──
-    await page.goto(f"{base}/over-under-standings/", wait_until="load", timeout=45000)
-    await page.wait_for_selector("tr td", timeout=20000)
-    rows = await page.evaluate(EXTRACT_JS)
-    ou_all = rows_to_dict(rows, sport, "O/U-All")
-    print(f"  {sport.upper()} O/U  All:  {len(ou_all)} teams")
-
-    # ── Merge ──
-    all_teams = set(ats_all) | set(ats_home) | set(ats_away) | set(ou_all)
-    for team in all_teams:
-        aw, al   = ats_all.get(team,  (0, 0))
-        haw, hal = ats_home.get(team, (0, 0))
-        aaw, aal = ats_away.get(team, (0, 0))
-        ov, un   = ou_all.get(team,   (0, 0))
-        teams[team] = dict(aw=aw, al=al, haw=haw, hal=hal, aaw=aaw, aal=aal, ov=ov, un=un)
-
-    return teams
-
-
-async def run_scrape() -> dict:
-    from datetime import datetime
-    from playwright.async_api import async_playwright
-
-    month = datetime.now().month
-    result = {}
-
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                       "AppleWebKit/537.36 (KHTML, like Gecko) "
-                       "Chrome/124.0.0.0 Safari/537.36"
-        )
-        page = await context.new_page()
-
-        print("Scraping NBA...")
-        result["nba"] = await scrape_sport(page, "nba")
-
-        print("Scraping NHL...")
-        nhl_raw = await scrape_sport(page, "nhl")
-        # NHL uses plw/pll field names (puck line) — rename aw/al
-        result["nhl"] = {}
-        for team, d in nhl_raw.items():
-            result["nhl"][team] = dict(plw=d["aw"], pll=d["al"], ov=d["ov"], un=d["un"])
-
-        # NFL: skip March through August (off-season)
-        if month not in range(3, 9):
-            print("Scraping NFL...")
-            result["nfl"] = await scrape_sport(page, "nfl")
-        else:
-            print("NFL off-season — skipping")
-            result["nfl"] = {}
-
-        # MLB: skip November through February (off-season)
-        if month not in (11, 12, 1, 2):
-            print("Scraping MLB...")
-            result["mlb"] = await scrape_sport(page, "mlb")
-        else:
-            print("MLB off-season — skipping")
-            result["mlb"] = {}
-
-        await browser.close()
-        return result
-
-
-def build_json(data: dict) -> dict:
-    today = date.today().isoformat()
-    sports = {}
-    for sport in ("nba", "nhl", "nfl", "mlb"):
-        if data.get(sport):
-            sports[sport] = [{"team": t, **v} for t, v in sorted(data[sport].items())]
-    out = {
-        "source": "bettingpros.com",
-        "season": "2025-26",
-        "as_of": today,
-        "scraped_by": "scripts/scrape_ats.py (automated)",
-        "_note": "NBA/NFL/MLB include home/away ATS splits. NHL puck-line only.",
-        "sports": sports,
-    }
+    # Merge — every team in ats_by_hub gets an entry (O/U optional).
+    out = []
+    for hub_name, (aw, al) in ats_by_hub.items():
+        entry = {"team": hub_name, "aw": aw, "al": al}
+        if hub_name in ou_by_hub:
+            ov, un = ou_by_hub[hub_name]
+            entry["ov"] = ov
+            entry["un"] = un
+        out.append(entry)
     return out
 
 
 def main():
     dry_run = "--dry-run" in sys.argv
-    out_path = "data/ats_refresh.json"
-
-    print("=" * 60)
-    print("BettingPros ATS Scraper")
-    print("=" * 60)
-
-    data = asyncio.run(run_scrape())
-
-    # Summarise
-    counts = []
-    for sport, expected in [("nba", 30), ("nhl", 32), ("nfl", 32), ("mlb", 30)]:
-        n = len(data.get(sport, {}))
-        if n > 0:
-            counts.append(f"{n}/{expected} {sport.upper()}")
-    print(f"\nScraped: {', '.join(counts) or 'no teams'}")
-
-    payload = build_json(data)
-
+    print(f"[scrape_ats] {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
     if dry_run:
-        print("\n[DRY RUN] Would write:")
-        print(json.dumps(payload, indent=2)[:2000])
+        print("  (dry-run mode — no files written, no hub patched)\n")
+
+    payload = {
+        "source": f"teamrankings.com — {datetime.now(timezone.utc).strftime('%Y-%m-%d')}",
+        "as_of":  datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "sports": {},
+    }
+    for sport in SPORT_CONFIG.keys():
+        entries = scrape_sport(sport)
+        if entries:
+            payload["sports"][sport] = entries
+
+    if not payload["sports"]:
+        print("\n✗ No data scraped from any sport — refusing to overwrite ats_refresh.json")
+        sys.exit(1)
+
+    print(f"\nTotal sports scraped: {list(payload['sports'].keys())}")
+    if dry_run:
+        print("\n--- payload preview ---")
+        print(json.dumps(payload, indent=2)[:1500])
+        print("...")
         return
 
-    os.makedirs("data", exist_ok=True)
-    with open(out_path, "w") as f:
-        json.dump(payload, f, indent=2)
-    print(f"\nWrote {out_path}")
+    Path(OUTPUT_PATH).parent.mkdir(parents=True, exist_ok=True)
+    Path(OUTPUT_PATH).write_text(json.dumps(payload, indent=2))
+    print(f"\n✓ Wrote {OUTPUT_PATH}")
 
-    # Run the patcher
-    print("\nPatching hub...")
+    # Now apply to the hub via refresh_ats.py
+    print(f"\n→ Applying to index.html via refresh_ats.py…")
     result = subprocess.run(
-        [sys.executable, "scripts/refresh_ats.py", out_path],
-        capture_output=True, text=True
+        [sys.executable, "scripts/refresh_ats.py", OUTPUT_PATH],
+        capture_output=False,
     )
-    print(result.stdout)
     if result.returncode != 0:
-        print("STDERR:", result.stderr, file=sys.stderr)
-        sys.exit(result.returncode)
+        sys.exit(f"✗ refresh_ats.py exited with {result.returncode}")
+    print("\n[scrape_ats] Done ✓")
 
 
 if __name__ == "__main__":

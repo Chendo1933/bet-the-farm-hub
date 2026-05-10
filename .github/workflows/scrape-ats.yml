@@ -1,0 +1,62 @@
+name: Daily ATS/O-U Refresh
+
+# Scrapes season-long ATS + O/U totals from teamrankings.com for MLB,
+# NBA, NFL and patches them into index.html. This is the authoritative
+# source for the overall ATS/O-U columns — see scripts/scrape_ats.py
+# for the full rationale (short version: data/results/*.json only
+# covers ~85% of daily slates, so archive-based recompute drifts
+# behind reality every week).
+#
+# Runs at 5:30 AM ET — before daily-update (7 AM ET) so the scraped
+# values land first, then update_stats.py refreshes other columns
+# without overwriting overall ATS/O-U for the scraper-owned sports.
+
+on:
+  schedule:
+    - cron: "30 9 * * *"   # 09:30 UTC = 5:30 AM ET
+  workflow_dispatch:        # manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-ats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # No Playwright/Chromium — the scraper uses urllib only.
+      - name: Scrape teamrankings.com ATS + O/U and patch hub
+        run: python scripts/scrape_ats.py
+
+      - name: Commit refreshed ATS data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html data/ats_refresh.json
+          if git diff --staged --quiet; then
+            echo "No ATS data changes to commit"
+          else
+            git commit -m "data: ATS/O-U refresh from teamrankings ($(date +'%Y-%m-%d'))"
+            # Rebase onto anything that landed during the workflow run
+            # before pushing (kalshi-reconcile fires in this window).
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "✅ ATS data refreshed and pushed"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      scrape-ats
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Daily ATS/O-U scrape failed — overall ATS/O-U columns will drift until next successful run"

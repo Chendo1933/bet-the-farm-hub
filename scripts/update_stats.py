@@ -689,20 +689,36 @@ def update_ats_ou(html_lines):
             else:
                 for k, v in stats.items():
                     merged[canonical][k] = merged[canonical].get(k, 0) + v
+        # Sports where scrape_ats.py owns overall ATS + O/U (aw/al/ov/un).
+        # For these we only update home/away splits (haw/hal/aaw/aal) from
+        # the archive — overall totals come from teamrankings.com which has
+        # full-season coverage that our results archive doesn't.
+        # See scripts/scrape_ats.py for the data flow.
+        SCRAPER_OWNS_OVERALL = {"mlb", "nba", "nfl"}
+
         for team_name, stats in merged.items():
             updates = {}
-            updates[idx["aw"]]  = stats.get("aw",  0)
-            updates[idx["al"]]  = stats.get("al",  0)
-            # For NHL, haw/hal/aaw/aal all alias to plw/pll — only set once
+            # Always update home/away splits from the archive. These aren't
+            # provided by the teamrankings scraper.
+            # For NHL, haw/hal/aaw/aal all alias to plw/pll — only set once.
             if idx["haw"] != idx["aw"]:
                 updates[idx["haw"]] = stats.get("haw", 0)
                 updates[idx["hal"]] = stats.get("hal", 0)
                 updates[idx["aaw"]] = stats.get("aaw", 0)
                 updates[idx["aal"]] = stats.get("aal", 0)
-            if idx.get("ov") is not None:
-                updates[idx["ov"]] = stats.get("ov", 0)
-            if idx.get("un") is not None:
-                updates[idx["un"]] = stats.get("un", 0)
+            # Only update overall ATS + O/U from archive for sports the
+            # scraper doesn't cover (NHL during regular season, CBB, CFB).
+            if sport not in SCRAPER_OWNS_OVERALL:
+                updates[idx["aw"]] = stats.get("aw", 0)
+                updates[idx["al"]] = stats.get("al", 0)
+                if idx.get("ov") is not None:
+                    updates[idx["ov"]] = stats.get("ov", 0)
+                if idx.get("un") is not None:
+                    updates[idx["un"]] = stats.get("un", 0)
+
+            if not updates:
+                continue   # NHL: scraper covers nothing for NHL today, but the
+                           # plw/pll alias path still fires above
 
             found, changed = patch_rows(html_lines, team_name, updates)
             if changed:
@@ -711,7 +727,8 @@ def update_ats_ou(html_lines):
                 sport_found_missing.append(team_name)
 
         if sport_total:
-            print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with ATS/O/U")
+            tag = " (home/away splits only — overall from teamrankings)" if sport in SCRAPER_OWNS_OVERALL else ""
+            print(f"  ✓ {sport.upper()}: {sport_total} team(s) updated with ATS/O/U{tag}")
         elif sport_found_missing:
             print(f"  · {sport.upper()}: {len(sport_found_missing)} team name(s) not in hub DB "
                   f"(sample: {sport_found_missing[:3]})")
