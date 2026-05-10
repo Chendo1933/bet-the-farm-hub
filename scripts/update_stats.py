@@ -922,6 +922,42 @@ def update_timestamp(html_lines):
             break
 
 
+def update_baseline_ver(html_lines):
+    """Bump BTF_BASELINE_VER to today's date so the hub's localStorage W-L
+    delta cache gets cleared on next page load.
+
+    Background: the hub has a client-side overlay (around index.html:3528
+    'RECORDS SYNC (THE ODDS API SCORES)') that fetches recent game scores
+    from The Odds API and stores per-game W-L deltas in localStorage. On
+    every page load, those deltas are RE-APPLIED on top of the static W-L
+    baseline in the hub's sport arrays. If the static baseline gets
+    refreshed (which this script does daily from ESPN standings) but
+    localStorage isn't cleared, the same games get counted twice:
+
+      static baseline (refreshed daily from ESPN) +
+      localStorage deltas (untouched) =
+      W-L double-counted by ~1 game per day per team
+
+    Over the ~30 days between 2026-04-10 (when the version was last
+    bumped manually) and 2026-05-10 (when this fix landed), every MLB
+    team's hub W-L display had drifted ~15-25 games above reality
+    (e.g. Cubs shown 42-22 vs actual 27-14).
+
+    The version-clear mechanism at index.html:6671 already handles the
+    clear — we just need to flip the version string. Doing it here, on
+    every workflow run, makes the localStorage cache effectively
+    short-lived (cleared each morning when the daily-update workflow
+    refreshes the baseline) instead of accumulating forever.
+    """
+    new_ver = datetime.now(timezone.utc).strftime("%Y-%m-%d-auto")
+    pattern = r"(const\s+BTF_BASELINE_VER\s*=\s*')[^']+(';)"
+    for i, line in enumerate(html_lines):
+        if "BTF_BASELINE_VER" in line and "const" in line:
+            html_lines[i] = re.sub(pattern, rf"\g<1>{new_ver}\g<2>", line)
+            return True
+    return False
+
+
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -942,11 +978,26 @@ def main():
     changed += update_ats_ou(html_lines)
     changed += update_recent_form(html_lines)
 
-    if changed:
+    # Bump BTF_BASELINE_VER unconditionally on every run. This clears the
+    # hub's localStorage W-L delta cache on the next page load so we never
+    # double-count game results that have already been baked into the
+    # static baseline. See update_baseline_ver()'s docstring for the full
+    # history of why this is necessary.
+    ver_bumped = update_baseline_ver(html_lines)
+    if ver_bumped:
+        print("\n✓ BTF_BASELINE_VER bumped — hub localStorage will clear on next page load")
+
+    # Write the file if ANY of the following are true:
+    #   - any team row's data changed (`changed > 0`)
+    #   - the baseline version was bumped (so the next page load clears)
+    # The version bump alone is reason enough to commit, even on days where
+    # no ESPN numbers moved (e.g. all-star break, off-days for active sports).
+    if changed or ver_bumped:
         update_timestamp(html_lines)
         with open(HUB_FILE, "w", encoding="utf-8") as f:
             f.writelines(html_lines)
-        print(f"\n✅ {changed} row(s) updated → {HUB_FILE}")
+        summary = f"{changed} row(s) updated" if changed else "version bump only"
+        print(f"\n✅ {summary} → {HUB_FILE}")
     else:
         print("\nℹ  No changes detected — hub is already up to date")
 
