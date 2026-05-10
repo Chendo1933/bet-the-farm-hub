@@ -16,12 +16,13 @@
     "validated for at least 1 week."
   ],
 
-  "environment": "demo",
+  "environment": "live",
   "environment_doc": [
     "'demo' → fake-money sandbox at demo-api.kalshi.co.",
     "'live' → real money at api.elections.kalshi.com.",
-    "Always start in demo. Switch to live only after demo orders match",
-    "expectations for at least a week."
+    "Note: env var KALSHI_ENVIRONMENT (set to 'live' in workflows by",
+    "default) takes precedence over this field. Field is kept for",
+    "consistency / local testing without env vars set."
   ],
 
   "min_calibrated_score": 65,
