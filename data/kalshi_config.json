@@ -39,16 +39,20 @@
     "mapping logic since Kalshi has limited spread coverage."
   ],
 
-  "max_stake_per_pick_dollars": 10,
+  "max_stake_per_pick_dollars": 5,
   "max_stake_per_pick_dollars_doc": [
     "Hard cap on a single order, regardless of Kelly recommendation.",
-    "Start at $10. Raise after a month of validated demo + live results."
+    "Initial Phase 3 launch is at $5 — small enough that a bad week is",
+    "single-digit % of bankroll. Raise to $10 → $25 → $50 over weeks if",
+    "live PnL is consistently positive."
   ],
 
-  "max_daily_exposure_dollars": 50,
+  "max_daily_exposure_dollars": 20,
   "max_daily_exposure_dollars_doc": [
     "Sum across all auto-placed orders in one ET day. New orders skip if",
-    "this would be exceeded. Defends against runaway bug placing many bets."
+    "this would be exceeded. With $5/pick × 4 = $20, this lets the typical",
+    "1-3 daily picks fire fully but caps blow-up days. Raise alongside",
+    "max_stake_per_pick_dollars."
   ],
 
   "kelly_fraction": 0.25,
@@ -64,10 +68,12 @@
     "you deposit/withdraw. Phase 3+ may auto-sync from Kalshi balance."
   ],
 
-  "kill_switch_daily_loss_dollars": 100,
+  "kill_switch_daily_loss_dollars": 25,
   "kill_switch_daily_loss_doc": [
-    "If realized + open losses on a given ET day exceed this, no new orders",
-    "are placed for the rest of the day. Manual reset required."
+    "If yesterday's reconciled PnL was below -$25, place_orders.py refuses",
+    "to place ANY orders today. Auto-resets the next day if PnL recovers.",
+    "With $20/day max exposure, a -$25 day means we lost more than today's",
+    "planned exposure — clear signal to pause and review."
   ],
 
   "skip_if_yes_ask_above_cents": 80,

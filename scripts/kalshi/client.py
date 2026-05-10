@@ -1,24 +1,26 @@
 """
-Kalshi v2 REST API client — Phase 1 (read-only).
+Kalshi v2 REST API client.
 
-Phase 1 surface area:
+Read-only surface (Phase 1):
   - get_balance()           — current portfolio cash balance
   - list_events(...)        — discover sports/event groupings
   - list_markets(...)       — markets within an event or by series ticker
   - get_market(ticker)      — full market detail (orderbook, etc.)
   - search_markets(query)   — name/ticker substring match across active markets
 
-Phase 2/3 will add:
-  - place_order(...)        — limit/market orders
-  - cancel_order(...)
-  - get_orders()            — open + filled orders
-  - get_positions()         — current positions
+Trading surface (Phase 3 — requires Trade-permission API key):
+  - create_order(...)       — place limit/market orders (POST /portfolio/orders)
+  - get_orders(...)         — list open + recent orders
+  - get_order(order_id)     — single order detail
+  - cancel_order(order_id)  — cancel an open order
+  - get_positions(...)      — current positions (open contracts)
 
 Environment selection:
-  KALSHI_ENVIRONMENT=demo   → https://demo-api.kalshi.co/trade-api/v2  (default)
+  KALSHI_ENVIRONMENT=demo   → https://external-api.demo.kalshi.co/trade-api/v2
   KALSHI_ENVIRONMENT=live   → https://api.elections.kalshi.com/trade-api/v2
 
-Demo accounts get $1k of fake money. Validate everything in demo first.
+Always validate Phase 3 changes in demo first — Kalshi demo gives $1k fake
+funds and supports the full trading surface.
 """
 from __future__ import annotations
 
@@ -68,6 +70,7 @@ class KalshiClient:
             self._key_id = _auth.get_api_key_id()
 
     def _request(self, method: str, path: str, params: dict | None = None,
+                 json_body: dict | None = None,
                  require_auth: bool = True, max_retries: int = 3) -> dict:
         # Path used in signing must match what we send (including query string).
         full_path = path
@@ -80,10 +83,13 @@ class KalshiClient:
 
         for attempt in range(max_retries + 1):
             headers = {"Accept": "application/json"}
+            if json_body is not None:
+                headers["Content-Type"] = "application/json"
             if require_auth:
                 self._ensure_auth()
                 headers.update(_auth.auth_headers(self._private_key, self._key_id, method, sign_path))
-            resp = requests.request(method.upper(), url, headers=headers, timeout=self.timeout)
+            resp = requests.request(method.upper(), url, headers=headers,
+                                    json=json_body, timeout=self.timeout)
 
             # Retry on 429 (rate limit) with backoff. Kalshi may include a
             # Retry-After header indicating seconds to wait; if not, fall back
@@ -157,6 +163,93 @@ class KalshiClient:
     def get_market(self, ticker: str) -> dict:
         """Full detail for one market — orderbook, last trade, settlement source."""
         return self._request("GET", f"/markets/{ticker}")
+
+    # ── Trading endpoints (Phase 3) ─────────────────────────────────────────
+    # These call the order-placement and position endpoints. They REQUIRE
+    # an API key with Trade permission (the Phase-1 read-only key will return
+    # 403 from Kalshi). All write methods are idempotent via client_order_id
+    # where supported, so retries don't double-place.
+
+    def create_order(self, *,
+                     ticker: str,
+                     side: str,            # 'yes' or 'no'
+                     action: str,          # 'buy' or 'sell'
+                     count: int,           # number of contracts
+                     order_type: str = "limit",   # 'limit' or 'market'
+                     yes_price_cents: int | None = None,  # required for limit YES
+                     no_price_cents: int | None = None,   # required for limit NO
+                     client_order_id: str | None = None,  # idempotency key
+                     time_in_force: str | None = None) -> dict:
+        """
+        Place a single order. Returns the order dict with order_id, status,
+        filled_count, etc.
+
+        Defensive checks (raise ValueError on bad input rather than letting
+        Kalshi reject with an unclear message):
+          - count must be positive
+          - side must be 'yes' or 'no' (lowercase)
+          - action must be 'buy' or 'sell'
+          - limit orders require the matching-side price in (1, 99) cents
+        """
+        if count <= 0:
+            raise ValueError(f"order count must be positive (got {count})")
+        side = (side or "").lower()
+        action = (action or "").lower()
+        if side not in ("yes", "no"):
+            raise ValueError(f"side must be 'yes' or 'no' (got {side!r})")
+        if action not in ("buy", "sell"):
+            raise ValueError(f"action must be 'buy' or 'sell' (got {action!r})")
+        if order_type == "limit":
+            if side == "yes" and (yes_price_cents is None or not (1 <= yes_price_cents <= 99)):
+                raise ValueError(f"limit YES order needs yes_price_cents in 1..99 (got {yes_price_cents})")
+            if side == "no" and (no_price_cents is None or not (1 <= no_price_cents <= 99)):
+                raise ValueError(f"limit NO order needs no_price_cents in 1..99 (got {no_price_cents})")
+
+        body = {
+            "ticker":     ticker,
+            "side":       side,
+            "action":     action,
+            "count":      count,
+            "type":       order_type,
+        }
+        if yes_price_cents is not None: body["yes_price"] = int(yes_price_cents)
+        if no_price_cents  is not None: body["no_price"]  = int(no_price_cents)
+        if client_order_id is not None: body["client_order_id"] = client_order_id
+        if time_in_force   is not None: body["time_in_force"]   = time_in_force
+
+        return self._request("POST", "/portfolio/orders", json_body=body)
+
+    def get_orders(self, *,
+                   ticker: str | None = None,
+                   status: str | None = None,    # 'resting' | 'canceled' | 'executed'
+                   limit: int = 100,
+                   cursor: str | None = None) -> dict:
+        """List your orders. Filterable by ticker + status."""
+        params = {"limit": min(max(limit, 1), 1000)}
+        if ticker: params["ticker"] = ticker
+        if status: params["status"] = status
+        if cursor: params["cursor"] = cursor
+        return self._request("GET", "/portfolio/orders", params=params)
+
+    def get_order(self, order_id: str) -> dict:
+        """Fetch a single order by ID."""
+        return self._request("GET", f"/portfolio/orders/{order_id}")
+
+    def cancel_order(self, order_id: str) -> dict:
+        """Cancel an open order. Returns the order with status='canceled'."""
+        return self._request("DELETE", f"/portfolio/orders/{order_id}")
+
+    def get_positions(self, *,
+                      ticker: str | None = None,
+                      event_ticker: str | None = None,
+                      limit: int = 100,
+                      cursor: str | None = None) -> dict:
+        """Current open positions."""
+        params = {"limit": min(max(limit, 1), 1000)}
+        if ticker:       params["ticker"] = ticker
+        if event_ticker: params["event_ticker"] = event_ticker
+        if cursor:       params["cursor"] = cursor
+        return self._request("GET", "/portfolio/positions", params=params)
 
     # ── Convenience search ──────────────────────────────────────────────────
     def search_markets_by_text(self, query: str, status: str = "open",

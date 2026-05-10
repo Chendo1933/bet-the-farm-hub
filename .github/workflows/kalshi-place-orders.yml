@@ -1,0 +1,99 @@
+name: Kalshi Place Orders (Live)
+
+# Fires automatically AFTER Kalshi Dry-Run completes successfully.
+# Reads the freshly-committed dry-run snapshot, runs every "would_place"
+# entry through hard pre-flight gates, and places real limit orders on
+# Kalshi for survivors.
+#
+# This workflow is GATED by data/kalshi_config.json `auto_trading_enabled`.
+# Default false → script exits cleanly without placing anything. User must
+# explicitly flip the flag (commit + push) to enable real placement.
+#
+# Required secrets if you want this to actually trade (Settings → Secrets):
+#   KALSHI_TRADE_KEY_ID    — UUID of an API key with Trade permission
+#                            (the read-only Phase 1+2 key won't work here)
+#   KALSHI_TRADE_PRIVATE_KEY — PEM of the matching private key
+#
+# These are NEW secrets, intentionally distinct from the read-only
+# KALSHI_API_KEY_ID + KALSHI_PRIVATE_KEY used by dry-run + reconcile. That
+# way the dry-run / paper-trade pipeline keeps working with read-only auth
+# and only this workflow touches the higher-privilege key.
+#
+# If TRADE secrets aren't set, this workflow runs but exits cleanly without
+# placing — same posture as kalshi-dry-run.yml's "skip cleanly if not configured".
+on:
+  workflow_run:
+    workflows: ["Kalshi Dry-Run"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  place-orders:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install cryptography requests
+
+      - name: Check Trade-permission secrets configured
+        id: check_secrets
+        env:
+          KEY: ${{ secrets.KALSHI_TRADE_KEY_ID }}
+        run: |
+          if [ -n "$KEY" ]; then
+            echo "configured=true" >> $GITHUB_OUTPUT
+            echo "✓ Trade-permission Kalshi secrets present"
+          else
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "::warning::KALSHI_TRADE_KEY_ID not set — skipping live order placement"
+            echo "  This workflow is opt-in. To enable:"
+            echo "  1. Generate a NEW Kalshi API key with Trade permission"
+            echo "  2. Add KALSHI_TRADE_KEY_ID + KALSHI_TRADE_PRIVATE_KEY as repo secrets"
+            echo "  3. Set data/kalshi_config.json auto_trading_enabled: true"
+          fi
+
+      - name: Place live orders against today's dry-run snapshot
+        if: steps.check_secrets.outputs.configured == 'true'
+        env:
+          KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
+          KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_TRADE_KEY_ID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_TRADE_PRIVATE_KEY }}
+        run: python scripts/kalshi/place_orders.py
+
+      - name: Commit order receipts
+        if: steps.check_secrets.outputs.configured == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/kalshi_orders/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No order receipts to commit (no orders placed or all skipped)"
+          else
+            git commit -m "kalshi: live order receipts $(date +'%Y-%m-%d')"
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "✅ Live order receipts committed"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      place-orders
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Kalshi LIVE order placement — REAL MONEY action; today's orders may be unplaced or partially placed"

@@ -28,9 +28,11 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-DRYRUN_DIR = Path("data/kalshi_dryrun")
-HISTORY    = Path("data/pick_history.json")
-PERF_OUT   = Path("data/kalshi_dryrun_perf.json")
+DRYRUN_DIR  = Path("data/kalshi_dryrun")
+ORDERS_DIR  = Path("data/kalshi_orders")    # Phase 3 live order receipts
+HISTORY     = Path("data/pick_history.json")
+PERF_OUT    = Path("data/kalshi_dryrun_perf.json")
+LIVE_PERF_OUT = Path("data/kalshi_live_perf.json")  # Phase 3 real-money PnL
 
 
 def _pick_key(p: dict) -> tuple:
@@ -219,13 +221,124 @@ def main():
     }
 
     PERF_OUT.write_text(json.dumps(overall, indent=2, default=str))
-    print(f"\n── Aggregate ────────────────────────────────────────────")
+    print(f"\n── Paper-trade aggregate ────────────────────────────────")
     if total_wins + total_losses:
         print(f"  Record: {total_wins}-{total_losses} ({overall['win_pct']:.1f}%) over {total_placed} placed orders")
         print(f"  Stake:  ${total_stake:.2f}    PnL: ${total_pnl:+.2f}    ROI: {overall['roi_pct']:+.1f}%")
     else:
         print(f"  No graded orders yet (run grading first or wait for tomorrow's reconcile)")
-    print(f"\n✅ Wrote {PERF_OUT}")
+    print(f"  ✅ Wrote {PERF_OUT}")
+
+    # ── Phase 3: reconcile live orders if any exist ────────────────────────
+    if ORDERS_DIR.exists():
+        live_files = sorted(ORDERS_DIR.glob("*.json"))
+        if live_files:
+            _reconcile_live_orders(live_files, hist_idx)
+
+
+def _reconcile_live_orders(files, hist_idx):
+    """
+    Reconcile live (real-money) order receipts against graded picks. Same
+    win/loss/PnL math as paper, but tied to actual placed orders rather
+    than hypothetical ones. Writes data/kalshi_live_perf.json.
+    """
+    print(f"\n── Live orders reconcile ─────────────────────────────────")
+    daily_summaries = []
+    total_wins = total_losses = total_placed = 0
+    total_stake = total_pnl = 0.0
+
+    for path in files:
+        try:
+            data = json.loads(path.read_text())
+        except Exception as e:
+            print(f"  · {path.name}: parse error ({e})")
+            continue
+        # Skip dry-mode order files (they have dry: true, no real placement)
+        if data.get("dry"):
+            continue
+        file_date = data.get("date", path.stem)
+        annotated = []
+        wins = losses = ungraded = 0
+        stake = payout = pnl = 0.0
+
+        for o in data.get("placed_orders", []):
+            if o.get("dry"):  # safety: skip any per-order dry rows
+                annotated.append(o); continue
+
+            pick = o.get("dryrun_pick") or {}
+            key = (file_date, pick.get("sport",""), pick.get("home",""),
+                   pick.get("away",""), pick.get("betType",""), pick.get("pickLabel",""))
+            hist = hist_idx.get(key)
+            ann = dict(o)
+            outcome = (hist or {}).get("outcome")
+            ann["outcome"] = outcome
+            ann["home_score"] = (hist or {}).get("homeScore")
+            ann["away_score"] = (hist or {}).get("awayScore")
+
+            stake_d = float(o.get("stake_dollars") or 0)
+            contracts = int(o.get("contracts") or 0)
+            if outcome == "win":
+                payout_d = contracts * 1.00
+                ann["pnl_dollars"] = round(payout_d - stake_d, 2)
+                ann["payout_dollars"] = round(payout_d, 2)
+                ann["reconcile_status"] = "graded"
+                wins += 1; payout += payout_d; pnl += ann["pnl_dollars"]; stake += stake_d
+            elif outcome == "loss":
+                ann["pnl_dollars"] = round(-stake_d, 2)
+                ann["payout_dollars"] = 0.0
+                ann["reconcile_status"] = "graded"
+                losses += 1; pnl += ann["pnl_dollars"]; stake += stake_d
+            elif outcome == "push":
+                ann["pnl_dollars"] = 0.0
+                ann["payout_dollars"] = round(stake_d, 2)
+                ann["reconcile_status"] = "graded"
+                stake += stake_d; payout += stake_d
+            else:
+                ann["pnl_dollars"] = 0.0
+                ann["payout_dollars"] = 0.0
+                ann["reconcile_status"] = "ungraded" if hist else "no_history_match"
+                ungraded += 1
+
+            annotated.append(ann)
+
+        daily = {
+            "date": file_date,
+            "placed": len([o for o in annotated if not o.get("dry") and o.get("status") not in (None,"canceled","rejected")]),
+            "wins": wins, "losses": losses, "ungraded": ungraded,
+            "total_stake_dollars": round(stake, 2),
+            "total_payout_dollars": round(payout, 2),
+            "total_pnl_dollars": round(pnl, 2),
+            "roi_pct": round((pnl/stake*100) if stake else 0, 2),
+        }
+        # Persist annotated back into the per-day file so the hub panel
+        # can show outcomes + PnL alongside placed orders.
+        data["placed_orders"] = annotated
+        data["reconcile"] = daily
+        path.write_text(json.dumps(data, indent=2, default=str))
+        daily_summaries.append(daily)
+
+        if daily["placed"]:
+            print(f"  {daily['date']}: {wins}-{losses}{f' ({ungraded} ungraded)' if ungraded else ''} · "
+                  f"stake ${daily['total_stake_dollars']:.2f} · "
+                  f"PnL ${daily['total_pnl_dollars']:+.2f} ({daily['roi_pct']:+.1f}%)")
+        total_placed += daily["placed"]; total_wins += wins; total_losses += losses
+        total_stake += stake; total_pnl += pnl
+
+    overall = {
+        "days": len(daily_summaries),
+        "total_orders_placed": total_placed,
+        "wins": total_wins, "losses": total_losses,
+        "total_stake_dollars": round(total_stake, 2),
+        "total_pnl_dollars": round(total_pnl, 2),
+        "roi_pct": round((total_pnl/total_stake*100) if total_stake else 0, 2),
+        "win_pct": round((total_wins/(total_wins+total_losses)*100) if (total_wins+total_losses) else 0, 1),
+        "daily": daily_summaries,
+    }
+    LIVE_PERF_OUT.write_text(json.dumps(overall, indent=2, default=str))
+    if total_wins + total_losses:
+        print(f"\n  Live record: {total_wins}-{total_losses} ({overall['win_pct']:.1f}%) over {total_placed} orders")
+        print(f"  Live stake:  ${total_stake:.2f}    PnL: ${total_pnl:+.2f}    ROI: {overall['roi_pct']:+.1f}%")
+    print(f"  ✅ Wrote {LIVE_PERF_OUT}")
 
 
 if __name__ == "__main__":

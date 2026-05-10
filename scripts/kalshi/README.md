@@ -247,6 +247,139 @@ webhook), failures auto-notify your phone. Successes are silent — just
 check `data/kalshi_dryrun_perf.json` weekly to see how Kalshi PnL is
 tracking against your sportsbook ROI.
 
+---
+
+## Phase 3 — Live order placement (real money)
+
+**Don't enable Phase 3 until you've reviewed Phase 2 dry-run data.** The whole
+point of Phase 2 was to confirm Kalshi prices are reasonable vs. the venue
+you're already on (DK Pred Markets, sportsbook, etc.). Skipping Phase 2
+verification means you're flying blind.
+
+### Architecture
+
+```
+11:50 AM ET  — log-picks.yml
+~11:51 AM ET — kalshi-dry-run.yml          (paper, read-only key)
+~11:52 AM ET — kalshi-place-orders.yml     (Phase 3 — REAL ORDERS, trade key)
+                ↓ runs scripts/kalshi/place_orders.py
+                ↓ checks all hard kill switches before any API call
+                ↓ places limit orders on Kalshi
+                ↓ commits data/kalshi_orders/{date}.json
+04:00 AM ET  — log-results.yml
+~04:01 AM ET — grade-picks.yml
+~04:02 AM ET — kalshi-reconcile.yml         (paper PnL + LIVE PnL update)
+                ↓ writes both data/kalshi_dryrun_perf.json
+                ↓ AND   data/kalshi_live_perf.json
+```
+
+### Hard kill switches (every one MUST pass before any order fires)
+
+1. `auto_trading_enabled: true` in config (master flag)
+2. KALSHI_API_KEY_ID + KALSHI_PRIVATE_KEY env vars present
+3. Account balance ≥ today's planned total stake
+4. Yesterday's reconciled PnL > `-kill_switch_daily_loss_dollars`
+5. No prior orders for this date (idempotency — re-runs are no-ops)
+
+Per-order gates (each order checked individually):
+
+6. `would_place: true` from dry-run
+7. stake_dollars > 0 and ≤ `max_stake_per_pick_dollars`
+8. cumulative-stake-so-far + this stake ≤ `max_daily_exposure_dollars`
+9. We don't already have a position on this market
+10. Limit order price in (1, 99) cents (defensive)
+
+### Setup steps for Phase 3
+
+#### 1. Generate a NEW API key with Trade permission
+
+Your current Phase 1+2 key is Read-only. For Phase 3 you need a SECOND key
+with Trade permission. Don't replace the existing one — having both lets
+the dry-run pipeline keep working with the safer read-only auth.
+
+```bash
+openssl genrsa -out ~/.config/kalshi/live_trade.pem 2048
+chmod 600 ~/.config/kalshi/live_trade.pem
+openssl rsa -in ~/.config/kalshi/live_trade.pem -pubout -out ~/.config/kalshi/live_trade.pub
+```
+
+In Kalshi Settings → API Keys → Create new API key:
+- Nickname: `BTF Phase 3 Trade`
+- Paste contents of `live_trade.pub`
+- **Permission: Read/Write** (this time)
+- Copy the Key ID UUID
+
+#### 2. Deposit funds on Kalshi
+
+Start small — recommended $50-100. The default config caps single-pick
+stake at $5 and daily exposure at $20, so $50 lasts at least 2-3 days
+even on a complete blowout.
+
+#### 3. Add the new secrets to repo
+
+Settings → Secrets and variables → Actions:
+
+- `KALSHI_TRADE_KEY_ID` = the new Key ID UUID from step 1
+- `KALSHI_TRADE_PRIVATE_KEY` = full PEM contents of `live_trade.pem`
+
+These are SEPARATE from the existing read-only secrets. Both pairs
+coexist — read-only powers dry-run; trade key powers live placement.
+
+#### 4. Update config bankroll (optional)
+
+Edit `data/kalshi_config.json`:
+
+```json
+"bankroll_dollars": 50    ← match what you actually deposited
+```
+
+This is used for Kelly sizing math. The actual cash check happens against
+your real Kalshi balance via API.
+
+#### 5. Flip the master flag
+
+Edit `data/kalshi_config.json`:
+
+```json
+"auto_trading_enabled": true
+```
+
+Commit + push. The next scheduled run (or manual workflow_dispatch) will
+attempt placement.
+
+### What you'll see when Phase 3 fires
+
+- **Workflow log** in Actions tab shows each order placed (or skipped reason)
+- **Hub panel** turns green and shows "💰 Kalshi LIVE" with placed orders
+- **`data/kalshi_orders/{date}.json`** gets the full receipt with order_id
+- **Tomorrow morning** after reconcile: outcomes + PnL annotated, live perf
+  file updates
+
+### How to ramp up safely
+
+After 5 days of clean live operation with positive PnL, consider:
+
+```json
+"max_stake_per_pick_dollars": 5  → 10
+"max_daily_exposure_dollars": 20 → 50
+"bankroll_dollars": 50           → 200
+"kill_switch_daily_loss_dollars": 25 → 50
+```
+
+Don't ramp on a single day's good result. Wait for sustained positive
+PnL across at least 5+ days and 15+ orders.
+
+### How to pause / kill
+
+Three levels of stop:
+
+1. **Soft pause** — flip `auto_trading_enabled: false` in config, commit, push.
+   Workflow runs but exits cleanly without placing.
+2. **Hard pause** — disable the `Kalshi Place Orders (Live)` workflow in
+   Actions tab. Even won't run.
+3. **Emergency stop** — revoke the Trade-permission API key in Kalshi
+   settings. Even if our code went rogue, Kalshi rejects every request.
+
 ## Common issues
 
 **`401 Unauthorized` on balance check**
