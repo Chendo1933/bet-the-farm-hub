@@ -1,0 +1,24 @@
+{
+  "days": 1,
+  "total_orders_placed": 2,
+  "wins": 0,
+  "losses": 2,
+  "total_stake_dollars": 19.04,
+  "total_pnl_dollars": -19.04,
+  "roi_pct": -100.0,
+  "win_pct": 0.0,
+  "daily": [
+    {
+      "date": "2026-05-09",
+      "placed": 2,
+      "wins": 0,
+      "losses": 2,
+      "pushes": 0,
+      "ungraded": 0,
+      "total_stake_dollars": 19.04,
+      "total_payout_dollars": 0.0,
+      "total_pnl_dollars": -19.04,
+      "roi_pct": -100.0
+    }
+  ]
+}
