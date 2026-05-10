@@ -87,6 +87,29 @@ def _hhmm_diff_minutes(a: str, b: str) -> int:
     return abs(am - bm)
 
 
+def _today_kalshi_date_stamp() -> str:
+    """
+    Today's date in the format Kalshi embeds in per-game tickers, e.g.
+    'KXNHLGAME-26MAY10TBLDET-DET' → '26MAY10'. Used to filter out playoff
+    series / futures / conference tickers that don't carry a per-day stamp,
+    when multiple events for the same teams collide on a playoff slate.
+
+    Uses ET because Kalshi schedules days by ET. Falls back gracefully when
+    zoneinfo isn't available.
+    """
+    try:
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo("America/New_York"))
+    except Exception:
+        now = datetime.utcnow()
+    return now.strftime("%y%b%d").upper()
+
+
+def _ticker_has_today_stamp(ticker: str, stamp: str) -> bool:
+    """True if the ticker contains today's per-game date stamp like '26MAY10'."""
+    return bool(ticker) and stamp in ticker.upper()
+
+
 # Hub team-name → Kalshi ticker abbreviation. Used as a backup signal when
 # yes_sub_title doesn't disambiguate. Add new entries when a `no_market`
 # result surfaces a market we can verify by suffix.
@@ -257,12 +280,23 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict,
     def _evt_ticker(e):
         return e.get("event_ticker") or e.get("ticker") or ""
 
-    # If multiple strong event matches exist (typically MLB doubleheaders),
-    # disambiguate by comparing the pick's game time against each candidate's
-    # ticker-encoded start time. Kalshi MLB tickers embed the time as HHMM,
-    # e.g., 'KXMLBGAME-26MAY112210SFLAD' = 22:10 (10:10 PM). Pick the one
-    # within 30 minutes of the pick's stated time. If no clear winner,
-    # surface the ambiguity for human review.
+    # If multiple strong event matches exist, disambiguate in two passes:
+    #   (1) NHL/NBA playoffs case — Kalshi creates per-game events PLUS series /
+    #       conference / champion futures markets, all of which mention both
+    #       teams in their title. Per-game tickers carry today's date (e.g.
+    #       '26MAY10'); series / futures tickers don't. Drop any candidate
+    #       whose ticker doesn't contain today's date stamp — that filters
+    #       out the futures cleanly before time-based logic runs.
+    #   (2) MLB doubleheader case — both per-game events carry today's date,
+    #       so compare the pick's game time against each candidate's
+    #       ticker-encoded HHMM. Pick the closest match within 30 minutes,
+    #       provided it's clearly closer than the runner-up.
+    # If neither pass resolves, surface the ambiguity for human review.
+    if len(strong) > 1:
+        today_stamp = _today_kalshi_date_stamp()
+        per_game = [e for e in strong if _ticker_has_today_stamp(_evt_ticker(e), today_stamp)]
+        if per_game and len(per_game) < len(strong):
+            strong = per_game
     if len(strong) > 1:
         pick_hhmm = _pick_time_to_hhmm(pick.get("time", ""))
         if pick_hhmm:

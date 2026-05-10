@@ -123,8 +123,18 @@ def main():
         print(f"Mapping pick to Kalshi market: {pick.get('pickLabel')}")
         result = find_market_for_ml_pick(client, pick)
         if result.get("status") != "matched":
-            sys.exit(f"✗ Could not map pick to market — status={result.get('status')}, "
-                     f"reason={result.get('reason','?')}")
+            print(f"✗ Could not map pick to market — status={result.get('status')}, "
+                  f"reason={result.get('reason','?')}", file=sys.stderr)
+            cands = result.get("candidates") or []
+            if cands:
+                print(f"\n  Candidate events the mapper considered:", file=sys.stderr)
+                for c in cands:
+                    print(f"    · {c.get('ticker')}  —  {c.get('title')}", file=sys.stderr)
+                print(f"\n  To bypass auto-mapping, find the per-game market ticker on", file=sys.stderr)
+                print(f"  kalshi.com (one of the candidates above is likely the parent", file=sys.stderr)
+                print(f"  event — drill into it to find the per-game ticker), then re-run", file=sys.stderr)
+                print(f"  with --ticker <market_ticker> --side yes --contracts {args.contracts}\n", file=sys.stderr)
+            sys.exit(1)
         args.ticker = result["market_ticker"]
         # Auto-detect side: pick_mapper says YES if YES = picked team, NO if NO = picked team
         args.side = result.get("yes_side","YES").lower() if result.get("yes_side") in ("YES","yes") else result.get("yes_side","NO").lower()
