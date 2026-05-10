@@ -1,0 +1,25 @@
+{
+  "date": "2026-05-10",
+  "logged": "2026-05-10T16:38:00.768046",
+  "config_snapshot": {
+    "environment": "demo",
+    "min_calibrated_score": 65,
+    "supported_bet_types": [
+      "ml"
+    ],
+    "max_stake_per_pick_dollars": 10,
+    "max_daily_exposure_dollars": 50,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [],
+  "summary": {
+    "picks_total": 13,
+    "picks_eligible_after_filter": 0,
+    "orders_would_place": 0,
+    "total_stake_dollars": 0,
+    "remaining_daily_capacity": 50.0,
+    "skipped_by_reason": {}
+  }
+}
