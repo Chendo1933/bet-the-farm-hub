@@ -1,0 +1,444 @@
+{
+  "date": "2026-05-10",
+  "logged": "2026-05-10T17:29:03.869802+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Montreal Canadiens",
+      "away": "Buffalo Sabres",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres ML (+102)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        }
+      ],
+      "date": "May 10",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "spread",
+      "home": "Montreal Canadiens",
+      "away": "Buffalo Sabres",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres +1.5",
+      "score100": 58,
+      "rawScore100": 64,
+      "odds": -245,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+102) \u2192 auto-covers spread"
+        }
+      ],
+      "date": "May 10",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Vegas Golden Knights",
+      "pickLabel": "Vegas Golden Knights ML (-112)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -112,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ],
+      "date": "May 10",
+      "time": "9:40 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Athletics",
+      "pickLabel": "Athletics ML (-102)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -102,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -102"
+        }
+      ],
+      "date": "May 10",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (+129)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 129,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +129"
+        }
+      ],
+      "date": "May 10",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Milwaukee Brewers",
+      "away": "New York Yankees",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (+100)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 100,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +100"
+        }
+      ],
+      "date": "May 10",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs ML (+102)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": 102,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        }
+      ],
+      "date": "May 10",
+      "time": "2:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs +1.5",
+      "score100": 63,
+      "rawScore100": 66,
+      "odds": -206,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +102"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+102) \u2192 auto-covers spread"
+        }
+      ],
+      "date": "May 10",
+      "time": "2:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Francisco Giants",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Pittsburgh Pirates",
+      "pickLabel": "Pittsburgh Pirates ML (-102)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 56% win rate vs 48% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.8"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Arizona Diamondbacks",
+      "away": "New York Mets",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": 100,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Arizona Diamondbacks 52% / New York Mets 39% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.5% edge vs implied"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (+113)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 113,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves +1.5",
+      "score100": 55,
+      "rawScore100": 63,
+      "odds": -181,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 79% (15-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +15.9% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 71%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 1 out (?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 67% vs 45% implied (+113) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 60% W)"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Dodgers 42% / Atlanta Braves 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.1% edge vs implied"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Diego Padres",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+109)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 109,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +109"
+        }
+      ],
+      "date": "May 10",
+      "time": "4:11 PM ET"
+    }
+  ],
+  "all_picks_count": 14,
+  "filter_stats": {
+    "prefilter": 33,
+    "sub60": 15,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 3,
+    "kept": 14,
+    "dropped": 19
+  }
+}
