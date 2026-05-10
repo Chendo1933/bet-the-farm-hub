@@ -44,6 +44,10 @@ jobs:
             echo "Nothing changed — hub already up to date"
           else
             git commit -m "auto: update stats + injuries $(date +'%Y-%m-%d')"
+            # Rebase onto any commits that landed while we were running
+            # (e.g. a kalshi-reconcile pushing during the same window).
+            # Without this, force-with-lease silently drops the race loser.
+            git pull --rebase origin main || true
             git push --force-with-lease
             echo "✅ Pushed updated stats + injuries"
           fi

@@ -39,6 +39,9 @@ jobs:
             echo "No new results to commit"
           else
             git commit -m "results: $(date -d 'yesterday' +'%Y-%m-%d') game log"
+            # Rebase onto any commits that landed while we were running
+            # (kalshi-reconcile can push during the same nightly window).
+            git pull --rebase origin main || true
             git push --force-with-lease
             echo "✅ Results committed"
           fi
