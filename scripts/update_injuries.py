@@ -65,50 +65,68 @@ def espn_get(url):
 
 
 def fetch_sport_injuries(sport, url):
-    """Fetch and parse ESPN injuries for one sport. Returns {team_name: [entries]}."""
+    """Fetch and parse ESPN injuries for one sport. Returns {team_name: [entries]}.
+
+    NOTE on the ESPN response shape (verified 2026-05-10):
+      Each top-level injuries[] entry now has `displayName` at the entry root
+      (NOT nested under entry.team.displayName as it was pre-2026-04-16).
+      Each nested injury has `status` at the root (not `type.description`)
+      and the human-readable blurb is in `shortComment` / `longComment`
+      (not `details.detail` or `location`).
+
+      On 2026-04-16, ESPN restructured this endpoint. Our parser was reading
+      the old paths, so every team name resolved to "" and the entire
+      INJURIES object collapsed to one empty-string key. F7 (the injury
+      scoring factor, 18% weight) silently went to zero for ~25 days
+      until the audit on 2026-05-10 surfaced it.
+    """
     data = espn_get(url)
     if not data:
         return {}
 
-    # ESPN injuries response: top-level "injuries" list, each item = one team
     team_list = data.get("injuries", [])
     result = {}
 
     for entry in team_list:
-        team_info = entry.get("team", {})
-        espn_name = team_info.get("displayName", "")
-        hub_name  = ESPN_NAME_MAP.get(espn_name, espn_name)
+        # New shape: displayName is at the entry root.
+        # Old shape (kept as fallback for safety): entry.team.displayName.
+        espn_name = entry.get("displayName") or entry.get("team", {}).get("displayName") or ""
+        if not espn_name:
+            continue   # CRITICAL: never write under an empty key (see docstring)
+        hub_name = ESPN_NAME_MAP.get(espn_name, espn_name)
 
         players = []
         for inj in entry.get("injuries", []):
-            # Player name
-            athlete  = inj.get("athlete", {})
-            pname    = athlete.get("displayName", "")
+            athlete = inj.get("athlete", {})
+            pname   = athlete.get("displayName", "")
             if not pname:
                 continue
 
-            # Status — ESPN puts it in type.description or a top-level "status" field
+            # Status — new shape puts it at inj.status; old shape had
+            # inj.type.description. Try new first, fall back to old.
             raw_status = (
-                inj.get("type", {}).get("description", "")
-                or inj.get("status", "")
+                inj.get("status")
+                or inj.get("type", {}).get("description", "")
             )
             hub_status = STATUS_MAP.get(raw_status)
             if hub_status not in INCLUDE_STATUSES:
-                continue   # skip Probable, GTD, etc.
+                continue
 
-            # Detail — ESPN puts it in details.detail, location, or shortComment
-            details = inj.get("details", {})
-            detail  = (
-                details.get("detail", "")
-                or inj.get("location", "")
-                or inj.get("shortComment", "")
-                or ""
-            )
-            # Trim long comments to just the first sentence / injury type
+            # Detail — new shape: shortComment / longComment. Old: details.detail.
+            # Prefer shortComment because it's already concise. Skip the single-
+            # word case ("out") since it duplicates the status field.
+            short = (inj.get("shortComment") or "").strip()
+            long_ = (inj.get("longComment") or "").strip()
+            old_detail = inj.get("details", {}).get("detail", "") or inj.get("location", "")
+            detail = ""
+            if short and len(short) > 6 and short.lower() != "out":
+                detail = short
+            elif long_ and len(long_) > 6 and long_.lower() != "out":
+                detail = long_
+            elif old_detail:
+                detail = old_detail
+            # Trim to first sentence to keep the hub display compact
             detail = detail.split(".")[0].strip()
-            # For NHL, keep "Injured Reserve" as the detail if no injury info
-            if not detail and hub_status == "Injured Reserve":
-                detail = ""
 
             position = athlete.get("position", {}).get("abbreviation", "")
             players.append({"player": pname, "status": hub_status, "detail": detail, "pos": position})
@@ -128,7 +146,15 @@ def build_injuries_object():
         count = sum(len(v) for v in sport_inj.values())
         print(f"    → {len(sport_inj)} teams, {count} players")
         all_injuries.update(sport_inj)
-    return all_injuries
+    # Belt-and-suspenders: never write entries under an empty or whitespace-only
+    # team name. The fetch loop already guards against this, but if ESPN's
+    # schema shifts again we want a second line of defense rather than another
+    # silent F7-dead-for-25-days incident.
+    stripped = {k: v for k, v in all_injuries.items() if k and k.strip()}
+    if len(stripped) != len(all_injuries):
+        dropped = len(all_injuries) - len(stripped)
+        print(f"  ⚠  Dropped {dropped} entries with empty team names")
+    return stripped
 
 
 def patch_hub(injuries: dict):
@@ -165,6 +191,18 @@ def main():
     if not injuries:
         print("  ⚠  No injury data fetched — skipping hub patch to avoid clearing existing data")
         sys.exit(0)
+
+    # Sanity gate. NBA + NHL + MLB together always produce 30+ teams with at
+    # least one player each during active seasons. If we have fewer than 10,
+    # the response was probably malformed (or ESPN restructured the schema
+    # again) — refuse to clobber the existing hub data, just like the empty
+    # case. This is the canary that would have caught the 2026-04-16 bug
+    # within a single workflow run rather than 25 days later.
+    if len(injuries) < 10:
+        print(f"  ✗ Only {len(injuries)} team(s) with injuries — refusing to patch the hub")
+        print(f"    Sample keys: {list(injuries.keys())[:5]}")
+        print(f"    Suspected cause: ESPN response schema change. Investigate manually.")
+        sys.exit(1)
 
     patch_hub(injuries)
     print("[update_injuries] Done ✓")

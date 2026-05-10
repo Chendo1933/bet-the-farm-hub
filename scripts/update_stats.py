@@ -563,7 +563,7 @@ def update_nfl(html_lines):
 RESULTS_DIR = "data/results"
 
 ATS_INDICES = {
-    # Sourced from const SIDX in Bet The Farm Hub.html (0-based)
+    # Sourced from const SIDX in index.html (0-based)
     # nba: aw=5,al=6,haw=8,hal=9,aaw=10,aal=11,ov=12,un=13
     # nhl: aw=6,al=7,haw=6,hal=7,aaw=6,aal=7,ov=13,un=14  (haw/hal/aaw/aal alias plw/pll)
     # mlb: aw=5,al=6,haw=8,hal=9,aaw=10,aal=11,ov=12,un=13
@@ -870,17 +870,55 @@ def update_recent_form(html_lines):
 
 # ── timestamp banner ──────────────────────────────────────────────────────────
 
+def _count_injuries(html_lines):
+    """Count team keys in the inline INJURIES object. Returns 0 if not found
+    or malformed — that's a useful canary because the hub header will then
+    print '0 teams w/ injuries' and any future regression (like the empty-
+    key bug that hid F7 being dead for 25 days) becomes visible in `git diff`
+    on the very next workflow run."""
+    joined = "".join(html_lines)
+    m = re.search(r"let\s+INJURIES\s*=\s*(\{.*?\})\s*;", joined, re.DOTALL)
+    if not m:
+        return 0
+    try:
+        obj = json.loads(m.group(1))
+        # Don't count the empty-string key — it should never exist, and if it
+        # does (broken data) we want the count to drop loudly, not be inflated.
+        return sum(1 for k in obj.keys() if k and k.strip())
+    except Exception:
+        return 0
+
+
 def update_timestamp(html_lines):
-    """Update the hdr-note data-updated attribute so the hub shows today's date."""
+    """Update the hdr-note banner: today's date AND current INJURIES count.
+
+    Why we rewrite the injuries count here: the hub's client-side JS already
+    rewrites this string on page load with the live count, so a user opening
+    the hub in a browser always sees the right number. But the *static* HTML
+    text is what shows up in `git diff` and in any quick file read. Keeping
+    it accurate makes regressions like the 2026-04-16 empty-key bug surface
+    immediately ('55 teams' → '0 teams' would have been an unmistakable red
+    flag on the very first broken commit).
+    """
     now  = datetime.now(timezone.utc)
     date = now.strftime("%b %-d, %Y")
+    inj_count = _count_injuries(html_lines)
     for i, line in enumerate(html_lines):
         if "hdr-note" in line and "Updated:" in line:
-            html_lines[i] = re.sub(
+            # Rewrite both the date AND the injuries count. Leave the team-
+            # records and games-today fields untouched (they're populated
+            # at different points in the pipeline).
+            new = re.sub(
                 r"(Updated:)\s*[^·]+",
                 f"\\1 {date} (auto) ",
                 line
             )
+            new = re.sub(
+                r"\d+\s+teams\s+w/\s+injuries",
+                f"{inj_count} teams w/ injuries",
+                new
+            )
+            html_lines[i] = new
             break
 
 
