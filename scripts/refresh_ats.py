@@ -2,7 +2,14 @@
 """
 Bet The Farm Hub — One-shot ATS/O-U manual refresh
 Reads a JSON file containing current ATS/O-U records for all teams and
-patches those values into the hub HTML (index.html / Bet The Farm Hub.html).
+patches those values into index.html.
+
+NOTE (2026-05-10): This script is legacy. The daily auto-pipeline now
+computes ATS/O-U records continuously via update_stats.py:update_ats_ou()
+from the data/results/*.json archive — so you typically don't need to
+run this. Kept around for the rare case you want to seed a sport's ATS
+from an external source (e.g. start of season before any results have
+been logged).
 
 Usage:
   python scripts/refresh_ats.py                          # uses data/ats_refresh.json
@@ -47,11 +54,13 @@ import sys
 import json
 import re
 
-# Which HTML files to patch (run from repo root)
-HUB_FILES = ["index.html", "Bet The Farm Hub.html"]
+# Which HTML files to patch (run from repo root). The duplicate
+# "Bet The Farm Hub.html" was removed 2026-05-10 — it was a stale shadow
+# the daily workflow never wrote to.
+HUB_FILES = ["index.html"]
 
 ATS_INDICES = {
-    # Sourced from const SIDX in Bet The Farm Hub.html (0-based)
+    # Sourced from const SIDX in index.html (0-based)
     "nba": {"aw":5,  "al":6,  "haw":8,  "hal":9,  "aaw":10, "aal":11, "ov":12, "un":13},
     "nhl": {"aw":6,  "al":7,  "haw":6,  "hal":7,  "aaw":6,  "aal":7,  "ov":13, "un":14},
     "mlb": {"aw":5,  "al":6,  "haw":8,  "hal":9,  "aaw":10, "aal":11, "ov":12, "un":13},
