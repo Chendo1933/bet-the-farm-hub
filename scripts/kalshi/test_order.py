@@ -48,9 +48,11 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from kalshi.client import KalshiClient, KalshiAPIError
+from kalshi.pick_mapper import find_market_for_ml_pick
 
 CONFIG_PATH = "data/kalshi_config.json"
 ORDERS_DIR  = "data/kalshi_orders"
+PICKS_DIR   = "data/picks"
 
 
 def _load_config() -> dict:
@@ -64,9 +66,11 @@ def _today_et_date() -> str:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--ticker",   required=True, help="Kalshi market ticker (e.g., KXMLBGAME-26MAY10...)")
+    ap.add_argument("--ticker",     help="Kalshi market ticker (alternative to --pick-label)")
+    ap.add_argument("--pick-label", help="Substring to match against today's pick labels "
+                    "(e.g. 'Cubs ML' or 'Athletics'). Auto-maps to the right Kalshi market.")
     ap.add_argument("--side",     default="yes",  choices=("yes","no"),
-                    help="Side of the binary contract (default: yes)")
+                    help="Side of the binary contract (default: yes; auto-detected when --pick-label is used)")
     ap.add_argument("--contracts", type=int, default=1,
                     help="Number of contracts to buy (default: 1)")
     ap.add_argument("--price-cents", type=int, default=None,
@@ -74,6 +78,10 @@ def main():
     ap.add_argument("--dry", action="store_true",
                     help="Show what would happen without actually placing an order")
     args = ap.parse_args()
+    if not args.ticker and not args.pick_label:
+        ap.error("must specify either --ticker or --pick-label")
+    if args.ticker and args.pick_label:
+        ap.error("specify only one of --ticker or --pick-label, not both")
 
     cfg = _load_config()
     date_key = _today_et_date()
@@ -93,6 +101,35 @@ def main():
         sys.exit("✗ KALSHI_PRIVATE_KEY or KALSHI_PRIVATE_KEY_PATH must be set")
 
     client = KalshiClient(environment=active_env)
+
+    # ── If --pick-label given, find today's pick + map to a Kalshi ticker
+    if args.pick_label:
+        picks_path = Path(PICKS_DIR) / f"{date_key}.json"
+        if not picks_path.exists():
+            sys.exit(f"✗ No picks file at {picks_path}")
+        all_picks = json.loads(picks_path.read_text()).get("picks", [])
+        needle = args.pick_label.lower()
+        ml_picks = [p for p in all_picks
+                    if p.get("betType") == "ml"
+                    and needle in (p.get("pickLabel","") or "").lower()]
+        if not ml_picks:
+            sys.exit(f"✗ No ML pick in {picks_path} matching {args.pick_label!r}")
+        if len(ml_picks) > 1:
+            print(f"  Multiple matches for {args.pick_label!r}:")
+            for p in ml_picks:
+                print(f"    · cal {p.get('score100','?')} · {p.get('pickLabel','?')}")
+            sys.exit("✗ Be more specific or use --ticker")
+        pick = ml_picks[0]
+        print(f"Mapping pick to Kalshi market: {pick.get('pickLabel')}")
+        result = find_market_for_ml_pick(client, pick)
+        if result.get("status") != "matched":
+            sys.exit(f"✗ Could not map pick to market — status={result.get('status')}, "
+                     f"reason={result.get('reason','?')}")
+        args.ticker = result["market_ticker"]
+        # Auto-detect side: pick_mapper says YES if YES = picked team, NO if NO = picked team
+        args.side = result.get("yes_side","YES").lower() if result.get("yes_side") in ("YES","yes") else result.get("yes_side","NO").lower()
+        print(f"  ✓ Mapped → {args.ticker} (side={args.side})")
+        print(f"  ✓ Pick score: cal {pick.get('score100')} · raw {pick.get('rawScore100','?')}")
 
     # ── Fetch market to verify it exists + grab current ask if not provided
     print(f"Fetching market {args.ticker}…")
