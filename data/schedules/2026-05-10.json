@@ -1,0 +1,216 @@
+{
+  "date": "2026-05-10",
+  "logged": "2026-05-10T16:37:37.021655+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "Philadelphia 76ers",
+      "away": "New York Knicks",
+      "date": "May 10",
+      "time": "3:40 PM ET",
+      "spread": 1.5,
+      "total": 215.5,
+      "spreadMove": 0,
+      "totalMove": 2
+    },
+    {
+      "sport": "nba",
+      "home": "Minnesota Timberwolves",
+      "away": "San Antonio Spurs",
+      "date": "May 10",
+      "time": "7:40 PM ET",
+      "spread": 4.5,
+      "total": 217.5,
+      "spreadMove": 0,
+      "totalMove": -1
+    },
+    {
+      "sport": "nhl",
+      "home": "Montreal Canadiens",
+      "away": "Buffalo Sabres",
+      "date": "May 10",
+      "time": "7:10 PM ET",
+      "spread": -1.5,
+      "total": 5.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "nhl",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "date": "May 10",
+      "time": "9:40 PM ET",
+      "spread": 1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Miami Marlins",
+      "away": "Washington Nationals",
+      "date": "May 10",
+      "time": "12:16 PM ET",
+      "spread": -1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": -2
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Athletics",
+      "date": "May 10",
+      "time": "1:36 PM ET",
+      "spread": 1.5,
+      "total": 10.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Boston Red Sox",
+      "away": "Tampa Bay Rays",
+      "date": "May 10",
+      "time": "1:36 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Philadelphia Phillies",
+      "away": "Colorado Rockies",
+      "date": "May 10",
+      "time": "1:36 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Toronto Blue Jays",
+      "away": "Los Angeles Angels",
+      "date": "May 10",
+      "time": "1:38 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Cincinnati Reds",
+      "away": "Houston Astros",
+      "date": "May 10",
+      "time": "1:40 PM ET",
+      "spread": 1.5,
+      "total": 9.5,
+      "spreadMove": 3,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Cleveland Guardians",
+      "away": "Minnesota Twins",
+      "date": "May 10",
+      "time": "1:41 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Chicago White Sox",
+      "away": "Seattle Mariners",
+      "date": "May 10",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Milwaukee Brewers",
+      "away": "New York Yankees",
+      "date": "May 10",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Texas Rangers",
+      "away": "Chicago Cubs",
+      "date": "May 10",
+      "time": "2:36 PM ET",
+      "spread": 1.5,
+      "total": 7.5,
+      "spreadMove": 3,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "San Francisco Giants",
+      "away": "Pittsburgh Pirates",
+      "date": "May 10",
+      "time": "4:06 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Arizona Diamondbacks",
+      "away": "New York Mets",
+      "date": "May 10",
+      "time": "4:11 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Los Angeles Dodgers",
+      "away": "Atlanta Braves",
+      "date": "May 10",
+      "time": "4:11 PM ET",
+      "spread": -1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "San Diego Padres",
+      "away": "St. Louis Cardinals",
+      "date": "May 10",
+      "time": "4:11 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Kansas City Royals",
+      "away": "Detroit Tigers",
+      "date": "May 10",
+      "time": "7:21 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 3,
+      "totalMove": 0
+    }
+  ]
+}
