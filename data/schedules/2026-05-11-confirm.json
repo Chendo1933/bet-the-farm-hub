@@ -1,0 +1,106 @@
+{
+  "date": "2026-05-11",
+  "logged": "2026-05-11T18:17:46.955844+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "Cleveland Cavaliers",
+      "away": "Detroit Pistons",
+      "date": "May 11",
+      "time": "8:10 PM ET",
+      "spread": -3.5,
+      "total": 213.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "nba",
+      "home": "Los Angeles Lakers",
+      "away": "Oklahoma City Thunder",
+      "date": "May 11",
+      "time": "10:40 PM ET",
+      "spread": 11.5,
+      "total": 214.5,
+      "spreadMove": 1,
+      "totalMove": 0
+    },
+    {
+      "sport": "nhl",
+      "home": "Minnesota Wild",
+      "away": "Colorado Avalanche",
+      "date": "May 11",
+      "time": "8:10 PM ET",
+      "spread": 1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Cleveland Guardians",
+      "away": "Los Angeles Angels",
+      "date": "May 11",
+      "time": "6:11 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "New York Yankees",
+      "date": "May 11",
+      "time": "6:36 PM ET",
+      "spread": 1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Toronto Blue Jays",
+      "away": "Tampa Bay Rays",
+      "date": "May 11",
+      "time": "7:08 PM ET",
+      "spread": -1.5,
+      "total": 7,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Texas Rangers",
+      "away": "Arizona Diamondbacks",
+      "date": "May 11",
+      "time": "8:06 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Houston Astros",
+      "away": "Seattle Mariners",
+      "date": "May 11",
+      "time": "8:11 PM ET",
+      "spread": 1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Los Angeles Dodgers",
+      "away": "San Francisco Giants",
+      "date": "May 11",
+      "time": "10:11 PM ET",
+      "spread": -1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    }
+  ]
+}
