@@ -1,6 +1,6 @@
 {
-  "source": "teamrankings.com \u2014 2026-05-10",
-  "as_of": "2026-05-10",
+  "source": "teamrankings.com \u2014 2026-05-11",
+  "as_of": "2026-05-11",
   "sports": {
     "mlb": [
       {
@@ -74,13 +74,6 @@
         "un": 20
       },
       {
-        "team": "Pittsburgh Pirates",
-        "aw": 22,
-        "al": 18,
-        "ov": 21,
-        "un": 18
-      },
-      {
         "team": "San Diego Padres",
         "aw": 22,
         "al": 18,
@@ -93,6 +86,13 @@
         "al": 19,
         "ov": 21,
         "un": 21
+      },
+      {
+        "team": "Pittsburgh Pirates",
+        "aw": 22,
+        "al": 19,
+        "ov": 22,
+        "un": 18
       },
       {
         "team": "Colorado Rockies",
@@ -110,9 +110,9 @@
       },
       {
         "team": "Detroit Tigers",
-        "aw": 20,
+        "aw": 21,
         "al": 20,
-        "ov": 18,
+        "ov": 19,
         "un": 20
       },
       {
@@ -146,8 +146,8 @@
       {
         "team": "Kansas City Royals",
         "aw": 18,
-        "al": 22,
-        "ov": 16,
+        "al": 23,
+        "ov": 17,
         "un": 24
       },
       {
@@ -166,9 +166,9 @@
       },
       {
         "team": "San Francisco Giants",
-        "aw": 16,
+        "aw": 17,
         "al": 23,
-        "ov": 16,
+        "ov": 17,
         "un": 20
       },
       {
@@ -210,16 +210,16 @@
     "nba": [
       {
         "team": "Charlotte Hornets",
-        "aw": 50,
-        "al": 34,
+        "aw": 38,
+        "al": 43,
         "ov": 32,
         "un": 52
       },
       {
         "team": "San Antonio Spurs",
         "aw": 52,
-        "al": 37,
-        "ov": 40,
+        "al": 38,
+        "ov": 41,
         "un": 51
       },
       {
@@ -349,11 +349,11 @@
         "un": 44
       },
       {
-        "team": "Brooklyn Nets",
-        "aw": 38,
-        "al": 43,
-        "ov": 37,
-        "un": 45
+        "team": "Minnesota Timberwolves",
+        "aw": 42,
+        "al": 50,
+        "ov": 41,
+        "un": 51
       },
       {
         "team": "Memphis Grizzlies",
@@ -361,13 +361,6 @@
         "al": 45,
         "ov": 43,
         "un": 39
-      },
-      {
-        "team": "Minnesota Timberwolves",
-        "aw": 41,
-        "al": 50,
-        "ov": 40,
-        "un": 51
       },
       {
         "team": "Milwaukee Bucks",
