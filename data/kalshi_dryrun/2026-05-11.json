@@ -1,0 +1,76 @@
+{
+  "date": "2026-05-11",
+  "logged": "2026-05-11T17:47:00.188920",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 65,
+    "supported_bet_types": [
+      "ml"
+    ],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "NHL",
+        "betType": "ml",
+        "home": "Minnesota Wild",
+        "away": "Colorado Avalanche",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Colorado Avalanche",
+        "pickLabel": "Colorado Avalanche ML (-142)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -142,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 76% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +8.1"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -142"
+          }
+        ],
+        "date": "May 11",
+        "time": "8:10 PM ET"
+      },
+      "market_ticker": "KXNHLGAME-26MAY11COLMIN-COL",
+      "market_title": "Game 4: Colorado at Minnesota Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 57,
+      "yes_bid_cents": 56,
+      "last_price_cents": 57,
+      "previous_yes_ask_cents": 55,
+      "volume_24h": "173987.01",
+      "use_price_cents": 57,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.71,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 4.56,
+      "contracts": 8,
+      "edge_pct": 0.14,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "summary": {
+    "picks_total": 6,
+    "picks_eligible_after_filter": 1,
+    "orders_would_place": 1,
+    "total_stake_dollars": 4.56,
+    "remaining_daily_capacity": 15.44,
+    "skipped_by_reason": {}
+  }
+}
