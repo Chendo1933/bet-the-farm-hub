@@ -1,0 +1,134 @@
+{
+  "date": "2026-05-12",
+  "logged": "2026-05-12T17:49:59.187315+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Toronto Blue Jays",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-115)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -115,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ],
+      "date": "May 12",
+      "time": "7:08 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-122)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -122,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.8"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -122"
+        }
+      ],
+      "date": "May 12",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Milwaukee Brewers",
+      "away": "San Diego Padres",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Milwaukee Brewers 49% / San Diego Padres 41% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.7% edge vs implied"
+        }
+      ],
+      "date": "May 12",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Athletics",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+129)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 129,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +129"
+        }
+      ],
+      "date": "May 12",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 4,
+  "filter_stats": {
+    "prefilter": 26,
+    "sub60": 21,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 4,
+    "dropped": 22
+  }
+}
