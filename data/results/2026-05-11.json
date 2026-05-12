@@ -1,0 +1,138 @@
+{
+  "date": "2026-05-11",
+  "logged": "2026-05-12T10:20:37.923678+00:00",
+  "sports": {
+    "nba": [
+      {
+        "game_id": "401871336",
+        "name": "Detroit Pistons at Cleveland Cavaliers",
+        "home": "Cleveland Cavaliers",
+        "away": "Detroit Pistons",
+        "home_score": 112,
+        "away_score": 103,
+        "winner": "home",
+        "status": "Final",
+        "spread": -3.5,
+        "total": 213.5,
+        "home_db": "Cleveland Cavaliers",
+        "away_db": "Detroit Pistons"
+      },
+      {
+        "game_id": "401871329",
+        "name": "Oklahoma City Thunder at Los Angeles Lakers",
+        "home": "Los Angeles Lakers",
+        "away": "Oklahoma City Thunder",
+        "home_score": 110,
+        "away_score": 115,
+        "winner": "away",
+        "status": "Final",
+        "spread": 11.5,
+        "total": 214.5,
+        "home_db": "Los Angeles Lakers",
+        "away_db": "Oklahoma City Thunder"
+      }
+    ],
+    "nhl": [
+      {
+        "game_id": "401871419",
+        "name": "Colorado Avalanche at Minnesota Wild",
+        "home": "Minnesota Wild",
+        "away": "Colorado Avalanche",
+        "home_score": 2,
+        "away_score": 5,
+        "winner": "away",
+        "status": "Final",
+        "spread": 1.5,
+        "total": 6.5,
+        "home_db": "Minnesota Wild",
+        "away_db": "Colorado Avalanche"
+      }
+    ],
+    "mlb": [
+      {
+        "game_id": "401815298",
+        "name": "Los Angeles Angels at Cleveland Guardians",
+        "home": "Cleveland Guardians",
+        "away": "Los Angeles Angels",
+        "home_score": 7,
+        "away_score": 2,
+        "winner": "home",
+        "status": "Final",
+        "spread": -1.5,
+        "total": 7.5,
+        "home_db": "Cleveland Guardians",
+        "away_db": "Los Angeles Angels"
+      },
+      {
+        "game_id": "401815299",
+        "name": "New York Yankees at Baltimore Orioles",
+        "home": "Baltimore Orioles",
+        "away": "New York Yankees",
+        "home_score": 3,
+        "away_score": 2,
+        "winner": "home",
+        "status": "Final",
+        "spread": 1.5,
+        "total": 9,
+        "home_db": "Baltimore Orioles",
+        "away_db": "New York Yankees"
+      },
+      {
+        "game_id": "401815300",
+        "name": "Tampa Bay Rays at Toronto Blue Jays",
+        "home": "Toronto Blue Jays",
+        "away": "Tampa Bay Rays",
+        "home_score": 5,
+        "away_score": 8,
+        "winner": "away",
+        "status": "Final",
+        "spread": -1.5,
+        "total": 7,
+        "home_db": "Toronto Blue Jays",
+        "away_db": "Tampa Bay Rays"
+      },
+      {
+        "game_id": "401815301",
+        "name": "Arizona Diamondbacks at Texas Rangers",
+        "home": "Texas Rangers",
+        "away": "Arizona Diamondbacks",
+        "home_score": 0,
+        "away_score": 1,
+        "winner": "away",
+        "status": "Final",
+        "spread": -1.5,
+        "total": 7.5,
+        "home_db": "Texas Rangers",
+        "away_db": "Arizona Diamondbacks"
+      },
+      {
+        "game_id": "401815302",
+        "name": "Seattle Mariners at Houston Astros",
+        "home": "Houston Astros",
+        "away": "Seattle Mariners",
+        "home_score": 1,
+        "away_score": 3,
+        "winner": "away",
+        "status": "Final",
+        "spread": 1.5,
+        "total": 9,
+        "home_db": "Houston Astros",
+        "away_db": "Seattle Mariners"
+      },
+      {
+        "game_id": "401815303",
+        "name": "San Francisco Giants at Los Angeles Dodgers",
+        "home": "Los Angeles Dodgers",
+        "away": "San Francisco Giants",
+        "home_score": 3,
+        "away_score": 9,
+        "winner": "away",
+        "status": "Final",
+        "spread": -1.5,
+        "total": 9,
+        "home_db": "Los Angeles Dodgers",
+        "away_db": "San Francisco Giants"
+      }
+    ]
+  }
+}
