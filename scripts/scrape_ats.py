@@ -203,23 +203,35 @@ def resolve_hub_name(slug: str | None, sport_cfg: dict, hub_names: set[str]) -> 
     """
     Map a teamrankings slug like 'chi-sox-white-sox' to a hub team name
     like 'Chicago White Sox'. Uses manual overrides first, then falls
-    back to a "last-word(s) = mascot" heuristic that matches against
-    hub team names ending in the slug's tail.
+    back to a "last-word(s) = mascot" heuristic.
+
+    Two-pass match strategy: try increasingly long mascot suffixes
+    (1 word, then 2, then 3). Return ONLY when exactly one hub team
+    matches — never return a non-unique match. This protects against
+    suffix collisions like 'sox' matching both Boston Red Sox and
+    Chicago White Sox, which (before this fix, 2026-05-10) caused
+    Boston's scraped ATS to land in the White Sox row whenever set
+    iteration ordered White Sox first. Mascot 'red sox' (take=2) is
+    unique to Boston; mascot 'white sox' is unique to Chicago.
+
+    Same pattern: NFL 'jets' / 'giants' would collide if both NY teams
+    had identical mascots — they don't here, but adding the require-
+    unique-match rule means we'd never silently misroute them either.
     """
     if not slug:
         return None
     overrides = sport_cfg.get("slug_to_hub", {})
     if slug in overrides:
         return overrides[slug]
-    # Heuristic: try increasingly long suffixes of the slug as mascot.
-    # 'atlanta-braves' → tries 'braves' → matches "Atlanta Braves"
-    # 'tampa-bay-rays' → tries 'rays'   → matches "Tampa Bay Rays"
     parts = slug.split("-")
     for take in range(1, min(4, len(parts) + 1)):
         mascot = " ".join(parts[-take:]).lower()
-        for hub_name in hub_names:
-            if hub_name.lower().endswith(mascot):
-                return hub_name
+        matches = [n for n in hub_names if n.lower().endswith(mascot)]
+        if len(matches) == 1:
+            return matches[0]
+        # Multiple matches → try longer suffix. Zero matches → also try longer
+        # (some slugs are city-only like 'cincinnati-reds' where mascot = 'reds'
+        # finds Cincinnati Reds uniquely — but if not we keep trying).
     return None
 
 

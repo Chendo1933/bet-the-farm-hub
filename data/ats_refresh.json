@@ -1,6 +1,6 @@
 {
-  "source": "teamrankings.com \u2014 2026-05-11",
-  "as_of": "2026-05-11",
+  "source": "teamrankings.com \u2014 2026-05-12",
+  "as_of": "2026-05-12",
   "sports": {
     "mlb": [
       {
@@ -68,10 +68,10 @@
       },
       {
         "team": "Chicago White Sox",
-        "aw": 14,
-        "al": 26,
-        "ov": 19,
-        "un": 20
+        "aw": 22,
+        "al": 18,
+        "ov": 21,
+        "un": 19
       },
       {
         "team": "San Diego Padres",
@@ -186,6 +186,13 @@
         "un": 14
       },
       {
+        "team": "Boston Red Sox",
+        "aw": 14,
+        "al": 26,
+        "ov": 19,
+        "un": 20
+      },
+      {
         "team": "New York Mets",
         "aw": 14,
         "al": 26,
@@ -210,8 +217,8 @@
     "nba": [
       {
         "team": "Charlotte Hornets",
-        "aw": 38,
-        "al": 43,
+        "aw": 50,
+        "al": 34,
         "ov": 32,
         "un": 52
       },
@@ -347,6 +354,13 @@
         "al": 48,
         "ov": 47,
         "un": 44
+      },
+      {
+        "team": "Brooklyn Nets",
+        "aw": 38,
+        "al": 43,
+        "ov": 37,
+        "un": 45
       },
       {
         "team": "Minnesota Timberwolves",
