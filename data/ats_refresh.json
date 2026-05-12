@@ -12,17 +12,10 @@
       },
       {
         "team": "Tampa Bay Rays",
-        "aw": 25,
+        "aw": 26,
         "al": 14,
-        "ov": 17,
+        "ov": 18,
         "un": 19
-      },
-      {
-        "team": "Arizona Diamondbacks",
-        "aw": 25,
-        "al": 14,
-        "ov": 20,
-        "un": 17
       },
       {
         "team": "Milwaukee Brewers",
@@ -37,6 +30,13 @@
         "al": 15,
         "ov": 19,
         "un": 19
+      },
+      {
+        "team": "Arizona Diamondbacks",
+        "aw": 25,
+        "al": 15,
+        "ov": 20,
+        "un": 18
       },
       {
         "team": "Washington Nationals",
@@ -60,10 +60,10 @@
         "un": 20
       },
       {
-        "team": "New York Yankees",
-        "aw": 23,
-        "al": 18,
-        "ov": 18,
+        "team": "Cleveland Guardians",
+        "aw": 24,
+        "al": 19,
+        "ov": 22,
         "un": 21
       },
       {
@@ -81,11 +81,18 @@
         "un": 23
       },
       {
-        "team": "Cleveland Guardians",
+        "team": "New York Yankees",
         "aw": 23,
         "al": 19,
-        "ov": 21,
-        "un": 21
+        "ov": 18,
+        "un": 22
+      },
+      {
+        "team": "Texas Rangers",
+        "aw": 22,
+        "al": 19,
+        "ov": 15,
+        "un": 24
       },
       {
         "team": "Pittsburgh Pirates",
@@ -102,13 +109,6 @@
         "un": 22
       },
       {
-        "team": "Texas Rangers",
-        "aw": 21,
-        "al": 19,
-        "ov": 15,
-        "un": 23
-      },
-      {
         "team": "Detroit Tigers",
         "aw": 21,
         "al": 20,
@@ -118,15 +118,8 @@
       {
         "team": "Los Angeles Angels",
         "aw": 20,
-        "al": 21,
-        "ov": 19,
-        "un": 22
-      },
-      {
-        "team": "Los Angeles Dodgers",
-        "aw": 19,
-        "al": 21,
-        "ov": 18,
+        "al": 22,
+        "ov": 20,
         "un": 22
       },
       {
@@ -144,18 +137,25 @@
         "un": 16
       },
       {
+        "team": "Los Angeles Dodgers",
+        "aw": 19,
+        "al": 22,
+        "ov": 19,
+        "un": 22
+      },
+      {
+        "team": "Baltimore Orioles",
+        "aw": 19,
+        "al": 23,
+        "ov": 26,
+        "un": 16
+      },
+      {
         "team": "Kansas City Royals",
         "aw": 18,
         "al": 23,
         "ov": 17,
         "un": 24
-      },
-      {
-        "team": "Baltimore Orioles",
-        "aw": 18,
-        "al": 23,
-        "ov": 26,
-        "un": 15
       },
       {
         "team": "Miami Marlins",
@@ -166,24 +166,31 @@
       },
       {
         "team": "San Francisco Giants",
-        "aw": 17,
+        "aw": 18,
         "al": 23,
-        "ov": 17,
+        "ov": 18,
         "un": 20
       },
       {
         "team": "Toronto Blue Jays",
         "aw": 16,
-        "al": 24,
-        "ov": 18,
+        "al": 25,
+        "ov": 19,
         "un": 20
       },
       {
         "team": "Houston Astros",
         "aw": 16,
-        "al": 25,
+        "al": 26,
         "ov": 26,
-        "un": 14
+        "un": 15
+      },
+      {
+        "team": "Seattle Mariners",
+        "aw": 15,
+        "al": 27,
+        "ov": 18,
+        "un": 23
       },
       {
         "team": "Boston Red Sox",
@@ -198,13 +205,6 @@
         "al": 26,
         "ov": 14,
         "un": 23
-      },
-      {
-        "team": "Seattle Mariners",
-        "aw": 14,
-        "al": 27,
-        "ov": 18,
-        "un": 22
       },
       {
         "team": "Philadelphia Phillies",
@@ -259,9 +259,9 @@
       },
       {
         "team": "Los Angeles Lakers",
-        "aw": 50,
+        "aw": 51,
         "al": 41,
-        "ov": 45,
+        "ov": 46,
         "un": 46
       },
       {
@@ -272,18 +272,18 @@
         "un": 50
       },
       {
-        "team": "Detroit Pistons",
-        "aw": 49,
-        "al": 43,
-        "ov": 42,
-        "un": 49
-      },
-      {
         "team": "Philadelphia 76ers",
         "aw": 50,
         "al": 44,
         "ov": 44,
         "un": 50
+      },
+      {
+        "team": "Detroit Pistons",
+        "aw": 49,
+        "al": 44,
+        "ov": 43,
+        "un": 49
       },
       {
         "team": "Atlanta Hawks",
@@ -330,8 +330,8 @@
       {
         "team": "Oklahoma City Thunder",
         "aw": 44,
-        "al": 45,
-        "ov": 48,
+        "al": 46,
+        "ov": 49,
         "un": 41
       },
       {
@@ -412,18 +412,18 @@
         "un": 35
       },
       {
+        "team": "Cleveland Cavaliers",
+        "aw": 38,
+        "al": 55,
+        "ov": 47,
+        "un": 46
+      },
+      {
         "team": "Washington Wizards",
         "aw": 33,
         "al": 49,
         "ov": 47,
         "un": 35
-      },
-      {
-        "team": "Cleveland Cavaliers",
-        "aw": 37,
-        "al": 55,
-        "ov": 46,
-        "un": 46
       }
     ],
     "nfl": [
