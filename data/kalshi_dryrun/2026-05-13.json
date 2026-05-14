@@ -62,7 +62,13 @@
       "stake_dollars": 4.76,
       "contracts": 7,
       "edge_pct": 0.12,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 4,
+      "away_score": 3,
+      "payout_dollars": 7.0,
+      "pnl_dollars": 2.24,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -72,5 +78,17 @@
     "total_stake_dollars": 4.76,
     "remaining_daily_capacity": 15.24,
     "skipped_by_reason": {}
+  },
+  "reconcile": {
+    "date": "2026-05-13",
+    "placed": 1,
+    "wins": 1,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 4.76,
+    "total_payout_dollars": 7.0,
+    "total_pnl_dollars": 2.24,
+    "roi_pct": 47.06
   }
 }
