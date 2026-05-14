@@ -15015,6 +15015,375 @@
           "l": "\ud83d\udcb0 Good value at +129"
         }
       ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Colorado Avalanche ML (-230)",
+      "home": "Colorado Avalanche",
+      "away": "Minnesota Wild",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -230,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.4348,
+      "homeScore": 4,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 78% vs implied 67%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -230"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "New York Yankees ML (+190)",
+      "home": "Baltimore Orioles",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": 190,
+      "outcome": "loss",
+      "margin": 7,
+      "units": -1.0,
+      "homeScore": 7,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 32%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +7.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +190"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "New York Yankees +1.5",
+      "home": "Baltimore Orioles",
+      "away": "New York Yankees",
+      "spread": -1.5,
+      "total": null,
+      "score100": 62,
+      "rawScore100": 65,
+      "odds": -114,
+      "outcome": "loss",
+      "margin": 5.5,
+      "units": -1.0,
+      "homeScore": 7,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\u2708\ufe0f Away ATS 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +2.63/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.773 / WHIP 1.14 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 8 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 61% vs 32% implied (+190) \u2014 strong ML value"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\udcca Market only gives pick 32% win chance"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\udcc8 Line moved 3.0 pts against pick"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +190 dog \u2192 auto-covers if wins"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Washington Nationals ML (+139)",
+      "home": "Cincinnati Reds",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 139,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.39,
+      "homeScore": 7,
+      "awayScore": 8,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 49% vs implied 40%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +139"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Tampa Bay Rays ML (+123)",
+      "home": "Toronto Blue Jays",
+      "away": "Tampa Bay Rays",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": 123,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.8"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "Tampa Bay Rays +1.5",
+      "home": "Toronto Blue Jays",
+      "away": "Tampa Bay Rays",
+      "spread": -1.5,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 66,
+      "odds": -181,
+      "outcome": "loss",
+      "margin": 0.5,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML aligns: spread follows Tampa Bay Rays (underdog wins = covers)"
+        },
+        {
+          "t": "neu",
+          "l": "\u2708\ufe0f Away ATS 50%"
+        },
+        {
+          "t": "neg",
+          "l": "\u26a0\ufe0f -11.6% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 63%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +0.92/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.709 / WHIP 1.15 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 15 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 70% vs 43% implied (+123) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 90% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +123 dog \u2192 auto-covers if wins"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Atlanta Braves ML (+113)",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": 113,
+      "outcome": "win",
+      "margin": 3,
+      "units": 1.13,
+      "homeScore": 4,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "good",
+      "pick": "Atlanta Braves +1.5",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "spread": 1.5,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 64,
+      "odds": -143,
+      "outcome": "win",
+      "margin": 4.5,
+      "units": 0.6993,
+      "homeScore": 4,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home ATS 65%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.2% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 69%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +1.05/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.787 / WHIP 1.15 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 1 out (?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home dog (+54% hist.)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 70% vs 45% implied (+113) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +113 dog \u2192 auto-covers if wins"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "St. Louis Cardinals ML (+123)",
+      "home": "Athletics",
+      "away": "St. Louis Cardinals",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 123,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 6,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 58% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ]
     }
   ]
 }
