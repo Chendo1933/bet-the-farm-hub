@@ -1,0 +1,169 @@
+{
+  "date": "2026-05-14",
+  "logged": "2026-05-14T18:16:27.505149+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Buffalo Sabres",
+      "away": "Montreal Canadiens",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres ML (-122)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -122,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -122"
+        }
+      ],
+      "date": "May 14",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Vegas Golden Knights",
+      "pickLabel": "Vegas Golden Knights ML (-112)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -112,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ],
+      "date": "May 14",
+      "time": "9:50 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Milwaukee Brewers",
+      "away": "San Diego Padres",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -106,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Milwaukee Brewers 49% / San Diego Padres 41% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.9 < line 9.5 (+1.6 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +14.4% edge vs implied"
+        }
+      ],
+      "date": "May 14",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Athletics",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+101)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +101"
+        }
+      ],
+      "date": "May 14",
+      "time": "3:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-181)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -181,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -181"
+        }
+      ],
+      "date": "May 14",
+      "time": "7:16 PM ET"
+    }
+  ],
+  "all_picks_count": 5,
+  "filter_stats": {
+    "prefilter": 17,
+    "sub60": 12,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 5,
+    "dropped": 12
+  }
+}
