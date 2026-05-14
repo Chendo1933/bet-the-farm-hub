@@ -1,0 +1,200 @@
+{
+  "date": "2026-05-14",
+  "logged": "2026-05-14T17:28:14.613702+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Buffalo Sabres",
+      "away": "Montreal Canadiens",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Buffalo Sabres",
+      "pickLabel": "Buffalo Sabres ML (-122)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -122,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -122"
+        }
+      ],
+      "date": "May 14",
+      "time": "7:10 PM ET"
+    },
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Vegas Golden Knights",
+      "pickLabel": "Vegas Golden Knights ML (-112)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -112,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ],
+      "date": "May 14",
+      "time": "9:50 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cincinnati Reds",
+      "away": "Washington Nationals",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 59,
+      "rawScore100": 72,
+      "odds": -143,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cincinnati Reds 62% \u00b7 Washington Nationals 66%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 10.1 > line 6.5 (+3.6 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.2% edge vs implied"
+        }
+      ],
+      "date": "May 14",
+      "time": "12:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "New York Mets",
+      "away": "Detroit Tigers",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 58,
+      "rawScore100": 68,
+      "odds": -122,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: New York Mets 38% / Detroit Tigers 49% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.5 < line 9.5 (+2.0 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.9% edge vs implied"
+        }
+      ],
+      "date": "May 14",
+      "time": "1:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Athletics",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+101)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +101"
+        }
+      ],
+      "date": "May 14",
+      "time": "3:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-181)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -181,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -181"
+        }
+      ],
+      "date": "May 14",
+      "time": "7:16 PM ET"
+    }
+  ],
+  "all_picks_count": 6,
+  "filter_stats": {
+    "prefilter": 22,
+    "sub60": 16,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 6,
+    "dropped": 16
+  }
+}
