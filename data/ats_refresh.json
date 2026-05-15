@@ -1,20 +1,20 @@
 {
-  "source": "teamrankings.com \u2014 2026-05-14",
-  "as_of": "2026-05-14",
+  "source": "teamrankings.com \u2014 2026-05-15",
+  "as_of": "2026-05-15",
   "sports": {
     "mlb": [
       {
         "team": "Atlanta Braves",
         "aw": 30,
-        "al": 13,
+        "al": 14,
         "ov": 18,
-        "un": 22
+        "un": 23
       },
       {
         "team": "Milwaukee Brewers",
-        "aw": 25,
+        "aw": 26,
         "al": 15,
-        "ov": 19,
+        "ov": 20,
         "un": 20
       },
       {
@@ -27,16 +27,9 @@
       {
         "team": "St. Louis Cardinals",
         "aw": 26,
-        "al": 16,
-        "ov": 19,
-        "un": 20
-      },
-      {
-        "team": "Washington Nationals",
-        "aw": 26,
         "al": 17,
-        "ov": 27,
-        "un": 14
+        "ov": 19,
+        "un": 21
       },
       {
         "team": "Arizona Diamondbacks",
@@ -46,18 +39,32 @@
         "un": 18
       },
       {
-        "team": "Chicago White Sox",
-        "aw": 24,
+        "team": "Washington Nationals",
+        "aw": 26,
         "al": 18,
-        "ov": 23,
+        "ov": 28,
+        "un": 14
+      },
+      {
+        "team": "Chicago White Sox",
+        "aw": 25,
+        "al": 18,
+        "ov": 24,
         "un": 19
       },
       {
         "team": "Athletics",
-        "aw": 24,
+        "aw": 25,
         "al": 18,
         "ov": 19,
-        "un": 21
+        "un": 22
+      },
+      {
+        "team": "Cincinnati Reds",
+        "aw": 25,
+        "al": 19,
+        "ov": 27,
+        "un": 16
       },
       {
         "team": "Texas Rangers",
@@ -67,25 +74,11 @@
         "un": 24
       },
       {
-        "team": "Cincinnati Reds",
-        "aw": 24,
-        "al": 19,
-        "ov": 26,
-        "un": 16
-      },
-      {
         "team": "Cleveland Guardians",
         "aw": 25,
         "al": 20,
         "ov": 22,
         "un": 23
-      },
-      {
-        "team": "San Diego Padres",
-        "aw": 23,
-        "al": 19,
-        "ov": 17,
-        "un": 24
       },
       {
         "team": "New York Yankees",
@@ -96,23 +89,37 @@
       },
       {
         "team": "Pittsburgh Pirates",
+        "aw": 24,
+        "al": 20,
+        "ov": 24,
+        "un": 19
+      },
+      {
+        "team": "San Diego Padres",
         "aw": 23,
         "al": 20,
-        "ov": 23,
-        "un": 19
+        "ov": 18,
+        "un": 24
       },
       {
         "team": "Colorado Rockies",
         "aw": 23,
-        "al": 20,
-        "ov": 20,
+        "al": 21,
+        "ov": 21,
         "un": 23
+      },
+      {
+        "team": "Minnesota Twins",
+        "aw": 21,
+        "al": 23,
+        "ov": 26,
+        "un": 15
       },
       {
         "team": "Detroit Tigers",
         "aw": 21,
-        "al": 22,
-        "ov": 20,
+        "al": 23,
+        "ov": 21,
         "un": 21
       },
       {
@@ -123,18 +130,11 @@
         "un": 24
       },
       {
-        "team": "Minnesota Twins",
-        "aw": 20,
-        "al": 23,
-        "ov": 25,
-        "un": 15
-      },
-      {
         "team": "Los Angeles Dodgers",
-        "aw": 20,
+        "aw": 21,
         "al": 23,
         "ov": 19,
-        "un": 24
+        "un": 25
       },
       {
         "team": "Baltimore Orioles",
@@ -144,32 +144,25 @@
         "un": 18
       },
       {
-        "team": "Miami Marlins",
-        "aw": 19,
+        "team": "Chicago Cubs",
+        "aw": 20,
         "al": 24,
         "ov": 24,
-        "un": 17
+        "un": 19
       },
       {
-        "team": "Chicago Cubs",
+        "team": "Miami Marlins",
         "aw": 19,
-        "al": 24,
-        "ov": 24,
-        "un": 18
+        "al": 25,
+        "ov": 25,
+        "un": 17
       },
       {
         "team": "San Francisco Giants",
         "aw": 19,
-        "al": 24,
-        "ov": 18,
-        "un": 22
-      },
-      {
-        "team": "Kansas City Royals",
-        "aw": 18,
         "al": 25,
-        "ov": 19,
-        "un": 24
+        "ov": 18,
+        "un": 23
       },
       {
         "team": "Toronto Blue Jays",
@@ -179,39 +172,46 @@
         "un": 20
       },
       {
+        "team": "Kansas City Royals",
+        "aw": 18,
+        "al": 26,
+        "ov": 20,
+        "un": 24
+      },
+      {
+        "team": "New York Mets",
+        "aw": 17,
+        "al": 26,
+        "ov": 16,
+        "un": 24
+      },
+      {
+        "team": "Seattle Mariners",
+        "aw": 17,
+        "al": 28,
+        "ov": 20,
+        "un": 24
+      },
+      {
         "team": "Houston Astros",
         "aw": 17,
-        "al": 27,
-        "ov": 27,
+        "al": 28,
+        "ov": 28,
         "un": 16
       },
       {
         "team": "Boston Red Sox",
         "aw": 16,
-        "al": 26,
+        "al": 27,
         "ov": 19,
-        "un": 22
-      },
-      {
-        "team": "New York Mets",
-        "aw": 16,
-        "al": 26,
-        "ov": 15,
-        "un": 24
-      },
-      {
-        "team": "Seattle Mariners",
-        "aw": 16,
-        "al": 28,
-        "ov": 19,
-        "un": 24
+        "un": 23
       },
       {
         "team": "Philadelphia Phillies",
-        "aw": 11,
+        "aw": 12,
         "al": 32,
         "ov": 22,
-        "un": 19
+        "un": 20
       }
     ],
     "nba": [
