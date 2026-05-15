@@ -15384,6 +15384,200 @@
           "l": "\ud83d\udcb0 Good value at +123"
         }
       ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Buffalo Sabres ML (-122)",
+      "home": "Buffalo Sabres",
+      "away": "Montreal Canadiens",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -122,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -122"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Vegas Golden Knights ML (-112)",
+      "home": "Anaheim Ducks",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -112,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.8929,
+      "homeScore": 1,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 6.5",
+      "home": "Cincinnati Reds",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": 6.5,
+      "score100": 59,
+      "rawScore100": 72,
+      "odds": -143,
+      "outcome": "win",
+      "margin": 9.5,
+      "units": 0.6993,
+      "homeScore": 15,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Cincinnati Reds 62% \u00b7 Washington Nationals 66%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 10.1 > line 6.5 (+3.6 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.2% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 9.5",
+      "home": "New York Mets",
+      "away": "Detroit Tigers",
+      "spread": null,
+      "total": 9.5,
+      "score100": 58,
+      "rawScore100": 68,
+      "odds": -122,
+      "outcome": "loss",
+      "margin": 3.5,
+      "units": -1.0,
+      "homeScore": 9,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: New York Mets 38% / Detroit Tigers 49% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.5 < line 9.5 (+2.0 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.9% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "St. Louis Cardinals ML (+101)",
+      "home": "Athletics",
+      "away": "St. Louis Cardinals",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 101,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.01,
+      "homeScore": 4,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +101"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (-181)",
+      "home": "Atlanta Braves",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -181,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 0,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -181"
+        }
+      ]
     }
   ]
 }
