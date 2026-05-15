@@ -1,0 +1,331 @@
+{
+  "date": "2026-05-15",
+  "logged": "2026-05-15T18:06:03.215385+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cleveland Guardians",
+      "away": "Cincinnati Reds",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Cleveland Guardians 49% / Cincinnati Reds 63% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.6% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Tampa Bay Rays",
+      "away": "Miami Marlins",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-123)",
+      "score100": 67,
+      "rawScore100": 63,
+      "odds": -123,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -123"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Tampa Bay Rays",
+      "away": "Miami Marlins",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -105,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Tampa Bay Rays 51% / Miami Marlins 60% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.2% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-109)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -109,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 59% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -109"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": 101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Twins 63% / Milwaukee Brewers 50% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.0% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-156)",
+      "score100": 85,
+      "rawScore100": 67,
+      "odds": -156,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 68% vs implied 58%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -156"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Atlanta Braves 44% / Boston Red Sox 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.9% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Chicago White Sox",
+      "away": "Chicago Cubs",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -103,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Chicago White Sox 56% / Chicago Cubs 56% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.1% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "San Francisco Giants",
+      "atsPick": null,
+      "spread": null,
+      "total": 10,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 10",
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -114,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 46% / San Francisco Giants 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.7 < line 10 (+2.3 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.6% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "San Diego Padres",
+      "pickLabel": "San Diego Padres ML (+109)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 109,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +109"
+        }
+      ],
+      "date": "May 15",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "atsPick": null,
+      "spread": null,
+      "total": 7,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -104,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Seattle Mariners 45% / San Diego Padres 43% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.9% edge vs implied"
+        }
+      ],
+      "date": "May 15",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 11,
+  "filter_stats": {
+    "prefilter": 30,
+    "sub60": 17,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 11,
+    "dropped": 19
+  }
+}
