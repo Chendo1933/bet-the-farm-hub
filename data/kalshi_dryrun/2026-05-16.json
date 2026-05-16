@@ -1,0 +1,176 @@
+{
+  "date": "2026-05-16",
+  "logged": "2026-05-16T16:39:55.856392",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 65,
+    "supported_bet_types": [
+      "ml"
+    ],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Tampa Bay Rays",
+        "away": "Miami Marlins",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-144)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -144,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 RTG edge +2.7"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -144"
+          }
+        ],
+        "date": "May 16",
+        "time": "4:11 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY161610MIATB-TB",
+      "market_title": "Miami vs Tampa Bay Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 58,
+      "yes_bid_cents": 57,
+      "last_price_cents": 58,
+      "previous_yes_ask_cents": 61,
+      "volume_24h": "261985.44",
+      "use_price_cents": 58,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.71,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 4.64,
+      "contracts": 8,
+      "edge_pct": 0.13,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Atlanta Braves",
+        "away": "Boston Red Sox",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-125)",
+        "score100": 80,
+        "rawScore100": 66,
+        "odds": -125,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 69% vs implied 53%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +6.6"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -125"
+          }
+        ],
+        "date": "May 16",
+        "time": "7:16 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY161915BOSATL-ATL",
+      "market_title": "Boston vs Atlanta Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 55,
+      "yes_bid_cents": 54,
+      "last_price_cents": 55,
+      "previous_yes_ask_cents": 62,
+      "volume_24h": "224148.49",
+      "use_price_cents": 55,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.8,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 4.95,
+      "contracts": 9,
+      "edge_pct": 0.25,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "New York Mets",
+        "away": "New York Yankees",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "New York Yankees",
+        "pickLabel": "New York Yankees ML (-125)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -125,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 62% vs implied 53%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.9"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -125"
+          }
+        ],
+        "date": "May 16",
+        "time": "7:16 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY161915NYYNYM-NYY",
+      "market_title": "New York Y vs New York M Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 54,
+      "yes_bid_cents": 53,
+      "last_price_cents": 54,
+      "previous_yes_ask_cents": 55,
+      "volume_24h": "109118.26",
+      "use_price_cents": 54,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.75,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 4.86,
+      "contracts": 9,
+      "edge_pct": 0.21,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "summary": {
+    "picks_total": 17,
+    "picks_eligible_after_filter": 3,
+    "orders_would_place": 3,
+    "total_stake_dollars": 14.45,
+    "remaining_daily_capacity": 5.55,
+    "skipped_by_reason": {}
+  }
+}
