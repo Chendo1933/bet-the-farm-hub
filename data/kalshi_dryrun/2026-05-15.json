@@ -62,7 +62,13 @@
       "stake_dollars": 4.86,
       "contracts": 9,
       "edge_pct": 0.13,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 7,
+      "away_score": 2,
+      "payout_dollars": 9.0,
+      "pnl_dollars": 4.14,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -112,7 +118,13 @@
       "stake_dollars": 4.59,
       "contracts": 9,
       "edge_pct": 0.2,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 2,
+      "away_score": 3,
+      "payout_dollars": 9.0,
+      "pnl_dollars": 4.41,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -162,7 +174,13 @@
       "stake_dollars": 4.72,
       "contracts": 8,
       "edge_pct": 0.26,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 3,
+      "away_score": 2,
+      "payout_dollars": 8.0,
+      "pnl_dollars": 3.28,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -172,5 +190,17 @@
     "total_stake_dollars": 14.17,
     "remaining_daily_capacity": 5.83,
     "skipped_by_reason": {}
+  },
+  "reconcile": {
+    "date": "2026-05-15",
+    "placed": 3,
+    "wins": 3,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 14.17,
+    "total_payout_dollars": 26.0,
+    "total_pnl_dollars": 11.83,
+    "roi_pct": 83.49
   }
 }
