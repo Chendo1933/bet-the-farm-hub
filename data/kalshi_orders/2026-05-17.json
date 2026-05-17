@@ -1,0 +1,238 @@
+{
+  "date": "2026-05-17",
+  "logged": "2026-05-17T21:39:22.063022",
+  "environment": "live",
+  "dry": false,
+  "config_snapshot": {
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kill_switch_daily_loss_dollars": 25,
+    "kelly_fraction": 0.25
+  },
+  "placed_orders": [],
+  "skipped": [
+    {
+      "ticker": "KXMLBGAME-26MAY171335BOSATL-ATL",
+      "skip_reason": "api_error_404",
+      "error": "{\"error\":{\"code\":\"market_not_found\",\"message\":\"market not found\",\"service\":\"exchange\"}}",
+      "candidate": {
+        "pick": {
+          "sport": "MLB",
+          "betType": "ml",
+          "home": "Atlanta Braves",
+          "away": "Boston Red Sox",
+          "atsPick": "home",
+          "spread": null,
+          "total": null,
+          "pickedTeam": "Atlanta Braves",
+          "pickLabel": "Atlanta Braves ML (-149)",
+          "score100": 75,
+          "rawScore100": 65,
+          "odds": -149,
+          "tier": "elite",
+          "factors": [
+            {
+              "t": "pos",
+              "l": "\ud83d\udcca Win rate 65% vs implied 57%"
+            },
+            {
+              "t": "pos",
+              "l": "\u26a1 Net RTG edge +6.4"
+            }
+          ],
+          "date": "May 17",
+          "time": "1:36 PM ET"
+        },
+        "market_ticker": "KXMLBGAME-26MAY171335BOSATL-ATL",
+        "market_title": "Boston vs Atlanta Winner?",
+        "yes_side": "YES",
+        "yes_ask_cents": 58,
+        "yes_bid_cents": 57,
+        "last_price_cents": 58,
+        "previous_yes_ask_cents": 62,
+        "volume_24h": "415804.68",
+        "use_price_cents": 58,
+        "use_price_source": "yes_ask",
+        "model_prob": 0.75,
+        "would_place": true,
+        "skip_reason": null,
+        "stake_dollars": 4.64,
+        "contracts": 8,
+        "edge_pct": 0.17,
+        "kelly_fraction_used": 0.25
+      }
+    },
+    {
+      "ticker": "KXMLBGAME-26MAY171340NYYNYM-NYY",
+      "skip_reason": "api_error_404",
+      "error": "{\"error\":{\"code\":\"market_not_found\",\"message\":\"market not found\",\"service\":\"exchange\"}}",
+      "candidate": {
+        "pick": {
+          "sport": "MLB",
+          "betType": "ml",
+          "home": "New York Mets",
+          "away": "New York Yankees",
+          "atsPick": "away",
+          "spread": null,
+          "total": null,
+          "pickedTeam": "New York Yankees",
+          "pickLabel": "New York Yankees ML (+101)",
+          "score100": 71,
+          "rawScore100": 64,
+          "odds": 101,
+          "tier": "elite",
+          "factors": [
+            {
+              "t": "pos",
+              "l": "\ud83d\udcca Win rate 60% vs implied 48%"
+            },
+            {
+              "t": "pos",
+              "l": "\u26a1 Net RTG edge +5.4"
+            },
+            {
+              "t": "pos",
+              "l": "\ud83d\udcb0 Good value at +101"
+            }
+          ],
+          "date": "May 17",
+          "time": "1:41 PM ET"
+        },
+        "market_ticker": "KXMLBGAME-26MAY171340NYYNYM-NYY",
+        "market_title": "New York Y vs New York M Winner?",
+        "yes_side": "YES",
+        "yes_ask_cents": 49,
+        "yes_bid_cents": 48,
+        "last_price_cents": 49,
+        "previous_yes_ask_cents": 55,
+        "volume_24h": "319375.59",
+        "use_price_cents": 49,
+        "use_price_source": "yes_ask",
+        "model_prob": 0.71,
+        "would_place": true,
+        "skip_reason": null,
+        "stake_dollars": 4.9,
+        "contracts": 10,
+        "edge_pct": 0.22,
+        "kelly_fraction_used": 0.25
+      }
+    },
+    {
+      "ticker": "KXMLBGAME-26MAY171410CHCCWS-CWS",
+      "skip_reason": "api_error_404",
+      "error": "{\"error\":{\"code\":\"market_not_found\",\"message\":\"market not found\",\"service\":\"exchange\"}}",
+      "candidate": {
+        "pick": {
+          "sport": "MLB",
+          "betType": "ml",
+          "home": "Chicago White Sox",
+          "away": "Chicago Cubs",
+          "atsPick": "away",
+          "spread": null,
+          "total": null,
+          "pickedTeam": "Chicago Cubs",
+          "pickLabel": "Chicago Cubs ML (-131)",
+          "score100": 67,
+          "rawScore100": 63,
+          "odds": -131,
+          "tier": "strong",
+          "factors": [
+            {
+              "t": "pos",
+              "l": "\ud83d\udcca Win rate 63% vs implied 54%"
+            },
+            {
+              "t": "pos",
+              "l": "\u26a1 RTG edge +3.1"
+            },
+            {
+              "t": "pos",
+              "l": "\ud83d\udcb0 Good value at -131"
+            }
+          ],
+          "date": "May 17",
+          "time": "2:11 PM ET"
+        },
+        "market_ticker": "KXMLBGAME-26MAY171410CHCCWS-CWS",
+        "market_title": "Chicago C vs Chicago WS Winner?",
+        "yes_side": "YES",
+        "yes_ask_cents": 46,
+        "yes_bid_cents": 45,
+        "last_price_cents": 46,
+        "previous_yes_ask_cents": 47,
+        "volume_24h": "35457.98",
+        "use_price_cents": 46,
+        "use_price_source": "yes_ask",
+        "model_prob": 0.67,
+        "would_place": true,
+        "skip_reason": null,
+        "stake_dollars": 4.6,
+        "contracts": 10,
+        "edge_pct": 0.21,
+        "kelly_fraction_used": 0.25
+      }
+    },
+    {
+      "ticker": "KXMLBGAME-26MAY171410MILMIN-MIL",
+      "skip_reason": "api_error_404",
+      "error": "{\"error\":{\"code\":\"market_not_found\",\"message\":\"market not found\",\"service\":\"exchange\"}}",
+      "candidate": {
+        "pick": {
+          "sport": "MLB",
+          "betType": "ml",
+          "home": "Minnesota Twins",
+          "away": "Milwaukee Brewers",
+          "atsPick": "away",
+          "spread": null,
+          "total": null,
+          "pickedTeam": "Milwaukee Brewers",
+          "pickLabel": "Milwaukee Brewers ML (-129)",
+          "score100": 75,
+          "rawScore100": 65,
+          "odds": -129,
+          "tier": "elite",
+          "factors": [
+            {
+              "t": "pos",
+              "l": "\ud83d\udcca Win rate 63% vs implied 54%"
+            },
+            {
+              "t": "pos",
+              "l": "\u26a1 Net RTG edge +4.5"
+            },
+            {
+              "t": "pos",
+              "l": "\ud83d\udcb0 Good value at -129"
+            }
+          ],
+          "date": "May 17",
+          "time": "2:11 PM ET"
+        },
+        "market_ticker": "KXMLBGAME-26MAY171410MILMIN-MIL",
+        "market_title": "Milwaukee vs Minnesota Winner?",
+        "yes_side": "YES",
+        "yes_ask_cents": 57,
+        "yes_bid_cents": 56,
+        "last_price_cents": 57,
+        "previous_yes_ask_cents": 54,
+        "volume_24h": "97488.94",
+        "use_price_cents": 57,
+        "use_price_source": "yes_ask",
+        "model_prob": 0.75,
+        "would_place": true,
+        "skip_reason": null,
+        "stake_dollars": 4.56,
+        "contracts": 8,
+        "edge_pct": 0.18,
+        "kelly_fraction_used": 0.25
+      }
+    }
+  ],
+  "summary": {
+    "candidates": 4,
+    "placed": 0,
+    "dry_simulated": 0,
+    "skipped": 4,
+    "total_stake_placed": 0.0
+  }
+}
