@@ -1,0 +1,339 @@
+{
+  "date": "2026-05-17",
+  "logged": "2026-05-17T17:32:30.349499+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-144)",
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -144,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 56%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -144"
+        }
+      ],
+      "date": "May 17",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cleveland Guardians",
+      "away": "Cincinnati Reds",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -117,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Cleveland Guardians 51% / Cincinnati Reds 64% Over"
+        }
+      ],
+      "date": "May 17",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Mets",
+      "away": "New York Yankees",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (+105)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": 105,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +105"
+        }
+      ],
+      "date": "May 17",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "New York Mets",
+      "away": "New York Yankees",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9",
+      "score100": 58,
+      "rawScore100": 68,
+      "odds": -121,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: New York Mets 41% / New York Yankees 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.6 < line 9 (+1.4 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.7% edge vs implied"
+        }
+      ],
+      "date": "May 17",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago White Sox",
+      "away": "Chicago Cubs",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago Cubs",
+      "pickLabel": "Chicago Cubs ML (-132)",
+      "score100": 67,
+      "rawScore100": 63,
+      "odds": -132,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -132"
+        }
+      ],
+      "date": "May 17",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-129)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -129,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -129"
+        }
+      ],
+      "date": "May 17",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "St. Louis Cardinals",
+      "away": "Kansas City Royals",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (-125)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -125,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -125"
+        }
+      ],
+      "date": "May 17",
+      "time": "2:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "St. Louis Cardinals",
+      "away": "Kansas City Royals",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -124,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: St. Louis Cardinals 48% / Kansas City Royals 46% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 8.3 < line 9.5 (+1.2 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +9.5% edge vs implied"
+        }
+      ],
+      "date": "May 17",
+      "time": "2:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "San Francisco Giants",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -119,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 47% / San Francisco Giants 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.8 < line 9.5 (+1.7 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.4% edge vs implied"
+        }
+      ],
+      "date": "May 17",
+      "time": "4:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Los Angeles Angels",
+      "away": "Los Angeles Dodgers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Los Angeles Dodgers",
+      "pickLabel": "Los Angeles Dodgers ML (-144)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -144,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 63% win rate vs 56% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +8.4"
+        }
+      ],
+      "date": "May 17",
+      "time": "4:08 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "San Diego Padres",
+      "pickLabel": "San Diego Padres ML (+134)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 134,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 41%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +134"
+        }
+      ],
+      "date": "May 17",
+      "time": "7:21 PM ET"
+    }
+  ],
+  "all_picks_count": 11,
+  "filter_stats": {
+    "prefilter": 24,
+    "sub60": 11,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 11,
+    "dropped": 13
+  }
+}
