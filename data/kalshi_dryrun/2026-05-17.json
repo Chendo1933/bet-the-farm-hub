@@ -1,6 +1,6 @@
 {
   "date": "2026-05-17",
-  "logged": "2026-05-17T22:15:34.746346",
+  "logged": "2026-05-17T22:20:30.438538",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -209,6 +209,8 @@
       "ambiguous": 4
     },
     "bankroll_used_dollars": 38.37,
-    "bankroll_source": "kalshi_live"
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 38.37
   }
 }
