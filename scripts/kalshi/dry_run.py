@@ -193,6 +193,7 @@ def main():
     config_bankroll = float(cfg.get("bankroll_dollars") or 0)
     bankroll = config_bankroll
     bankroll_source = "config"
+    positions_value = 0.0   # market value of currently-open contracts, in dollars
     try:
         bal = client.get_balance()
         live_bankroll = float(bal.get("balance", 0) or 0) / 100.0   # cents → dollars
@@ -201,7 +202,33 @@ def main():
             bankroll_source = "kalshi_live"
     except Exception as e:
         print(f"  ⚠ Could not fetch live balance ({type(e).__name__}: {e}) — falling back to config bankroll ${config_bankroll:.2f}")
+
+    # Also fetch open positions so the morning summary can show Cash vs.
+    # Open positions vs. Total. The Kalshi API exposes per-position
+    # `market_exposure` (in cents) which is the contracts' current market
+    # value — that's what we sum. Fall back to position * fill_avg if the
+    # field isn't present in an older API response shape.
+    try:
+        pos_resp = client.get_positions(limit=200)
+        for p in pos_resp.get("market_positions", []) or []:
+            if (p.get("position") or 0) == 0:
+                continue   # closed
+            # Prefer market_exposure if present (in cents); else compute
+            # from position * fees_paid-adjusted avg fill price. Both are
+            # in cents — divide by 100 for dollars.
+            exposure_cents = p.get("market_exposure")
+            if exposure_cents is None:
+                # Fallback: position count × resting market price.
+                qty = abs(int(p.get("position", 0)))
+                px  = p.get("last_market_price") or p.get("market_close_price") or 0
+                exposure_cents = qty * int(px)
+            positions_value += float(exposure_cents) / 100.0
+    except Exception as e:
+        print(f"  ⚠ Could not fetch positions ({type(e).__name__}: {e}) — positions_value stays $0")
+
     print(f"  Bankroll for Kelly sizing: ${bankroll:.2f} (source: {bankroll_source})")
+    if positions_value > 0:
+        print(f"  Open positions value: ${positions_value:.2f} · Total account: ${bankroll + positions_value:.2f}")
 
     # Shared events cache across all picks — list_events fires at most once
     # per sport instead of once per pick. Critical for live rate limits.
@@ -299,8 +326,10 @@ def main():
         "skipped_by_reason": skipped,
         # Audit trail: which bankroll value drove Kelly sizing today.
         # If this drifts unexpectedly day-over-day, something's wrong upstream.
-        "bankroll_used_dollars": round(bankroll, 2),
-        "bankroll_source": bankroll_source,
+        "bankroll_used_dollars":   round(bankroll, 2),
+        "bankroll_source":         bankroll_source,
+        "open_positions_dollars":  round(positions_value, 2),
+        "total_account_dollars":   round(bankroll + positions_value, 2),
     }
     out = {
         "date": date_key,

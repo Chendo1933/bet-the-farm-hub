@@ -65,10 +65,14 @@ def _read_today_plan(date_key: str) -> dict:
     data = json.loads(p.read_text())
     summary = data.get("summary", {})
     return {
-        "orders_would_place": summary.get("orders_would_place", 0),
-        "total_stake_dollars": summary.get("total_stake_dollars", 0.0),
-        "picks_total": summary.get("picks_total", 0),
-        "bankroll_used_dollars": summary.get("bankroll_used_dollars"),
+        "orders_would_place":     summary.get("orders_would_place", 0),
+        "total_stake_dollars":    summary.get("total_stake_dollars", 0.0),
+        "picks_total":            summary.get("picks_total", 0),
+        # Live account snapshot (added 2026-05-17). Older snapshots without
+        # these fields fall back to showing just bankroll alone.
+        "bankroll_used_dollars":  summary.get("bankroll_used_dollars"),
+        "open_positions_dollars": summary.get("open_positions_dollars"),
+        "total_account_dollars":  summary.get("total_account_dollars"),
     }
 
 
@@ -184,8 +188,15 @@ def build_summary(date_key: str) -> str:
                      f"(from {today_plan['picks_total']} total picks)")
     else:
         lines.append(f"TODAY: 0 auto-bets queued (no picks met cal≥{cfg.get('min_calibrated_score','?')} threshold)")
-    if today_plan.get("bankroll_used_dollars"):
-        lines.append(f"  Bankroll: ${today_plan['bankroll_used_dollars']:.2f}")
+    # Account snapshot. If we have both cash and positions, show the
+    # three-line breakdown. Else fall back to the older single-line.
+    cash = today_plan.get("bankroll_used_dollars")
+    positions = today_plan.get("open_positions_dollars")
+    total = today_plan.get("total_account_dollars")
+    if cash is not None and positions is not None and positions > 0:
+        lines.append(f"  Cash: ${cash:.2f} · Open positions: ${positions:.2f} · Total: ${total:.2f}")
+    elif cash is not None:
+        lines.append(f"  Bankroll: ${cash:.2f}")
 
     # 7-day rolling
     lines.append("")
