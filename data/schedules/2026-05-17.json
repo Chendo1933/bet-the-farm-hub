@@ -1,0 +1,183 @@
+{
+  "date": "2026-05-17",
+  "logged": "2026-05-17T16:40:31.413873+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "Detroit Pistons",
+      "away": "Cleveland Cavaliers",
+      "date": "May 17",
+      "time": "8:10 PM ET",
+      "spread": -4.5,
+      "total": 205.5,
+      "spreadMove": 0,
+      "totalMove": -1
+    },
+    {
+      "sport": "mlb",
+      "home": "Tampa Bay Rays",
+      "away": "Miami Marlins",
+      "date": "May 17",
+      "time": "12:16 PM ET",
+      "spread": -1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": -1
+    },
+    {
+      "sport": "mlb",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "date": "May 17",
+      "time": "1:36 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Washington Nationals",
+      "away": "Baltimore Orioles",
+      "date": "May 17",
+      "time": "1:36 PM ET",
+      "spread": 1.5,
+      "total": 10,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Pittsburgh Pirates",
+      "away": "Philadelphia Phillies",
+      "date": "May 17",
+      "time": "1:36 PM ET",
+      "spread": 1.5,
+      "total": 7,
+      "spreadMove": 3,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Cleveland Guardians",
+      "away": "Cincinnati Reds",
+      "date": "May 17",
+      "time": "1:41 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Detroit Tigers",
+      "away": "Toronto Blue Jays",
+      "date": "May 17",
+      "time": "1:41 PM ET",
+      "spread": 1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "New York Mets",
+      "away": "New York Yankees",
+      "date": "May 17",
+      "time": "1:41 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Chicago White Sox",
+      "away": "Chicago Cubs",
+      "date": "May 17",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Houston Astros",
+      "away": "Texas Rangers",
+      "date": "May 17",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "date": "May 17",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "St. Louis Cardinals",
+      "away": "Kansas City Royals",
+      "date": "May 17",
+      "time": "2:16 PM ET",
+      "spread": 1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Colorado Rockies",
+      "away": "Arizona Diamondbacks",
+      "date": "May 17",
+      "time": "3:11 PM ET",
+      "spread": 1.5,
+      "total": 10.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Athletics",
+      "away": "San Francisco Giants",
+      "date": "May 17",
+      "time": "4:06 PM ET",
+      "spread": -1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Los Angeles Angels",
+      "away": "Los Angeles Dodgers",
+      "date": "May 17",
+      "time": "4:08 PM ET",
+      "spread": 1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "date": "May 17",
+      "time": "7:21 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
