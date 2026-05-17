@@ -15884,6 +15884,523 @@
           "l": "\ud83d\udcc8 +4.9% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "St. Louis Cardinals ML (-114)",
+      "home": "St. Louis Cardinals",
+      "away": "Kansas City Royals",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -114,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.8772,
+      "homeScore": 4,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -114"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Pittsburgh Pirates ML (+141)",
+      "home": "Pittsburgh Pirates",
+      "away": "Philadelphia Phillies",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 141,
+      "outcome": "loss",
+      "margin": 6,
+      "units": -1.0,
+      "homeScore": 0,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 52% vs implied 40%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +141"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 8.5",
+      "home": "Pittsburgh Pirates",
+      "away": "Philadelphia Phillies",
+      "spread": null,
+      "total": 8.5,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -104,
+      "outcome": "loss",
+      "margin": 2.5,
+      "units": -1.0,
+      "homeScore": 0,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Pittsburgh Pirates 57% / Philadelphia Phillies 53% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.2% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Tampa Bay Rays ML (-144)",
+      "home": "Tampa Bay Rays",
+      "away": "Miami Marlins",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -144,
+      "outcome": "loss",
+      "margin": 5,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 10,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 56%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -144"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Cincinnati Reds ML (+130)",
+      "home": "Cleveland Guardians",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 130,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 7,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 54% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +130"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8.5",
+      "home": "Cleveland Guardians",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": 8.5,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -107,
+      "outcome": "win",
+      "margin": 2.5,
+      "units": 0.9346,
+      "homeScore": 7,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Cleveland Guardians 50% / Cincinnati Reds 64% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Chicago Cubs ML (-105)",
+      "home": "Chicago White Sox",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -105,
+      "outcome": "loss",
+      "margin": 5,
+      "units": -1.0,
+      "homeScore": 8,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 49%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.8"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -105"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Milwaukee Brewers ML (-126)",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -126,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.7937,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 60% win rate vs 53% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.4"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 8.5",
+      "home": "Minnesota Twins",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": 8.5,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -103,
+      "outcome": "loss",
+      "margin": 5.5,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Twins 62% / Milwaukee Brewers 49% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.6% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (-125)",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -125,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -125"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 7.5",
+      "home": "Atlanta Braves",
+      "away": "Boston Red Sox",
+      "spread": null,
+      "total": 7.5,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -103,
+      "outcome": "win",
+      "margin": 2.5,
+      "units": 0.9709,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Atlanta Braves 43% / Boston Red Sox 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.7% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "New York Yankees ML (-125)",
+      "home": "New York Mets",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -125,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 6,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 53%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -125"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "San Diego Padres ML (+144)",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 144,
+      "outcome": "win",
+      "margin": 3,
+      "units": 1.44,
+      "homeScore": 4,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 39%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +144"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 7",
+      "home": "Seattle Mariners",
+      "away": "San Diego Padres",
+      "spread": null,
+      "total": 7,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -101,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Seattle Mariners 44% / San Diego Padres 42% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.6% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Los Angeles Dodgers ML (-136)",
+      "home": "Los Angeles Angels",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -136,
+      "outcome": "win",
+      "margin": 13,
+      "units": 0.7353,
+      "homeScore": 2,
+      "awayScore": 15,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 63% win rate vs 55% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.9"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 8.5",
+      "home": "Los Angeles Angels",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": 8.5,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -111,
+      "outcome": "loss",
+      "margin": 8.5,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 15,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Los Angeles Angels 44% / Los Angeles Dodgers 42% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 9.5",
+      "home": "Athletics",
+      "away": "San Francisco Giants",
+      "spread": null,
+      "total": 9.5,
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -114,
+      "outcome": "loss",
+      "margin": 0.5,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 45% / San Francisco Giants 43% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.7 < line 9.5 (+1.8 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.3% edge vs implied"
+        }
+      ]
     }
   ]
 }
