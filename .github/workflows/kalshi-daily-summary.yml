@@ -1,0 +1,48 @@
+name: Kalshi Daily Summary
+
+# Fires after Kalshi Reconcile completes — by then we have:
+#   - Yesterday's reconciled PnL in data/kalshi_*_perf.json
+#   - Today's auto-bet plan in data/kalshi_dryrun/{today}.json
+# Sends a single morning push notification with the day's plan + recent
+# performance + stage-advance recommendation.
+#
+# Read-only: never modifies config, never places orders.
+on:
+  workflow_run:
+    workflows: ["Kalshi Reconcile"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  summary:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Send morning summary
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        # stdlib only — no pip install needed
+        run: python scripts/kalshi/daily_summary.py
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      summary
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Morning summary push failed — you won't see today's plan until next run"

@@ -1,9 +1,9 @@
 name: 'Notify on workflow failure'
-description: 'POST a Discord-compatible JSON payload to a webhook URL when a workflow step fails. Silent no-op if WEBHOOK_URL secret is not set.'
+description: 'POST a notification to a webhook URL when a workflow fails. Auto-detects ntfy.sh vs Discord vs generic JSON. Silent no-op if WEBHOOK_URL secret is not set.'
 
 inputs:
   webhook:
-    description: 'Webhook URL (Discord, Slack, or generic JSON-receiving endpoint).'
+    description: 'Webhook URL. Auto-detected: ntfy.sh (plain text + headers), Discord (JSON {content}), or generic JSON {content}.'
     required: true
   workflow:
     description: 'Workflow name (typically github.workflow).'
@@ -39,20 +39,41 @@ runs:
           echo "WEBHOOK_URL not set — notification skipped"
           exit 0
         fi
-        # Build a Discord-compatible payload (Slack also accepts simple JSON
-        # if you switch "content" → "text"). jq used for safe JSON quoting:
-        # workflow names with backticks/quotes/newlines won't break the body.
-        TITLE_LINE="🚨 **BTF workflow failed**: \`$WORKFLOW\`"
-        if [ -n "$JOB" ]; then TITLE_LINE="$TITLE_LINE / \`$JOB\`"; fi
+
+        # Build the human-readable message body. Same format across all
+        # notification backends — the wire encoding is what differs.
+        TITLE_LINE="🚨 BTF workflow failed: $WORKFLOW"
+        if [ -n "$JOB" ]; then TITLE_LINE="$TITLE_LINE / $JOB"; fi
         BODY="$TITLE_LINE"
-        if [ -n "$CONTEXT" ]; then BODY="$BODY"$'\n'"_${CONTEXT}_"; fi
+        if [ -n "$CONTEXT" ]; then BODY="$BODY"$'\n'"$CONTEXT"; fi
         BODY="$BODY"$'\n'"$RUN_URL"
-        PAYLOAD=$(jq -n --arg msg "$BODY" '{content: $msg}')
-        # Don't propagate notification failures — the original workflow has
-        # already failed; a flaky webhook should not compound the problem.
-        if curl -sS -f -X POST -H 'Content-Type: application/json' \
-             -d "$PAYLOAD" "$WEBHOOK" -o /dev/null; then
-          echo "✅ Failure notification sent"
+
+        # Auto-detect destination from URL host so the user can swap between
+        # ntfy.sh / Discord / Slack without code changes — just paste a
+        # different URL into the WEBHOOK_URL secret.
+        if echo "$WEBHOOK" | grep -qiE 'ntfy\.sh|/ntfy/'; then
+          # ntfy.sh accepts plain text body + headers for title/priority/tags.
+          # https://docs.ntfy.sh/publish/
+          # Title goes in X-Title header, body is the plain text post.
+          # Priority 4 = high (shows on iOS lock screen even with focus on).
+          if curl -sS -f -X POST \
+               -H "Title: BTF workflow failed" \
+               -H "Priority: 4" \
+               -H "Tags: warning,rotating_light" \
+               -d "$BODY" \
+               "$WEBHOOK" -o /dev/null; then
+            echo "✅ Failure notification sent (ntfy.sh)"
+          else
+            echo "⚠ Notification POST returned non-2xx (continuing anyway)"
+          fi
         else
-          echo "⚠ Notification POST returned non-2xx (continuing anyway)"
+          # Discord / Slack-style: JSON with "content" field. Slack also
+          # accepts "text" instead — both fields are harmless to include.
+          PAYLOAD=$(jq -n --arg msg "$BODY" '{content: $msg, text: $msg}')
+          if curl -sS -f -X POST -H 'Content-Type: application/json' \
+               -d "$PAYLOAD" "$WEBHOOK" -o /dev/null; then
+            echo "✅ Failure notification sent (json webhook)"
+          else
+            echo "⚠ Notification POST returned non-2xx (continuing anyway)"
+          fi
         fi

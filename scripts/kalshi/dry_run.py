@@ -86,11 +86,37 @@ def _config_snapshot(cfg: dict) -> dict:
     return {k: cfg.get(k) for k in keep}
 
 
+# Empirical calibration shrinkage (added 2026-05-17 from a 605-pick audit).
+# Pre-shrinkage, the hub's score100 is consistently overconfident:
+#
+#   model says ~75%  →  actually wins 61%   (over by 14 pts)
+#   model says ~65%  →  actually wins 56%   (over by  9 pts)
+#   model says ~55%  →  actually wins 52%   (over by  3 pts)
+#
+# Pattern is roughly linear: over-confidence ≈ (raw - 50) × 0.4
+# So calibrated_prob = 0.5 + (raw_prob - 0.5) × 0.6 brings the model
+# in line with observed outcomes (a form of Platt scaling).
+#
+# Effect on Kelly sizing: bets get smaller across the board, especially
+# on high-confidence picks. The min_calibrated_score eligibility gate
+# still uses the raw score100 (so the volume of bets is unchanged) —
+# we only shrink the probability that goes INTO Kelly's stake formula.
+# Re-tune this constant if a future audit shows the bias has changed.
+CALIBRATION_SHRINKAGE = 0.6
+
+
 def _model_prob_from_pick(pick: dict) -> float | None:
-    """Calibrated score / 100 → model's win probability."""
+    """Calibrated score / 100 → model's win probability, shrunk toward 50%.
+
+    See CALIBRATION_SHRINKAGE comment above for the empirical basis.
+    The shrinkage corrects for the model's systematic overconfidence —
+    Kelly sizes were ~30% too aggressive on elite picks before this.
+    """
     s = pick.get("score100")
     if s is None: return None
-    return max(0.01, min(0.99, s / 100.0))
+    raw = s / 100.0
+    calibrated = 0.5 + (raw - 0.5) * CALIBRATION_SHRINKAGE
+    return max(0.01, min(0.99, calibrated))
 
 
 def _resolve_use_price(mapping: dict) -> tuple[int | None, str]:
@@ -155,6 +181,28 @@ def main():
 
     # Map each eligible pick to a Kalshi market (live API call).
     client = KalshiClient(environment=active_env)
+
+    # Auto-sync bankroll from live Kalshi balance. The hardcoded
+    # bankroll_dollars in kalshi_config.json is used as a fallback only —
+    # before this auto-sync, the dry-run was sizing Kelly stakes against
+    # a stale $500 baseline that diverged from reality every time you
+    # deposited or withdrew. The read-only API key has portfolio.read
+    # permission so this should succeed in production; if the call fails
+    # (rate limit, demo env, permission change) we fall back to the
+    # config value so the rest of the dry-run still works.
+    config_bankroll = float(cfg.get("bankroll_dollars") or 0)
+    bankroll = config_bankroll
+    bankroll_source = "config"
+    try:
+        bal = client.get_balance()
+        live_bankroll = float(bal.get("balance", 0) or 0) / 100.0   # cents → dollars
+        if live_bankroll > 0:
+            bankroll = live_bankroll
+            bankroll_source = "kalshi_live"
+    except Exception as e:
+        print(f"  ⚠ Could not fetch live balance ({type(e).__name__}: {e}) — falling back to config bankroll ${config_bankroll:.2f}")
+    print(f"  Bankroll for Kelly sizing: ${bankroll:.2f} (source: {bankroll_source})")
+
     # Shared events cache across all picks — list_events fires at most once
     # per sport instead of once per pick. Critical for live rate limits.
     events_cache: dict = {}
@@ -209,7 +257,7 @@ def main():
         # Stake math uses the resolved use_price (with fallback chain) rather
         # than yes_ask alone, so thin orderbooks don't always block sizing.
         sized = kelly_stake_dollars(
-            bankroll_dollars            = float(cfg.get("bankroll_dollars") or 0),
+            bankroll_dollars            = bankroll,   # auto-synced from live Kalshi balance above
             kelly_fraction              = float(cfg.get("kelly_fraction") or 0.25),
             model_prob                  = order["model_prob"],
             yes_ask_cents               = order["use_price_cents"],
@@ -249,6 +297,10 @@ def main():
         "total_stake_dollars": total_stake,
         "remaining_daily_capacity": round(max(0, daily_cap - total_stake), 2),
         "skipped_by_reason": skipped,
+        # Audit trail: which bankroll value drove Kelly sizing today.
+        # If this drifts unexpectedly day-over-day, something's wrong upstream.
+        "bankroll_used_dollars": round(bankroll, 2),
+        "bankroll_source": bankroll_source,
     }
     out = {
         "date": date_key,
