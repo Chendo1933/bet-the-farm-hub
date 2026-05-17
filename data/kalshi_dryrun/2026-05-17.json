@@ -1,6 +1,6 @@
 {
   "date": "2026-05-17",
-  "logged": "2026-05-17T18:09:35.031365",
+  "logged": "2026-05-17T22:15:34.746346",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -208,7 +208,7 @@
     "skipped_by_reason": {
       "ambiguous": 4
     },
-    "bankroll_used_dollars": 500.0,
-    "bankroll_source": "config"
+    "bankroll_used_dollars": 38.37,
+    "bankroll_source": "kalshi_live"
   }
 }
