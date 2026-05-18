@@ -1,0 +1,152 @@
+{
+  "date": "2026-05-18",
+  "logged": "2026-05-18T17:50:20.981150",
+  "environment": "live",
+  "dry": false,
+  "config_snapshot": {
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kill_switch_daily_loss_dollars": 25,
+    "kelly_fraction": 0.25
+  },
+  "placed_orders": [
+    {
+      "ticker": "KXMLBGAME-26MAY181840ATLMIA-ATL",
+      "side": "yes",
+      "contracts": 5,
+      "price_cents": 50,
+      "stake_dollars": 2.5,
+      "client_order_id": "btf-5ee6106d-7273-5b1e-a013-04536f0b4321",
+      "order_id": "61bbf488-bdcf-471d-9db4-b567e0858eaf",
+      "status": "executed",
+      "kalshi_response": {
+        "action": "buy",
+        "book_side": "bid",
+        "client_order_id": "btf-5ee6106d-7273-5b1e-a013-04536f0b4321",
+        "created_time": "2026-05-18T17:50:20.834315Z",
+        "fill_count_fp": "5.00",
+        "initial_count_fp": "5.00",
+        "last_update_time": "2026-05-18T17:50:20.834315Z",
+        "maker_fees_dollars": "0.000000",
+        "maker_fill_cost_dollars": "0.000000",
+        "no_price_dollars": "0.5000",
+        "order_id": "61bbf488-bdcf-471d-9db4-b567e0858eaf",
+        "outcome_side": "yes",
+        "remaining_count_fp": "0.00",
+        "side": "yes",
+        "status": "executed",
+        "subaccount_number": 0,
+        "taker_fees_dollars": "0.090000",
+        "taker_fill_cost_dollars": "2.500000",
+        "ticker": "KXMLBGAME-26MAY181840ATLMIA-ATL",
+        "type": "limit",
+        "user_id": "90d44230-127c-436e-87b1-c64463e1f609",
+        "yes_price_dollars": "0.5000"
+      },
+      "dryrun_pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Miami Marlins",
+        "away": "Atlanta Braves",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-105)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -105,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 68% vs implied 49%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +6.7"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -105"
+          }
+        ],
+        "date": "May 18",
+        "time": "6:41 PM ET"
+      }
+    },
+    {
+      "ticker": "KXMLBGAME-26MAY181840BALTB-TB",
+      "side": "yes",
+      "contracts": 3,
+      "price_cents": 58,
+      "stake_dollars": 1.74,
+      "client_order_id": "btf-81ebe4fc-c4b5-5347-8a4d-de60a11c7c13",
+      "order_id": "e9a9d531-81eb-4eda-9ba2-d22bb876cf17",
+      "status": "executed",
+      "kalshi_response": {
+        "action": "buy",
+        "book_side": "bid",
+        "client_order_id": "btf-81ebe4fc-c4b5-5347-8a4d-de60a11c7c13",
+        "created_time": "2026-05-18T17:50:20.951517Z",
+        "fill_count_fp": "3.00",
+        "initial_count_fp": "3.00",
+        "last_update_time": "2026-05-18T17:50:20.951517Z",
+        "maker_fees_dollars": "0.000000",
+        "maker_fill_cost_dollars": "0.000000",
+        "no_price_dollars": "0.4200",
+        "order_id": "e9a9d531-81eb-4eda-9ba2-d22bb876cf17",
+        "outcome_side": "yes",
+        "remaining_count_fp": "0.00",
+        "side": "yes",
+        "status": "executed",
+        "subaccount_number": 0,
+        "taker_fees_dollars": "0.060000",
+        "taker_fill_cost_dollars": "1.740000",
+        "ticker": "KXMLBGAME-26MAY181840BALTB-TB",
+        "type": "limit",
+        "user_id": "90d44230-127c-436e-87b1-c64463e1f609",
+        "yes_price_dollars": "0.5800"
+      },
+      "dryrun_pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Tampa Bay Rays",
+        "away": "Baltimore Orioles",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-144)",
+        "score100": 80,
+        "rawScore100": 66,
+        "odds": -144,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +4.2"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -144"
+          }
+        ],
+        "date": "May 18",
+        "time": "6:41 PM ET"
+      }
+    }
+  ],
+  "skipped": [],
+  "summary": {
+    "candidates": 2,
+    "placed": 2,
+    "dry_simulated": 0,
+    "skipped": 0,
+    "total_stake_placed": 4.24
+  }
+}
