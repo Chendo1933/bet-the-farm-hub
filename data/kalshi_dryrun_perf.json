@@ -1,5 +1,5 @@
 {
-  "days": 8,
+  "days": 9,
   "total_orders_placed": 12,
   "wins": 6,
   "losses": 6,
@@ -103,6 +103,18 @@
       "total_payout_dollars": 0.0,
       "total_pnl_dollars": -14.45,
       "roi_pct": -100.0
+    },
+    {
+      "date": "2026-05-17",
+      "placed": 0,
+      "wins": 0,
+      "losses": 0,
+      "pushes": 0,
+      "ungraded": 0,
+      "total_stake_dollars": 0.0,
+      "total_payout_dollars": 0.0,
+      "total_pnl_dollars": 0.0,
+      "roi_pct": 0
     }
   ]
 }

@@ -55,7 +55,13 @@
       "model_prob": 0.65,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "Multiple weak event matches"
+      "map_reason": "Multiple weak event matches",
+      "outcome": "win",
+      "home_score": 8,
+      "away_score": 1,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     },
     {
       "pick": {
@@ -102,7 +108,13 @@
       "model_prob": 0.626,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "4 strong event matches and time disambiguation didn't resolve"
+      "map_reason": "4 strong event matches and time disambiguation didn't resolve",
+      "outcome": "loss",
+      "home_score": 7,
+      "away_score": 6,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     },
     {
       "pick": {
@@ -149,7 +161,13 @@
       "model_prob": 0.602,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "5 strong event matches and time disambiguation didn't resolve"
+      "map_reason": "5 strong event matches and time disambiguation didn't resolve",
+      "outcome": "loss",
+      "home_score": 9,
+      "away_score": 8,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     },
     {
       "pick": {
@@ -196,7 +214,13 @@
       "model_prob": 0.65,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "Multiple weak event matches"
+      "map_reason": "Multiple weak event matches",
+      "outcome": "loss",
+      "home_score": 5,
+      "away_score": 4,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     }
   ],
   "summary": {
@@ -212,5 +236,17 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 38.37
+  },
+  "reconcile": {
+    "date": "2026-05-17",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0
   }
 }
