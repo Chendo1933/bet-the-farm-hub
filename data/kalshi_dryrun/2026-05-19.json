@@ -1,0 +1,126 @@
+{
+  "date": "2026-05-19",
+  "logged": "2026-05-19T17:53:58.131591",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 65,
+    "supported_bet_types": [
+      "ml"
+    ],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Miami Marlins",
+        "away": "Atlanta Braves",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-143)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -143,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 65% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.1"
+          }
+        ],
+        "date": "May 19",
+        "time": "4:11 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY191610ATLMIA-ATL",
+      "market_title": "Atlanta vs Miami Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 57,
+      "yes_bid_cents": 56,
+      "last_price_cents": 57,
+      "previous_yes_ask_cents": 55,
+      "volume_24h": "992776.35",
+      "use_price_cents": 57,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.626,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 1.14,
+      "contracts": 2,
+      "edge_pct": 0.056,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Tampa Bay Rays",
+        "away": "Baltimore Orioles",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-112)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -112,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 50%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.3"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -112"
+          }
+        ],
+        "date": "May 19",
+        "time": "6:41 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY191840BALTB-TB",
+      "market_title": "Baltimore vs Tampa Bay Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 52,
+      "yes_bid_cents": 51,
+      "last_price_cents": 52,
+      "previous_yes_ask_cents": 57,
+      "volume_24h": "253209.32",
+      "use_price_cents": 52,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.65,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 2.08,
+      "contracts": 4,
+      "edge_pct": 0.13,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "summary": {
+    "picks_total": 10,
+    "picks_eligible_after_filter": 2,
+    "orders_would_place": 2,
+    "total_stake_dollars": 3.22,
+    "remaining_daily_capacity": 16.78,
+    "skipped_by_reason": {},
+    "bankroll_used_dollars": 36.98,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 36.98
+  }
+}
