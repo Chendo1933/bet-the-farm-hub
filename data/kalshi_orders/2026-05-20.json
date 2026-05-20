@@ -1,0 +1,152 @@
+{
+  "date": "2026-05-20",
+  "logged": "2026-05-20T18:06:50.211039",
+  "environment": "live",
+  "dry": false,
+  "config_snapshot": {
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kill_switch_daily_loss_dollars": 25,
+    "kelly_fraction": 0.25
+  },
+  "placed_orders": [
+    {
+      "ticker": "KXNHLGAME-26MAY20VGKCOL-COL",
+      "side": "yes",
+      "contracts": 2,
+      "price_cents": 62,
+      "stake_dollars": 1.24,
+      "client_order_id": "btf-57fe4455-0315-509d-b019-da847ec740cf",
+      "order_id": "f4c85d25-334f-4d50-884b-656a29400b7e",
+      "status": "executed",
+      "kalshi_response": {
+        "action": "buy",
+        "book_side": "bid",
+        "client_order_id": "btf-57fe4455-0315-509d-b019-da847ec740cf",
+        "created_time": "2026-05-20T18:06:49.881265Z",
+        "fill_count_fp": "2.00",
+        "initial_count_fp": "2.00",
+        "last_update_time": "2026-05-20T18:06:49.881265Z",
+        "maker_fees_dollars": "0.000000",
+        "maker_fill_cost_dollars": "0.000000",
+        "no_price_dollars": "0.3800",
+        "order_id": "f4c85d25-334f-4d50-884b-656a29400b7e",
+        "outcome_side": "yes",
+        "remaining_count_fp": "0.00",
+        "side": "yes",
+        "status": "executed",
+        "subaccount_number": 0,
+        "taker_fees_dollars": "0.040000",
+        "taker_fill_cost_dollars": "1.240000",
+        "ticker": "KXNHLGAME-26MAY20VGKCOL-COL",
+        "type": "limit",
+        "user_id": "90d44230-127c-436e-87b1-c64463e1f609",
+        "yes_price_dollars": "0.6200"
+      },
+      "dryrun_pick": {
+        "sport": "NHL",
+        "betType": "ml",
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Colorado Avalanche",
+        "pickLabel": "Colorado Avalanche ML (-175)",
+        "score100": 80,
+        "rawScore100": 66,
+        "odds": -175,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 77% vs implied 61%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +10.2"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -175"
+          }
+        ],
+        "date": "May 20",
+        "time": "8:20 PM ET"
+      }
+    },
+    {
+      "ticker": "KXMLBGAME-26MAY201310BALTB-TB",
+      "side": "yes",
+      "contracts": 5,
+      "price_cents": 54,
+      "stake_dollars": 2.7,
+      "client_order_id": "btf-b05c1939-6c4c-5bae-aca5-74a197ec091f",
+      "order_id": "095de67e-f5d7-4c54-918b-26309ece017a",
+      "status": "resting",
+      "kalshi_response": {
+        "action": "buy",
+        "book_side": "bid",
+        "client_order_id": "btf-b05c1939-6c4c-5bae-aca5-74a197ec091f",
+        "created_time": "2026-05-20T18:06:50.188377Z",
+        "fill_count_fp": "0.00",
+        "initial_count_fp": "5.00",
+        "last_update_time": "2026-05-20T18:06:50.188377Z",
+        "maker_fees_dollars": "0.000000",
+        "maker_fill_cost_dollars": "0.000000",
+        "no_price_dollars": "0.4600",
+        "order_id": "095de67e-f5d7-4c54-918b-26309ece017a",
+        "outcome_side": "yes",
+        "remaining_count_fp": "5.00",
+        "side": "yes",
+        "status": "resting",
+        "subaccount_number": 0,
+        "taker_fees_dollars": "0.000000",
+        "taker_fill_cost_dollars": "0.000000",
+        "ticker": "KXMLBGAME-26MAY201310BALTB-TB",
+        "type": "limit",
+        "user_id": "90d44230-127c-436e-87b1-c64463e1f609",
+        "yes_price_dollars": "0.5400"
+      },
+      "dryrun_pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Tampa Bay Rays",
+        "away": "Baltimore Orioles",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-145)",
+        "score100": 80,
+        "rawScore100": 66,
+        "odds": -145,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 69% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.7"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -145"
+          }
+        ],
+        "date": "May 20",
+        "time": "1:11 PM ET"
+      }
+    }
+  ],
+  "skipped": [],
+  "summary": {
+    "candidates": 2,
+    "placed": 2,
+    "dry_simulated": 0,
+    "skipped": 0,
+    "total_stake_placed": 3.94
+  }
+}
