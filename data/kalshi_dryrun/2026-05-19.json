@@ -58,7 +58,13 @@
       "stake_dollars": 1.14,
       "contracts": 2,
       "edge_pct": 0.056,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 4,
+      "away_score": 8,
+      "payout_dollars": 2.0,
+      "pnl_dollars": 0.86,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -108,7 +114,13 @@
       "stake_dollars": 2.08,
       "contracts": 4,
       "edge_pct": 0.13,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 4,
+      "away_score": 1,
+      "payout_dollars": 4.0,
+      "pnl_dollars": 1.92,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -122,5 +134,17 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 36.98
+  },
+  "reconcile": {
+    "date": "2026-05-19",
+    "placed": 2,
+    "wins": 2,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 3.22,
+    "total_payout_dollars": 6.0,
+    "total_pnl_dollars": 2.78,
+    "roi_pct": 86.34
   }
 }
