@@ -1,0 +1,277 @@
+{
+  "date": "2026-05-20",
+  "logged": "2026-05-20T18:40:08.388544+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Colorado Avalanche",
+      "away": "Vegas Golden Knights",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Colorado Avalanche",
+      "pickLabel": "Colorado Avalanche ML (-175)",
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -175,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 77% vs implied 61%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -175"
+        }
+      ],
+      "date": "May 20",
+      "time": "8:20 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Minnesota Twins",
+      "away": "Houston Astros",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 58,
+      "rawScore100": 69,
+      "odds": -153,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Twins 60% / Houston Astros 60% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.4 > line 6.5 (+2.9 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.8% edge vs implied"
+        }
+      ],
+      "date": "May 20",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "Chicago White Sox",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago White Sox",
+      "pickLabel": "Chicago White Sox ML (+123)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 123,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 52% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ],
+      "date": "May 20",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Detroit Tigers",
+      "away": "Cleveland Guardians",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Cleveland Guardians",
+      "pickLabel": "Cleveland Guardians ML (-120)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": -120,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 58% win rate vs 52% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.3"
+        }
+      ],
+      "date": "May 20",
+      "time": "6:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Washington Nationals",
+      "away": "New York Mets",
+      "atsPick": null,
+      "spread": null,
+      "total": 10,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 10",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Washington Nationals 67% / New York Mets 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.9% edge vs implied"
+        }
+      ],
+      "date": "May 20",
+      "time": "6:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Kansas City Royals",
+      "away": "Boston Red Sox",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 45% / Boston Red Sox 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.7% edge vs implied"
+        }
+      ],
+      "date": "May 20",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago Cubs",
+      "away": "Milwaukee Brewers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-101)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -101"
+        }
+      ],
+      "date": "May 20",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Chicago Cubs",
+      "away": "Milwaukee Brewers",
+      "atsPick": null,
+      "spread": null,
+      "total": 6.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 6.5",
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -103,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Chicago Cubs 58% / Milwaukee Brewers 49% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.9 > line 6.5 (+2.4 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +14.2% edge vs implied"
+        }
+      ],
+      "date": "May 20",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "St. Louis Cardinals",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (-118)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -118,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -118"
+        }
+      ],
+      "date": "May 20",
+      "time": "7:46 PM ET"
+    }
+  ],
+  "all_picks_count": 9,
+  "filter_stats": {
+    "prefilter": 22,
+    "sub60": 10,
+    "mlbFav": 2,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 9,
+    "dropped": 13
+  }
+}
