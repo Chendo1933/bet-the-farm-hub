@@ -62,7 +62,13 @@
       "stake_dollars": 5.0,
       "contracts": 100,
       "edge_pct": 0.63,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 2,
+      "away_score": 4,
+      "payout_dollars": 0.0,
+      "pnl_dollars": -5.0,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -109,7 +115,13 @@
       "model_prob": 0.68,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "Multiple weak event matches"
+      "map_reason": "Multiple weak event matches",
+      "outcome": "win",
+      "home_score": 5,
+      "away_score": 3,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     }
   ],
   "paper_orders": [
@@ -147,7 +159,12 @@
       },
       "track": "paper",
       "model_prob": 0.5479999999999999,
-      "would_grade": true
+      "would_grade": true,
+      "outcome": "win",
+      "home_score": 5,
+      "away_score": 3,
+      "pnl_dollars": 1.0,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -183,7 +200,12 @@
       },
       "track": "paper",
       "model_prob": 0.5479999999999999,
-      "would_grade": true
+      "would_grade": true,
+      "outcome": "loss",
+      "home_score": 4,
+      "away_score": 1,
+      "pnl_dollars": -1.1,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -215,7 +237,12 @@
       },
       "track": "paper",
       "model_prob": 0.536,
-      "would_grade": true
+      "would_grade": true,
+      "outcome": "win",
+      "home_score": 3,
+      "away_score": 4,
+      "pnl_dollars": 1.0,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -251,7 +278,12 @@
       },
       "track": "paper",
       "model_prob": 0.536,
-      "would_grade": true
+      "would_grade": true,
+      "outcome": "loss",
+      "home_score": 0,
+      "away_score": 5,
+      "pnl_dollars": -1.1,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -272,5 +304,28 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 40.64
+  },
+  "paper_reconcile": {
+    "date": "2026-05-20",
+    "placed": 4,
+    "wins": 2,
+    "losses": 2,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 4.4,
+    "total_pnl_dollars": -0.2,
+    "roi_pct": -4.55
+  },
+  "reconcile": {
+    "date": "2026-05-20",
+    "placed": 1,
+    "wins": 0,
+    "losses": 1,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 5.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": -5.0,
+    "roi_pct": -100.0
   }
 }

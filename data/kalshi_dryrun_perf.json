@@ -1,12 +1,24 @@
 {
-  "days": 0,
-  "total_orders_placed": 0,
-  "wins": 0,
-  "losses": 0,
-  "total_stake_dollars": 0,
-  "total_pnl_dollars": 0,
-  "roi_pct": 0,
-  "win_pct": 0,
+  "days": 1,
+  "total_orders_placed": 4,
+  "wins": 2,
+  "losses": 2,
+  "total_stake_dollars": 4.4,
+  "total_pnl_dollars": -0.2,
+  "roi_pct": -4.55,
+  "win_pct": 50.0,
   "track": "paper_ou",
-  "daily": []
+  "daily": [
+    {
+      "date": "2026-05-20",
+      "placed": 4,
+      "wins": 2,
+      "losses": 2,
+      "pushes": 0,
+      "ungraded": 0,
+      "total_stake_dollars": 4.4,
+      "total_pnl_dollars": -0.2,
+      "roi_pct": -4.55
+    }
+  ]
 }
