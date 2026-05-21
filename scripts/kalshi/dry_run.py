@@ -329,11 +329,16 @@ def main():
     # live-perf that existed before this split is now gone.
     paper_supported = set(cfg.get("paper_supported_bet_types") or [])
     paper_only = paper_supported - supported   # don't double-count anything live also tracks
+    # Paper picks use a separate (lower) score floor than live picks. Live
+    # picks need cal ≥65 because real money is at stake; paper picks just
+    # need to be above coin-flip (≥50). This lets us accumulate samples
+    # fast for validation while keeping live picks selective.
+    paper_min = int(cfg.get("paper_min_calibrated_score") or 50)
     paper_orders = []
     if paper_only:
         paper_eligible = [p for p in all_picks
                           if p.get("betType") in paper_only
-                          and (p.get("score100") or 0) >= min_score]
+                          and (p.get("score100") or 0) >= paper_min]
         for pick in paper_eligible:
             # Synthesize a simple "would place" record. No market lookup
             # since we're not actually placing — just need enough metadata

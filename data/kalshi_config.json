@@ -52,6 +52,15 @@
     "auto-pipeline starts placing it for real."
   ],
 
+  "paper_min_calibrated_score": 50,
+  "paper_min_calibrated_score_doc": [
+    "Cal-score floor for paper-track picks — separate from the live",
+    "min_calibrated_score gate. Set lower (50 = essentially any pick the",
+    "model produces) so we accumulate paper samples fast for validation.",
+    "Live bets need 65+ confidence to be worth real money risk; paper",
+    "bets just need to be above coin-flip (50)."
+  ],
+
   "max_stake_per_pick_dollars": 5,
   "max_stake_per_pick_dollars_doc": [
     "Hard cap on a single order, regardless of Kelly recommendation.",
