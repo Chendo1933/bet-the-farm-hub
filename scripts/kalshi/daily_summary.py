@@ -1,25 +1,36 @@
 #!/usr/bin/env python3
 """
-BTF morning summary — fires once per day via the webhook.
+BTF push-notification dispatcher — two modes for two daily cadences.
 
-Sends a single push notification with:
-  - Yesterday's reconciled PnL (combined paper + live)
-  - Today's planned auto-bets (count + total stake)
-  - 7-day rolling performance
-  - Bet-sizing stage recommendation (advisory only — never auto-changes config)
+  --mode recap   Sends yesterday's results + 7d rolling + stage advisor.
+                 Fired by .github/workflows/kalshi-daily-recap.yml
+                 immediately after Kalshi Reconcile completes (early AM).
 
-Design intent:
-  This script is read-only on data and write-only on the webhook. It
-  never modifies kalshi_config.json or any placed orders. The point is
-  to give the operator passive visibility — open the phone, see the
-  morning summary, decide whether to bump stake caps. If the script
-  itself fails, the workflow's notify-failure step still fires (we
-  re-use the existing webhook channel).
+  --mode plan    Sends "we just placed these orders today" with the
+                 ticker/contract/price breakdown. Fired by
+                 .github/workflows/kalshi-daily-plan.yml immediately
+                 after Kalshi Place Orders (Live) completes (~12:10 PM ET).
+
+Why split: prior to 2026-05-20, this was one combined notification
+fired after Reconcile only. That meant "today's plan" came from a
+stale dry-run snapshot — by morning the user got "yesterday: 1W 1L"
+followed by "today: 0 bets queued" because the dry-run hadn't run
+for today yet. Splitting into two pings fixes the ordering: morning
+ping has only confirmed yesterday's results, post-placement ping
+has the actual just-placed bets.
+
+This script is read-only on data and write-only on the webhook. It
+never modifies kalshi_config.json or any placed orders. The point is
+passive visibility — open the phone, see the notification, decide
+whether to bump stake caps. If the script itself fails, the
+workflow's notify-failure step still fires (same webhook channel,
+different priority).
 
 Usage:
-  python3 scripts/kalshi/daily_summary.py            # today's summary
-  python3 scripts/kalshi/daily_summary.py --dry      # print to stdout only
-  python3 scripts/kalshi/daily_summary.py --date YYYY-MM-DD
+  python3 scripts/kalshi/daily_summary.py --mode recap
+  python3 scripts/kalshi/daily_summary.py --mode plan
+  python3 scripts/kalshi/daily_summary.py --mode recap --dry  # print only
+  python3 scripts/kalshi/daily_summary.py --mode plan --date 2026-05-21
 
 Env:
   WEBHOOK_URL  — same secret used by .github/actions/notify-failure.
@@ -57,23 +68,26 @@ def _load_perf(path: str) -> dict | None:
         return None
 
 
-def _read_today_plan(date_key: str) -> dict:
-    """Pull today's auto-bet plan from the dry-run snapshot."""
+def _load_dryrun(date_key: str) -> dict | None:
+    """Read the dry-run snapshot (auto-bet candidates + bankroll info)."""
     p = Path(DRYRUN_DIR) / f"{date_key}.json"
     if not p.exists():
-        return {"orders_would_place": 0, "total_stake_dollars": 0.0, "picks_total": 0}
-    data = json.loads(p.read_text())
-    summary = data.get("summary", {})
-    return {
-        "orders_would_place":     summary.get("orders_would_place", 0),
-        "total_stake_dollars":    summary.get("total_stake_dollars", 0.0),
-        "picks_total":            summary.get("picks_total", 0),
-        # Live account snapshot (added 2026-05-17). Older snapshots without
-        # these fields fall back to showing just bankroll alone.
-        "bankroll_used_dollars":  summary.get("bankroll_used_dollars"),
-        "open_positions_dollars": summary.get("open_positions_dollars"),
-        "total_account_dollars":  summary.get("total_account_dollars"),
-    }
+        return None
+    try:
+        return json.loads(p.read_text())
+    except Exception:
+        return None
+
+
+def _load_orders(date_key: str) -> dict | None:
+    """Read today's order receipts file (post-placement)."""
+    p = Path(ORDERS_DIR) / f"{date_key}.json"
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text())
+    except Exception:
+        return None
 
 
 def _rolling_pnl(perf: dict | None, days: int = 7) -> dict:
@@ -145,58 +159,66 @@ def _stage_recommendation(cfg: dict, live_perf: dict | None) -> tuple[str, str]:
     return current_label, advice
 
 
-def build_summary(date_key: str) -> str:
+# ── Recap mode ──────────────────────────────────────────────────────────────
+# Yesterday-focused. Fires after Reconcile (early AM) when yesterday's
+# outcomes have been graded and PnL written. Does NOT mention today's
+# auto-bets because dry-run hasn't run yet at this point.
+
+def build_recap(date_key: str) -> tuple[str, str]:
+    """Returns (title, body) for the recap notification.
+
+    `date_key` is today's ET date — the recap talks about yesterday
+    relative to that, which is whatever's at the tail of the perf
+    files (already filtered to most-recent reconciled day).
+    """
     cfg = json.loads(Path(CONFIG_PATH).read_text())
     cfg = {k: v for k, v in cfg.items() if not k.startswith("_") and not k.endswith("_doc")}
 
     paper_perf = _load_perf(PAPER_PERF_PATH)
     live_perf  = _load_perf(LIVE_PERF_PATH)
 
-    # Yesterday's snapshot from the last entry of each perf file
     def _last_day(perf):
         if not perf or not perf.get("daily"): return None
         return perf["daily"][-1]
     last_paper = _last_day(paper_perf)
     last_live  = _last_day(live_perf)
 
-    today_plan = _read_today_plan(date_key)
     paper_7d = _rolling_pnl(paper_perf, 7)
     live_7d  = _rolling_pnl(live_perf, 7)
     stage_label, advice = _stage_recommendation(cfg, live_perf)
 
-    lines = [f"☀️ BTF Morning Summary · {date_key}", ""]
+    lines = [f"🌙 BTF Recap · {date_key}", ""]
 
-    # Yesterday
+    # Yesterday — live preferred, paper as fallback
     if last_live and last_live.get("placed", 0) > 0:
-        lines.append(f"YESTERDAY (LIVE): {last_live.get('placed',0)} placed · "
-                     f"{last_live.get('wins',0)}W {last_live.get('losses',0)}L · "
-                     f"${last_live.get('total_pnl_dollars',0):+.2f} "
-                     f"({last_live.get('roi_pct',0):+.1f}% ROI)")
+        prev = last_live
+        lines.append(f"YESTERDAY (LIVE): {prev.get('placed',0)} placed · "
+                     f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
+                     f"${prev.get('total_pnl_dollars',0):+.2f} "
+                     f"({prev.get('roi_pct',0):+.1f}% ROI)")
+        # Show per-order detail when we have it (live only — these have ticker info)
+        date = prev.get("date")
+        orders = _load_orders(date) if date else None
+        if orders and orders.get("placed_orders"):
+            for o in orders["placed_orders"]:
+                if o.get("test"): continue   # skip the smoke-test
+                ticker = o.get("ticker", "?")
+                # Short label: extract the last "-TEAM" suffix if present
+                short = ticker.rsplit("-", 1)[-1] if "-" in ticker else ticker
+                outcome = o.get("outcome") or o.get("status", "?")
+                pnl = o.get("pnl_dollars")
+                pnl_str = f"${pnl:+.2f}" if pnl is not None else "(ungraded)"
+                # ✅ for win, ❌ for loss, ⏳ for ungraded
+                icon = "✅" if (pnl and pnl > 0) else ("❌" if (pnl and pnl < 0) else "⏳")
+                lines.append(f"  {icon} {short} {pnl_str}")
     elif last_paper and last_paper.get("placed", 0) > 0:
-        lines.append(f"YESTERDAY (paper): {last_paper.get('placed',0)} simulated · "
-                     f"{last_paper.get('wins',0)}W {last_paper.get('losses',0)}L · "
-                     f"${last_paper.get('total_pnl_dollars',0):+.2f} "
-                     f"({last_paper.get('roi_pct',0):+.1f}% ROI)")
+        prev = last_paper
+        lines.append(f"YESTERDAY (paper): {prev.get('placed',0)} simulated · "
+                     f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
+                     f"${prev.get('total_pnl_dollars',0):+.2f} "
+                     f"({prev.get('roi_pct',0):+.1f}% ROI)")
     else:
         lines.append("YESTERDAY: no orders placed/simulated")
-
-    # Today's plan
-    lines.append("")
-    if today_plan["orders_would_place"] > 0:
-        lines.append(f"TODAY: {today_plan['orders_would_place']} order(s) queued · "
-                     f"${today_plan['total_stake_dollars']:.2f} stake "
-                     f"(from {today_plan['picks_total']} total picks)")
-    else:
-        lines.append(f"TODAY: 0 auto-bets queued (no picks met cal≥{cfg.get('min_calibrated_score','?')} threshold)")
-    # Account snapshot. If we have both cash and positions, show the
-    # three-line breakdown. Else fall back to the older single-line.
-    cash = today_plan.get("bankroll_used_dollars")
-    positions = today_plan.get("open_positions_dollars")
-    total = today_plan.get("total_account_dollars")
-    if cash is not None and positions is not None and positions > 0:
-        lines.append(f"  Cash: ${cash:.2f} · Open positions: ${positions:.2f} · Total: ${total:.2f}")
-    elif cash is not None:
-        lines.append(f"  Bankroll: ${cash:.2f}")
 
     # 7-day rolling
     lines.append("")
@@ -215,19 +237,94 @@ def build_summary(date_key: str) -> str:
     if advice:
         lines.append(advice)
 
-    return "\n".join(lines)
+    return f"BTF Recap · {date_key}", "\n".join(lines)
 
 
-def send(body: str, webhook: str) -> None:
+# ── Plan mode ───────────────────────────────────────────────────────────────
+# Today-focused. Fires AFTER place_orders.py has run and committed receipts.
+# Reports what JUST got placed, with per-order detail.
+
+def build_plan(date_key: str) -> tuple[str, str]:
+    """Returns (title, body) for the post-placement plan notification."""
+    cfg = json.loads(Path(CONFIG_PATH).read_text())
+    cfg = {k: v for k, v in cfg.items() if not k.startswith("_") and not k.endswith("_doc")}
+
+    orders = _load_orders(date_key)
+    dryrun = _load_dryrun(date_key)
+
+    lines = [f"🎯 BTF Today's Bets · {date_key}", ""]
+
+    placed = [] if not orders else [o for o in (orders.get("placed_orders") or []) if not o.get("test")]
+    skipped = [] if not orders else (orders.get("skipped") or [])
+
+    if not placed and not skipped and not orders:
+        # No orders file yet — place_orders hasn't run, or there were
+        # no candidates from the dry-run. Surface what the dry-run had
+        # so the operator at least sees today's candidates list.
+        if dryrun:
+            picks_total = (dryrun.get("summary") or {}).get("picks_total", 0)
+            would_place = (dryrun.get("summary") or {}).get("orders_would_place", 0)
+            lines.append(f"No orders placed today.")
+            lines.append(f"  Dry-run saw {picks_total} picks, {would_place} eligible after filters.")
+        else:
+            lines.append("No order receipts found for today yet.")
+        return f"BTF Today · {date_key}", "\n".join(lines)
+
+    if not placed and skipped:
+        # All candidates were skipped — usually means markets closed
+        # before the workflow could fire, or all already had positions.
+        lines.append(f"0 orders placed · {len(skipped)} skipped")
+        # Most common skip reasons grouped
+        reasons = {}
+        for s in skipped:
+            r = s.get("skip_reason", "unknown")
+            reasons[r] = reasons.get(r, 0) + 1
+        for r, n in sorted(reasons.items(), key=lambda x: -x[1]):
+            lines.append(f"  · {n}× {r}")
+    elif placed:
+        total_stake = sum(o.get("stake_dollars") or 0 for o in placed)
+        lines.append(f"{len(placed)} order(s) placed · ${total_stake:.2f} total stake")
+        for o in placed:
+            ticker = o.get("ticker", "?")
+            short = ticker.rsplit("-", 1)[-1] if "-" in ticker else ticker
+            contracts = o.get("contracts", 0)
+            price = o.get("price_cents", 0)
+            stake = o.get("stake_dollars", 0)
+            status = o.get("status", "?")
+            # Compact: SIDE TICKER · 5× @ 54¢ · $2.70 · executed
+            lines.append(f"  · {short}: {contracts}× @ {price}¢ = ${stake:.2f} ({status})")
+        if skipped:
+            lines.append(f"  + {len(skipped)} skipped")
+
+    # Account snapshot — pulled from this morning's dry-run (BEFORE today's
+    # stakes were deployed) plus subtract what we just placed.
+    if dryrun:
+        s = dryrun.get("summary", {})
+        pre_cash = s.get("bankroll_used_dollars")
+        pre_positions = s.get("open_positions_dollars") or 0
+        pre_total = s.get("total_account_dollars")
+        placed_stake = sum(o.get("stake_dollars") or 0 for o in placed)
+        if pre_cash is not None:
+            post_cash = max(0.0, pre_cash - placed_stake)
+            post_positions = pre_positions + placed_stake
+            post_total = post_cash + post_positions
+            lines.append("")
+            lines.append(f"After placement (est.):")
+            lines.append(f"  Cash ${post_cash:.2f} · Positions ${post_positions:.2f} · Total ${post_total:.2f}")
+
+    return f"BTF Today · {date_key}", "\n".join(lines)
+
+
+def send(title: str, body: str, webhook: str, priority: str = "3", tags: str = "sunny,bar_chart") -> None:
     """Send to webhook. Auto-detects ntfy.sh (plain text + headers) vs JSON."""
     if "ntfy.sh" in webhook or "/ntfy/" in webhook:
         req = urllib.request.Request(
             webhook,
             data=body.encode("utf-8"),
             headers={
-                "Title": "BTF Morning Summary",
-                "Priority": "3",   # default — informational, not urgent
-                "Tags": "sunny,bar_chart",
+                "Title": title,
+                "Priority": priority,
+                "Tags": tags,
             },
             method="POST",
         )
@@ -245,28 +342,37 @@ def send(body: str, webhook: str) -> None:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--mode", choices=("recap", "plan"), default="recap",
+                    help="recap = yesterday's results (after reconcile); "
+                         "plan = today's just-placed bets (after place_orders)")
     ap.add_argument("--date", help="ET date (default: today)")
     ap.add_argument("--dry", action="store_true", help="Print to stdout only, don't POST")
     args = ap.parse_args()
 
     date_key = args.date or _today_et_date()
-    body = build_summary(date_key)
+
+    if args.mode == "recap":
+        title, body = build_recap(date_key)
+        tags = "moon,bar_chart"
+    else:   # plan
+        title, body = build_plan(date_key)
+        tags = "dart,money_with_wings"
 
     print(body)
     print()
 
     if args.dry:
-        print("[DRY] Skipping webhook POST")
+        print(f"[DRY mode={args.mode}] Skipping webhook POST")
         return
 
     webhook = os.environ.get("WEBHOOK_URL", "").strip()
     if not webhook:
-        print("WEBHOOK_URL not set — summary printed but not pushed")
+        print("WEBHOOK_URL not set — body printed but not pushed")
         return
 
     try:
-        send(body, webhook)
-        print("✓ Pushed to webhook")
+        send(title, body, webhook, priority="3", tags=tags)
+        print(f"✓ Pushed to webhook (mode={args.mode})")
     except Exception as e:
         # Don't fail the workflow over a notification hiccup — just log.
         print(f"⚠ Webhook POST failed: {type(e).__name__}: {e}")

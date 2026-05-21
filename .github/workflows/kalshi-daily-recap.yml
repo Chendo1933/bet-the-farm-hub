@@ -1,0 +1,56 @@
+name: Kalshi Daily Recap
+
+# Fires after Kalshi Reconcile completes (early AM). By then we have
+# yesterday's reconciled PnL written to data/kalshi_*_perf.json.
+#
+# Sends a single push notification with:
+#   - Yesterday's W/L + PnL (per-order detail when live data is available)
+#   - 7-day rolling performance
+#   - Bet-sizing stage advisor
+#
+# Does NOT mention today's auto-bets — that goes out via the separate
+# kalshi-daily-plan.yml workflow after place_orders.py runs at ~12:10 PM
+# ET. Splitting the two notifications was added 2026-05-20 because the
+# combined version ran before today's dry-run, which meant "today's plan"
+# was always stale/empty in the morning.
+#
+# Read-only: never modifies config, never places orders.
+on:
+  workflow_run:
+    workflows: ["Kalshi Reconcile"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recap:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Send recap notification
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        # stdlib only — no pip install needed
+        run: python scripts/kalshi/daily_summary.py --mode recap
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      recap
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Morning recap push failed — yesterday's results notification skipped"

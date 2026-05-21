@@ -1,15 +1,16 @@
-name: Kalshi Daily Summary
+name: Kalshi Daily Plan
 
-# Fires after Kalshi Reconcile completes — by then we have:
-#   - Yesterday's reconciled PnL in data/kalshi_*_perf.json
-#   - Today's auto-bet plan in data/kalshi_dryrun/{today}.json
-# Sends a single morning push notification with the day's plan + recent
-# performance + stage-advance recommendation.
+# Fires after Kalshi Place Orders (Live) completes — at ~12:10 PM ET.
+# By then place_orders.py has written today's receipts to
+# data/kalshi_orders/{today}.json. We send a push notification with
+# the actual just-placed bets so the operator can see what real
+# money went out today (no more "we won/lost yesterday but didn't
+# place any today" confusion that the recap-only version produced).
 #
 # Read-only: never modifies config, never places orders.
 on:
   workflow_run:
-    workflows: ["Kalshi Reconcile"]
+    workflows: ["Kalshi Place Orders (Live)"]
     types: [completed]
   workflow_dispatch:
 
@@ -17,7 +18,7 @@ permissions:
   contents: read
 
 jobs:
-  summary:
+  plan:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success'
@@ -31,11 +32,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Send morning summary
+      - name: Send today's-bets notification
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         # stdlib only — no pip install needed
-        run: python scripts/kalshi/daily_summary.py
+        run: python scripts/kalshi/daily_summary.py --mode plan
 
       - name: Notify on failure
         if: failure()
@@ -43,6 +44,6 @@ jobs:
         with:
           webhook:  ${{ secrets.WEBHOOK_URL }}
           workflow: ${{ github.workflow }}
-          job:      summary
+          job:      plan
           run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          context:  "Morning summary push failed — you won't see today's plan until next run"
+          context:  "Today's-bets notification skipped — orders are still placed/committed, only the ping failed"
