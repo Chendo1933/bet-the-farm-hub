@@ -1,6 +1,6 @@
 {
   "date": "2026-05-21",
-  "snapshot_time": "2026-05-21T19:40:48.797751+00:00",
+  "snapshot_time": "2026-05-21T21:20:35.491986+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -13,6 +13,16 @@
         "ml_home": -106,
         "ml_away": -110,
         "snapshot_time": "2026-05-21T19:40:48.797751+00:00"
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "Atlanta Braves",
+        "commence": "2026-05-21T22:41:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 116,
+        "ml_away": -136,
+        "snapshot_time": "2026-05-21T21:20:35.491986+00:00"
       }
     ]
   }
