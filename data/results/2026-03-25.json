@@ -211,7 +211,11 @@
         "spread": 1.5,
         "total": 7.0,
         "home_db": "San Francisco Giants",
-        "away_db": "New York Yankees"
+        "away_db": "New York Yankees",
+        "f5_home": 0,
+        "f5_away": 7,
+        "f5_total": 7,
+        "f5_complete": true
       }
     ]
   }

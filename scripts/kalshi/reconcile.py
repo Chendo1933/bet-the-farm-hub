@@ -168,42 +168,122 @@ def _reconcile_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> 
     return daily
 
 
+def _f5_outcome_for_pick(pick: dict, file_date: str) -> tuple[str | None, dict | None]:
+    """
+    Grade an f5_ou paper pick against the actual F5 score in
+    data/results/{date}.json (written by scripts/fetch_f5_scores.py).
+
+    Returns (outcome, score_info):
+      outcome ∈ {'win','loss','push',None}
+      score_info contains f5_total/f5_home/f5_away for audit trail.
+
+    Returns (None, None) when:
+      - The day's results file isn't present yet (game not finished)
+      - The specific game isn't found in the file
+      - f5_total isn't populated (fetch_f5_scores hasn't run for that day)
+      - f5_complete is False (game shortened — biased sample, skip)
+    """
+    home = pick.get("home", ""); away = pick.get("away", "")
+    line = pick.get("total")
+    side = pick.get("pickedTeam", "").lower()  # 'over' or 'under'
+    if not home or not away or line is None or side not in ("over","under"):
+        return (None, None)
+
+    results_path = Path(f"data/results/{file_date}.json")
+    if not results_path.exists():
+        return (None, None)
+    try:
+        data = json.loads(results_path.read_text())
+    except Exception:
+        return (None, None)
+    mlb = data.get("sports", {}).get("mlb", [])
+    if not isinstance(mlb, list):
+        return (None, None)
+
+    for g in mlb:
+        g_home = g.get("home_db") or g.get("home")
+        g_away = g.get("away_db") or g.get("away")
+        if g_home != home or g_away != away:
+            continue
+        if not g.get("f5_complete"):
+            return (None, None)   # rain-shortened, walkoff in 5th, etc. — skip
+        f5_total = g.get("f5_total")
+        if f5_total is None:
+            return (None, None)
+
+        # Pick line is "{line}.5 F5" per the pick label — so f5_total > line
+        # means Over wins. Exact-half lines (e.g. 4.5) never push.
+        actual_over = f5_total > line
+        if side == "over":
+            outcome = "win" if actual_over else "loss"
+        else:
+            outcome = "win" if not actual_over else "loss"
+        return (outcome, {
+            "f5_total": f5_total,
+            "f5_home":  g.get("f5_home"),
+            "f5_away":  g.get("f5_away"),
+            "line":     line,
+        })
+    return (None, None)
+
+
 def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> dict | None:
     """
     Reconcile the paper-track orders (paper_orders[]) from a dry-run file
-    against actual game outcomes. Returns aggregate stats for the day,
-    or None when the file has no paper_orders array (older snapshots
-    pre-2026-05-21 — silently skipped).
+    against actual outcomes. Returns aggregate stats for the day, or None
+    when the file has no paper_orders array (older snapshots — silently
+    skipped).
 
-    Math: paper bets are graded as if we'd bet $1.10 at -110 juice per
-    pick (standard sportsbook total / O/U price). Win = +$1.00 profit,
-    loss = -$1.10 stake. This makes paper stats directly comparable
-    against the break-even 52.4% hit rate we need.
+    Two bet types handled here:
+      ou      → graded against full-game total via pick_history.json
+      f5_ou   → graded against F5 total via data/results/{date}.json
+                (written by scripts/fetch_f5_scores.py)
 
-    No Kalshi market lookup happens here — paper picks are pure
-    "would we win or lose if we bet at -110" simulations. That's all
-    we need to know whether the O/U model is ready for promotion to
-    live betting.
+    Math: paper bets graded at standard -110 juice. Win = +$1.00 profit,
+    loss = -$1.10 stake. Comparable to break-even 52.4% hit rate.
     """
     data = json.loads(path.read_text())
     file_date = data.get("date", path.stem)
     paper_orders = data.get("paper_orders")
     if not paper_orders:
-        return None   # nothing to reconcile (older file or no O/U picks today)
+        return None
 
     annotated = []
     wins = losses = pushes = ungraded = 0
-    # Standard -110 sportsbook math for paper grading
     STAKE_PER_PICK   = 1.10
     PROFIT_PER_WIN   = 1.00
 
     for o in paper_orders:
         pick = o.get("pick", {})
-        key = (file_date, pick.get("sport", ""), pick.get("home", ""),
-               pick.get("away", ""), pick.get("betType", ""),
-               pick.get("pickLabel", ""))
-        hist = hist_idx.get(key)
+        bet_type = pick.get("betType", "")
         ann = dict(o)
+
+        # ── F5 grading path ────────────────────────────────────────────
+        if bet_type == "f5_ou":
+            outcome, score_info = _f5_outcome_for_pick(pick, file_date)
+            if score_info:
+                ann["f5_score_info"] = score_info
+            if outcome is None:
+                ann["outcome"] = None
+                ann["reconcile_status"] = "ungraded_no_f5_data"
+                ann["pnl_dollars"] = 0.0
+                ungraded += 1
+                annotated.append(ann)
+                continue
+            ann["outcome"] = outcome
+            if outcome == "win":
+                ann["pnl_dollars"] = PROFIT_PER_WIN; ann["reconcile_status"] = "graded"; wins += 1
+            elif outcome == "loss":
+                ann["pnl_dollars"] = -STAKE_PER_PICK; ann["reconcile_status"] = "graded"; losses += 1
+            else:
+                ann["pnl_dollars"] = 0.0; ann["reconcile_status"] = "graded"; pushes += 1
+            annotated.append(ann)
+            continue
+
+        # ── Full-game O/U grading path (existing logic) ───────────────
+        key = (file_date, pick.get("sport", ""), pick.get("home", ""),
+               pick.get("away", ""), bet_type, pick.get("pickLabel", ""))
+        hist = hist_idx.get(key)
         if not hist:
             ann["outcome"] = None
             ann["reconcile_status"] = "no_history_match"

@@ -299,7 +299,11 @@
         "spread": null,
         "total": null,
         "home_db": "Kansas City Royals",
-        "away_db": "Minnesota Twins"
+        "away_db": "Minnesota Twins",
+        "f5_home": 0,
+        "f5_away": 1,
+        "f5_total": 1,
+        "f5_complete": true
       },
       {
         "game_id": "401814781",
@@ -313,7 +317,11 @@
         "spread": 1.5,
         "total": 9.0,
         "home_db": "Arizona Diamondbacks",
-        "away_db": "Atlanta Braves"
+        "away_db": "Atlanta Braves",
+        "f5_home": 1,
+        "f5_away": 10,
+        "f5_total": 11,
+        "f5_complete": true
       },
       {
         "game_id": "401814782",
@@ -327,7 +335,11 @@
         "spread": 1.5,
         "total": 7.5,
         "home_db": "San Francisco Giants",
-        "away_db": "New York Mets"
+        "away_db": "New York Mets",
+        "f5_home": 6,
+        "f5_away": 2,
+        "f5_total": 8,
+        "f5_complete": true
       }
     ]
   }

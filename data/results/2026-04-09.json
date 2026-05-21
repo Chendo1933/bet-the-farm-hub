@@ -299,7 +299,11 @@
         "spread": null,
         "total": null,
         "home_db": "Miami Marlins",
-        "away_db": "Cincinnati Reds"
+        "away_db": "Cincinnati Reds",
+        "f5_home": 4,
+        "f5_away": 1,
+        "f5_total": 5,
+        "f5_complete": true
       },
       {
         "game_id": "401814871",
@@ -313,7 +317,11 @@
         "spread": null,
         "total": null,
         "home_db": "New York Yankees",
-        "away_db": "Athletics"
+        "away_db": "Athletics",
+        "f5_home": 0,
+        "f5_away": 0,
+        "f5_total": 0,
+        "f5_complete": true
       },
       {
         "game_id": "401814874",
@@ -327,7 +335,11 @@
         "spread": null,
         "total": null,
         "home_db": "Minnesota Twins",
-        "away_db": "Detroit Tigers"
+        "away_db": "Detroit Tigers",
+        "f5_home": 1,
+        "f5_away": 0,
+        "f5_total": 1,
+        "f5_complete": true
       },
       {
         "game_id": "401814870",
@@ -341,7 +353,11 @@
         "spread": -1.5,
         "total": 6.5,
         "home_db": "New York Mets",
-        "away_db": "Arizona Diamondbacks"
+        "away_db": "Arizona Diamondbacks",
+        "f5_home": 1,
+        "f5_away": 0,
+        "f5_total": 1,
+        "f5_complete": true
       },
       {
         "game_id": "401814873",
@@ -355,7 +371,11 @@
         "spread": -1.5,
         "total": 9.0,
         "home_db": "Kansas City Royals",
-        "away_db": "Chicago White Sox"
+        "away_db": "Chicago White Sox",
+        "f5_home": 0,
+        "f5_away": 1,
+        "f5_total": 1,
+        "f5_complete": true
       },
       {
         "game_id": "401814875",
@@ -369,7 +389,11 @@
         "spread": -1.5,
         "total": 7.5,
         "home_db": "San Diego Padres",
-        "away_db": "Colorado Rockies"
+        "away_db": "Colorado Rockies",
+        "f5_home": 1,
+        "f5_away": 1,
+        "f5_total": 2,
+        "f5_complete": true
       }
     ]
   }

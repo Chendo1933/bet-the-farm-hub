@@ -273,7 +273,11 @@
         "home_score": 3,
         "away_score": 2,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 3,
+        "f5_away": 1,
+        "f5_total": 4,
+        "f5_complete": true
       },
       {
         "game_id": "401833335",
@@ -283,7 +287,11 @@
         "home_score": 15,
         "away_score": 6,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 9,
+        "f5_away": 5,
+        "f5_total": 14,
+        "f5_complete": true
       },
       {
         "game_id": "401833336",
@@ -293,7 +301,11 @@
         "home_score": 4,
         "away_score": 1,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 3,
+        "f5_away": 0,
+        "f5_total": 3,
+        "f5_complete": true
       },
       {
         "game_id": "401833332",
@@ -303,7 +315,11 @@
         "home_score": 3,
         "away_score": 8,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 2,
+        "f5_away": 5,
+        "f5_total": 7,
+        "f5_complete": true
       },
       {
         "game_id": "401833333",
@@ -313,7 +329,11 @@
         "home_score": 8,
         "away_score": 11,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 6,
+        "f5_away": 6,
+        "f5_total": 12,
+        "f5_complete": true
       },
       {
         "game_id": "401833330",
@@ -323,7 +343,11 @@
         "home_score": 5,
         "away_score": 10,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 4,
+        "f5_away": 6,
+        "f5_total": 10,
+        "f5_complete": true
       },
       {
         "game_id": "401833338",
@@ -333,7 +357,11 @@
         "home_score": 4,
         "away_score": 1,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 2,
+        "f5_away": 0,
+        "f5_total": 2,
+        "f5_complete": true
       },
       {
         "game_id": "401833334",
@@ -343,7 +371,11 @@
         "home_score": 0,
         "away_score": 3,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 0,
+        "f5_away": 3,
+        "f5_total": 3,
+        "f5_complete": true
       }
     ]
   }

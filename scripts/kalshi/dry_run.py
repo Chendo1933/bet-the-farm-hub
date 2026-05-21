@@ -62,6 +62,277 @@ from kalshi.client import KalshiClient
 from kalshi.pick_mapper import find_market_for_ml_pick
 from kalshi.stake import kelly_stake_dollars
 
+
+# ── F5 (First 5 Innings) paper-track helpers ──────────────────────────────
+# These produce paper-only picks for KXMLBF5TOTAL markets using the same
+# pitcher-tier signal as the live hub's full-game O/U scorer — but applied
+# to F5 specifically, where starting pitchers are essentially the entire
+# story (no bullpen, no late-inning chaos). Expected to outperform full-
+# game O/U paper picks because the signal isn't diluted by bullpen variance.
+
+PITCHER_DATA_PATH = "data/pitcher_data.json"
+
+# Same park factors the hub uses (kept synced manually — see MLB_PARK_FACTORS
+# in index.html). Only needed for F5 if we extend the model later; the
+# current minimum implementation uses pitcher signal alone.
+_F5_PARK_FACTORS = {
+    'Baltimore Orioles':1.00,'Boston Red Sox':1.08,'New York Yankees':1.03,
+    'Tampa Bay Rays':0.96,'Toronto Blue Jays':1.02,'Chicago White Sox':1.01,
+    'Cleveland Guardians':0.95,'Detroit Tigers':0.97,'Kansas City Royals':0.98,
+    'Minnesota Twins':1.03,'Houston Astros':0.97,'Los Angeles Angels':1.01,
+    'Athletics':0.99,'Seattle Mariners':0.93,'Texas Rangers':1.05,
+    'Atlanta Braves':1.01,'Miami Marlins':0.95,'New York Mets':0.97,
+    'Philadelphia Phillies':1.02,'Washington Nationals':1.01,
+    'Chicago Cubs':1.04,'Cincinnati Reds':1.05,'Milwaukee Brewers':0.97,
+    'Pittsburgh Pirates':0.98,'St. Louis Cardinals':0.99,
+    'Arizona Diamondbacks':1.02,'Colorado Rockies':1.28,'Los Angeles Dodgers':0.98,
+    'San Diego Padres':0.93,'San Francisco Giants':0.92,
+}
+
+
+def _load_pitcher_cache() -> dict:
+    """Load data/pitcher_data.json — produced by backfill_pitcher_data.py."""
+    try:
+        return json.loads(Path(PITCHER_DATA_PATH).read_text())
+    except FileNotFoundError:
+        return {"starters_by_gamePk": {}, "game_logs": {}}
+
+
+def _cumulative_pitcher_stats(starts: list, before_date: str) -> dict | None:
+    """Cumulative ERA + FIP from all of a pitcher's starts strictly before
+    `before_date`. Returns None when there are zero prior starts."""
+    prior = [s for s in (starts or []) if s.get("date") and s["date"] < before_date]
+    if not prior:
+        return None
+    total_ip = sum(s.get("ip", 0) for s in prior)
+    if total_ip < 1: return None
+    total_er = sum(s.get("er", 0) for s in prior)
+    total_bb = sum(s.get("bb", 0) for s in prior)
+    total_k  = sum(s.get("k", 0) for s in prior)
+    total_hr = sum(s.get("hr", 0) for s in prior)
+    era = (9 * total_er) / total_ip
+    # FIP = ((13*HR + 3*BB - 2*K) / IP) + ~3.10 constant
+    fip = ((13*total_hr + 3*total_bb - 2*total_k) / total_ip) + 3.10
+    return {"era": round(era,2), "fip": round(fip,2), "ip": round(total_ip,1),
+            "starts": len(prior)}
+
+
+def _pitcher_tier(val: float) -> str:
+    """Same tiering the hub uses (hbScoreOU pitcher branch)."""
+    if val <= 3.25: return "elite"
+    if val <= 4.00: return "quality"
+    if val <= 4.75: return "average"
+    return "weak"
+
+
+def _f5_market_summary_for_game(client, date_yymmdd: str, home_abbr: str, away_abbr: str) -> list[dict] | None:
+    """
+    Fetch all KXMLBF5TOTAL line markets for one game. Tickers look like
+    KXMLBF5TOTAL-26MAY211605NYMWSH-{line} where {line} is the runs over/under.
+
+    Returns list of {line, yes_ask_cents, no_ask_cents, ticker} sorted by line,
+    or None if no markets found.
+    """
+    # Pull all open F5 total markets in one call, filter to this matchup.
+    # The series ticker is global; per-game markets are paginated within it.
+    try:
+        resp = client.list_markets(series_ticker="KXMLBF5TOTAL", status="open", limit=200)
+    except Exception:
+        return None
+    matchup_key = f"{date_yymmdd}{home_abbr}{away_abbr}"   # one order — Kalshi uses away+home, we try both
+    alt_key     = f"{date_yymmdd}{away_abbr}{home_abbr}"
+    candidates = []
+    for m in resp.get("markets", []) or []:
+        t = m.get("ticker", "")
+        if matchup_key not in t and alt_key not in t:
+            continue
+        # Parse line number off the end (e.g. "-5")
+        import re
+        match = re.search(r"-(\d+)$", t)
+        if not match: continue
+        candidates.append({
+            "ticker": t,
+            "line": int(match.group(1)),
+            "yes_ask_cents": _price_cents(m, "yes_ask"),
+            "no_ask_cents":  _price_cents(m, "no_ask"),
+        })
+    if not candidates: return None
+    candidates.sort(key=lambda c: c["line"])
+    return candidates
+
+
+def _price_cents(market: dict, field: str) -> int | None:
+    """Read a price field as integer cents, handling both '_dollars' (string)
+    and '_cents' (int) formats Kalshi uses across endpoints."""
+    v = market.get(f"{field}_dollars")
+    if v not in (None, ""):
+        try: return round(float(v) * 100)
+        except: pass
+    v = market.get(field)
+    if isinstance(v, (int, float)): return int(v)
+    return None
+
+
+# Compact 30-team MLB abbreviation map used to build Kalshi ticker keys.
+# (Kalshi uses team-3-letter codes mashed together in the per-game ticker.)
+_MLB_TEAM_ABBR = {
+    "Arizona Diamondbacks": "AZ",  "Atlanta Braves": "ATL",
+    "Baltimore Orioles": "BAL",    "Boston Red Sox": "BOS",
+    "Chicago Cubs": "CHC",         "Chicago White Sox": "CWS",
+    "Cincinnati Reds": "CIN",      "Cleveland Guardians": "CLE",
+    "Colorado Rockies": "COL",     "Detroit Tigers": "DET",
+    "Houston Astros": "HOU",       "Kansas City Royals": "KC",
+    "Los Angeles Angels": "LAA",   "Los Angeles Dodgers": "LAD",
+    "Miami Marlins": "MIA",        "Milwaukee Brewers": "MIL",
+    "Minnesota Twins": "MIN",      "New York Mets": "NYM",
+    "New York Yankees": "NYY",     "Athletics": "ATH",
+    "Philadelphia Phillies": "PHI","Pittsburgh Pirates": "PIT",
+    "San Diego Padres": "SD",      "San Francisco Giants": "SF",
+    "Seattle Mariners": "SEA",     "St. Louis Cardinals": "STL",
+    "Tampa Bay Rays": "TB",        "Texas Rangers": "TEX",
+    "Toronto Blue Jays": "TOR",    "Washington Nationals": "WSH",
+}
+
+
+def _generate_f5_paper_orders(client, picks: list, date_key: str,
+                              paper_min_score: int) -> list[dict]:
+    """
+    For each MLB game in today's picks with a usable pitcher matchup,
+    generate a paper f5_ou order. Strategy:
+      - Tier both starters by FIP (or ERA if FIP unavailable, n<3 starts).
+      - Both aces (avg ≤3.25) → bet UNDER (most likely a pitchers' duel)
+      - Both weak (avg ≥4.75) → bet OVER (lots of runs likely)
+      - Ace vs liability → no signal, skip
+    Pick the Kalshi F5 line nearest to 50¢ YES — that's where the book is
+    least confident, which maximizes the room for our signal to add edge.
+    """
+    # We need pitcher data + Kalshi markets. Fail soft on either.
+    pdata = _load_pitcher_cache()
+    if not pdata.get("game_logs"):
+        return []
+
+    # Build (home, away) → (h_pid, a_pid) lookup from the starter cache by
+    # matching on team names. Kalshi gamePk-keyed entries also have team
+    # names embedded; we look them up to find each pitcher's ID.
+    starters_by_teams = {}
+    for pk, entry in pdata.get("starters_by_gamePk", {}).items():
+        ht, at_ = entry.get("home_team"), entry.get("away_team")
+        if ht and at_:
+            starters_by_teams[(ht, at_)] = (entry.get("home_id"), entry.get("away_id"))
+
+    # Deduplicate MLB games — picks file has multiple picks per game (ML, ATS,
+    # O/U) — we only want one F5 paper order per game.
+    seen_games = set()
+    paper_orders = []
+    mlb_picks = [p for p in picks if (p.get("sport") or "").upper() == "MLB"]
+    if not mlb_picks: return []
+
+    print(f"  F5 paper track: scanning {len(mlb_picks)} MLB picks across "
+          f"{len(set((p.get('home'),p.get('away')) for p in mlb_picks))} game(s)")
+
+    for pick in mlb_picks:
+        home = pick.get("home"); away = pick.get("away")
+        if not home or not away: continue
+        if (home, away) in seen_games: continue
+        seen_games.add((home, away))
+
+        # Find this game's starters
+        starter_ids = starters_by_teams.get((home, away))
+        if not starter_ids or not all(starter_ids):
+            continue
+        h_pid, a_pid = starter_ids
+        h_log = pdata.get("game_logs", {}).get(str(h_pid), [])
+        a_log = pdata.get("game_logs", {}).get(str(a_pid), [])
+        h_stats = _cumulative_pitcher_stats(h_log, date_key)
+        a_stats = _cumulative_pitcher_stats(a_log, date_key)
+        if not h_stats or not a_stats:
+            continue
+
+        # Prefer FIP when both have ≥3 starts (more stable than ERA)
+        use_fip = h_stats["starts"] >= 3 and a_stats["starts"] >= 3
+        h_val = h_stats["fip"] if use_fip else h_stats["era"]
+        a_val = a_stats["fip"] if use_fip else a_stats["era"]
+        h_tier = _pitcher_tier(h_val); a_tier = _pitcher_tier(a_val)
+        avg_val = (h_val + a_val) / 2
+
+        # Decide signal direction
+        both_good = h_tier in ("elite","quality") and a_tier in ("elite","quality")
+        both_weak = h_tier == "weak" and a_tier == "weak"
+        if both_good:
+            side = "under"   # bet NO on Kalshi (against more runs scored)
+            confidence = 0.75 if avg_val <= 3.25 else (0.68 if avg_val <= 3.75 else 0.60)
+        elif both_weak:
+            side = "over"    # bet YES (more runs scored)
+            confidence = 0.75 if avg_val >= 5.25 else (0.65 if avg_val >= 5.00 else 0.58)
+        else:
+            # Ace vs liability — opposing forces cancel for F5 modeling
+            continue
+
+        # Paper threshold: any pick above min cal (default 50) qualifies
+        if int(confidence * 100) < paper_min_score:
+            continue
+
+        # Find Kalshi F5 markets for this game
+        date_yymmdd = datetime.strptime(date_key, "%Y-%m-%d").strftime("%y%b%d").upper()
+        h_abbr = _MLB_TEAM_ABBR.get(home); a_abbr = _MLB_TEAM_ABBR.get(away)
+        if not h_abbr or not a_abbr:
+            continue
+        f5_markets = _f5_market_summary_for_game(client, date_yymmdd, h_abbr, a_abbr)
+        if not f5_markets:
+            continue
+
+        # Pick the line closest to 50¢ YES — that's the most informative line
+        def _closest_to_50(m):
+            ya = m.get("yes_ask_cents") or 50
+            return abs(ya - 50)
+        target = min(f5_markets, key=_closest_to_50)
+        # Skip games with terrible liquidity (huge bid-ask spread suggests no
+        # real action — YES + NO well above 100c)
+        ya = target.get("yes_ask_cents") or 0
+        na = target.get("no_ask_cents") or 0
+        if ya + na > 110:   # tight spread = ya + na ≈ 100-102
+            continue
+
+        # Synthesize the paper pick. f5_ou bet type so reconcile/grader knows
+        # to grade against F5 score (not full-game total).
+        synthetic_pick = {
+            "sport": "MLB",
+            "betType": "f5_ou",
+            "home": home,
+            "away": away,
+            "total": target["line"] + 0.5,   # Kalshi line N+ runs is "over N.5" in standard book parlance
+            "pickedTeam": "Over" if side == "over" else "Under",
+            "pickLabel": f"{'Over' if side == 'over' else 'Under'} {target['line']}.5 F5",
+            "score100": int(confidence * 100),
+            "tier": "paper",   # tier label so it's obvious in tooling
+            "date": date_key,
+            # F5-specific context for audit
+            "f5_meta": {
+                "home_starter_id": h_pid,
+                "away_starter_id": a_pid,
+                "home_pitcher_val": h_val,
+                "away_pitcher_val": a_val,
+                "stat_used": "FIP" if use_fip else "ERA",
+                "kalshi_line": target["line"],
+                "kalshi_yes_ask_cents": ya,
+                "kalshi_no_ask_cents": na,
+                "kalshi_ticker": target["ticker"],
+            },
+        }
+        paper_orders.append({
+            "pick": synthetic_pick,
+            "track": "paper",
+            "model_prob": confidence,
+            "would_grade": True,
+        })
+
+    if paper_orders:
+        print(f"    → generated {len(paper_orders)} F5 paper picks")
+    else:
+        print(f"    → no F5 paper picks (no qualifying matchups today)")
+    return paper_orders
+# ── end F5 helpers ──────────────────────────────────────────────────────────
+
 CONFIG_PATH = "data/kalshi_config.json"
 DRYRUN_DIR  = "data/kalshi_dryrun"
 
@@ -335,21 +606,30 @@ def main():
     # fast for validation while keeping live picks selective.
     paper_min = int(cfg.get("paper_min_calibrated_score") or 50)
     paper_orders = []
-    if paper_only:
-        paper_eligible = [p for p in all_picks
-                          if p.get("betType") in paper_only
-                          and (p.get("score100") or 0) >= paper_min]
-        for pick in paper_eligible:
-            # Synthesize a simple "would place" record. No market lookup
-            # since we're not actually placing — just need enough metadata
-            # for reconcile to find the graded outcome.
+    # ── Full-game O/U paper picks (from picks file) ─────────────────────
+    # These come from the hub's hbScoreOU — bet type "ou". We grade them
+    # against the full-game total in reconcile.
+    if "ou" in paper_only:
+        ou_eligible = [p for p in all_picks
+                       if p.get("betType") == "ou"
+                       and (p.get("score100") or 0) >= paper_min]
+        for pick in ou_eligible:
             paper_orders.append({
                 "pick": pick,
                 "track": "paper",
                 "model_prob": _model_prob_from_pick(pick),
-                "would_grade": True,   # always graded; no Kalshi gates apply
+                "would_grade": True,
             })
-        print(f"  Paper track: {len(paper_orders)} {sorted(paper_only)} candidates (simulated only, no placement)")
+        print(f"  Paper O/U track: {len(ou_eligible)} candidates (full-game total)")
+
+    # ── F5 (First 5 Innings) paper picks (synthesized here) ─────────────
+    # The hub doesn't currently produce f5_ou picks — this Python module
+    # generates them from the pitcher data we backfilled (data/pitcher_data.json)
+    # and Kalshi's KXMLBF5TOTAL markets. Same paper-track plumbing as O/U
+    # but graded against F5 total (innings 1-5 only) rather than final score.
+    if "f5_ou" in paper_only:
+        f5_orders = _generate_f5_paper_orders(client, all_picks, date_key, paper_min)
+        paper_orders.extend(f5_orders)
 
     summary = {
         "picks_total": len(all_picks),

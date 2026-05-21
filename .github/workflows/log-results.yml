@@ -30,6 +30,13 @@ jobs:
       - name: Fetch and log game results
         run: python scripts/log_results.py
 
+      - name: Enrich MLB games with First-5-Innings scores
+        # No API key (statsapi.mlb.com is free). Adds f5_total + f5_home/f5_away
+        # to each MLB game's entry — consumed by reconcile.py to grade f5_ou
+        # paper picks. Soft-fail with || true: if MLB API hiccups, daily
+        # results still commit and we can backfill F5 later.
+        run: python scripts/fetch_f5_scores.py || echo "F5 fetch failed (non-fatal)"
+
       - name: Commit results if any new data
         run: |
           git config user.name  "github-actions[bot]"

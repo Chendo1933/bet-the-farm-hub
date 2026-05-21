@@ -165,7 +165,11 @@
         "home_score": 0,
         "away_score": 7,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 0,
+        "f5_away": 0,
+        "f5_total": 0,
+        "f5_complete": true
       },
       {
         "game_id": "401833321",
@@ -175,7 +179,11 @@
         "home_score": 6,
         "away_score": 9,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 5,
+        "f5_away": 6,
+        "f5_total": 11,
+        "f5_complete": true
       },
       {
         "game_id": "401833326",
@@ -185,7 +193,11 @@
         "home_score": 2,
         "away_score": 5,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 1,
+        "f5_away": 3,
+        "f5_total": 4,
+        "f5_complete": true
       },
       {
         "game_id": "401833329",
@@ -195,7 +207,11 @@
         "home_score": 0,
         "away_score": 2,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 0,
+        "f5_away": 0,
+        "f5_total": 0,
+        "f5_complete": true
       },
       {
         "game_id": "401833320",
@@ -205,7 +221,11 @@
         "home_score": 10,
         "away_score": 9,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 9,
+        "f5_away": 7,
+        "f5_total": 16,
+        "f5_complete": true
       },
       {
         "game_id": "401833322",
@@ -215,7 +235,11 @@
         "home_score": 15,
         "away_score": 6,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 10,
+        "f5_away": 2,
+        "f5_total": 12,
+        "f5_complete": true
       },
       {
         "game_id": "401833327",
@@ -225,7 +249,11 @@
         "home_score": 10,
         "away_score": 3,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 1,
+        "f5_away": 2,
+        "f5_total": 3,
+        "f5_complete": true
       },
       {
         "game_id": "401833337",
@@ -235,7 +263,11 @@
         "home_score": 9,
         "away_score": 1,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 7,
+        "f5_away": 1,
+        "f5_total": 8,
+        "f5_complete": true
       },
       {
         "game_id": "401833328",
@@ -245,7 +277,11 @@
         "home_score": 3,
         "away_score": 2,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 2,
+        "f5_away": 0,
+        "f5_total": 2,
+        "f5_complete": true
       },
       {
         "game_id": "401833323",
@@ -255,7 +291,11 @@
         "home_score": 6,
         "away_score": 5,
         "winner": "home",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 4,
+        "f5_away": 4,
+        "f5_total": 8,
+        "f5_complete": true
       },
       {
         "game_id": "401833324",
@@ -265,7 +305,11 @@
         "home_score": 7,
         "away_score": 7,
         "winner": "tie",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 3,
+        "f5_away": 6,
+        "f5_total": 9,
+        "f5_complete": true
       },
       {
         "game_id": "401833319",
@@ -275,7 +319,11 @@
         "home_score": 0,
         "away_score": 7,
         "winner": "away",
-        "status": "Final"
+        "status": "Final",
+        "f5_home": 0,
+        "f5_away": 6,
+        "f5_total": 6,
+        "f5_complete": true
       }
     ]
   }

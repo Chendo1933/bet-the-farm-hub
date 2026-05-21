@@ -89,7 +89,11 @@
         "spread": -1.5,
         "total": 8,
         "home_db": "Cleveland Guardians",
-        "away_db": "Tampa Bay Rays"
+        "away_db": "Tampa Bay Rays",
+        "f5_home": 2,
+        "f5_away": 0,
+        "f5_total": 2,
+        "f5_complete": true
       },
       {
         "game_id": "401815111",
@@ -103,7 +107,11 @@
         "spread": -1.5,
         "total": 8,
         "home_db": "Pittsburgh Pirates",
-        "away_db": "St. Louis Cardinals"
+        "away_db": "St. Louis Cardinals",
+        "f5_home": 2,
+        "f5_away": 0,
+        "f5_total": 2,
+        "f5_complete": true
       },
       {
         "game_id": "401815110",
@@ -117,7 +125,11 @@
         "spread": -1.5,
         "total": 7,
         "home_db": "Toronto Blue Jays",
-        "away_db": "Boston Red Sox"
+        "away_db": "Boston Red Sox",
+        "f5_home": 0,
+        "f5_away": 3,
+        "f5_total": 3,
+        "f5_complete": true
       },
       {
         "game_id": "401815113",
@@ -131,7 +143,11 @@
         "spread": 1.5,
         "total": 9,
         "home_db": "Chicago White Sox",
-        "away_db": "Los Angeles Angels"
+        "away_db": "Los Angeles Angels",
+        "f5_home": 1,
+        "f5_away": 4,
+        "f5_total": 5,
+        "f5_complete": true
       },
       {
         "game_id": "401815115",
@@ -145,7 +161,11 @@
         "spread": 1.5,
         "total": 9,
         "home_db": "Minnesota Twins",
-        "away_db": "Seattle Mariners"
+        "away_db": "Seattle Mariners",
+        "f5_home": 7,
+        "f5_away": 2,
+        "f5_total": 9,
+        "f5_complete": true
       },
       {
         "game_id": "401815114",
@@ -159,7 +179,11 @@
         "spread": 1.5,
         "total": 8,
         "home_db": "Texas Rangers",
-        "away_db": "New York Yankees"
+        "away_db": "New York Yankees",
+        "f5_home": 0,
+        "f5_away": 4,
+        "f5_total": 4,
+        "f5_complete": true
       },
       {
         "game_id": "401815116",
@@ -173,7 +197,11 @@
         "spread": 1.5,
         "total": 7.5,
         "home_db": "San Diego Padres",
-        "away_db": "Chicago Cubs"
+        "away_db": "Chicago Cubs",
+        "f5_home": 6,
+        "f5_away": 5,
+        "f5_total": 11,
+        "f5_complete": true
       },
       {
         "game_id": "401815117",
@@ -187,7 +215,11 @@
         "spread": -1.5,
         "total": 8.5,
         "home_db": "Los Angeles Dodgers",
-        "away_db": "Miami Marlins"
+        "away_db": "Miami Marlins",
+        "f5_home": 2,
+        "f5_away": 4,
+        "f5_total": 6,
+        "f5_complete": true
       }
     ]
   }
