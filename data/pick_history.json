@@ -17405,6 +17405,291 @@
           "l": "\ud83d\udcc8 +5.2% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Colorado Avalanche ML (-175)",
+      "home": "Colorado Avalanche",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -175,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 77% vs implied 61%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -175"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Tampa Bay Rays ML (-145)",
+      "home": "Tampa Bay Rays",
+      "away": "Baltimore Orioles",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -145,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.6897,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 56%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -145"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 6.5",
+      "home": "Tampa Bay Rays",
+      "away": "Baltimore Orioles",
+      "spread": null,
+      "total": 6.5,
+      "score100": 58,
+      "rawScore100": 68,
+      "odds": -148,
+      "outcome": "win",
+      "margin": 1.5,
+      "units": 0.6757,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Tampa Bay Rays 55% / Baltimore Orioles 58% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.6 > line 6.5 (+2.1 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.2% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 6.5",
+      "home": "Minnesota Twins",
+      "away": "Houston Astros",
+      "spread": null,
+      "total": 6.5,
+      "score100": 58,
+      "rawScore100": 69,
+      "odds": -141,
+      "outcome": "loss",
+      "margin": 1.5,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Twins 60% / Houston Astros 60% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.3 > line 6.5 (+2.8 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +10.7% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Chicago White Sox ML (+124)",
+      "home": "Seattle Mariners",
+      "away": "Chicago White Sox",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 124,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +124"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Cleveland Guardians ML (-120)",
+      "home": "Detroit Tigers",
+      "away": "Cleveland Guardians",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": -120,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.8333,
+      "homeScore": 2,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 58% win rate vs 52% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.3"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Under 7.5",
+      "home": "Kansas City Royals",
+      "away": "Boston Red Sox",
+      "spread": null,
+      "total": 7.5,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -102,
+      "outcome": "win",
+      "margin": 0.5,
+      "units": 0.9804,
+      "homeScore": 3,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 45% / Boston Red Sox 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.7% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Milwaukee Brewers ML (-101)",
+      "home": "Chicago Cubs",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -101,
+      "outcome": "win",
+      "margin": 5,
+      "units": 0.9901,
+      "homeScore": 0,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -101"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 6.5",
+      "home": "Chicago Cubs",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": 6.5,
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -103,
+      "outcome": "loss",
+      "margin": 1.5,
+      "units": -1.0,
+      "homeScore": 0,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Chicago Cubs 58% / Milwaukee Brewers 49% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.8 > line 6.5 (+2.3 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +14.2% edge vs implied"
+        }
+      ]
     }
   ]
 }
