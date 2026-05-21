@@ -1,0 +1,143 @@
+{
+  "date": "2026-05-21",
+  "snapshot_time": "2026-05-21T17:48:58.963062+00:00",
+  "type": "midday",
+  "games": {
+    "nba": [
+      {
+        "home": "New York Knicks",
+        "away": "Cleveland Cavaliers",
+        "commence": "2026-05-22T00:10:00Z",
+        "spread": -5.5,
+        "total": 215.5,
+        "ml_home": -200,
+        "ml_away": 168,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "San Antonio Spurs",
+        "away": "Oklahoma City Thunder",
+        "commence": "2026-05-23T00:40:00Z",
+        "spread": -1.5,
+        "total": 216.5,
+        "ml_home": -118,
+        "ml_away": 100,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "commence": "2026-05-22T00:20:36Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -205,
+        "ml_away": 168,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "commence": "2026-05-23T00:00:00Z",
+        "spread": -1.5,
+        "total": 6.5,
+        "ml_home": -192,
+        "ml_away": 160,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      }
+    ],
+    "mlb": [
+      {
+        "home": "Detroit Tigers",
+        "away": "Cleveland Guardians",
+        "commence": "2026-05-21T17:11:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -148,
+        "ml_away": 116,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "St. Louis Cardinals",
+        "away": "Pittsburgh Pirates",
+        "commence": "2026-05-21T17:16:00Z",
+        "spread": 1.5,
+        "total": 6.5,
+        "ml_home": 158,
+        "ml_away": -205,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Washington Nationals",
+        "away": "New York Mets",
+        "commence": "2026-05-21T20:06:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -106,
+        "ml_away": -110,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "Atlanta Braves",
+        "commence": "2026-05-21T22:41:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 116,
+        "ml_away": -136,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "New York Yankees",
+        "away": "Toronto Blue Jays",
+        "commence": "2026-05-21T23:06:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -144,
+        "ml_away": 122,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Los Angeles Angels",
+        "away": "Athletics",
+        "commence": "2026-05-22T01:39:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -116,
+        "ml_away": -102,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Arizona Diamondbacks",
+        "away": "Colorado Rockies",
+        "commence": "2026-05-22T01:41:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -205,
+        "ml_away": 172,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Chicago Cubs",
+        "away": "Houston Astros",
+        "commence": "2026-05-22T18:21:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      },
+      {
+        "home": "Cincinnati Reds",
+        "away": "St. Louis Cardinals",
+        "commence": "2026-05-22T22:41:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-05-21T17:48:58.963062+00:00"
+      }
+    ]
+  }
+}
