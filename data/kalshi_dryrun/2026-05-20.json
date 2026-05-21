@@ -1,6 +1,6 @@
 {
   "date": "2026-05-20",
-  "logged": "2026-05-21T02:07:16.727435",
+  "logged": "2026-05-21T02:18:24.694637",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -49,19 +49,19 @@
       "market_ticker": "KXNHLGAME-26MAY20VGKCOL-COL",
       "market_title": "Game 1: Vegas at Colorado Winner?",
       "yes_side": "YES",
-      "yes_ask_cents": 17,
-      "yes_bid_cents": 16,
-      "last_price_cents": 17,
+      "yes_ask_cents": 5,
+      "yes_bid_cents": 4,
+      "last_price_cents": 5,
       "previous_yes_ask_cents": 64,
       "volume_24h": "1211557.02",
-      "use_price_cents": 17,
+      "use_price_cents": 5,
       "use_price_source": "yes_ask",
       "model_prob": 0.68,
       "would_place": true,
       "skip_reason": null,
-      "stake_dollars": 4.93,
-      "contracts": 29,
-      "edge_pct": 0.51,
+      "stake_dollars": 5.0,
+      "contracts": 100,
+      "edge_pct": 0.63,
       "kelly_fraction_used": 0.25
     },
     {
@@ -258,13 +258,14 @@
     "picks_total": 9,
     "picks_eligible_after_filter": 2,
     "orders_would_place": 1,
-    "total_stake_dollars": 4.93,
-    "remaining_daily_capacity": 15.07,
+    "total_stake_dollars": 5.0,
+    "remaining_daily_capacity": 15.0,
     "skipped_by_reason": {
       "ambiguous": 1
     },
     "paper_candidates": 4,
     "paper_bet_types_tracked": [
+      "f5_ou",
       "ou"
     ],
     "bankroll_used_dollars": 40.64,
