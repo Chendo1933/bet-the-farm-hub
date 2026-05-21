@@ -114,36 +114,232 @@ def park_signal(home: str) -> Optional[float]:
     return None  # mid-range parks contribute no signal
 
 
+# ── Pitcher signal helpers ────────────────────────────────────────────────
+# Loaded once from data/pitcher_data.json (produced by backfill_pitcher_data.py).
+# Game logs are per-start raw stats; we compute cumulative ERA/WHIP/FIP
+# up to (but not including) a given date for each pitcher.
+
+PITCHER_DATA: dict = {}   # populated by load_pitcher_data()
+# Lookup index: {(date, home_team, away_team): {home_id, away_id, ...}}
+# Built once on load because the MLB Stats API uses gamePk while ESPN
+# results files use a different game_id, so we can't join on IDs. We
+# build an index keyed by (date, team names) which IS stable across
+# both data sources after normalizing team names.
+PITCHER_INDEX: dict = {}
+
+# ESPN team name → MLB Stats API team name (when they differ)
+_TEAM_NAME_FIXES = {
+    "Athletics": "Athletics",
+    "Oakland Athletics": "Athletics",
+    "Sacramento Athletics": "Athletics",
+    # Add more if a future audit surfaces them
+}
+
+
+def _norm_team(name: str) -> str:
+    """Normalize team name for cross-source matching."""
+    return _TEAM_NAME_FIXES.get(name, name)
+
+
+def load_pitcher_data():
+    """Load the historical pitcher cache + build the (date, teams) index."""
+    global PITCHER_DATA, PITCHER_INDEX
+    if PITCHER_DATA: return
+    try:
+        PITCHER_DATA = json.loads(Path("data/pitcher_data.json").read_text())
+    except FileNotFoundError:
+        print("⚠ No pitcher data — run scripts/backfill_pitcher_data.py first")
+        PITCHER_DATA = {"starters_by_gamePk": {}, "game_logs": {}}
+        return
+    # Rebuild the (date, home, away) → starters index. Date comes from the
+    # game log we have — but the starter entry itself doesn't carry the
+    # date. We'll fill date in from the first appearance of each gamePk
+    # found in pitcher game logs.
+    starter_dates: dict = {}
+    for pid, starts in PITCHER_DATA.get("game_logs", {}).items():
+        for s in starts:
+            # Each start has 'date' but not gamePk in our schema. We can
+            # join by (date, team) since pitcher game logs include team.
+            # Actually we just need the starters_by_gamePk entries indexed
+            # by (date, home_team, away_team) — date must come from the
+            # results files we'll be walking. Build the team-only index
+            # here and look up date at query time.
+            pass
+    # The starters_by_gamePk entries don't have a date field — they were
+    # fetched per-date but we discarded the date. So we add a fallback
+    # path that searches for any entry matching (home_team, away_team)
+    # whose starter pitched on or near the query date.
+    by_team = {}
+    for pk, entry in PITCHER_DATA.get("starters_by_gamePk", {}).items():
+        ht = _norm_team(entry.get("home_team") or "")
+        at_ = _norm_team(entry.get("away_team") or "")
+        if not ht or not at_: continue
+        # Map (home, away) → list of (gamePk, starters) — most matchups
+        # repeat across the season (series of 3 games).
+        by_team.setdefault((ht, at_), []).append((pk, entry))
+    PITCHER_INDEX = by_team
+
+
+def _cumulative_stats(starts: list, before_date: str) -> Optional[dict]:
+    """
+    Compute cumulative ERA + WHIP + FIP from all starts STRICTLY BEFORE
+    `before_date`. Returns None when the pitcher has 0 prior starts (no
+    signal possible — they're a fresh callup or first start of season).
+
+    FIP = ((13*HR + 3*BB - 2*K) / IP) + constant ~3.10
+      Defense-independent — measures only what the pitcher controls.
+      Lower FIP = better. We use it preferentially over ERA when
+      sample is decent (≥3 starts), because ERA on small samples is
+      heavily skewed by BABIP / sequencing luck.
+    """
+    prior = [s for s in (starts or []) if s.get("date") and s["date"] < before_date]
+    if not prior:
+        return None
+    total_ip = sum(s.get("ip", 0) for s in prior)
+    if total_ip < 1: return None
+    total_er = sum(s.get("er", 0) for s in prior)
+    total_h  = sum(s.get("h", 0) for s in prior)
+    total_bb = sum(s.get("bb", 0) for s in prior)
+    total_k  = sum(s.get("k", 0) for s in prior)
+    total_hr = sum(s.get("hr", 0) for s in prior)
+    era  = (9 * total_er) / total_ip
+    whip = (total_h + total_bb) / total_ip
+    fip  = ((13 * total_hr + 3 * total_bb - 2 * total_k) / total_ip) + 3.10
+    return {
+        "era":   round(era, 2),
+        "whip":  round(whip, 2),
+        "fip":   round(fip, 2),
+        "ip":    round(total_ip, 1),
+        "starts": len(prior),
+    }
+
+
+def pitcher_signal(home: str, away: str, date: str) -> Optional[float]:
+    """
+    Returns the pitcher-matchup O/U signal for one game, or None when
+    we don't have data for either starter.
+
+    Looks up starters by (home_team, away_team, date) since ESPN
+    game_id ≠ MLB Stats API gamePk. For each matchup we find candidate
+    starter pairs and pick the one whose game log dates contain `date`
+    (the actual game we're scoring). When multiple matches exist (e.g.
+    doubleheaders), we accept any — the same starters typically pitch
+    both games anyway, and even if not, the pitcher quality tier is
+    usually the same.
+
+    Mirrors hub's hbScoreOU pitcher branch:
+      Tier: elite ≤3.25 · quality ≤4.00 · average ≤4.75 · weak >4.75
+      Both aces (avg ≤3.25)   → 0.25 (strong Under)
+      Both elite (avg ≤3.75)  → 0.32 (Under lean)
+      Both quality+ (avg >3.75) → 0.40 (slight Under)
+      Both weak  (avg ≥5.25)  → 0.75 (strong Over)
+      Both weak  (avg ≥4.75)  → 0.65 (Over lean)
+      Ace vs liability → None (cancels — no O/U signal)
+    """
+    ht, at_ = _norm_team(home), _norm_team(away)
+    candidates = PITCHER_INDEX.get((ht, at_), [])
+    if not candidates: return None
+
+    # Find the candidate whose home OR away starter pitched on `date`.
+    # That's our matchup. If none match exactly (rare — usually a name
+    # mismatch in normalization), fall back to the first candidate.
+    h_id = a_id = None
+    for _pk, entry in candidates:
+        cand_h = entry.get("home_id")
+        cand_a = entry.get("away_id")
+        if not cand_h or not cand_a: continue
+        h_log = PITCHER_DATA.get("game_logs", {}).get(str(cand_h), [])
+        a_log = PITCHER_DATA.get("game_logs", {}).get(str(cand_a), [])
+        h_pitched_today = any(s.get("date") == date for s in h_log)
+        a_pitched_today = any(s.get("date") == date for s in a_log)
+        if h_pitched_today and a_pitched_today:
+            h_id, a_id = cand_h, cand_a
+            break
+    if h_id is None or a_id is None:
+        # No exact match — skip (was probably an early-season game where
+        # we don't have the probable pitcher data, or a doubleheader edge case)
+        return None
+
+    h_log = PITCHER_DATA.get("game_logs", {}).get(str(h_id), [])
+    a_log = PITCHER_DATA.get("game_logs", {}).get(str(a_id), [])
+    h_stats = _cumulative_stats(h_log, date)
+    a_stats = _cumulative_stats(a_log, date)
+    if not h_stats or not a_stats: return None
+
+    # Prefer FIP when both pitchers have ≥3 starts (FIP needs the
+    # sample to be stable — on 1-2 starts it's basically the HR rate
+    # of two outings). Else fall back to ERA.
+    use_fip = h_stats["starts"] >= 3 and a_stats["starts"] >= 3
+    h_val = h_stats["fip"] if use_fip else h_stats["era"]
+    a_val = a_stats["fip"] if use_fip else a_stats["era"]
+
+    def tier(v: float) -> str:
+        if v <= 3.25: return "e"
+        if v <= 4.00: return "q"
+        if v <= 4.75: return "a"
+        return "w"
+
+    h_t, a_t = tier(h_val), tier(a_val)
+    avg = (h_val + a_val) / 2
+    both_good = h_t in ("e", "q") and a_t in ("e", "q")
+    both_weak = h_t == "w" and a_t == "w"
+
+    if both_good:
+        if avg <= 3.25: return 0.25
+        if avg <= 3.75: return 0.32
+        return 0.40
+    if both_weak:
+        if avg >= 5.25: return 0.75
+        return 0.65
+    # Ace vs liability: cancels, no signal
+    return None
+
+
 def model_prediction(model: str, home: str, away: str,
-                     team_records: dict) -> Optional[float]:
+                     team_records: dict,
+                     game_date: Optional[str] = None) -> Optional[float]:
     """
     Returns the predicted P(Over) for the given model, or None if the model
     can't produce a pick on this game (insufficient data, no signal, etc.).
     """
     if model == "always_over":
-        return 0.99   # always picks Over with max confidence
+        return 0.99
     if model == "always_under":
-        return 0.01   # always picks Under
+        return 0.01
     if model == "hist_only":
         return hist_signal(team_records, home, away)
     if model == "park_only":
         return park_signal(home)
+    if model == "pitcher_only":
+        if game_date is None: return None
+        return pitcher_signal(home, away, game_date)
     if model == "hist_plus_park":
         h = hist_signal(team_records, home, away)
         p = park_signal(home)
-        # Blend with the same weights as hub: hist 0.55, park 0.15.
-        # If only one is present, fall back to it alone.
         wsum, vsum = 0.0, 0.0
         if h is not None: vsum += h * 0.55; wsum += 0.55
         if p is not None: vsum += p * 0.15; wsum += 0.15
-        if wsum == 0:
-            return None
-        # Conflict gate: when both fire but disagree direction, skip
-        # (matches hub's "histSignal vs projSignal disagree → return null"
-        # philosophy). Without this, the park signal could flip a strong
-        # hist signal by tiny margins.
+        if wsum == 0: return None
         if h is not None and p is not None and (h > 0.5) != (p > 0.5):
             return None
+        return vsum / wsum
+    if model == "full_blend":
+        # Mirrors the live hub formula: hist 0.55, park 0.15, pitcher 0.20.
+        # All three signals must agree in direction OR only one fires
+        # (single-signal mode falls back to that signal alone).
+        h = hist_signal(team_records, home, away)
+        p = park_signal(home)
+        pit = pitcher_signal(home, away, game_date) if game_date else None
+        signals = [(h, 0.55), (p, 0.15), (pit, 0.20)]
+        firing = [(s, w) for s, w in signals if s is not None]
+        if not firing: return None
+        # Direction agreement check — when ≥2 signals fire, they must all
+        # point the same way (over vs under). Disagreement = no pick.
+        # This is the hub's "no contradictory signals" rule.
+        dirs = [s > 0.5 for s, _ in firing]
+        if len(set(dirs)) > 1: return None
+        vsum = sum(s * w for s, w in firing)
+        wsum = sum(w for _, w in firing)
         return vsum / wsum
     raise ValueError(f"Unknown model: {model}")
 
@@ -205,12 +401,22 @@ def _run_backtest(args, threshold: float):
           f"({files[0].split('/')[-1] if files else '?'} → "
           f"{files[-1].split('/')[-1] if files else '?'})")
 
+    # Load historical pitcher data for the pitcher-aware models. Cheap —
+    # one JSON read. Safe — if file doesn't exist, pitcher signal silently
+    # returns None and those models just produce 0 picks (rather than
+    # crashing).
+    load_pitcher_data()
+    pitchers_loaded = sum(1 for v in PITCHER_DATA.get("game_logs", {}).values() if v)
+    print(f"  Pitcher data: {len(PITCHER_DATA.get('starters_by_gamePk', {}))} game→starter "
+          f"mappings, {pitchers_loaded} pitchers with logs")
+
     # Mutable team O/U records — incremented AFTER each game is scored.
     # Must walk in chronological order so any model that reads `team_records`
     # at game N only sees games 1..N-1.
     team_records: dict = defaultdict(lambda: {"ov": 0, "un": 0})
 
-    MODELS = ["always_over", "always_under", "hist_only", "park_only", "hist_plus_park"]
+    MODELS = ["always_over", "always_under", "hist_only", "park_only",
+              "pitcher_only", "hist_plus_park", "full_blend"]
     # Per-model running tally: {model: {picks, wins, losses, pushes, units}}
     tallies = {m: {"picks": 0, "wins": 0, "losses": 0, "pushes": 0, "units": 0.0}
                for m in MODELS}
@@ -236,6 +442,7 @@ def _run_backtest(args, threshold: float):
             as_  = g.get("away_score")
             home = g.get("home_db") or g.get("home")
             away = g.get("away_db") or g.get("away")
+            game_pk = g.get("game_id")
             if line is None or hs is None or as_ is None or not home or not away:
                 continue   # not gradeable
             games_seen += 1
@@ -244,7 +451,8 @@ def _run_backtest(args, threshold: float):
             # Run each model and grade
             game_picks = {}
             for m in MODELS:
-                over_prob = model_prediction(m, home, away, team_records)
+                over_prob = model_prediction(m, home, away, team_records,
+                                             game_date=date)
                 pick = pick_from_prob(over_prob, threshold)
                 outcome = grade_pick(pick, actual_total, line)
                 game_picks[m] = (pick, outcome)
