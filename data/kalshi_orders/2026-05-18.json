@@ -73,7 +73,13 @@
         ],
         "date": "May 18",
         "time": "6:41 PM ET"
-      }
+      },
+      "outcome": "loss",
+      "home_score": 12,
+      "away_score": 0,
+      "pnl_dollars": -2.5,
+      "payout_dollars": 0.0,
+      "reconcile_status": "graded"
     },
     {
       "ticker": "KXMLBGAME-26MAY181840BALTB-TB",
@@ -138,7 +144,13 @@
         ],
         "date": "May 18",
         "time": "6:41 PM ET"
-      }
+      },
+      "outcome": "win",
+      "home_score": 16,
+      "away_score": 6,
+      "pnl_dollars": 1.26,
+      "payout_dollars": 3.0,
+      "reconcile_status": "graded"
     }
   ],
   "skipped": [],
@@ -148,5 +160,16 @@
     "dry_simulated": 0,
     "skipped": 0,
     "total_stake_placed": 4.24
+  },
+  "reconcile": {
+    "date": "2026-05-18",
+    "placed": 2,
+    "wins": 1,
+    "losses": 1,
+    "ungraded": 0,
+    "total_stake_dollars": 4.24,
+    "total_payout_dollars": 3.0,
+    "total_pnl_dollars": -1.24,
+    "roi_pct": -29.25
   }
 }

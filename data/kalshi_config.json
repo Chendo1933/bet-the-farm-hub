@@ -36,8 +36,20 @@
 
   "supported_bet_types": ["ml"],
   "supported_bet_types_doc": [
-    "Only ML picks auto-place in Phase 1/2. Spread/total need their own",
-    "mapping logic since Kalshi has limited spread coverage."
+    "What bet types are eligible for LIVE auto-placement (real money).",
+    "Currently ML only. Spread/total need their own Kalshi market mapping",
+    "logic and have separate considerations. See paper_supported_bet_types",
+    "for the parallel paper-trade track."
+  ],
+
+  "paper_supported_bet_types": ["ou"],
+  "paper_supported_bet_types_doc": [
+    "What bet types are tracked in the PAPER (simulated, never placed)",
+    "performance track. Set to ['ou'] so O/U picks get graded against",
+    "actual outcomes for model validation without risking real money.",
+    "Once the paper track shows consistent profitable hit rate ≥52.4%,",
+    "we can promote a bet type from paper → supported_bet_types and the",
+    "auto-pipeline starts placing it for real."
   ],
 
   "max_stake_per_pick_dollars": 5,

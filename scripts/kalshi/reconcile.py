@@ -168,6 +168,91 @@ def _reconcile_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> 
     return daily
 
 
+def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> dict | None:
+    """
+    Reconcile the paper-track orders (paper_orders[]) from a dry-run file
+    against actual game outcomes. Returns aggregate stats for the day,
+    or None when the file has no paper_orders array (older snapshots
+    pre-2026-05-21 — silently skipped).
+
+    Math: paper bets are graded as if we'd bet $1.10 at -110 juice per
+    pick (standard sportsbook total / O/U price). Win = +$1.00 profit,
+    loss = -$1.10 stake. This makes paper stats directly comparable
+    against the break-even 52.4% hit rate we need.
+
+    No Kalshi market lookup happens here — paper picks are pure
+    "would we win or lose if we bet at -110" simulations. That's all
+    we need to know whether the O/U model is ready for promotion to
+    live betting.
+    """
+    data = json.loads(path.read_text())
+    file_date = data.get("date", path.stem)
+    paper_orders = data.get("paper_orders")
+    if not paper_orders:
+        return None   # nothing to reconcile (older file or no O/U picks today)
+
+    annotated = []
+    wins = losses = pushes = ungraded = 0
+    # Standard -110 sportsbook math for paper grading
+    STAKE_PER_PICK   = 1.10
+    PROFIT_PER_WIN   = 1.00
+
+    for o in paper_orders:
+        pick = o.get("pick", {})
+        key = (file_date, pick.get("sport", ""), pick.get("home", ""),
+               pick.get("away", ""), pick.get("betType", ""),
+               pick.get("pickLabel", ""))
+        hist = hist_idx.get(key)
+        ann = dict(o)
+        if not hist:
+            ann["outcome"] = None
+            ann["reconcile_status"] = "no_history_match"
+            ann["pnl_dollars"] = 0.0
+            ungraded += 1
+            annotated.append(ann)
+            continue
+        outcome = hist.get("outcome")
+        ann["outcome"] = outcome
+        ann["home_score"] = hist.get("homeScore")
+        ann["away_score"] = hist.get("awayScore")
+        if outcome == "win":
+            ann["pnl_dollars"] = PROFIT_PER_WIN
+            ann["reconcile_status"] = "graded"
+            wins += 1
+        elif outcome == "loss":
+            ann["pnl_dollars"] = -STAKE_PER_PICK
+            ann["reconcile_status"] = "graded"
+            losses += 1
+        elif outcome == "push":
+            ann["pnl_dollars"] = 0.0
+            ann["reconcile_status"] = "graded"
+            pushes += 1
+        else:
+            ann["pnl_dollars"] = 0.0
+            ann["reconcile_status"] = "ungraded"
+            ungraded += 1
+        annotated.append(ann)
+
+    placed = wins + losses + pushes + ungraded
+    stake = placed * STAKE_PER_PICK
+    pnl = sum(a.get("pnl_dollars") or 0 for a in annotated)
+    daily = {
+        "date": file_date,
+        "placed": placed,
+        "wins": wins, "losses": losses, "pushes": pushes, "ungraded": ungraded,
+        "total_stake_dollars": round(stake, 2),
+        "total_pnl_dollars": round(pnl, 2),
+        "roi_pct": round((pnl / stake * 100) if stake else 0, 2),
+    }
+
+    if write_back:
+        data["paper_orders"] = annotated
+        data["paper_reconcile"] = daily
+        path.write_text(json.dumps(data, indent=2, default=str))
+
+    return daily
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--date", help="ET date YYYY-MM-DD; reconcile only that file")
@@ -187,49 +272,59 @@ def main():
     hist_idx = _build_history_index()
     print(f"Reconciling {len(files)} dry-run file(s) against {len(hist_idx)} graded picks")
 
-    daily_summaries = []
+    # ── PAPER TRACK: grade paper_orders[] (O/U simulated) ─────────────────
+    # As of 2026-05-21 the paper track is dedicated to O/U validation.
+    # ML used to be reconciled here too but it's now tracked through the
+    # live-orders pipeline (no double-counting). Days without paper_orders
+    # (older snapshots or no O/U picks) are skipped silently.
+    print(f"\n── Paper track (O/U) ──────────────────────────────────────")
+    paper_daily = []
     for f in files:
-        daily = _reconcile_one_file(f, hist_idx)
-        daily_summaries.append(daily)
+        daily = _reconcile_paper_orders_one_file(f, hist_idx)
+        if daily is None: continue
+        paper_daily.append(daily)
         n = daily["placed"]
-        if n == 0:
-            print(f"  {daily['date']}: no orders placed")
-        else:
-            graded_n = daily["wins"] + daily["losses"] + daily["pushes"]
+        if n:
+            graded = daily["wins"] + daily["losses"] + daily["pushes"]
             ungraded_str = f", {daily['ungraded']} ungraded" if daily["ungraded"] else ""
-            print(f"  {daily['date']}: {daily['wins']}-{daily['losses']}{('-'+str(daily['pushes'])) if daily['pushes'] else ''} "
-                  f"of {graded_n}{ungraded_str} placed · "
-                  f"stake ${daily['total_stake_dollars']:.2f} · "
+            print(f"  {daily['date']}: {daily['wins']}-{daily['losses']}"
+                  f"{('-'+str(daily['pushes'])) if daily['pushes'] else ''} of {graded}{ungraded_str} · "
                   f"PnL ${daily['total_pnl_dollars']:+.2f} ({daily['roi_pct']:+.1f}%)")
+    if not paper_daily:
+        print(f"  No paper_orders yet — start producing some by leaving "
+              f"paper_supported_bet_types: [\"ou\"] in kalshi_config.json")
 
-    # Aggregate across all reconciled days
-    total_stake = sum(d["total_stake_dollars"] for d in daily_summaries)
-    total_pnl   = sum(d["total_pnl_dollars"]   for d in daily_summaries)
-    total_placed = sum(d["placed"] for d in daily_summaries)
-    total_wins  = sum(d["wins"] for d in daily_summaries)
-    total_losses = sum(d["losses"] for d in daily_summaries)
-    overall = {
-        "days": len(daily_summaries),
-        "total_orders_placed": total_placed,
-        "wins": total_wins,
-        "losses": total_losses,
-        "total_stake_dollars": round(total_stake, 2),
-        "total_pnl_dollars": round(total_pnl, 2),
-        "roi_pct": round((total_pnl / total_stake * 100) if total_stake else 0, 2),
-        "win_pct": round((total_wins / (total_wins + total_losses) * 100) if (total_wins + total_losses) else 0, 1),
-        "daily": daily_summaries,
+    p_stake = sum(d["total_stake_dollars"] for d in paper_daily)
+    p_pnl   = sum(d["total_pnl_dollars"]   for d in paper_daily)
+    p_placed = sum(d["placed"] for d in paper_daily)
+    p_wins  = sum(d["wins"] for d in paper_daily)
+    p_losses = sum(d["losses"] for d in paper_daily)
+    paper_overall = {
+        "days": len(paper_daily),
+        "total_orders_placed": p_placed,
+        "wins": p_wins, "losses": p_losses,
+        "total_stake_dollars": round(p_stake, 2),
+        "total_pnl_dollars": round(p_pnl, 2),
+        "roi_pct": round((p_pnl / p_stake * 100) if p_stake else 0, 2),
+        "win_pct": round((p_wins / (p_wins + p_losses) * 100) if (p_wins + p_losses) else 0, 1),
+        "track": "paper_ou",
+        "daily": paper_daily,
     }
-
-    PERF_OUT.write_text(json.dumps(overall, indent=2, default=str))
-    print(f"\n── Paper-trade aggregate ────────────────────────────────")
-    if total_wins + total_losses:
-        print(f"  Record: {total_wins}-{total_losses} ({overall['win_pct']:.1f}%) over {total_placed} placed orders")
-        print(f"  Stake:  ${total_stake:.2f}    PnL: ${total_pnl:+.2f}    ROI: {overall['roi_pct']:+.1f}%")
-    else:
-        print(f"  No graded orders yet (run grading first or wait for tomorrow's reconcile)")
+    PERF_OUT.write_text(json.dumps(paper_overall, indent=2, default=str))
+    print(f"\n── Paper aggregate (O/U simulated) ────────────────────────")
+    if p_wins + p_losses:
+        print(f"  Record: {p_wins}-{p_losses} ({paper_overall['win_pct']:.1f}%) over {p_placed} graded paper picks")
+        print(f"  PnL: ${p_pnl:+.2f}    ROI: {paper_overall['roi_pct']:+.1f}%  (need ≥0% to enable live)")
     print(f"  ✅ Wrote {PERF_OUT}")
 
-    # ── Phase 3: reconcile live orders if any exist ────────────────────────
+    # Still update the per-day reconcile fields on the legacy orders[]
+    # array (so the hub panel can show ML simulated outcomes as historical
+    # context), but DON'T aggregate those into paper-perf anymore — that
+    # would double-count with live-perf.
+    for f in files:
+        _reconcile_one_file(f, hist_idx, write_back=True)
+
+    # ── LIVE TRACK: real ML placements → live-perf ─────────────────────────
     if ORDERS_DIR.exists():
         live_files = sorted(ORDERS_DIR.glob("*.json"))
         if live_files:

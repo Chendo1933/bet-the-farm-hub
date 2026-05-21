@@ -317,6 +317,35 @@ def main():
     placed = sum(1 for o in orders if o["would_place"])
     total_stake = round(sum(o.get("stake_dollars") or 0 for o in orders if o["would_place"]), 2)
 
+    # ── PAPER TRACK ─────────────────────────────────────────────────────
+    # Generate paper-only orders for bet types in paper_supported_bet_types
+    # but NOT in supported_bet_types. Today this means O/U: we want to
+    # validate the model against real outcomes without risking money.
+    #
+    # Paper orders don't need a Kalshi market lookup — we just need the
+    # pick metadata. Reconcile.py grades them against pick_history.json
+    # outcomes (computed by grade_picks.py) and writes paper-perf with
+    # ONLY these orders. The double-counting between paper-perf and
+    # live-perf that existed before this split is now gone.
+    paper_supported = set(cfg.get("paper_supported_bet_types") or [])
+    paper_only = paper_supported - supported   # don't double-count anything live also tracks
+    paper_orders = []
+    if paper_only:
+        paper_eligible = [p for p in all_picks
+                          if p.get("betType") in paper_only
+                          and (p.get("score100") or 0) >= min_score]
+        for pick in paper_eligible:
+            # Synthesize a simple "would place" record. No market lookup
+            # since we're not actually placing — just need enough metadata
+            # for reconcile to find the graded outcome.
+            paper_orders.append({
+                "pick": pick,
+                "track": "paper",
+                "model_prob": _model_prob_from_pick(pick),
+                "would_grade": True,   # always graded; no Kalshi gates apply
+            })
+        print(f"  Paper track: {len(paper_orders)} {sorted(paper_only)} candidates (simulated only, no placement)")
+
     summary = {
         "picks_total": len(all_picks),
         "picks_eligible_after_filter": len(eligible),
@@ -324,6 +353,9 @@ def main():
         "total_stake_dollars": total_stake,
         "remaining_daily_capacity": round(max(0, daily_cap - total_stake), 2),
         "skipped_by_reason": skipped,
+        # Paper track stats (separate from live)
+        "paper_candidates": len(paper_orders),
+        "paper_bet_types_tracked": sorted(paper_only),
         # Audit trail: which bankroll value drove Kelly sizing today.
         # If this drifts unexpectedly day-over-day, something's wrong upstream.
         "bankroll_used_dollars":   round(bankroll, 2),
@@ -335,7 +367,8 @@ def main():
         "date": date_key,
         "logged": datetime.now().isoformat(),
         "config_snapshot": _config_snapshot(cfg),
-        "orders": orders,
+        "orders": orders,              # LIVE candidates (ML) → place_orders.py reads this
+        "paper_orders": paper_orders,  # PAPER candidates (O/U) → reconcile.py paper track only
         "summary": summary,
     }
 

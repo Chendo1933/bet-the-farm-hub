@@ -36,10 +36,27 @@
         "user_id": "90d44230-127c-436e-87b1-c64463e1f609",
         "yes_price_dollars": "0.4600"
       },
-      "market_title": "Game 3: Buffalo at Montreal Winner?"
+      "market_title": "Game 3: Buffalo at Montreal Winner?",
+      "outcome": null,
+      "home_score": null,
+      "away_score": null,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "no_history_match"
     }
   ],
   "skipped": [],
   "summary": {},
-  "last_test_order_at": "2026-05-10T17:58:03.065158"
+  "last_test_order_at": "2026-05-10T17:58:03.065158",
+  "reconcile": {
+    "date": "2026-05-10",
+    "placed": 1,
+    "wins": 0,
+    "losses": 0,
+    "ungraded": 1,
+    "total_stake_dollars": 0.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0
+  }
 }

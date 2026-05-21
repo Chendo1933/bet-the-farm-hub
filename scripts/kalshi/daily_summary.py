@@ -189,47 +189,53 @@ def build_recap(date_key: str) -> tuple[str, str]:
 
     lines = [f"🌙 BTF Recap · {date_key}", ""]
 
-    # Yesterday — live preferred, paper as fallback
+    # ── LIVE TRACK (real money — ML auto-placed) ────────────────────────
+    lines.append("💰 LIVE (ML)")
     if last_live and last_live.get("placed", 0) > 0:
         prev = last_live
-        lines.append(f"YESTERDAY (LIVE): {prev.get('placed',0)} placed · "
+        lines.append(f"  Yesterday: {prev.get('placed',0)} placed · "
                      f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
                      f"${prev.get('total_pnl_dollars',0):+.2f} "
                      f"({prev.get('roi_pct',0):+.1f}% ROI)")
-        # Show per-order detail when we have it (live only — these have ticker info)
+        # Per-order detail with ticker + PnL
         date = prev.get("date")
         orders = _load_orders(date) if date else None
         if orders and orders.get("placed_orders"):
             for o in orders["placed_orders"]:
-                if o.get("test"): continue   # skip the smoke-test
+                if o.get("test"): continue
                 ticker = o.get("ticker", "?")
-                # Short label: extract the last "-TEAM" suffix if present
                 short = ticker.rsplit("-", 1)[-1] if "-" in ticker else ticker
-                outcome = o.get("outcome") or o.get("status", "?")
                 pnl = o.get("pnl_dollars")
                 pnl_str = f"${pnl:+.2f}" if pnl is not None else "(ungraded)"
-                # ✅ for win, ❌ for loss, ⏳ for ungraded
                 icon = "✅" if (pnl and pnl > 0) else ("❌" if (pnl and pnl < 0) else "⏳")
-                lines.append(f"  {icon} {short} {pnl_str}")
-    elif last_paper and last_paper.get("placed", 0) > 0:
+                lines.append(f"    {icon} {short} {pnl_str}")
+    else:
+        lines.append("  Yesterday: no orders placed")
+    if live_7d["days"] > 0:
+        lines.append(f"  7d: {live_7d['placed']} placed · "
+                     f"{live_7d['wins']}W {live_7d['losses']}L · "
+                     f"${live_7d['pnl']:+.2f}")
+
+    # ── PAPER TRACK (simulated — O/U validation) ────────────────────────
+    lines.append("")
+    lines.append("📝 PAPER (O/U sim)")
+    if last_paper and last_paper.get("placed", 0) > 0:
         prev = last_paper
-        lines.append(f"YESTERDAY (paper): {prev.get('placed',0)} simulated · "
+        lines.append(f"  Yesterday: {prev.get('placed',0)} simulated · "
                      f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
                      f"${prev.get('total_pnl_dollars',0):+.2f} "
                      f"({prev.get('roi_pct',0):+.1f}% ROI)")
     else:
-        lines.append("YESTERDAY: no orders placed/simulated")
-
-    # 7-day rolling
-    lines.append("")
-    if live_7d["days"] > 0:
-        lines.append(f"7d LIVE: {live_7d['placed']} placed · "
-                     f"{live_7d['wins']}W {live_7d['losses']}L · "
-                     f"${live_7d['pnl']:+.2f}")
+        lines.append("  Yesterday: no O/U picks simulated yet")
     if paper_7d["days"] > 0:
-        lines.append(f"7d paper: {paper_7d['placed']} simulated · "
+        lines.append(f"  7d: {paper_7d['placed']} simulated · "
                      f"{paper_7d['wins']}W {paper_7d['losses']}L · "
                      f"${paper_7d['pnl']:+.2f}")
+        # The big question: is paper O/U at break-even yet?
+        if paper_7d["wins"] + paper_7d["losses"] >= 20:
+            hit_pct = 100 * paper_7d["wins"] / (paper_7d["wins"] + paper_7d["losses"])
+            status = "✓ above break-even" if hit_pct >= 52.4 else "↗ below break-even"
+            lines.append(f"  Hit rate: {hit_pct:.1f}%  ({status} 52.4%)")
 
     # Stage advisor
     lines.append("")
@@ -252,7 +258,7 @@ def build_plan(date_key: str) -> tuple[str, str]:
     orders = _load_orders(date_key)
     dryrun = _load_dryrun(date_key)
 
-    lines = [f"🎯 BTF Today's Bets · {date_key}", ""]
+    lines = [f"🎯 BTF Today's LIVE Bets (ML) · {date_key}", ""]
 
     placed = [] if not orders else [o for o in (orders.get("placed_orders") or []) if not o.get("test")]
     skipped = [] if not orders else (orders.get("skipped") or [])

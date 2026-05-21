@@ -234,5 +234,16 @@
     "dry_simulated": 0,
     "skipped": 4,
     "total_stake_placed": 0.0
+  },
+  "reconcile": {
+    "date": "2026-05-17",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0
   }
 }
