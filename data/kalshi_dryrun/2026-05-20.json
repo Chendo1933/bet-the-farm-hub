@@ -1,6 +1,6 @@
 {
   "date": "2026-05-20",
-  "logged": "2026-05-21T02:05:46.589163",
+  "logged": "2026-05-21T02:07:16.727435",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -112,7 +112,148 @@
       "map_reason": "Multiple weak event matches"
     }
   ],
-  "paper_orders": [],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Tampa Bay Rays",
+        "away": "Baltimore Orioles",
+        "atsPick": null,
+        "spread": null,
+        "total": 6.5,
+        "pickedTeam": "Over",
+        "pickLabel": "Over 6.5",
+        "score100": 58,
+        "rawScore100": 68,
+        "odds": -148,
+        "tier": "good",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Tampa Bay Rays 55% / Baltimore Orioles 58% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 Proj 8.6 > line 6.5 (+2.1 Over edge)"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +7.2% edge vs implied"
+          }
+        ],
+        "date": "May 20",
+        "time": "1:11 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.5479999999999999,
+      "would_grade": true
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Minnesota Twins",
+        "away": "Houston Astros",
+        "atsPick": null,
+        "spread": null,
+        "total": 6.5,
+        "pickedTeam": "Over",
+        "pickLabel": "Over 6.5",
+        "score100": 58,
+        "rawScore100": 69,
+        "odds": -141,
+        "tier": "good",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Minnesota Twins 60% / Houston Astros 60% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 Proj 9.3 > line 6.5 (+2.8 Over edge)"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +10.7% edge vs implied"
+          }
+        ],
+        "date": "May 20",
+        "time": "1:41 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.5479999999999999,
+      "would_grade": true
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Kansas City Royals",
+        "away": "Boston Red Sox",
+        "atsPick": null,
+        "spread": null,
+        "total": 7.5,
+        "pickedTeam": "Under",
+        "pickLabel": "Under 7.5",
+        "score100": 56,
+        "rawScore100": 59,
+        "odds": -102,
+        "tier": "lean",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Kansas City Royals 45% / Boston Red Sox 45% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +4.7% edge vs implied"
+          }
+        ],
+        "date": "May 20",
+        "time": "7:41 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.536,
+      "would_grade": true
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Chicago Cubs",
+        "away": "Milwaukee Brewers",
+        "atsPick": null,
+        "spread": null,
+        "total": 6.5,
+        "pickedTeam": "Over",
+        "pickLabel": "Over 6.5",
+        "score100": 56,
+        "rawScore100": 66,
+        "odds": -103,
+        "tier": "lean",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Chicago Cubs 58% / Milwaukee Brewers 49% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 Proj 8.8 > line 6.5 (+2.3 Over edge)"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +14.2% edge vs implied"
+          }
+        ],
+        "date": "May 20",
+        "time": "7:41 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.536,
+      "would_grade": true
+    }
+  ],
   "summary": {
     "picks_total": 9,
     "picks_eligible_after_filter": 2,
@@ -122,7 +263,7 @@
     "skipped_by_reason": {
       "ambiguous": 1
     },
-    "paper_candidates": 0,
+    "paper_candidates": 4,
     "paper_bet_types_tracked": [
       "ou"
     ],
