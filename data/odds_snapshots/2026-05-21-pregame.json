@@ -1,0 +1,19 @@
+{
+  "date": "2026-05-21",
+  "snapshot_time": "2026-05-21T19:40:48.797751+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Washington Nationals",
+        "away": "New York Mets",
+        "commence": "2026-05-21T20:06:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -106,
+        "ml_away": -110,
+        "snapshot_time": "2026-05-21T19:40:48.797751+00:00"
+      }
+    ]
+  }
+}
