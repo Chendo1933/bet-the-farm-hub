@@ -34,6 +34,15 @@ jobs:
         # hbScoreOU can read it via data/weather/{date}.json.
         run: python scripts/fetch_mlb_weather.py || echo "weather fetch failed (non-fatal)"
 
+      - name: Backfill MLB starters + game logs for today
+        # Updates data/pitcher_data.json with today's probable pitchers and
+        # each starter's cumulative season stats. Lands BEFORE log-picks +
+        # the dry-run so the F5 paper-track generator has fresh pitcher data.
+        # Idempotent — only fetches dates/pitchers not already cached.
+        # Soft-fails on network blips since F5 is paper-only (no live money
+        # at risk if it's stale).
+        run: python scripts/backfill_pitcher_data.py || echo "pitcher backfill failed (non-fatal)"
+
       - name: Fetch ESPN standings and patch hub (NBA · NHL · MLB · NFL)
         run: python scripts/update_stats.py
 
@@ -44,7 +53,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html data/odds_snapshots/ data/weather/
+          git add index.html data/odds_snapshots/ data/weather/ data/pitcher_data.json
           if git diff --staged --quiet; then
             echo "Nothing changed — hub already up to date"
           else
