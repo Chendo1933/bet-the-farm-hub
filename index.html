@@ -1502,6 +1502,11 @@ const TODAY_DATE_STR=(()=>{const d=new Date();return d.toLocaleDateString('en-US
 // MLB_PITCHERS: keyed by team name (normalized), populated by fetchMLBProbablePitchers()
 // Format: { "New York Yankees": { name, era, whip, wins, losses, ip, k9, bb9, hr9, baa, gs, fip }, ... }
 let MLB_PITCHERS={};
+// MLB_WEATHER: keyed by home team name. Populated by loadMLBWeather() from
+// data/weather/{date}.json (written by scripts/fetch_mlb_weather.py via NWS).
+// Outdoor entry shape: { is_dome:false, wind_mph, wind_out_component, wind_label,
+//   temp_f, park }. Domes: { is_dome:true, park }. Consumed by hbScoreOU windSignal.
+let MLB_WEATHER={};
 let TODAY_GAMES=[
   // All games auto-populate from the Odds API on Refresh.
   // NBA, NHL, and CBB games are fetched live — no hardcoded fallbacks needed.
@@ -3224,14 +3229,29 @@ function importGamesFromAPI(apiData,sport){
     const _awayCorrNull=TEAM_NAME_CORRECTIONS[ag.away_team]===null||TEAM_NAME_CORRECTIONS[ag.away_team.replace(/\bSt\b(?!\.)/g,'State')]===null;
     const homeStatus=_homeCorrNull?'skip':homeRow?'ok':'unmatched';
     const awayStatus=_awayCorrNull?'skip':awayRow?'ok':'unmatched';
-    // Line movement: compare current spread/total to morning snapshot (if available)
-    let spreadMove=null, totalMove=null;
-    if(window.BTF_MORNING_ODDS){
-      const mo=window.BTF_MORNING_ODDS;
-      const sportGames=mo.games?.[sport]||[];
-      const match=sportGames.find(m=>m.home===ag.home_team&&m.away===ag.away_team);
-      if(match&&odds.spread!=null&&match.spread!=null) spreadMove=odds.spread-match.spread;
-      if(match&&odds.total!=null&&match.total!=null) totalMove=odds.total-match.total;
+    // Line movement: pick the most-recent snapshot strictly before "now" as
+    // the F12 baseline (spreadMove). Also compute spreadMoveDay = mostRecent −
+    // morning so F12 can score the full-day drift as a separate sub-factor.
+    // Snapshot priority: pregame > midday > morning. If only morning exists,
+    // behavior collapses back to the original "current vs morning" signal.
+    let spreadMove=null, totalMove=null, spreadMoveDay=null, totalMoveDay=null;
+    const snaps=window.BTF_ODDS_SNAPSHOTS||(window.BTF_MORNING_ODDS?{morning:window.BTF_MORNING_ODDS}:null);
+    if(snaps){
+      const pickMatch=label=>{
+        const data=snaps[label]; if(!data)return null;
+        const arr=data.games?.[sport]||[];
+        return arr.find(m=>m.home===ag.home_team&&m.away===ag.away_team)||null;
+      };
+      const morning=pickMatch('morning');
+      // Walk newest → oldest so the first match is the freshest pre-game read.
+      const mostRecent=pickMatch('pregame')||pickMatch('midday')||morning;
+      if(mostRecent&&odds.spread!=null&&mostRecent.spread!=null) spreadMove=odds.spread-mostRecent.spread;
+      if(mostRecent&&odds.total!=null&&mostRecent.total!=null) totalMove=odds.total-mostRecent.total;
+      // Day drift only makes sense when the recent snapshot is *not* the morning one.
+      if(morning&&mostRecent&&mostRecent!==morning){
+        if(morning.spread!=null&&mostRecent.spread!=null) spreadMoveDay=mostRecent.spread-morning.spread;
+        if(morning.total!=null&&mostRecent.total!=null) totalMoveDay=mostRecent.total-morning.total;
+      }
     }
     TODAY_GAMES.push({
       sport,
@@ -3246,6 +3266,8 @@ function importGamesFromAPI(apiData,sport){
       total:odds.total??null,
       spreadMove,
       totalMove,
+      spreadMoveDay,
+      totalMoveDay,
       spreadLabel:sport==='nhl'?'Puck Line':sport==='mlb'?'Run Line':'Spread',
       mlHome:odds.mlHome??null,
       mlAway:odds.mlAway??null,
@@ -6707,13 +6729,17 @@ function init(){
   // Load feature flags FIRST (before exotic venues / morning odds / locked
   // slate) so any flag they depend on is set. Synchronous-style fire 0ms.
   setTimeout(()=>loadFeatureFlags(),0);
-  // Load morning odds snapshot for line-movement scoring (F12). Must fire
-  // BEFORE any refreshAllOdds() call so importGamesFromAPI sees the data.
-  setTimeout(()=>loadMorningOdds(),50);
+  // Load all intraday odds snapshots (morning + midday + pregame) for the F12
+  // line-movement signal. Must fire BEFORE any refreshAllOdds() call so
+  // importGamesFromAPI sees them when it builds TODAY_GAMES.
+  setTimeout(()=>loadOddsSnapshots(),50);
   // Load exotic-venue config (Mexico City series, London games, Field of Dreams,
   // outdoor NHL games, etc.) — these break park-factor assumptions. Loaded EARLY
   // (100ms) so it's ready before any hbRender call from the Hot Bets tab.
   setTimeout(()=>loadExoticVenues(),100);
+  // Load MLB weather (wind + temp at each park) — written by the morning workflow
+  // via NWS. Same early-load pattern so hbScoreOU's windSignal has data ready.
+  setTimeout(()=>loadMLBWeather(),120);
   // Load today's locked slate panel — what was captured by the morning logger
   // (data/picks/{ET-today}.json). Read-only snapshot; lets the user see what's
   // being graded today separate from the live UI which keeps shifting as odds drift.
@@ -6746,43 +6772,52 @@ async function loadFeatureFlags(){
   }
 }
 
-// ── Morning odds snapshot (line-movement signal F12) ─────────────────────────
-// Fetches data/odds_snapshots/{ET-today}-morning.json (written by 7 AM ET cron
-// in daily-update.yml via scripts/snapshot_odds.py) and sets it on
-// window.BTF_MORNING_ODDS. The hub's importGamesFromAPI() reads this when
-// building TODAY_GAMES and computes spreadMove/totalMove = current − morning.
+// ── Intraday odds snapshots (line-movement signal F12) ───────────────────────
+// Three snapshot files per ET-day live under data/odds_snapshots/:
+//   {date}-morning.json   ← 7 AM ET   (daily-update.yml)
+//   {date}-midday.json    ← 12 PM ET  (odds-snapshot-midday.yml)
+//   {date}-pregame.json   ← hourly    (odds-snapshot-pregame.yml; merged across
+//                                      the day, latest snapshot per game wins)
 //
-// hbScoreSpread() then fires F12 (~line 7895): if the line moved toward our
-// pick by ≥0.5pt, treat as sharp-money confirmation (boost); if it moved
-// against, treat as market-correcting-against-us (penalty). Weight 0.08.
+// All three are loaded into window.BTF_ODDS_SNAPSHOTS = {morning, midday, pregame}.
+// importGamesFromAPI() walks them per-game and picks the most-recent snapshot
+// strictly before "now" as the reference for spreadMove (the F12 primary signal),
+// and separately computes spreadMoveDay = mostRecent − morning so F12 can
+// surface "sharps loaded up midday" as a distinct factor.
 //
-// Why this matters now: the snapshot has been collected daily since 4/12 but
-// the live hub never loaded it — only log_picks.py was injecting it during
-// the morning logger run. So F12 was firing for the GitHub Actions logger
-// but NOT for any picks rendered when you opened the hub yourself. This
-// closes that gap so live cards see the same line-movement signal.
+// Backward-compat: window.BTF_MORNING_ODDS is still populated so any code that
+// hasn't been migrated keeps working. Don't add new callers — use BTF_ODDS_SNAPSHOTS.
 //
 // Loaded EARLY (50ms) so it's set before the first refreshAllOdds() call
-// (which builds TODAY_GAMES) reads window.BTF_MORNING_ODDS.
-async function loadMorningOdds(){
-  try{
-    const nowMs=Date.now();
-    const etOff=getETOffsetHours(nowMs)*3600*1000;
-    const etNow=new Date(nowMs+etOff);
-    const y=etNow.getUTCFullYear();
-    const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
-    const d=String(etNow.getUTCDate()).padStart(2,'0');
-    const dateKey=`${y}-${m}-${d}`;
-    const r=await fetch(`data/odds_snapshots/${dateKey}-morning.json`);
-    if(!r.ok)return; // no snapshot yet today (will exist after 7 AM ET cron)
-    const data=await r.json();
-    if(!data||!data.games)return;
-    window.BTF_MORNING_ODDS=data;
-    const sportCounts=Object.entries(data.games).map(([s,g])=>`${s}:${g.length}`).join(' ');
-    console.log(`[BTF] Morning odds snapshot loaded (${data.snapshot_time||'?'}) — ${sportCounts}`);
-  }catch(e){
-    console.warn('[BTF] morning odds fetch failed:',e.message);
-  }
+// (which builds TODAY_GAMES) reads the snapshots.
+async function loadOddsSnapshots(){
+  const nowMs=Date.now();
+  const etOff=getETOffsetHours(nowMs)*3600*1000;
+  const etNow=new Date(nowMs+etOff);
+  const y=etNow.getUTCFullYear();
+  const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+  const d=String(etNow.getUTCDate()).padStart(2,'0');
+  const dateKey=`${y}-${m}-${d}`;
+  const labels=['morning','midday','pregame'];
+  const out={};
+  await Promise.all(labels.map(async label=>{
+    try{
+      const r=await fetch(`data/odds_snapshots/${dateKey}-${label}.json`);
+      if(!r.ok)return; // not written yet today (cron hasn't fired)
+      const data=await r.json();
+      if(!data||!data.games)return;
+      out[label]=data;
+    }catch(e){
+      console.warn(`[BTF] ${label} odds fetch failed:`,e.message);
+    }
+  }));
+  window.BTF_ODDS_SNAPSHOTS=out;
+  if(out.morning)window.BTF_MORNING_ODDS=out.morning; // legacy alias
+  const summary=labels.filter(l=>out[l]).map(l=>{
+    const counts=Object.entries(out[l].games).map(([s,g])=>`${s}:${g.length}`).join(' ');
+    return `${l}(${counts||'∅'})`;
+  }).join('  ');
+  console.log(`[BTF] Odds snapshots loaded — ${summary||'none yet today'}`);
 }
 
 // ── Exotic venue detection ────────────────────────────────────────────────────
@@ -6819,6 +6854,33 @@ async function loadExoticVenues(){
     }
   }catch(e){
     console.warn('[BTF] exotic_venues fetch failed:',e.message);
+  }
+}
+
+// ── MLB weather loader (data/weather/{ET-today}.json) ────────────────────────
+// Written by scripts/fetch_mlb_weather.py (NWS API, no key). Populates
+// MLB_WEATHER keyed by home team name. Consumed by hbScoreOU windSignal.
+// Silent failure: file may not exist (off-season, weather workflow failed, etc).
+async function loadMLBWeather(){
+  try{
+    const nowMs=Date.now();
+    const etOff=getETOffsetHours(nowMs)*3600*1000;
+    const etNow=new Date(nowMs+etOff);
+    const y=etNow.getUTCFullYear();
+    const m=String(etNow.getUTCMonth()+1).padStart(2,'0');
+    const d=String(etNow.getUTCDate()).padStart(2,'0');
+    const dateKey=`${y}-${m}-${d}`;
+    const r=await fetch(`data/weather/${dateKey}.json`);
+    if(!r.ok)return;
+    const data=await r.json();
+    if(data&&typeof data.parks==='object'){
+      MLB_WEATHER=data.parks;
+      const n=Object.keys(MLB_WEATHER).length;
+      const outdoor=Object.values(MLB_WEATHER).filter(p=>!p.is_dome).length;
+      console.log(`[BTF] MLB weather loaded: ${n} parks (${outdoor} outdoor, ${n-outdoor} domes)`);
+    }
+  }catch(e){
+    console.warn('[BTF] MLB weather fetch failed:',e.message);
   }
 }
 
@@ -7557,17 +7619,57 @@ function hbScoreOU(g, ht, at, ix){
     }
   }
 
+  // ── MLB ballpark factor signal (direct) ──
+  // MLB_PARK_FACTORS feeds hbProjectScores, but projSignal only fires when proj
+  // differs from line by >1.2 runs — Coors at 1.28 on a 9-run proj only nudges
+  // 0.36 runs, often gated out. Fire park as a standalone signal at the extremes
+  // so Coors/Petco/SF/SEA reliably push picks. Hist signal averages teams' overall
+  // O/U records (not split by venue) so a direct park add-on is genuinely additive.
+  let parkSignal=null;
+  if(sport==='mlb'&&g.home){
+    const pf=MLB_PARK_FACTORS[g.home];
+    if(pf!=null){
+      if(pf>=1.06){parkSignal=0.62;factors.push({t:'pos',l:`🏟️ Hitter park (PF ${pf.toFixed(2)}) → Over lean`});}
+      else if(pf>=1.03){parkSignal=0.55;factors.push({t:'pos',l:`🏟️ Mild hitter park (PF ${pf.toFixed(2)}) → slight Over`});}
+      else if(pf<=0.94){parkSignal=0.38;factors.push({t:'pos',l:`🏟️ Pitcher park (PF ${pf.toFixed(2)}) → Under lean`});}
+      else if(pf<=0.96){parkSignal=0.45;factors.push({t:'pos',l:`🏟️ Mild pitcher park (PF ${pf.toFixed(2)}) → slight Under`});}
+    }
+  }
+
+  // ── MLB wind signal (NWS forecast, written by daily-update.yml) ──
+  // wind_out_component = wind_mph × cos(angle_from_outfield_bearing).
+  //   positive = blowing OUT to CF (helps hitters, HR carry) → Over
+  //   negative = blowing IN from CF (knocks down fly balls) → Under
+  // Domes have is_dome:true (no signal). Calm/crosswind (|component| < 5) ignored.
+  let windSignal=null;
+  if(sport==='mlb'&&g.home){
+    const w=MLB_WEATHER[g.home];
+    if(w&&!w.is_dome&&typeof w.wind_out_component==='number'){
+      const c=w.wind_out_component;
+      if(c>=10){windSignal=0.65;factors.push({t:'pos',l:`🌬️ Wind ${w.wind_mph}mph out to CF (+${c.toFixed(0)} comp) → Over`});}
+      else if(c>=5){windSignal=0.58;factors.push({t:'pos',l:`🌬️ Wind ${w.wind_mph}mph out (+${c.toFixed(0)} comp) → slight Over`});}
+      else if(c<=-10){windSignal=0.35;factors.push({t:'pos',l:`🌬️ Wind ${w.wind_mph}mph in from CF (${c.toFixed(0)} comp) → Under`});}
+      else if(c<=-5){windSignal=0.42;factors.push({t:'pos',l:`🌬️ Wind ${w.wind_mph}mph in (${c.toFixed(0)} comp) → slight Under`});}
+    }
+  }
+
   // ── Signal gate ──
   // Need at least one signal. If both are present, they must agree in direction —
   // conflicting signals mean no clear edge; skip rather than average to noise.
-  if(histSignal===null&&projSignal===null&&pitcherOUSignal===null&&nhlSTSignal===null&&nbaPaceSignal===null&&nhlGoalieSignal===null)return null;
+  if(histSignal===null&&projSignal===null&&pitcherOUSignal===null&&nhlSTSignal===null&&nbaPaceSignal===null&&nhlGoalieSignal===null&&parkSignal===null&&windSignal===null)return null;
   if(histSignal!==null&&projSignal!==null&&(histSignal>0.5)!==(projSignal>0.5))return null;
-  // MLB early-season: pitcher ERA alone (moderate signal) is too thin to make a pick.
-  // Without historical O/U records (< 5 games) or projection data, we'd fire Under on
-  // every game with decent starters — which is most of the board. Only allow pitcher-only
-  // picks when the signal is extreme: both aces (≤0.30) or both terrible starters (≥0.70).
-  if(sport==='mlb'&&histSignal===null&&projSignal===null&&pitcherOUSignal!==null){
-    if(pitcherOUSignal>0.30&&pitcherOUSignal<0.70)return null;
+  // MLB early-season: without hist+proj data (< 5 games), require either a single
+  // EXTREME secondary signal (pitcher/park/wind) OR multiple secondaries agreeing.
+  // Stops phantom Unders firing on every game with decent starters or every Petco
+  // game from park alone. Multiple agreeing secondaries = real confluence of edge.
+  if(sport==='mlb'&&histSignal===null&&projSignal===null){
+    const mlbSec=[pitcherOUSignal,parkSignal,windSignal].filter(s=>s!==null);
+    if(mlbSec.length===1){
+      if(mlbSec[0]>0.35&&mlbSec[0]<0.65)return null;
+    } else if(mlbSec.length>=2){
+      const dirs=mlbSec.map(s=>s>0.5);
+      if(dirs.some(d=>d!==dirs[0]))return null;
+    }
   }
   // NBA pace-only: above/below average pace alone isn't enough — require extreme pace
   // matchup (both fast or both slow, ≤0.35 or ≥0.65) when hist/proj data is missing.
@@ -7593,6 +7695,10 @@ function hbScoreOU(g, ht, at, ix){
   if(nhlSTSignal!==null){overSum+=nhlSTSignal*0.20; wt+=0.20;}
   if(nbaPaceSignal!==null){overSum+=nbaPaceSignal*0.15; wt+=0.15;}
   if(nhlGoalieSignal!==null){overSum+=nhlGoalieSignal*0.25; wt+=0.25;}
+  // MLB ballpark + wind. Weighted modestly — these are real but secondary to
+  // team records and pitcher matchup. Tuned per the user's 0.15-0.20 spec.
+  if(parkSignal!==null){overSum+=parkSignal*0.15; wt+=0.15;}
+  if(windSignal!==null){overSum+=windSignal*0.18; wt+=0.18;}
 
   const rawOverProb=overSum/wt;
   const pickOver=rawOverProb>=0.5;
@@ -8147,10 +8253,10 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
     }
   }
 
-  // ── 12. Line movement (morning → afternoon spread change) ──
-  // If the line moved toward our pick, sharp money confirms the direction → boost.
-  // If it moved away, the market is correcting against us → caution penalty.
-  // spreadMove = current home spread − morning home spread.
+  // ── 12a. Late line movement (most-recent pre-game snapshot → current) ──
+  // spreadMove = current home spread − most-recent pre-game snapshot.
+  // This catches sharp action in the final hour or two before tip-off, which
+  // is the highest-signal line move (pros bet late). Weight 0.08.
   // Positive spreadMove means home spread got bigger (line moved toward away / against home).
   if(g.spreadMove!=null&&Math.abs(g.spreadMove)>=0.5){
     const movedTowardPick=(atsPick==='home'&&g.spreadMove<0)||(atsPick==='away'&&g.spreadMove>0);
@@ -8158,11 +8264,30 @@ function hbScoreMatchup(g, ht, at, ix, mlHint=null, simHint=null){
     if(movedTowardPick){
       const f12=absMove>=2?0.72:absMove>=1?0.64:0.58;
       score+=f12*0.08; weight+=0.08;
-      factors.push({t:'pos',l:`📉 Line moved ${absMove.toFixed(1)} pts toward pick`});
+      factors.push({t:'pos',l:`📉 Late line moved ${absMove.toFixed(1)} pts toward pick`});
     } else {
       const f12=absMove>=2?0.28:absMove>=1?0.36:0.42;
       score+=f12*0.08; weight+=0.08;
-      factors.push({t:'neg',l:`📈 Line moved ${absMove.toFixed(1)} pts against pick`});
+      factors.push({t:'neg',l:`📈 Late line moved ${absMove.toFixed(1)} pts against pick`});
+    }
+  }
+
+  // ── 12b. Day-drift (morning → most-recent pre-game snapshot) ──
+  // Captures where the day's money flowed: "sharps loaded up at midday" vs
+  // "Joe Public pushed the line on an early game." Noisier than the late move
+  // (it spans many hours of mixed action) so half-weight at 0.04. Skipped
+  // entirely when no intraday snapshot exists yet — then F12a is the whole signal.
+  if(g.spreadMoveDay!=null&&Math.abs(g.spreadMoveDay)>=0.5){
+    const movedTowardPick=(atsPick==='home'&&g.spreadMoveDay<0)||(atsPick==='away'&&g.spreadMoveDay>0);
+    const absMove=Math.abs(g.spreadMoveDay);
+    if(movedTowardPick){
+      const f12d=absMove>=2?0.68:absMove>=1?0.60:0.56;
+      score+=f12d*0.04; weight+=0.04;
+      factors.push({t:'pos',l:`📊 Day drift ${absMove.toFixed(1)} pts toward pick`});
+    } else {
+      const f12d=absMove>=2?0.32:absMove>=1?0.40:0.44;
+      score+=f12d*0.04; weight+=0.04;
+      factors.push({t:'neg',l:`📊 Day drift ${absMove.toFixed(1)} pts against pick`});
     }
   }
 

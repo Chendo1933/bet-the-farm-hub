@@ -1,0 +1,64 @@
+name: Odds Snapshot — Pregame Sweep
+
+# Hourly sweep across US-sports prime hours. snapshot_odds.py filters to games
+# starting in the next 1.5h and merges with the day's existing pregame file,
+# so each game's "pregame" snapshot ends up being the freshest reading taken
+# before tip-off. F12 uses this for late-sharp-action detection.
+on:
+  schedule:
+    - cron: "0 16-23 * * *"   # 12 PM ET → 7 PM ET (DST window)
+    - cron: "0 0-4 * * *"     # 8 PM ET → 12 AM ET (rolls into UTC next day)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Hourly runs can overlap if a prior run hangs on a slow API. Serializing them
+# avoids racing pushes on the same data/odds_snapshots/{date}-pregame.json.
+concurrency:
+  group: odds-snapshot-pregame
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Capture pregame odds snapshot (games starting in next 1.5h)
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python scripts/snapshot_odds.py --label pregame
+
+      - name: Commit and push if a snapshot was written
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/odds_snapshots/
+          if git diff --staged --quiet; then
+            echo "No games in window this hour — nothing to commit"
+          else
+            git commit -m "auto: pregame odds snapshot $(date -u +'%Y-%m-%d %H:%MZ')"
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "✅ Pushed pregame snapshot"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      snapshot
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Pregame odds sweep failed — F12 will skip the late-sharp signal for this hour's games"

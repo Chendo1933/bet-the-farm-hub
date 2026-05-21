@@ -1,0 +1,69 @@
+{
+  "date": "2026-05-21",
+  "fetched_at": "2026-05-21T01:40:30.780080+00:00",
+  "parks": {
+    "Detroit Tigers": {
+      "is_dome": false,
+      "park": "Comerica Park",
+      "wind_mph": 13,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 150,
+      "wind_out_component": -6.5,
+      "wind_label": "crosswind",
+      "temp_f": 60,
+      "game_time_utc": "2026-05-21T17:10:00+00:00"
+    },
+    "St. Louis Cardinals": {
+      "is_dome": false,
+      "park": "Busch Stadium",
+      "wind_mph": 8,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": -6.9,
+      "wind_label": "in from CF",
+      "temp_f": 66,
+      "game_time_utc": "2026-05-21T17:15:00+00:00"
+    },
+    "Washington Nationals": {
+      "is_dome": false,
+      "park": "Nationals Park",
+      "wind_mph": 9,
+      "wind_from_deg": 45,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": -8.5,
+      "wind_label": "in from CF",
+      "temp_f": 64,
+      "game_time_utc": "2026-05-21T20:05:00+00:00"
+    },
+    "Miami Marlins": {
+      "is_dome": true,
+      "park": "loanDepot Park"
+    },
+    "New York Yankees": {
+      "is_dome": false,
+      "park": "Yankee Stadium",
+      "wind_mph": 5,
+      "wind_from_deg": 135,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": -2.1,
+      "wind_label": "crosswind",
+      "temp_f": 62,
+      "game_time_utc": "2026-05-21T23:05:00+00:00"
+    },
+    "Los Angeles Angels": {
+      "is_dome": false,
+      "park": "Angel Stadium",
+      "wind_mph": 10,
+      "wind_from_deg": 225,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 9.7,
+      "wind_label": "out to CF",
+      "temp_f": 77,
+      "game_time_utc": "2026-05-22T01:38:00+00:00"
+    },
+    "Arizona Diamondbacks": {
+      "is_dome": true,
+      "park": "Chase Field"
+    }
+  }
+}
