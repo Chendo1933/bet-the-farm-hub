@@ -1,6 +1,6 @@
 {
   "date": "2026-05-20",
-  "logged": "2026-05-20T18:06:27.845390",
+  "logged": "2026-05-21T02:05:46.589163",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -49,24 +49,20 @@
       "market_ticker": "KXNHLGAME-26MAY20VGKCOL-COL",
       "market_title": "Game 1: Vegas at Colorado Winner?",
       "yes_side": "YES",
-      "yes_ask_cents": 62,
-      "yes_bid_cents": 61,
-      "last_price_cents": 62,
-      "previous_yes_ask_cents": 65,
-      "volume_24h": "213834.49",
-      "use_price_cents": 62,
+      "yes_ask_cents": 17,
+      "yes_bid_cents": 16,
+      "last_price_cents": 17,
+      "previous_yes_ask_cents": 64,
+      "volume_24h": "1211557.02",
+      "use_price_cents": 17,
       "use_price_source": "yes_ask",
       "model_prob": 0.68,
       "would_place": true,
       "skip_reason": null,
-      "stake_dollars": 1.24,
-      "contracts": 2,
-      "edge_pct": 0.06,
-      "kelly_fraction_used": 0.25,
-      "outcome": null,
-      "pnl_dollars": 0.0,
-      "payout_dollars": 0.0,
-      "reconcile_status": "no_history_match"
+      "stake_dollars": 4.93,
+      "contracts": 29,
+      "edge_pct": 0.51,
+      "kelly_fraction_used": 0.25
     },
     {
       "pick": {
@@ -100,51 +96,39 @@
         "date": "May 20",
         "time": "1:11 PM ET"
       },
-      "market_ticker": "KXMLBGAME-26MAY201310BALTB-TB",
-      "market_title": "Baltimore vs Tampa Bay Winner?",
-      "yes_side": "YES",
-      "yes_ask_cents": 54,
-      "yes_bid_cents": 53,
-      "last_price_cents": 54,
-      "previous_yes_ask_cents": 56,
-      "volume_24h": "2502616.00",
-      "use_price_cents": 54,
-      "use_price_source": "yes_ask",
+      "market_ticker": null,
+      "market_title": null,
+      "yes_side": null,
+      "yes_ask_cents": null,
+      "yes_bid_cents": null,
+      "last_price_cents": null,
+      "previous_yes_ask_cents": null,
+      "volume_24h": null,
+      "use_price_cents": null,
+      "use_price_source": "no_price",
       "model_prob": 0.68,
-      "would_place": true,
-      "skip_reason": null,
-      "stake_dollars": 2.7,
-      "contracts": 5,
-      "edge_pct": 0.14,
-      "kelly_fraction_used": 0.25,
-      "outcome": null,
-      "pnl_dollars": 0.0,
-      "payout_dollars": 0.0,
-      "reconcile_status": "no_history_match"
+      "would_place": false,
+      "skip_reason": "ambiguous",
+      "map_reason": "Multiple weak event matches"
     }
   ],
+  "paper_orders": [],
   "summary": {
     "picks_total": 9,
     "picks_eligible_after_filter": 2,
-    "orders_would_place": 2,
-    "total_stake_dollars": 3.94,
-    "remaining_daily_capacity": 16.06,
-    "skipped_by_reason": {},
-    "bankroll_used_dollars": 39.65,
+    "orders_would_place": 1,
+    "total_stake_dollars": 4.93,
+    "remaining_daily_capacity": 15.07,
+    "skipped_by_reason": {
+      "ambiguous": 1
+    },
+    "paper_candidates": 0,
+    "paper_bet_types_tracked": [
+      "ou"
+    ],
+    "bankroll_used_dollars": 40.64,
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
-    "total_account_dollars": 39.65
-  },
-  "reconcile": {
-    "date": "2026-05-20",
-    "placed": 2,
-    "wins": 0,
-    "losses": 0,
-    "pushes": 0,
-    "ungraded": 2,
-    "total_stake_dollars": 3.94,
-    "total_payout_dollars": 0.0,
-    "total_pnl_dollars": 0.0,
-    "roi_pct": 0.0
+    "total_account_dollars": 40.64
   }
 }
