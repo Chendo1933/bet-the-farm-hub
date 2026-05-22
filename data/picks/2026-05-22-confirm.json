@@ -1,0 +1,219 @@
+{
+  "date": "2026-05-22",
+  "logged": "2026-05-22T18:15:51.563733+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Colorado Avalanche",
+      "away": "Vegas Golden Knights",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Colorado Avalanche",
+      "pickLabel": "Colorado Avalanche ML (-185)",
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -185,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 76% vs implied 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -185"
+        }
+      ],
+      "date": "May 22",
+      "time": "8:00 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Cincinnati Reds",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+101)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 56% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +101"
+        }
+      ],
+      "date": "May 22",
+      "time": "6:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Philadelphia Phillies",
+      "away": "Cleveland Guardians",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Cleveland Guardians",
+      "pickLabel": "Cleveland Guardians ML (+153)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 153,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 38%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +153"
+        }
+      ],
+      "date": "May 22",
+      "time": "6:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Yankees",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (+123)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 123,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ],
+      "date": "May 22",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Toronto Blue Jays",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Pittsburgh Pirates",
+      "pickLabel": "Pittsburgh Pirates ML (+135)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 135,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 41%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +135"
+        }
+      ],
+      "date": "May 22",
+      "time": "7:08 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-109)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -109,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -109"
+        }
+      ],
+      "date": "May 22",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Diego Padres",
+      "away": "Athletics",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Athletics",
+      "pickLabel": "Athletics ML (+109)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 109,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +109"
+        }
+      ],
+      "date": "May 22",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 7,
+  "filter_stats": {
+    "prefilter": 19,
+    "sub60": 10,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 2,
+    "kept": 7,
+    "dropped": 12
+  }
+}
