@@ -62,7 +62,11 @@
       "stake_dollars": 1.24,
       "contracts": 2,
       "edge_pct": 0.06,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": null,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "no_history_match"
     }
   ],
   "paper_orders": [],
@@ -82,5 +86,17 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 42.29
+  },
+  "reconcile": {
+    "date": "2026-05-22",
+    "placed": 1,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 1,
+    "total_stake_dollars": 1.24,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0.0
   }
 }

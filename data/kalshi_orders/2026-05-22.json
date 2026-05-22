@@ -73,7 +73,13 @@
         ],
         "date": "May 22",
         "time": "8:00 PM ET"
-      }
+      },
+      "outcome": null,
+      "home_score": null,
+      "away_score": null,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "no_history_match"
     }
   ],
   "skipped": [],
@@ -83,5 +89,16 @@
     "dry_simulated": 0,
     "skipped": 0,
     "total_stake_placed": 1.24
+  },
+  "reconcile": {
+    "date": "2026-05-22",
+    "placed": 1,
+    "wins": 0,
+    "losses": 0,
+    "ungraded": 1,
+    "total_stake_dollars": 0.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0
   }
 }

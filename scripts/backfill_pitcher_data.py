@@ -89,13 +89,36 @@ def _http_get(url: str) -> Optional[dict]:
 
 
 def collect_dates_from_results() -> list[str]:
-    """Pull every ET date present in data/results/*.json."""
+    """
+    Pull every ET date present in data/results/*.json PLUS today (and
+    tomorrow). Historical dates give us each starter's full game-log
+    history for cumulative-stat math; today/tomorrow give us the
+    probable-pitcher mapping the F5 paper-track generator needs for the
+    CURRENT slate.
+
+    Without today's date here, the F5 generator had no starter-to-game
+    mapping for games that hadn't been played yet — every current-day
+    matchup showed "NO STARTER DATA" and zero F5 paper picks generated.
+    """
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+
     files = sorted(glob.glob(RESULTS_GLOB))
     dates = []
     for f in files:
         if "/index.json" in f: continue
         d = Path(f).stem  # YYYY-MM-DD
         if len(d) == 10 and d[4] == '-' and d[7] == '-':
+            dates.append(d)
+
+    # Always (re)fetch today + tomorrow ET so the current slate's probable
+    # pitchers are present. These are appended even though they have no
+    # results file yet. They're force-refetched each run (not cached) since
+    # probable pitchers can change up to game time.
+    now_et = datetime.now(ZoneInfo("America/New_York"))
+    for offset in (0, 1):
+        d = (now_et + timedelta(days=offset)).strftime("%Y-%m-%d")
+        if d not in dates:
             dates.append(d)
     return dates
 
@@ -180,9 +203,15 @@ def main():
     dates = collect_dates_from_results()
     print(f"Pass 1: starters for {len(dates)} dates "
           f"({dates[0]} → {dates[-1]})")
+    # Today + tomorrow ET are always re-fetched (probable pitchers change up
+    # to game time). Compute them so we can bypass the cache-skip for them.
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    _now = datetime.now(ZoneInfo("America/New_York"))
+    always_refetch = {(_now + timedelta(days=o)).strftime("%Y-%m-%d") for o in (0, 1)}
     fetched = set(cache.get("dates_fetched", []))
     for i, d in enumerate(dates):
-        if d in fetched and not args.force:
+        if d in fetched and not args.force and d not in always_refetch:
             continue
         starters = fetch_starters_for_date(d)
         cache["starters_by_gamePk"].update({k: v for k, v in starters.items()})
