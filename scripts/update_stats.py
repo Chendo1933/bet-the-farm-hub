@@ -436,9 +436,31 @@ def fetch_mlb_advanced():
                 if era  is not None: bucket["era"]  = era
                 if whip is not None: bucket["whip"] = whip
 
+        # Fetch BULLPEN ERA via reliever situational split (sitCodes=rp).
+        # One call returns all 30 teams' reliever-only ERA. This is the
+        # late-inning run environment our full-game O/U model was blind to —
+        # F5 (innings 1-5) is the starters; the bullpen owns innings 6-9.
+        # A team with two aces but a 5.50 bullpen blows F5 unders into
+        # full-game overs, which is exactly the divergence we couldn't see.
+        bullpen_url = (
+            f"https://statsapi.mlb.com/api/v1/teams/stats"
+            f"?stats=statSplits&group=pitching&season={year}&sportIds=1&sitCodes=rp"
+        )
+        resp = requests.get(bullpen_url, headers=HEADERS, timeout=TIMEOUT)
+        if resp.status_code == 200:
+            for split in resp.json().get("stats", [{}])[0].get("splits", []):
+                name = split.get("team", {}).get("name", "")
+                name = MLB_NAME_MAP_STATSAPI.get(name, name)
+                bp_era = _safe_float(split.get("stat", {}).get("era"))
+                if name and bp_era is not None:
+                    result.setdefault(name, {})["bp_era"] = bp_era
+        else:
+            print(f"  · MLB Stats API bullpen split returned {resp.status_code} — bp_era skipped")
+
         with_era = sum(1 for v in result.values() if "era" in v)
         with_ops = sum(1 for v in result.values() if "ops" in v)
-        print(f"  ✓ MLB Stats API: {len(result)} teams ({with_ops} OPS/AVG, {with_era} ERA/WHIP)")
+        with_bp  = sum(1 for v in result.values() if "bp_era" in v)
+        print(f"  ✓ MLB Stats API: {len(result)} teams ({with_ops} OPS/AVG, {with_era} ERA/WHIP, {with_bp} bullpen ERA)")
         return result
     except Exception as e:
         print(f"  · MLB Stats API error: {e} — advanced MLB stats skipped")
@@ -471,8 +493,8 @@ def update_mlb(html_lines):
         if rs: updates[15] = rs
         if ra: updates[16] = ra
 
-        # Patch ERA + AVG + OPS + WHIP from MLB Stats API
-        #   idx 17 = era, idx 18 = avg, idx 23 = ops, idx 24 = whip
+        # Patch ERA + AVG + OPS + WHIP + bullpen ERA from MLB Stats API
+        #   idx 17 = era, idx 18 = avg, idx 23 = ops, idx 24 = whip, idx 25 = bp_era
         adv = advanced.get(name, {})
         if adv.get("era") is not None:
             updates[17] = round(adv["era"], 2)
@@ -482,6 +504,8 @@ def update_mlb(html_lines):
             updates[23] = round(adv["ops"], 3)
         if adv.get("whip") is not None:
             updates[24] = round(adv["whip"], 2)
+        if adv.get("bp_era") is not None:
+            updates[25] = round(adv["bp_era"], 2)
 
         found, changed = patch_rows(html_lines, name, updates)
         if changed:
