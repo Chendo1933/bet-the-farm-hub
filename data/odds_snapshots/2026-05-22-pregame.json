@@ -1,0 +1,19 @@
+{
+  "date": "2026-05-22",
+  "snapshot_time": "2026-05-22T17:43:22.252935+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Chicago Cubs",
+        "away": "Houston Astros",
+        "commence": "2026-05-22T18:21:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-05-22T17:43:22.252935+00:00"
+      }
+    ]
+  }
+}
