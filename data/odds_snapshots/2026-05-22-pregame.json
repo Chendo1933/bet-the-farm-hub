@@ -1,8 +1,32 @@
 {
   "date": "2026-05-22",
-  "snapshot_time": "2026-05-22T22:48:20.332341+00:00",
+  "snapshot_time": "2026-05-22T23:55:26.216758+00:00",
   "type": "pregame",
   "games": {
+    "nba": [
+      {
+        "home": "San Antonio Spurs",
+        "away": "Oklahoma City Thunder",
+        "commence": "2026-05-23T00:40:00Z",
+        "spread": -2.5,
+        "total": 219.5,
+        "ml_home": -138,
+        "ml_away": 118,
+        "snapshot_time": "2026-05-22T23:55:26.216758+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "commence": "2026-05-23T00:20:00Z",
+        "spread": -1.5,
+        "total": 6.5,
+        "ml_home": -180,
+        "ml_away": 150,
+        "snapshot_time": "2026-05-22T23:55:26.216758+00:00"
+      }
+    ],
     "mlb": [
       {
         "home": "Chicago Cubs",
@@ -92,18 +116,6 @@
         "total": 8.5,
         "ml_home": -108,
         "ml_away": -108,
-        "snapshot_time": "2026-05-22T22:48:20.332341+00:00"
-      }
-    ],
-    "nhl": [
-      {
-        "home": "Colorado Avalanche",
-        "away": "Vegas Golden Knights",
-        "commence": "2026-05-23T00:00:00Z",
-        "spread": -1.5,
-        "total": 6.5,
-        "ml_home": -166,
-        "ml_away": 140,
         "snapshot_time": "2026-05-22T22:48:20.332341+00:00"
       }
     ]
