@@ -5927,6 +5927,62 @@
       "away_name": "Aaron Civale",
       "home_team": "Los Angeles Angels",
       "away_team": "Athletics"
+    },
+    "824274": {
+      "home_id": 663554,
+      "home_name": "Casey Mize",
+      "away_id": 676282,
+      "away_name": "Joey Cantillo",
+      "home_team": "Detroit Tigers",
+      "away_team": "Cleveland Guardians"
+    },
+    "823056": {
+      "home_id": 669160,
+      "home_name": "Dustin May",
+      "away_id": 677952,
+      "away_name": "Braxton Ashcraft",
+      "home_team": "St. Louis Cardinals",
+      "away_team": "Pittsburgh Pirates"
+    },
+    "822733": {
+      "home_id": 676917,
+      "home_name": "Cade Cavalli",
+      "away_id": 656849,
+      "away_name": "David Peterson",
+      "home_team": "Washington Nationals",
+      "away_team": "New York Mets"
+    },
+    "823864": {
+      "home_id": 645261,
+      "home_name": "Sandy Alcantara",
+      "away_id": 675911,
+      "away_name": "Spencer Strider",
+      "home_team": "Miami Marlins",
+      "away_team": "Atlanta Braves"
+    },
+    "823545": {
+      "home_id": 607074,
+      "home_name": "Carlos Rod\u00f3n",
+      "away_id": 680755,
+      "away_name": "Braydon Fisher",
+      "home_team": "New York Yankees",
+      "away_team": "Toronto Blue Jays"
+    },
+    "824031": {
+      "home_id": 667755,
+      "home_name": "Jos\u00e9 Soriano",
+      "away_id": 622663,
+      "away_name": "Luis Severino",
+      "home_team": "Los Angeles Angels",
+      "away_team": "Athletics"
+    },
+    "825083": {
+      "home_id": 593958,
+      "home_name": "Eduardo Rodriguez",
+      "away_id": 688642,
+      "away_name": "Zach Agnos",
+      "home_team": "Arizona Diamondbacks",
+      "away_team": "Colorado Rockies"
     }
   },
   "game_logs": {
@@ -21122,6 +21178,18 @@
         "hr": 1,
         "bf": 19
       }
+    ],
+    "688642": [
+      {
+        "date": "2026-05-21",
+        "ip": 5.0,
+        "er": 0,
+        "h": 1,
+        "bb": 1,
+        "k": 4,
+        "hr": 0,
+        "bf": 17
+      }
     ]
   },
   "dates_fetched": [
@@ -21181,6 +21249,7 @@
     "2026-05-17",
     "2026-05-18",
     "2026-05-19",
-    "2026-05-20"
+    "2026-05-20",
+    "2026-05-21"
   ]
 }
