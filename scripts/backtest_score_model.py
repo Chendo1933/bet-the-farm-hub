@@ -75,6 +75,11 @@ def main():
     pr_margin_errs = []
     pr_ats_w = pr_ats_l = 0
     pr_conf = defaultdict(lambda: {"w":0,"l":0})
+    # Moneyline (straight-up winner) accuracy, bucketed by projected-margin
+    # confidence. Also tracks the subset where our power rating's favorite
+    # DISAGREES with the spread favorite — where ML edge would live.
+    ml_conf = defaultdict(lambda: {"w":0,"l":0})
+    ml_disagree_w = ml_disagree_l = 0
 
     margin_errs = []; total_errs = []
     # Main-line betting from the projection
@@ -153,6 +158,18 @@ def main():
                     edge = abs(pr_cover)
                     cb = "1-3" if edge<=3 else "3-7" if edge<=7 else "7-14" if edge<=14 else "14+"
                     pr_conf[cb]["w" if won else "l"] += 1
+            # ── Moneyline (straight-up winner) accuracy by conviction ──
+            if actual_margin != 0:
+                pick_home_ml = pr_proj_margin > 0
+                ml_won = (actual_margin > 0) == pick_home_ml
+                conf = abs(pr_proj_margin)  # bigger projected margin = more sure
+                mb = "0-3" if conf<=3 else "3-7" if conf<=7 else "7-14" if conf<=14 else "14+"
+                ml_conf[mb]["w" if ml_won else "l"] += 1
+                # Does our ML pick disagree with the spread favorite?
+                spread_fav_home = spread < 0
+                if pick_home_ml != spread_fav_home:
+                    if ml_won: ml_disagree_w += 1
+                    else:      ml_disagree_l += 1
         # Update power ratings toward observed margin (opponent-adjusted)
         expected = power[home] - power[away] + hf2
         err = actual_margin - expected
@@ -197,6 +214,19 @@ def main():
         if bk and (bk["w"]+bk["l"])>=15:
             t=bk["w"]+bk["l"]
             print(f"    {cb:<5} pts: {bk['w']}-{bk['l']} = {100*bk['w']/t:.1f}% (n={t})")
+
+    # ── Moneyline results ──
+    print("\n═══ MONEYLINE (straight-up winner) accuracy by conviction ═══")
+    for mb in ["0-3","3-7","7-14","14+"]:
+        bk=ml_conf.get(mb)
+        if bk and (bk["w"]+bk["l"])>=15:
+            t=bk["w"]+bk["l"]
+            print(f"  proj margin {mb:<5} pts: {bk['w']}-{bk['l']} = {100*bk['w']/t:.1f}% (n={t})")
+    if ml_disagree_w+ml_disagree_l:
+        t=ml_disagree_w+ml_disagree_l
+        print(f"  When our ML pick FADES the spread favorite: {ml_disagree_w}-{ml_disagree_l} "
+              f"= {100*ml_disagree_w/t:.1f}% (n={t})")
+        print("  (>50% here = the power rating finds live underdogs the line missed)")
 
     print("\nIf the opponent-adjusted model beats both the naive model AND the")
     print("52.4% line, the score-first architecture is viable — and alt lines")
