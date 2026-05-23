@@ -17847,6 +17847,192 @@
           "l": "\u26a1 Net RTG edge +4.6"
         }
       ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Colorado Avalanche ML (-185)",
+      "home": "Colorado Avalanche",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -185,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 76% vs implied 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -185"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Cleveland Guardians ML (+153)",
+      "home": "Philadelphia Phillies",
+      "away": "Cleveland Guardians",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 153,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.53,
+      "homeScore": 0,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 38%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +153"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Tampa Bay Rays ML (+123)",
+      "home": "New York Yankees",
+      "away": "Tampa Bay Rays",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 123,
+      "outcome": "win",
+      "margin": 2,
+      "units": 1.23,
+      "homeScore": 2,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +123"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Pittsburgh Pirates ML (+135)",
+      "home": "Toronto Blue Jays",
+      "away": "Pittsburgh Pirates",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 135,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 6,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 41%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +135"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Milwaukee Brewers ML (-109)",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -109,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.9174,
+      "homeScore": 5,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -109"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Athletics ML (+109)",
+      "home": "San Diego Padres",
+      "away": "Athletics",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 109,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 7,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +109"
+        }
+      ]
     }
   ]
 }
