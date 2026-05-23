@@ -34,6 +34,18 @@ SPORT_TO_SERIES = {
     "NFL": "KXNFLGAME",
 }
 
+# Kalshi spread (point/puck-line) series. Each game has per-team line markets:
+#   KXNHLSPREAD-26MAY26COLVGK-COL1  = "Colorado wins by over 1.5 goals"
+#   KXNBASPREAD-26MAY18SASOKC-SAS5  = "San Antonio wins by over 5.5 points"
+# Suffix = {TEAM_ABBR}{N} where the line value is N + 0.5.
+# MLB has only first-5-innings spread (KXMLBF5SPREAD), no full-game run line,
+# so MLB is intentionally absent — MLB spread picks can't map to Kalshi.
+SPORT_TO_SPREAD_SERIES = {
+    "NBA": "KXNBASPREAD",
+    "NHL": "KXNHLSPREAD",
+    "NFL": "KXNFLSPREAD",
+}
+
 
 def _normalize(s: str) -> str:
     """Lowercase + strip non-alphanumerics for fuzzy team/title matching."""
@@ -402,6 +414,122 @@ def find_market_for_ml_pick(client: KalshiClient, pick: dict,
         "last_price_cents":        last_price,
         "previous_yes_ask_cents":  prev_ask,
         "volume_24h":              volume,
+    }
+
+
+def find_market_for_spread_pick(client: KalshiClient, pick: dict,
+                                events_cache: dict | None = None) -> dict:
+    """
+    Map a spread pick to a Kalshi spread market + side.
+
+    Kalshi spread markets are per-team "wins by over N.5" contracts:
+      KXNHLSPREAD-26MAY26COLVGK-COL1  "Colorado wins by over 1.5 goals"
+      KXNBASPREAD-26MAY18SASOKC-SAS5  "San Antonio wins by over 5.5 points"
+    Ticker suffix is {TEAM_ABBR}{N}; the line value is N + 0.5.
+
+    Pick → market translation:
+      Favorite pick (laying points, line < 0, e.g. -1.5):
+        We need the PICKED team to win by more than |line|.
+        → YES on "{picked} wins by over (|line|−0.5)" at the closest suffix.
+      Underdog pick (getting points, line > 0, e.g. +1.5):
+        Picked team covers if the OPPONENT doesn't win by more than line.
+        → NO on "{opponent} wins by over (line−0.5)" at the closest suffix.
+
+    Returns the same dict shape as find_market_for_ml_pick (status/
+    market_ticker/yes_side/prices) so the dry-run treats it uniformly.
+    """
+    sport = pick.get("sport", "").upper()
+    series = SPORT_TO_SPREAD_SERIES.get(sport)
+    if not series:
+        return {"status": "unsupported",
+                "reason": f"No Kalshi spread series for {sport} (MLB has F5-only)",
+                "pick": pick}
+    if pick.get("betType") != "spread":
+        return {"status": "unsupported", "reason": "not a spread pick", "pick": pick}
+
+    home = pick.get("home", ""); away = pick.get("away", "")
+    spread = pick.get("spread")       # HOME team's line (negative = home favored)
+    ats    = pick.get("atsPick")      # 'home' or 'away'
+    if spread is None or ats not in ("home", "away"):
+        return {"status": "unsupported", "reason": "missing spread/atsPick", "pick": pick}
+
+    picked   = home if ats == "home" else away
+    opponent = away if ats == "home" else home
+    # Picked team's own line: home team gets `spread`; away gets the negation.
+    picked_line = spread if ats == "home" else -spread
+
+    # ── List spread markets for the series, filter to this game ──────────
+    if events_cache is not None and f"_spread_{series}" in events_cache:
+        markets = events_cache[f"_spread_{series}"]
+    else:
+        resp = client.list_markets(series_ticker=series, status="open", limit=400)
+        markets = resp.get("markets", []) or []
+        if events_cache is not None:
+            events_cache[f"_spread_{series}"] = markets
+
+    stamp = _today_kalshi_date_stamp()
+    picked_abbrs = _team_abbreviations(picked)
+    opp_abbrs    = _team_abbreviations(opponent)
+
+    # Decide which team's markets we want + which side:
+    #   favorite (line<0)  → picked team's markets, YES
+    #   underdog (line>0)  → opponent's markets, NO
+    #   pick'em (line==0)  → treat like favorite by tiny margin (YES picked)
+    want_underdog = picked_line > 0
+    target_abbrs  = opp_abbrs if want_underdog else picked_abbrs
+    side          = "NO" if want_underdog else "YES"
+    target_line   = abs(picked_line)   # e.g. 1.5
+
+    # Find candidate markets: same game (today stamp + both teams in ticker)
+    # whose suffix team matches target_abbrs. Parse the suffix line number.
+    candidates = []
+    for m in markets:
+        t = (m.get("ticker") or "").upper()
+        if not _ticker_has_today_stamp(t, stamp):
+            continue
+        # Both teams must appear in the matchup portion of the ticker
+        if not (any(a in t for a in picked_abbrs) and any(a in t for a in opp_abbrs)):
+            continue
+        # Parse the trailing {TEAM}{N} suffix
+        msuf = re.search(r"-([A-Z]+)(\d+)$", t)
+        if not msuf:
+            continue
+        suf_abbr, suf_n = msuf.group(1), int(msuf.group(2))
+        if suf_abbr not in target_abbrs:
+            continue
+        line_value = suf_n + 0.5
+        candidates.append((abs(line_value - target_line), line_value, m))
+
+    if not candidates:
+        return {"status": "no_market",
+                "reason": f"No {series} market for {away}@{home} at ~{target_line}",
+                "pick": pick}
+
+    # Pick the closest line; ties → lower line (easier to cover for a favorite).
+    candidates.sort(key=lambda c: (c[0], c[1]))
+    _, chosen_line, market = candidates[0]
+
+    yes_ask = _price_cents(market, "yes_ask_dollars", "yes_ask")
+    yes_bid = _price_cents(market, "yes_bid_dollars", "yes_bid")
+    no_ask  = _price_cents(market, "no_ask_dollars",  "no_ask")
+    last    = _price_cents(market, "last_price_dollars", "last_price")
+
+    return {
+        "status": "matched",
+        "pick": pick,
+        "market_ticker": market.get("ticker"),
+        "market_title":  market.get("title"),
+        "yes_side": side,             # 'YES' for favorite, 'NO' for underdog
+        "spread_line_bet": chosen_line,
+        "spread_line_wanted": target_line,
+        # For NO bets, the effective price is (100 - yes side). The dry-run's
+        # price resolver handles YES; expose both so it can size correctly.
+        "current_yes_ask_cents": yes_ask,
+        "current_yes_bid_cents": yes_bid,
+        "no_ask_cents":          no_ask,
+        "last_price_cents":      last,
+        "previous_yes_ask_cents": None,
+        "volume_24h": market.get("volume"),
     }
 
 

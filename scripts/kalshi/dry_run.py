@@ -59,7 +59,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from kalshi.client import KalshiClient
-from kalshi.pick_mapper import find_market_for_ml_pick
+from kalshi.pick_mapper import find_market_for_ml_pick, find_market_for_spread_pick
 from kalshi.stake import kelly_stake_dollars
 
 
@@ -630,6 +630,37 @@ def main():
     if "f5_ou" in paper_only:
         f5_orders = _generate_f5_paper_orders(client, all_picks, date_key, paper_min)
         paper_orders.extend(f5_orders)
+
+    # ── Spread paper picks (NHL/NBA/NFL — proven +8.9% ROI historically) ──
+    # The hub already produces spread picks. We map each to a Kalshi spread
+    # market (KXNHLSPREAD/KXNBASPREAD/KXNFLSPREAD) and paper-track it before
+    # going live. MLB spread picks are skipped — Kalshi only has F5 run line.
+    if "spread" in paper_only:
+        spread_eligible = [p for p in all_picks
+                           if p.get("betType") == "spread"
+                           and (p.get("score100") or 0) >= paper_min
+                           and (p.get("sport") or "").upper() in ("NBA", "NHL", "NFL")]
+        spread_made = 0
+        for pick in spread_eligible:
+            mapping = find_market_for_spread_pick(client, pick, events_cache=events_cache)
+            if mapping.get("status") != "matched":
+                continue
+            paper_orders.append({
+                "pick": pick,
+                "track": "paper",
+                "model_prob": _model_prob_from_pick(pick),
+                "would_grade": True,
+                "spread_meta": {
+                    "market_ticker":      mapping.get("market_ticker"),
+                    "yes_side":           mapping.get("yes_side"),
+                    "spread_line_bet":    mapping.get("spread_line_bet"),
+                    "spread_line_wanted": mapping.get("spread_line_wanted"),
+                    "yes_ask_cents":      mapping.get("current_yes_ask_cents"),
+                    "no_ask_cents":       mapping.get("no_ask_cents"),
+                },
+            })
+            spread_made += 1
+        print(f"  Spread paper track: {len(spread_eligible)} eligible → {spread_made} mapped to Kalshi markets")
 
     summary = {
         "picks_total": len(all_picks),

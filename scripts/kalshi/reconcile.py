@@ -227,6 +227,61 @@ def _f5_outcome_for_pick(pick: dict, file_date: str) -> tuple[str | None, dict |
     return (None, None)
 
 
+def _spread_outcome_for_pick(pick: dict, spread_meta: dict, file_date: str) -> tuple[str | None, dict | None]:
+    """
+    Grade a spread paper pick against the actual final score and the
+    Kalshi line we'd have bet (spread_meta.spread_line_bet), NOT the
+    consensus line — because the Kalshi bet is what we're validating.
+
+    yes_side semantics from find_market_for_spread_pick:
+      'YES' = favorite, market is "{picked} wins by over {line}"
+              → win if picked margin > line
+      'NO'  = underdog, market is "{opponent} wins by over {line}"
+              → win if opponent margin <= line (picked covered the +line)
+
+    Returns (outcome, info). (None, None) when the game isn't final yet
+    or isn't found in the results file.
+    """
+    home = pick.get("home", ""); away = pick.get("away", "")
+    ats  = pick.get("atsPick")
+    line = spread_meta.get("spread_line_bet")
+    side = spread_meta.get("yes_side")
+    if not home or not away or ats not in ("home","away") or line is None or side not in ("YES","NO"):
+        return (None, None)
+
+    results_path = Path(f"data/results/{file_date}.json")
+    if not results_path.exists():
+        return (None, None)
+    try:
+        data = json.loads(results_path.read_text())
+    except Exception:
+        return (None, None)
+    sport_key = (pick.get("sport") or "").lower()
+    games = data.get("sports", {}).get(sport_key, [])
+    for g in games:
+        g_home = g.get("home_db") or g.get("home")
+        g_away = g.get("away_db") or g.get("away")
+        if g_home != home or g_away != away:
+            continue
+        hs = g.get("home_score"); as_ = g.get("away_score")
+        if hs is None or as_ is None:
+            return (None, None)
+        picked   = home if ats == "home" else away
+        picked_score = hs if ats == "home" else as_
+        opp_score    = as_ if ats == "home" else hs
+        picked_margin = picked_score - opp_score   # positive = picked won by this
+        if side == "YES":
+            # Favorite: "picked wins by over line"
+            won = picked_margin > line
+        else:
+            # Underdog NO: "opponent wins by over line" must be FALSE →
+            # opponent's margin (−picked_margin) must be ≤ line
+            won = (-picked_margin) <= line
+        outcome = "win" if won else "loss"
+        return (outcome, {"picked_margin": picked_margin, "line": line, "side": side})
+    return (None, None)
+
+
 def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> dict | None:
     """
     Reconcile the paper-track orders (paper_orders[]) from a dry-run file
@@ -234,10 +289,11 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
     when the file has no paper_orders array (older snapshots — silently
     skipped).
 
-    Two bet types handled here:
+    Three bet types handled here:
       ou      → graded against full-game total via pick_history.json
       f5_ou   → graded against F5 total via data/results/{date}.json
-                (written by scripts/fetch_f5_scores.py)
+      spread  → graded against final score vs the Kalshi line we bet
+                (spread_meta.spread_line_bet)
 
     Math: paper bets graded at standard -110 juice. Win = +$1.00 profit,
     loss = -$1.10 stake. Comparable to break-even 52.4% hit rate.
@@ -277,6 +333,27 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
                 ann["pnl_dollars"] = -STAKE_PER_PICK; ann["reconcile_status"] = "graded"; losses += 1
             else:
                 ann["pnl_dollars"] = 0.0; ann["reconcile_status"] = "graded"; pushes += 1
+            annotated.append(ann)
+            continue
+
+        # ── Spread grading path ───────────────────────────────────────
+        if bet_type == "spread":
+            sm = o.get("spread_meta") or {}
+            outcome, info = _spread_outcome_for_pick(pick, sm, file_date)
+            if info:
+                ann["spread_grade_info"] = info
+            if outcome is None:
+                ann["outcome"] = None
+                ann["reconcile_status"] = "ungraded_no_score"
+                ann["pnl_dollars"] = 0.0
+                ungraded += 1
+                annotated.append(ann)
+                continue
+            ann["outcome"] = outcome
+            if outcome == "win":
+                ann["pnl_dollars"] = PROFIT_PER_WIN; ann["reconcile_status"] = "graded"; wins += 1
+            else:
+                ann["pnl_dollars"] = -STAKE_PER_PICK; ann["reconcile_status"] = "graded"; losses += 1
             annotated.append(ann)
             continue
 

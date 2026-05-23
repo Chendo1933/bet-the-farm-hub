@@ -42,7 +42,7 @@
     "for the parallel paper-trade track."
   ],
 
-  "paper_supported_bet_types": ["ou", "f5_ou"],
+  "paper_supported_bet_types": ["ou", "f5_ou", "spread"],
   "paper_supported_bet_types_doc": [
     "What bet types are tracked in the PAPER (simulated, never placed)",
     "performance track. Set to ['ou'] so O/U picks get graded against",
