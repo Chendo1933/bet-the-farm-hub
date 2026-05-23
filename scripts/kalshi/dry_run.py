@@ -114,7 +114,68 @@ def _cumulative_pitcher_stats(starts: list, before_date: str) -> dict | None:
     # FIP = ((13*HR + 3*BB - 2*K) / IP) + ~3.10 constant
     fip = ((13*total_hr + 3*total_bb - 2*total_k) / total_ip) + 3.10
     return {"era": round(era,2), "fip": round(fip,2), "ip": round(total_ip,1),
-            "starts": len(prior)}
+            "starts": len(prior), "last_date": prior[-1]["date"]}
+
+
+def _days_between(d1: str, d2: str) -> int | None:
+    try:
+        return (datetime.strptime(d2, "%Y-%m-%d") - datetime.strptime(d1, "%Y-%m-%d")).days
+    except Exception:
+        return None
+
+
+def _recent_era(starts: list, before_date: str, n: int = 3) -> float | None:
+    """Avg ERA over a pitcher's last n starts before the date (recent trend)."""
+    prior = [s for s in (starts or []) if s.get("date") and s["date"] < before_date]
+    if len(prior) < n: return None
+    rec = prior[-n:]
+    ip = sum(s.get("ip", 0) for s in rec)
+    if ip < 1: return None
+    return 9 * sum(s.get("er", 0) for s in rec) / ip
+
+
+def _project_f5_total(h_stats, a_stats, h_log, a_log, home, date) -> float:
+    """
+    Projection-v2 F5 model (validated in scripts/backtest_f5.py — lifts F5
+    from 47.8% binary-tier to 52.0% at a fair 4.5 line by adding rest +
+    recent form + park):
+
+      base = (home_FIP × 5/9) + (away_FIP × 5/9)   expected F5 runs
+      × rest tilt    (≥6 days → 0.93, ≤4 days → 1.06)
+      × recent-form tilt (trending bad → 1.05, trending good → 0.96)
+      × park factor
+    """
+    use_fip = h_stats["starts"] >= 3 and a_stats["starts"] >= 3
+    hv = h_stats["fip"] if use_fip else h_stats["era"]
+    av = a_stats["fip"] if use_fip else a_stats["era"]
+    proj = (hv * 5/9) + (av * 5/9)
+
+    h_rest = _days_between(h_stats["last_date"], date)
+    a_rest = _days_between(a_stats["last_date"], date)
+    if h_rest is not None and a_rest is not None:
+        avg_rest = (h_rest + a_rest) / 2
+        if avg_rest >= 6:   proj *= 0.93
+        elif avg_rest <= 4: proj *= 1.06
+
+    hrf = _recent_era(h_log, date); arf = _recent_era(a_log, date)
+    if hrf is not None and arf is not None:
+        recent_avg = (hrf + arf) / 2
+        season_avg = (h_stats["era"] + a_stats["era"]) / 2
+        if recent_avg - season_avg >= 1.0:   proj *= 1.05
+        elif season_avg - recent_avg >= 1.0: proj *= 0.96
+
+    pf = _F5_PARK_FACTORS.get(home)
+    if pf is not None:
+        proj *= pf
+    return proj
+
+
+def _pitcher_tier(val: float) -> str:
+    """Same tiering the hub uses (hbScoreOU pitcher branch)."""
+    if val <= 3.25: return "elite"
+    if val <= 4.00: return "quality"
+    if val <= 4.75: return "average"
+    return "weak"
 
 
 def _pitcher_tier(val: float) -> str:
@@ -248,31 +309,12 @@ def _generate_f5_paper_orders(client, picks: list, date_key: str,
         if not h_stats or not a_stats:
             continue
 
-        # Prefer FIP when both have ≥3 starts (more stable than ERA)
         use_fip = h_stats["starts"] >= 3 and a_stats["starts"] >= 3
         h_val = h_stats["fip"] if use_fip else h_stats["era"]
         a_val = a_stats["fip"] if use_fip else a_stats["era"]
-        h_tier = _pitcher_tier(h_val); a_tier = _pitcher_tier(a_val)
-        avg_val = (h_val + a_val) / 2
 
-        # Decide signal direction
-        both_good = h_tier in ("elite","quality") and a_tier in ("elite","quality")
-        both_weak = h_tier == "weak" and a_tier == "weak"
-        if both_good:
-            side = "under"   # bet NO on Kalshi (against more runs scored)
-            confidence = 0.75 if avg_val <= 3.25 else (0.68 if avg_val <= 3.75 else 0.60)
-        elif both_weak:
-            side = "over"    # bet YES (more runs scored)
-            confidence = 0.75 if avg_val >= 5.25 else (0.65 if avg_val >= 5.00 else 0.58)
-        else:
-            # Ace vs liability — opposing forces cancel for F5 modeling
-            continue
-
-        # Paper threshold: any pick above min cal (default 50) qualifies
-        if int(confidence * 100) < paper_min_score:
-            continue
-
-        # Find Kalshi F5 markets for this game
+        # Find Kalshi F5 markets for this game FIRST — the projection model
+        # bets against the actual Kalshi line, not a fixed line.
         date_yymmdd = datetime.strptime(date_key, "%Y-%m-%d").strftime("%y%b%d").upper()
         h_abbr = _MLB_TEAM_ABBR.get(home); a_abbr = _MLB_TEAM_ABBR.get(away)
         if not h_abbr or not a_abbr:
@@ -280,40 +322,54 @@ def _generate_f5_paper_orders(client, picks: list, date_key: str,
         f5_markets = _f5_market_summary_for_game(client, date_yymmdd, h_abbr, a_abbr)
         if not f5_markets:
             continue
-
-        # Pick the line closest to 50¢ YES — that's the most informative line
+        # Pick the line closest to 50¢ YES (the book's true F5 estimate)
         def _closest_to_50(m):
             ya = m.get("yes_ask_cents") or 50
             return abs(ya - 50)
         target = min(f5_markets, key=_closest_to_50)
-        # Skip games with terrible liquidity (huge bid-ask spread suggests no
-        # real action — YES + NO well above 100c)
         ya = target.get("yes_ask_cents") or 0
         na = target.get("no_ask_cents") or 0
-        if ya + na > 110:   # tight spread = ya + na ≈ 100-102
+        if ya + na > 110:   # poor liquidity
+            continue
+        kalshi_line = target["line"] + 0.5   # "N+ runs" market = over N.5
+
+        # ── Projection-v2 signal (rest + recent form + park) ──────────────
+        # Validated in scripts/backtest_f5.py: lifts F5 from 47.8% (binary
+        # tier) to 52.0% at a fair line. Bet over/under vs the Kalshi line
+        # only when the projection clears it by ≥0.4 runs (noise floor).
+        proj = _project_f5_total(h_stats, a_stats, h_log, a_log, home, date_key)
+        edge = proj - kalshi_line
+        if edge >= 0.4:
+            side = "over"
+        elif edge <= -0.4:
+            side = "under"
+        else:
+            continue   # projection too close to the line — no edge
+        # Confidence scales with how far the projection clears the line.
+        confidence = min(0.72, 0.55 + abs(edge) * 0.08)
+        if int(confidence * 100) < paper_min_score:
             continue
 
-        # Synthesize the paper pick. f5_ou bet type so reconcile/grader knows
-        # to grade against F5 score (not full-game total).
         synthetic_pick = {
             "sport": "MLB",
             "betType": "f5_ou",
             "home": home,
             "away": away,
-            "total": target["line"] + 0.5,   # Kalshi line N+ runs is "over N.5" in standard book parlance
+            "total": kalshi_line,
             "pickedTeam": "Over" if side == "over" else "Under",
             "pickLabel": f"{'Over' if side == 'over' else 'Under'} {target['line']}.5 F5",
             "score100": int(confidence * 100),
-            "tier": "paper",   # tier label so it's obvious in tooling
+            "tier": "paper",
             "date": date_key,
-            # F5-specific context for audit
             "f5_meta": {
                 "home_starter_id": h_pid,
                 "away_starter_id": a_pid,
                 "home_pitcher_val": h_val,
                 "away_pitcher_val": a_val,
                 "stat_used": "FIP" if use_fip else "ERA",
+                "projected_f5": round(proj, 2),
                 "kalshi_line": target["line"],
+                "edge_runs": round(edge, 2),
                 "kalshi_yes_ask_cents": ya,
                 "kalshi_no_ask_cents": na,
                 "kalshi_ticker": target["ticker"],

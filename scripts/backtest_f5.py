@@ -68,6 +68,7 @@ def cumulative(starts: list, before_date: str) -> Optional[dict]:
         "era": (9*er)/ip,
         "fip": ((13*hr + 3*bb - 2*k)/ip) + 3.10,
         "starts": len(prior),
+        "last_date": prior[-1]["date"],
     }
 
 
@@ -96,6 +97,82 @@ def pitcher_signal(h_stats, a_stats, extended=False) -> Optional[str]:
     return None
 
 
+PARK = {
+    'Baltimore Orioles':1.00,'Boston Red Sox':1.08,'New York Yankees':1.03,
+    'Tampa Bay Rays':0.96,'Toronto Blue Jays':1.02,'Chicago White Sox':1.01,
+    'Cleveland Guardians':0.95,'Detroit Tigers':0.97,'Kansas City Royals':0.98,
+    'Minnesota Twins':1.03,'Houston Astros':0.97,'Los Angeles Angels':1.01,
+    'Athletics':0.99,'Seattle Mariners':0.93,'Texas Rangers':1.05,
+    'Atlanta Braves':1.01,'Miami Marlins':0.95,'New York Mets':0.97,
+    'Philadelphia Phillies':1.02,'Washington Nationals':1.01,
+    'Chicago Cubs':1.04,'Cincinnati Reds':1.05,'Milwaukee Brewers':0.97,
+    'Pittsburgh Pirates':0.98,'St. Louis Cardinals':0.99,
+    'Arizona Diamondbacks':1.02,'Colorado Rockies':1.28,'Los Angeles Dodgers':0.98,
+    'San Diego Padres':0.93,'San Francisco Giants':0.92,
+}
+
+
+def _days_between(d1, d2):
+    from datetime import datetime
+    try:
+        return (datetime.strptime(d2,"%Y-%m-%d") - datetime.strptime(d1,"%Y-%m-%d")).days
+    except Exception:
+        return None
+
+
+def _recent_era(starts, before_date, n=3):
+    prior = [s for s in (starts or []) if s.get("date") and s["date"] < before_date]
+    if len(prior) < n: return None
+    rec = prior[-n:]
+    ip = sum(s.get("ip",0) for s in rec)
+    if ip < 1: return None
+    return 9*sum(s.get("er",0) for s in rec)/ip
+
+
+def projection_signal(h_stats, a_stats, h_log, a_log, home, away, date, line):
+    """
+    Projection-based F5 model: estimate expected F5 runs from starter
+    quality, then tilt for rest + recent form + park, and bet over/under
+    vs the line. Returns 'over'/'under'/None.
+
+    expected F5 runs per starter ≈ (ERA × 5/9), i.e. their per-9 rate
+    scaled to 5 innings. Summed across both starters = base F5 projection.
+    """
+    use_fip = h_stats["starts"] >= 3 and a_stats["starts"] >= 3
+    hv = h_stats["fip"] if use_fip else h_stats["era"]
+    av = a_stats["fip"] if use_fip else a_stats["era"]
+    proj = (hv * 5/9) + (av * 5/9)
+
+    # Rest tilt — long rest suppresses, short rest inflates (from feature test:
+    # ≤4 days → 54% over, 6.5+ → 42% over). Applied as a small multiplier.
+    h_rest = _days_between(h_stats["last_date"], date)
+    a_rest = _days_between(a_stats["last_date"], date)
+    if h_rest is not None and a_rest is not None:
+        avg_rest = (h_rest + a_rest)/2
+        if avg_rest >= 6:   proj *= 0.93   # extra-rested = fresher = fewer runs
+        elif avg_rest <= 4: proj *= 1.06   # short rest = more runs
+
+    # Recent-form tilt — if both starters are pitching worse than their
+    # season line lately, nudge up; better lately, nudge down.
+    hrf = _recent_era(h_log, date); arf = _recent_era(a_log, date)
+    if hrf is not None and arf is not None:
+        recent_avg = (hrf + arf)/2
+        season_avg = (h_stats["era"] + a_stats["era"])/2
+        if recent_avg - season_avg >= 1.0:   proj *= 1.05   # trending bad
+        elif season_avg - recent_avg >= 1.0: proj *= 0.96   # trending good
+
+    # Park tilt
+    pf = PARK.get(home)
+    if pf is not None:
+        proj *= pf
+
+    # Bet only when the projection clears the line by a meaningful margin
+    # (avoid coin-flip calls). 0.4 runs ≈ the noise floor for F5.
+    if proj >= line + 0.4: return "over"
+    if proj <= line - 0.4: return "under"
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--line", type=float, default=4.5,
@@ -115,7 +192,7 @@ def main():
     files = sorted(glob.glob("data/results/*.json"))
     files = [f for f in files if "/index.json" not in f]
 
-    MODELS = ["always_over", "always_under", "pitcher_signal", "pitcher_extended"]
+    MODELS = ["always_over", "always_under", "pitcher_signal", "pitcher_extended", "projection_v2"]
     tally = {m: {"picks":0,"wins":0,"losses":0,"units":0.0} for m in MODELS}
     csv_rows = []
     graded = 0
@@ -132,21 +209,24 @@ def main():
             graded += 1
             actual_over = f5 > args.line
 
-            # Compute pitcher signal
+            # Compute pitcher signals
             ids = by_teams.get((home, away))
-            sig = sig_ext = None
+            sig = sig_ext = proj_sig = None
             if ids:
-                h = cumulative(logs.get(str(ids[0]), []), date)
-                a = cumulative(logs.get(str(ids[1]), []), date)
+                h_log = logs.get(str(ids[0]), []); a_log = logs.get(str(ids[1]), [])
+                h = cumulative(h_log, date)
+                a = cumulative(a_log, date)
                 if h and a:
                     sig = pitcher_signal(h, a, extended=False)
                     sig_ext = pitcher_signal(h, a, extended=True)
+                    proj_sig = projection_signal(h, a, h_log, a_log, home, away, date, args.line)
 
             picks = {
                 "always_over": "over",
                 "always_under": "under",
                 "pitcher_signal": sig,
                 "pitcher_extended": sig_ext,
+                "projection_v2": proj_sig,
             }
             for m, pick in picks.items():
                 if pick is None: continue
