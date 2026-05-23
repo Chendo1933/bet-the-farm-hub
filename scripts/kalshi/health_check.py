@@ -253,12 +253,16 @@ def main():
         lines += [f"  • {i}" for i in infos]
     body = "\n".join(lines).rstrip()
 
+    # NOTE: the title becomes an HTTP header, which urllib encodes as latin-1 —
+    # raw emoji there crashes the POST. Keep the title ASCII; the Tags header
+    # carries the emoji (ntfy renders white_check_mark/warning/rotating_light as
+    # ✅/⚠️/🚨). The body can hold emoji freely since it's sent as UTF-8 data.
     if crit:
-        title = "🚨 BTF pipeline ALERT"; priority = "5"; tags = "rotating_light,warning"
+        title = "BTF pipeline ALERT"; priority = "5"; tags = "rotating_light,warning"
     elif warns:
-        title = "⚠️ BTF pipeline warning"; priority = "4"; tags = "warning"
+        title = "BTF pipeline warning"; priority = "4"; tags = "warning"
     else:
-        title = "✅ BTF pipeline healthy"; priority = "2"; tags = "white_check_mark"
+        title = "BTF pipeline healthy"; priority = "2"; tags = "white_check_mark"
 
     print(body)
     print()
