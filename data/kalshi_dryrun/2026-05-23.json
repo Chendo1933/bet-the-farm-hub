@@ -1,6 +1,6 @@
 {
   "date": "2026-05-23",
-  "logged": "2026-05-23T16:37:13.681787",
+  "logged": "2026-05-23T16:42:56.952690",
   "config_snapshot": {
     "environment": "live",
     "min_calibrated_score": 65,
@@ -53,14 +53,14 @@
       "yes_bid_cents": 60,
       "last_price_cents": 61,
       "previous_yes_ask_cents": 66,
-      "volume_24h": "233112.53",
+      "volume_24h": "236510.12",
       "use_price_cents": 61,
       "use_price_source": "yes_ask",
       "model_prob": 0.68,
       "would_place": true,
       "skip_reason": null,
-      "stake_dollars": 1.83,
-      "contracts": 3,
+      "stake_dollars": 1.22,
+      "contracts": 2,
       "edge_pct": 0.07,
       "kelly_fraction_used": 0.25
     }
@@ -111,8 +111,8 @@
     "picks_total": 6,
     "picks_eligible_after_filter": 1,
     "orders_would_place": 1,
-    "total_stake_dollars": 1.83,
-    "remaining_daily_capacity": 10.47,
+    "total_stake_dollars": 1.22,
+    "remaining_daily_capacity": 10.52,
     "skipped_by_reason": {},
     "paper_candidates": 1,
     "paper_bet_types_tracked": [
@@ -120,9 +120,9 @@
       "ou",
       "spread"
     ],
-    "bankroll_used_dollars": 41.01,
+    "bankroll_used_dollars": 39.13,
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
-    "total_account_dollars": 41.01
+    "total_account_dollars": 39.13
   }
 }
