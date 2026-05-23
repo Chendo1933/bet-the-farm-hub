@@ -1,9 +1,17 @@
 name: Daily Pick Logger
 
-# Runs at 11:50 AM ET (10 min before noon games) + manual trigger
+# Runs at 10:30 AM ET + manual trigger. Moved earlier (was 11:50 AM) so the
+# pick→dry-run→place-orders chain finishes (~10:45 AM ET) BEFORE early MLB day
+# games (earliest realistic first pitch ~11:00 AM ET) and weekend afternoon
+# NBA/NHL. The full slate — including evening games — already has open Kalshi
+# markets and posted odds by mid-morning, so nothing is lost by going earlier;
+# for our underpriced-favorite ML edge, getting in before the public moves the
+# price is neutral-to-favorable. All upstream deps still precede this (results/
+# reconcile ~4 AM, ATS refresh 5:30 AM, stats update 7 AM) and the health check
+# (1:30 PM) still runs after placement.
 on:
   schedule:
-    - cron: "50 15 * * *"   # 15:50 UTC = 11:50 AM ET
+    - cron: "30 14 * * *"   # 14:30 UTC = 10:30 AM ET (EDT) / 9:30 AM ET (EST)
   workflow_dispatch:
 
 permissions:
@@ -52,4 +60,4 @@ jobs:
           workflow: ${{ github.workflow }}
           job:      log-picks
           run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          context:  "Primary 11:50 AM ET pick logger — today's slate may be missing or stale"
+          context:  "Primary 10:30 AM ET pick logger (triggers the live bet chain) — today's slate may be missing or stale"
