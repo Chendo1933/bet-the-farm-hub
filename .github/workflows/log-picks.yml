@@ -1,17 +1,21 @@
 name: Daily Pick Logger
 
-# Runs at 10:30 AM ET + manual trigger. Moved earlier (was 11:50 AM) so the
-# pick→dry-run→place-orders chain finishes (~10:45 AM ET) BEFORE early MLB day
-# games (earliest realistic first pitch ~11:00 AM ET) and weekend afternoon
-# NBA/NHL. The full slate — including evening games — already has open Kalshi
-# markets and posted odds by mid-morning, so nothing is lost by going earlier;
-# for our underpriced-favorite ML edge, getting in before the public moves the
-# price is neutral-to-favorable. All upstream deps still precede this (results/
-# reconcile ~4 AM, ATS refresh 5:30 AM, stats update 7 AM) and the health check
-# (1:30 PM) still runs after placement.
+# Triggered by the Daily Stats Update COMPLETING — not its own cron. GitHub
+# delays scheduled runs unpredictably (~1-3h under load), which previously let
+# the independent pick cron drift to ~1:30-2 PM ET AND risked it racing the
+# (also-delayed) stats update. Chaining off stats guarantees the correct order
+# — fresh standings are always committed before picks are generated — and makes
+# the whole bet chain key off a single scheduled job (stats, 10:00 UTC). With
+# stats' typical delay the chain now places bets ~8:45 AM ET (worst case
+# ~9:45 AM), before early MLB day games.
+#
+# If stats FAILS, this won't fire and no morning snapshot is produced — the
+# 12:30 PM Backup/Verify logger + the conditional failsafe (kalshi-failsafe-
+# place.yml) catch that case and place the day's bets.
 on:
-  schedule:
-    - cron: "30 14 * * *"   # 14:30 UTC = 10:30 AM ET (EDT) / 9:30 AM ET (EST)
+  workflow_run:
+    workflows: ["Daily Stats Update"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -19,6 +23,11 @@ permissions:
 
 jobs:
   log-picks:
+    # Only run when Stats Update succeeded (so standings are fresh) or on a
+    # manual dispatch. If stats failed, skip — the failsafe covers that day.
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

@@ -1,9 +1,16 @@
 name: Daily Stats Update
 
-# Runs every morning + can be triggered manually from GitHub Actions tab
+# Runs every morning + can be triggered manually from GitHub Actions tab.
+# This is now the HEAD of the daily bet chain: on completion it triggers the
+# Daily Pick Logger (workflow_run), which triggers Dry-Run → Place Orders. So
+# the whole live-bet chain keys off when THIS finishes. Scheduled at 10:00 UTC
+# (6:00 AM ET) — earlier than before — so that even with GitHub's typical
+# ~2.5h scheduled-run delay, the chain places bets by ~8:45 AM ET (worst case
+# ~9:45 AM), comfortably before early MLB day games (~11 AM ET first pitch).
+# 10:00 UTC is still well after overnight West Coast games finish (~1-2 AM ET).
 on:
   schedule:
-    - cron: "0 11 * * *"   # 11:00 UTC = 7:00 AM ET (after overnight games finish)
+    - cron: "0 10 * * *"   # 10:00 UTC = 6:00 AM ET (EDT) / 5:00 AM ET (EST)
   workflow_dispatch:         # "Run workflow" button in GitHub Actions tab
 
 permissions:
