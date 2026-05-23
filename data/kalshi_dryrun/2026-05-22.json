@@ -63,10 +63,12 @@
       "contracts": 2,
       "edge_pct": 0.06,
       "kelly_fraction_used": 0.25,
-      "outcome": null,
-      "pnl_dollars": 0.0,
+      "outcome": "loss",
+      "pnl_dollars": -1.24,
       "payout_dollars": 0.0,
-      "reconcile_status": "no_history_match"
+      "reconcile_status": "graded",
+      "home_score": 1,
+      "away_score": 3
     }
   ],
   "paper_orders": [],
@@ -91,12 +93,12 @@
     "date": "2026-05-22",
     "placed": 1,
     "wins": 0,
-    "losses": 0,
+    "losses": 1,
     "pushes": 0,
-    "ungraded": 1,
+    "ungraded": 0,
     "total_stake_dollars": 1.24,
     "total_payout_dollars": 0.0,
-    "total_pnl_dollars": 0.0,
-    "roi_pct": 0.0
+    "total_pnl_dollars": -1.24,
+    "roi_pct": -100.0
   }
 }
