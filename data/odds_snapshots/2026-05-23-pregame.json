@@ -1,6 +1,6 @@
 {
   "date": "2026-05-23",
-  "snapshot_time": "2026-05-23T17:52:05.557648+00:00",
+  "snapshot_time": "2026-05-23T19:59:46.206794+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -33,6 +33,66 @@
         "ml_home": 128,
         "ml_away": -152,
         "snapshot_time": "2026-05-23T17:52:05.557648+00:00"
+      },
+      {
+        "home": "San Francisco Giants",
+        "away": "Chicago White Sox",
+        "commence": "2026-05-23T20:06:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+      },
+      {
+        "home": "Atlanta Braves",
+        "away": "Washington Nationals",
+        "commence": "2026-05-23T20:11:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -172,
+        "ml_away": 144,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+      },
+      {
+        "home": "Boston Red Sox",
+        "away": "Minnesota Twins",
+        "commence": "2026-05-23T20:11:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -124,
+        "ml_away": 106,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+      },
+      {
+        "home": "Kansas City Royals",
+        "away": "Seattle Mariners",
+        "commence": "2026-05-23T20:11:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": 108,
+        "ml_away": -126,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "New York Mets",
+        "commence": "2026-05-23T20:11:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+      },
+      {
+        "home": "Philadelphia Phillies",
+        "away": "Cleveland Guardians",
+        "commence": "2026-05-23T20:36:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -178,
+        "ml_away": 150,
+        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
       }
     ]
   }
