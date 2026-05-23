@@ -6155,8 +6155,8 @@
     "823222": {
       "home_id": 605288,
       "home_name": "Adrian Houser",
-      "away_id": 607200,
-      "away_name": "Erick Fedde",
+      "away_id": 663542,
+      "away_name": "Bryan Hudson",
       "home_team": "San Francisco Giants",
       "away_team": "Chicago White Sox"
     },
@@ -6169,10 +6169,10 @@
       "away_team": "Seattle Mariners"
     },
     "824760": {
-      "home_id": null,
-      "home_name": null,
-      "away_id": null,
-      "away_name": null,
+      "home_id": 663558,
+      "home_name": "Jovani Mor\u00e1n",
+      "away_id": 671737,
+      "away_name": "Taj Bradley",
       "home_team": "Boston Red Sox",
       "away_team": "Minnesota Twins"
     },
@@ -6223,6 +6223,126 @@
       "away_name": "Michael Lorenzen",
       "home_team": "Arizona Diamondbacks",
       "away_team": "Colorado Rockies"
+    },
+    "822813": {
+      "home_id": 656302,
+      "home_name": "Dylan Cease",
+      "away_id": 656605,
+      "away_name": "Mitch Keller",
+      "home_team": "Toronto Blue Jays",
+      "away_team": "Pittsburgh Pirates"
+    },
+    "824839": {
+      "home_id": 669432,
+      "home_name": "Trevor Rogers",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Baltimore Orioles",
+      "away_team": "Detroit Tigers"
+    },
+    "824759": {
+      "home_id": 543243,
+      "home_name": "Sonny Gray",
+      "away_id": 641927,
+      "away_name": "Bailey Ober",
+      "home_team": "Boston Red Sox",
+      "away_team": "Minnesota Twins"
+    },
+    "823459": {
+      "home_id": 691725,
+      "home_name": "Andrew Painter",
+      "away_id": 800048,
+      "away_name": "Parker Messick",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "Cleveland Guardians"
+    },
+    "823544": {
+      "home_id": 701542,
+      "home_name": "Will Warren",
+      "away_id": 663556,
+      "away_name": "Shane McClanahan",
+      "home_team": "New York Yankees",
+      "away_team": "Tampa Bay Rays"
+    },
+    "824514": {
+      "home_id": 663903,
+      "home_name": "Brady Singer",
+      "away_id": 669461,
+      "away_name": "Matthew Liberatore",
+      "home_team": "Cincinnati Reds",
+      "away_team": "St. Louis Cardinals"
+    },
+    "823861": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 681035,
+      "away_name": "Christian Scott",
+      "home_team": "Miami Marlins",
+      "away_team": "New York Mets"
+    },
+    "824108": {
+      "home_id": 607625,
+      "home_name": "Seth Lugo",
+      "away_id": 693433,
+      "away_name": "Bryan Woo",
+      "home_team": "Kansas City Royals",
+      "away_team": "Seattle Mariners"
+    },
+    "823786": {
+      "home_id": 687075,
+      "home_name": "Brandon Sproat",
+      "away_id": 808967,
+      "away_name": "Yoshinobu Yamamoto",
+      "home_team": "Milwaukee Brewers",
+      "away_team": "Los Angeles Dodgers"
+    },
+    "824676": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 663567,
+      "away_name": "Peter Lambert",
+      "home_team": "Chicago Cubs",
+      "away_team": "Houston Astros"
+    },
+    "823220": {
+      "home_id": 592662,
+      "home_name": "Robbie Ray",
+      "away_id": 702273,
+      "away_name": "Noah Schultz",
+      "home_team": "San Francisco Giants",
+      "away_team": "Chicago White Sox"
+    },
+    "825081": {
+      "home_id": 669194,
+      "home_name": "Ryne Nelson",
+      "away_id": 500779,
+      "away_name": "Jose Quintana",
+      "home_team": "Arizona Diamondbacks",
+      "away_team": "Colorado Rockies"
+    },
+    "823297": {
+      "home_id": 650633,
+      "home_name": "Michael King",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "San Diego Padres",
+      "away_team": "Athletics"
+    },
+    "824921": {
+      "home_id": 527048,
+      "home_name": "Mart\u00edn P\u00e9rez",
+      "away_id": 656492,
+      "away_name": "Foster Griffin",
+      "home_team": "Atlanta Braves",
+      "away_team": "Washington Nationals"
+    },
+    "824028": {
+      "home_id": 672282,
+      "home_name": "Reid Detmers",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Los Angeles Angels",
+      "away_team": "Texas Rangers"
     }
   },
   "game_logs": {
@@ -21492,6 +21612,8 @@
     "2026-05-20",
     "2026-05-21",
     "2026-05-22",
-    "2026-05-23"
+    "2026-05-23",
+    "2026-05-23",
+    "2026-05-24"
   ]
 }
