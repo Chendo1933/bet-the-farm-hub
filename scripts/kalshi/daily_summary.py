@@ -109,31 +109,35 @@ def _stage_recommendation(cfg: dict, live_perf: dict | None) -> tuple[str, str]:
     """
     Returns (current_stage_label, advice_line).
 
-    Stages are encoded by max_stake_per_pick_dollars. We never auto-bump;
-    we just compare actual PnL against the next stage's gate and advise
-    in the morning summary. Operator flips the config when they're ready.
+    As of the 2026-05-22 bankroll-relative redesign, the day-to-day caps
+    (per-pick %, daily %, kill-switch %) auto-scale with the live balance.
+    The ONE manual lever left is max_stake_hard_ceiling_dollars — the
+    absolute ceiling on any single bet. This advisor tells you when the
+    live track record supports raising that ceiling.
 
-    Stage gates were chosen so each step doubles capital deployed while
-    requiring at least 2 weeks of consistent positive ROI to advance:
-      $5  → $10 : 14 days of live data, total ROI ≥ 0%
-      $10 → $25 : 30 days of live data, total ROI ≥ +5%
-      $25 → $50 : 60 days of live data, total ROI ≥ +10%
+    Ceiling gates (each ~doubles the max single bet, requiring a longer
+    track record + higher proven ROI before unlocking):
+      $25  → $50  : 14 days of live data, total ROI ≥ 0%
+      $50  → $100 : 30 days of live data, total ROI ≥ +5%
+      $100 → $200 : 60 days of live data, total ROI ≥ +10%
+    We never auto-bump — you flip the ceiling in config when ready.
     """
-    current_cap = float(cfg.get("max_stake_per_pick_dollars") or 0)
-    if current_cap >= 50:
-        return (f"$50 cap (mature)", "")
-    if current_cap >= 25:
-        threshold_days, threshold_roi, next_cap = 60, 10.0, 50
-        current_label = "$25 cap"
-    elif current_cap >= 10:
-        threshold_days, threshold_roi, next_cap = 30, 5.0, 25
-        current_label = "$10 cap"
+    ceiling = float(cfg.get("max_stake_hard_ceiling_dollars")
+                    or cfg.get("max_stake_per_pick_dollars") or 0)
+    if ceiling >= 200:
+        return ("$200 ceiling (mature)", "")
+    if ceiling >= 100:
+        threshold_days, threshold_roi, next_cap = 60, 10.0, 200
+        current_label = "$100 ceiling"
+    elif ceiling >= 50:
+        threshold_days, threshold_roi, next_cap = 30, 5.0, 100
+        current_label = "$50 ceiling"
     else:
-        threshold_days, threshold_roi, next_cap = 14, 0.0, 10
-        current_label = f"${int(current_cap)} cap (Phase 3 launch)"
+        threshold_days, threshold_roi, next_cap = 14, 0.0, 50
+        current_label = f"${int(ceiling)} ceiling (launch)"
 
     if not live_perf or not live_perf.get("daily"):
-        advice = f"  Bump gate: ${next_cap} after {threshold_days}d of live data ≥ {threshold_roi:+.0f}% ROI (currently 0d of live data)"
+        advice = f"  Ceiling gate: ${next_cap} after {threshold_days}d live ≥ {threshold_roi:+.0f}% ROI (currently 0d)"
         return current_label, advice
 
     days_live = len(live_perf["daily"])
@@ -142,19 +146,19 @@ def _stage_recommendation(cfg: dict, live_perf: dict | None) -> tuple[str, str]:
     roi = (total_pnl / total_stake * 100) if total_stake > 0 else 0.0
 
     if days_live >= threshold_days and roi >= threshold_roi:
-        advice = (f"  ✅ READY TO BUMP: {days_live}d live, ROI {roi:+.1f}% — "
-                  f"edit data/kalshi_config.json max_stake_per_pick_dollars to ${next_cap}")
+        advice = (f"  ✅ READY: {days_live}d live, ROI {roi:+.1f}% — raise "
+                  f"max_stake_hard_ceiling_dollars to ${next_cap}")
     else:
         days_missing = max(0, threshold_days - days_live)
         roi_gap = threshold_roi - roi
         if days_missing > 0 and roi_gap > 0:
-            advice = (f"  Bump gate: {days_live}/{threshold_days}d live, "
+            advice = (f"  Ceiling gate: {days_live}/{threshold_days}d live, "
                       f"ROI {roi:+.1f}% (need ≥{threshold_roi:+.0f}%) → ${next_cap}")
         elif days_missing > 0:
-            advice = (f"  Bump gate: {days_live}/{threshold_days}d live, "
+            advice = (f"  Ceiling gate: {days_live}/{threshold_days}d live, "
                       f"ROI {roi:+.1f}% ✓ → ${next_cap}")
         else:
-            advice = (f"  Bump gate: {days_live}d live ✓, "
+            advice = (f"  Ceiling gate: {days_live}d live ✓, "
                       f"ROI {roi:+.1f}% (need ≥{threshold_roi:+.0f}%) → ${next_cap}")
     return current_label, advice
 

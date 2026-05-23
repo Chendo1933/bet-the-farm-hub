@@ -60,7 +60,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from kalshi.client import KalshiClient
 from kalshi.pick_mapper import find_market_for_ml_pick, find_market_for_spread_pick
-from kalshi.stake import kelly_stake_dollars
+from kalshi.stake import kelly_stake_dollars, effective_caps
 
 
 # ── F5 (First 5 Innings) paper-track helpers ──────────────────────────────
@@ -563,7 +563,12 @@ def main():
     orders = []
     skipped: dict = {}
     daily_exposure = 0.0
-    daily_cap = float(cfg.get("max_daily_exposure_dollars") or 0)
+    # Bankroll-relative caps, computed off the live balance synced above.
+    caps = effective_caps(cfg, bankroll)
+    daily_cap     = caps["daily_dollars"]
+    per_pick_cap  = caps["per_pick_dollars"]
+    print(f"  Risk caps ({caps['source']}): per-pick ${per_pick_cap:.2f} · "
+          f"daily ${daily_cap:.2f} · kill-switch ${caps['kill_switch_dollars']:.2f}")
 
     for pick in eligible:
         mapping = find_market_for_ml_pick(client, pick, events_cache=events_cache)
@@ -615,7 +620,7 @@ def main():
             kelly_fraction              = float(cfg.get("kelly_fraction") or 0.25),
             model_prob                  = order["model_prob"],
             yes_ask_cents               = order["use_price_cents"],
-            max_stake_dollars           = float(cfg.get("max_stake_per_pick_dollars") or 0),
+            max_stake_dollars           = per_pick_cap,
             skip_if_yes_ask_above_cents = cfg.get("skip_if_yes_ask_above_cents"),
         )
         order["stake_dollars"]       = sized["stake_dollars"]

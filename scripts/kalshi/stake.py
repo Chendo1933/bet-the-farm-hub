@@ -27,6 +27,57 @@ Returns 0 dollars when:
 from __future__ import annotations
 
 
+def effective_caps(cfg: dict, bankroll_dollars: float) -> dict:
+    """
+    Compute the effective dollar risk caps from the bankroll-relative pct
+    config (2026-05-22 redesign). Falls back to the deprecated fixed-dollar
+    keys when a pct key is absent, so old configs still work.
+
+    Returns:
+      {
+        "per_pick_dollars":   min(bankroll × max_stake_pct, hard_ceiling),
+        "daily_dollars":      bankroll × max_daily_exposure_pct,
+        "kill_switch_dollars": bankroll × kill_switch_loss_pct,  # positive
+        "source":             "pct" | "fixed",
+      }
+
+    Why bankroll-relative: a fixed $25 kill switch on a $38 bankroll lets
+    you lose 66% before halting. As a percentage (20%), the kill switch is
+    always 20% of CURRENT balance — safe at every account size, and every
+    cap auto-scales as the account compounds (no manual stage-bumping).
+    """
+    bankroll = max(0.0, float(bankroll_dollars or 0))
+
+    # ── Per-pick cap: min(bankroll × pct, hard ceiling) ──
+    pct = cfg.get("max_stake_pct_of_bankroll")
+    ceiling = cfg.get("max_stake_hard_ceiling_dollars")
+    if pct is not None:
+        per_pick = bankroll * float(pct)
+        if ceiling is not None:
+            per_pick = min(per_pick, float(ceiling))
+        source = "pct"
+    else:
+        per_pick = float(cfg.get("max_stake_per_pick_dollars") or 0)
+        source = "fixed"
+
+    # ── Daily exposure cap ──
+    dpct = cfg.get("max_daily_exposure_pct")
+    daily = (bankroll * float(dpct)) if dpct is not None \
+        else float(cfg.get("max_daily_exposure_dollars") or 0)
+
+    # ── Kill switch (yesterday-loss threshold, stored as a positive #) ──
+    kpct = cfg.get("kill_switch_loss_pct")
+    kill = (bankroll * float(kpct)) if kpct is not None \
+        else float(cfg.get("kill_switch_daily_loss_dollars") or 0)
+
+    return {
+        "per_pick_dollars":    round(per_pick, 2),
+        "daily_dollars":       round(daily, 2),
+        "kill_switch_dollars": round(kill, 2),
+        "source":              source,
+    }
+
+
 def kelly_stake_dollars(
     *,
     bankroll_dollars: float,

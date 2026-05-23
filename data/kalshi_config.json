@@ -61,20 +61,52 @@
     "bets just need to be above coin-flip (50)."
   ],
 
-  "max_stake_per_pick_dollars": 5,
-  "max_stake_per_pick_dollars_doc": [
-    "Hard cap on a single order, regardless of Kelly recommendation.",
-    "Initial Phase 3 launch is at $5 — small enough that a bad week is",
-    "single-digit % of bankroll. Raise to $10 → $25 → $50 over weeks if",
-    "live PnL is consistently positive."
+  "_RISK_CAPS_doc": [
+    "── Bankroll-relative risk caps (2026-05-22 redesign) ──",
+    "All caps are now PERCENTAGES of the live Kalshi balance, not fixed",
+    "dollars. This auto-scales every cap as the account compounds — no",
+    "manual stage-bumping. The old fixed-dollar caps were set against a",
+    "$500 reference bankroll but the real balance was ~$38, leaving the",
+    "kill switch at 66% of bankroll (would let you lose two-thirds before",
+    "halting). Percentages fix that at every account size.",
+    "",
+    "Effective per-pick cap = min(bankroll × max_stake_pct, hard_ceiling).",
+    "The hard ceiling is the ONE manual lever — raise it deliberately as",
+    "the live track record builds (that's the 'Kelly ramp').",
+    "",
+    "Fixed-dollar keys below are kept ONLY as fallbacks if a pct key is",
+    "missing — the pct keys take precedence everywhere."
   ],
 
-  "max_daily_exposure_dollars": 20,
-  "max_daily_exposure_dollars_doc": [
-    "Sum across all auto-placed orders in one ET day. New orders skip if",
-    "this would be exceeded. With $5/pick × 4 = $20, this lets the typical",
-    "1-3 daily picks fire fully but caps blow-up days. Raise alongside",
-    "max_stake_per_pick_dollars."
+  "max_stake_pct_of_bankroll": 0.10,
+  "max_stake_pct_of_bankroll_doc": [
+    "No single order risks more than this fraction of live bankroll.",
+    "0.10 = 10%. With quarter Kelly already sizing the stake, this is a",
+    "ceiling that only binds on the highest-edge picks."
+  ],
+
+  "max_daily_exposure_pct": 0.30,
+  "max_daily_exposure_pct_doc": [
+    "Total auto-placed stake in one ET day caps at this fraction of live",
+    "bankroll. 0.30 = 30%. Lets the typical 1-3 daily picks fire fully",
+    "while capping blow-up days."
+  ],
+
+  "kill_switch_loss_pct": 0.20,
+  "kill_switch_loss_pct_doc": [
+    "If yesterday's reconciled PnL was below this fraction of bankroll",
+    "(0.20 = -20%), place_orders.py refuses to place ANY orders today.",
+    "Auto-resets the next day if PnL recovers. Always 20% of CURRENT",
+    "balance — never the old 66%-of-bankroll hole."
+  ],
+
+  "max_stake_hard_ceiling_dollars": 25,
+  "max_stake_hard_ceiling_doc": [
+    "Absolute dollar ceiling on any single order, on top of the pct cap.",
+    "THIS is the manual Kelly-ramp lever: percentages handle smooth",
+    "scaling underneath, but no bet ever exceeds this until you raise it.",
+    "Bump 25 → 50 → 100 as live ROI proves out over weeks. The morning",
+    "recap's stage advisor tells you when the gates are met."
   ],
 
   "kelly_fraction": 0.25,
@@ -86,16 +118,17 @@
 
   "bankroll_dollars": 500,
   "bankroll_doc": [
-    "Reference bankroll for Kelly stake calculation. Update manually when",
-    "you deposit/withdraw. Phase 3+ may auto-sync from Kalshi balance."
+    "FALLBACK reference bankroll, used ONLY if the live Kalshi balance",
+    "fetch fails. Normal operation auto-syncs bankroll from the live",
+    "account balance every dry-run."
   ],
 
+  "max_stake_per_pick_dollars": 5,
+  "max_daily_exposure_dollars": 20,
   "kill_switch_daily_loss_dollars": 25,
-  "kill_switch_daily_loss_doc": [
-    "If yesterday's reconciled PnL was below -$25, place_orders.py refuses",
-    "to place ANY orders today. Auto-resets the next day if PnL recovers.",
-    "With $20/day max exposure, a -$25 day means we lost more than today's",
-    "planned exposure — clear signal to pause and review."
+  "_deprecated_fixed_caps_doc": [
+    "Deprecated fixed-dollar caps. Superseded by the pct keys above.",
+    "Kept only as fallbacks if a corresponding pct key is missing."
   ],
 
   "skip_if_yes_ask_above_cents": 80,

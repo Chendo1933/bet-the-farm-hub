@@ -56,6 +56,7 @@ from zoneinfo import ZoneInfo
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from kalshi.client import KalshiClient, KalshiAPIError
+from kalshi.stake import effective_caps
 
 CONFIG_PATH      = "data/kalshi_config.json"
 DRYRUN_DIR       = "data/kalshi_dryrun"
@@ -178,11 +179,14 @@ def main():
     if total_planned > balance_dollars:
         sys.exit(f"✗ Planned stake ${total_planned:.2f} exceeds balance ${balance_dollars:.2f} — refusing all orders")
 
+    # Bankroll-relative caps off the live balance (2026-05-22 redesign).
+    caps = effective_caps(cfg, balance_dollars)
     yesterday_pnl = _yesterday_pnl_dollars()
-    kill_switch = float(cfg.get("kill_switch_daily_loss_dollars") or 0)
+    kill_switch = caps["kill_switch_dollars"]
     if kill_switch > 0 and yesterday_pnl < -kill_switch:
         _print_block(f"Kill switch tripped",
-                     f"Yesterday PnL was ${yesterday_pnl:.2f}, below threshold of -${kill_switch:.2f}.\n"
+                     f"Yesterday PnL was ${yesterday_pnl:.2f}, below threshold of -${kill_switch:.2f} "
+                     f"({caps['source']} cap @ {balance_dollars:.2f} bankroll).\n"
                      f"Skipping all orders today. Reset by waiting for a non-losing day.")
         sys.exit(0)
     print(f"  Yesterday PnL: ${yesterday_pnl:+.2f} (kill switch threshold: -${kill_switch:.2f}) — OK")
@@ -200,8 +204,9 @@ def main():
             print(f"  ⚠ Could not fetch existing positions ({e.status}) — continuing without dedup check")
 
     # ── Per-order placement loop ────────────────────────────────────────────
-    max_per_pick = float(cfg.get("max_stake_per_pick_dollars") or 0)
-    max_daily   = float(cfg.get("max_daily_exposure_dollars") or 0)
+    max_per_pick = caps["per_pick_dollars"]
+    max_daily   = caps["daily_dollars"]
+    print(f"  Risk caps ({caps['source']}): per-pick ${max_per_pick:.2f} · daily ${max_daily:.2f}")
     placed_orders = []
     skipped: list = []
     cumulative_stake = 0.0
