@@ -1,0 +1,19 @@
+{
+  "date": "2026-05-23",
+  "snapshot_time": "2026-05-23T16:45:45.268910+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Cincinnati Reds",
+        "away": "St. Louis Cardinals",
+        "commence": "2026-05-23T17:11:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-05-23T16:45:45.268910+00:00"
+      }
+    ]
+  }
+}
