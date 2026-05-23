@@ -1,0 +1,125 @@
+name: Kalshi Place Orders — Failsafe
+
+# Catch-up safety net for the live bet chain.
+#
+# Primary path: Daily Pick Logger (10:30am ET) → Kalshi Dry-Run → Kalshi Place
+# Orders → Kalshi Daily Plan. If that chain FAILS before producing a dry-run
+# snapshot (e.g. log_picks or dry_run errors out), no live bets get placed that
+# day and you'd only learn at the 1:30pm health check — after early games.
+#
+# This workflow fires after the 12:30pm Backup/Verify pick logger (which re-logs
+# today's picks even if the morning logger died) and re-runs dry_run →
+# place_orders → plan — but ONLY when the morning snapshot is missing.
+#
+# Conditional by design (no notification spam on normal days):
+#   • data/kalshi_dryrun/{today}.json EXISTS → morning chain ran (placed bets or
+#     correctly placed none) → this no-ops. No duplicate plan push.
+#   • picks file missing → off day / both loggers down → nothing to place, no-op.
+#   • snapshot missing BUT picks exist → morning chain broke → ACTIVATE.
+#
+# Second safety layer: place_orders.py refuses to run twice in a day (gate 6:
+# if today's receipt file already has placed_orders it bails), so even if this
+# fired redundantly it cannot double-place.
+
+on:
+  workflow_run:
+    workflows: ["Daily Pick Logger — Backup/Verify"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  failsafe-place:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Decide whether the failsafe is needed
+        id: decide
+        run: |
+          ET_DATE=$(TZ='America/New_York' date +%F)
+          echo "et_date=$ET_DATE" >> $GITHUB_OUTPUT
+          if [ -f "data/kalshi_dryrun/${ET_DATE}.json" ]; then
+            echo "run=false" >> $GITHUB_OUTPUT
+            echo "Morning dry-run snapshot present for ${ET_DATE} — chain ran, failsafe NOT needed."
+          elif [ ! -f "data/picks/${ET_DATE}.json" ]; then
+            echo "run=false" >> $GITHUB_OUTPUT
+            echo "No picks file for ${ET_DATE} (off day or both loggers down) — nothing to place."
+          else
+            echo "run=true" >> $GITHUB_OUTPUT
+            echo "::warning::No morning dry-run snapshot for ${ET_DATE} but picks exist — ACTIVATING failsafe placement."
+          fi
+
+      - name: Check trade secrets configured
+        id: check_secrets
+        if: steps.decide.outputs.run == 'true'
+        env:
+          KEY: ${{ secrets.KALSHI_TRADE_KEY_ID }}
+        run: |
+          if [ -n "$KEY" ]; then
+            echo "configured=true" >> $GITHUB_OUTPUT
+            echo "Trade-permission secrets present"
+          else
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "::warning::KALSHI_TRADE_KEY_ID not set — cannot place; skipping"
+          fi
+
+      - name: Set up Python
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        run: pip install cryptography requests
+
+      - name: Regenerate dry-run snapshot (read-only key)
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        env:
+          KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
+          KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_API_KEY_ID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_PRIVATE_KEY }}
+        run: python scripts/kalshi/dry_run.py
+
+      - name: Place live orders (trade key)
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        env:
+          KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
+          KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_TRADE_KEY_ID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_TRADE_PRIVATE_KEY }}
+        run: python scripts/kalshi/place_orders.py
+
+      - name: Commit snapshot + receipts
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/kalshi_dryrun/ data/kalshi_orders/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "kalshi: FAILSAFE catch-up place $(date +'%Y-%m-%d')"
+            git pull --rebase origin main || true
+            git push --force-with-lease
+            echo "Failsafe placement committed"
+          fi
+
+      - name: Send today's-bets notification
+        if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python scripts/kalshi/daily_summary.py --mode plan
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      failsafe-place
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Failsafe catch-up placement FAILED — morning chain had already failed, so today's live bets may be unplaced. Manual check needed."
