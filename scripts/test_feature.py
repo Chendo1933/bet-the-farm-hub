@@ -65,7 +65,8 @@ def cumulative(starts, before_date):
     er=sum(s.get("er",0) for s in prior); bb=sum(s.get("bb",0) for s in prior)
     k=sum(s.get("k",0) for s in prior); hr=sum(s.get("hr",0) for s in prior)
     return {"era":9*er/ip,"fip":(13*hr+3*bb-2*k)/ip+3.10,"starts":len(prior),
-            "last_date":prior[-1]["date"]}
+            "last_date":prior[-1]["date"],
+            "k9": 9*k/ip, "hr9": 9*hr/ip}
 
 
 def recent_form(starts, before_date, n=3):
@@ -95,8 +96,10 @@ def main():
             by_teams[(_norm(e["home_team"]), _norm(e["away_team"]))] = (e["home_id"], e["away_id"])
 
     # Build a chronological list of games with their features + outcomes.
-    # Also track each team's rolling runs-scored for hot/cold offense.
+    # Also track each team's rolling runs-scored for hot/cold offense and
+    # the running count of consecutive same-matchup days (series game #).
     team_recent_runs = defaultdict(list)  # team -> [runs scored, newest last]
+    series_state = {}                      # (home,away) -> {last_date, count}
 
     games = []
     files = sorted(glob.glob("data/results/*.json"))
@@ -122,6 +125,8 @@ def main():
                 a = cumulative(logs.get(str(ids[1]),[]), date)
                 if h and a:
                     feats["combined_fip"] = h["fip"] + a["fip"]
+                    feats["combined_k9"]  = h["k9"] + a["k9"]    # strikeout suppression
+                    feats["combined_hr9"] = h["hr9"] + a["hr9"]  # homer-proneness
                     # Rest: days since each starter's last outing
                     hr_rest = days_between(h["last_date"], date)
                     ar_rest = days_between(a["last_date"], date)
@@ -132,6 +137,18 @@ def main():
                     arf = recent_form(logs.get(str(ids[1]),[]), date)
                     if hrf is not None and arf is not None:
                         feats["combined_recent_era"] = hrf + arf
+            # Series game number (1 = opener, 2/3 = deeper). Reset when the
+            # same matchup hasn't played in >1 day (i.e. a new series).
+            sk = (home, away)
+            st = series_state.get(sk)
+            gap = days_between(st["last_date"], date) if st else None
+            if st and gap is not None and gap <= 1:
+                st["count"] += 1
+            else:
+                st = {"count": 1}
+            st["last_date"] = date
+            series_state[sk] = st
+            feats["series_game_num"] = st["count"]
             # Hot/cold offense: both teams' avg runs over last 5 games (pre-game)
             h_recent = team_recent_runs[home][-5:]
             a_recent = team_recent_runs[away][-5:]
@@ -152,7 +169,8 @@ def main():
     print()
 
     # For each feature, split into terciles and measure over-rates.
-    feature_names = ["park","combined_fip","avg_rest","combined_recent_era","combined_recent_offense"]
+    feature_names = ["park","combined_fip","avg_rest","combined_recent_era",
+                     "combined_recent_offense","combined_k9","combined_hr9","series_game_num"]
     FULL_LINE, F5_LINE = 8.5, 4.5
 
     print(f"{'feature':<24} {'n':>4}  {'bottom⅓ over%':>14} {'top⅓ over%':>12} {'separation':>11}")
