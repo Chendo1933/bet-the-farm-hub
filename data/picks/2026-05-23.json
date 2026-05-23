@@ -1,0 +1,196 @@
+{
+  "date": "2026-05-23",
+  "logged": "2026-05-23T16:36:54.142275+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Toronto Blue Jays",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Toronto Blue Jays",
+      "pickLabel": "Toronto Blue Jays ML (+129)",
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 129,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 50% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +129"
+        }
+      ],
+      "date": "May 23",
+      "time": "3:08 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Philadelphia Phillies",
+      "away": "Cleveland Guardians",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Cleveland Guardians",
+      "pickLabel": "Cleveland Guardians ML (+154)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 154,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 38%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +154"
+        }
+      ],
+      "date": "May 23",
+      "time": "4:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Washington Nationals",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-168)",
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -168,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 60%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -168"
+        }
+      ],
+      "date": "May 23",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-101)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 64% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -101"
+        }
+      ],
+      "date": "May 23",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9",
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -114,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Milwaukee Brewers 47% / Los Angeles Dodgers 43% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.8 < line 9 (+1.2 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Both bullpens elite (3.22/2.98 ERA) \u2192 late-inning Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.1% edge vs implied"
+        }
+      ],
+      "date": "May 23",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Diego Padres",
+      "away": "Athletics",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "San Diego Padres",
+      "pickLabel": "San Diego Padres ML (-102)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 60% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -102"
+        }
+      ],
+      "date": "May 23",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 6,
+  "filter_stats": {
+    "prefilter": 20,
+    "sub60": 13,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 6,
+    "dropped": 14
+  }
+}
