@@ -72,14 +72,19 @@ class KalshiClient:
     def _request(self, method: str, path: str, params: dict | None = None,
                  json_body: dict | None = None,
                  require_auth: bool = True, max_retries: int = 3) -> dict:
-        # Path used in signing must match what we send (including query string).
         full_path = path
         if params:
             full_path = f"{path}?{urlencode(params)}"
         url = f"{self.base_url}{full_path}"
-        # Kalshi signs the path including the /trade-api/v2 prefix exactly
-        # as sent. Re-sign each retry so the timestamp stays fresh.
-        sign_path = f"/trade-api/v2{full_path}"
+        # Kalshi signs timestamp + METHOD + path, where `path` is the route
+        # WITHOUT the query string. Including the query string here produced
+        # `INCORRECT_API_KEY_SIGNATURE` (401) on strict-auth endpoints with
+        # params — e.g. GET /portfolio/positions?limit=200 — while no-query
+        # routes like /portfolio/balance worked, and public market endpoints
+        # (/events, /markets) aren't strictly auth-checked so they slipped by.
+        # Sign the bare path (no query); the query still rides in the URL.
+        # Re-sign each retry so the timestamp stays fresh.
+        sign_path = f"/trade-api/v2{path}"
 
         for attempt in range(max_retries + 1):
             headers = {"Accept": "application/json"}
