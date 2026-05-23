@@ -1,0 +1,64 @@
+name: Pipeline Health Check
+
+# The dead-man's switch. Runs on its OWN independent cron — deliberately NOT
+# chained to any other workflow — so it stays alive even if the pick→dry-run→
+# place-orders chain breaks upstream.
+#
+# Every other workflow only alerts via `if: failure()`, which fires when a
+# workflow RUNS and FAILS. That can't catch the silent failures: a workflow
+# that never ran, one that succeeded but did nothing, or a dead trade
+# credential (the PEM-parse bug that silently killed live betting for 5 days).
+#
+# This job actively authenticates to Kalshi with the TRADE key, reads the
+# balance, and checks that the dry-run / results files are fresh — then pushes
+# ONE notification a day:
+#   ✅ healthy (low priority) — its absence is itself a signal something's off
+#   ⚠️ warning  — stale data / placed nothing despite candidates
+#   🚨 critical — trade credential dead / Kalshi unreachable
+#
+# Timed for ~1:30pm ET, AFTER the morning pick→dry-run→place chain finishes,
+# so it can verify today's run produced what it should. A dead-credential
+# alert here turns a multi-day silent outage into a same-day fix.
+
+on:
+  schedule:
+    - cron: "30 17 * * *"   # 17:30 UTC = 1:30 PM ET (EDT) / 12:30 PM ET (EST)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install cryptography requests
+
+      - name: Run pipeline health check
+        env:
+          WEBHOOK_URL:        ${{ secrets.WEBHOOK_URL }}
+          KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
+          # Validate the SAME credential the live betting workflow uses — the
+          # trade key — so a broken/expired key is caught here proactively.
+          KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_TRADE_KEY_ID }}
+          KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_TRADE_PRIVATE_KEY }}
+        run: python scripts/kalshi/health_check.py
+
+      - name: Notify on failure
+        if: failure()
+        uses: ./.github/actions/notify-failure
+        with:
+          webhook:  ${{ secrets.WEBHOOK_URL }}
+          workflow: ${{ github.workflow }}
+          job:      health
+          run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          context:  "Pipeline health-check itself failed — the dead-man's switch is down; investigate."
