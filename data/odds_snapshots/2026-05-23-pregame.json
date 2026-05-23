@@ -1,6 +1,6 @@
 {
   "date": "2026-05-23",
-  "snapshot_time": "2026-05-23T22:41:06.712555+00:00",
+  "snapshot_time": "2026-05-23T23:45:09.112676+00:00",
   "type": "pregame",
   "games": {
     "nba": [
@@ -9,22 +9,10 @@
         "away": "New York Knicks",
         "commence": "2026-05-24T00:10:00Z",
         "spread": -3.5,
-        "total": 215.5,
+        "total": 216.5,
         "ml_home": -148,
         "ml_away": 124,
-        "snapshot_time": "2026-05-23T22:41:06.712555+00:00"
-      }
-    ],
-    "nhl": [
-      {
-        "home": "Carolina Hurricanes",
-        "away": "Montr\u00e9al Canadiens",
-        "commence": "2026-05-23T23:20:00Z",
-        "spread": -1.5,
-        "total": 5.5,
-        "ml_home": -205,
-        "ml_away": 168,
-        "snapshot_time": "2026-05-23T22:41:06.712555+00:00"
+        "snapshot_time": "2026-05-23T23:45:09.112676+00:00"
       }
     ],
     "mlb": [
@@ -126,6 +114,18 @@
         "total": 8.5,
         "ml_home": -102,
         "ml_away": -116,
+        "snapshot_time": "2026-05-23T22:41:06.712555+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "commence": "2026-05-23T23:20:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -205,
+        "ml_away": 168,
         "snapshot_time": "2026-05-23T22:41:06.712555+00:00"
       }
     ]
