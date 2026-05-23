@@ -1,0 +1,1780 @@
+{
+  "401803461": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-03-22",
+    "home": "New York Rangers",
+    "away": "Winnipeg Jets"
+  },
+  "401803462": {
+    "home_ml": 136,
+    "away_ml": -162,
+    "date": "2026-03-22",
+    "home": "Washington Capitals",
+    "away": "Colorado Avalanche"
+  },
+  "401803463": {
+    "home_ml": 120,
+    "away_ml": -142,
+    "date": "2026-03-22",
+    "home": "Pittsburgh Penguins",
+    "away": "Carolina Hurricanes"
+  },
+  "401803464": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-03-22",
+    "home": "Chicago Blackhawks",
+    "away": "Nashville Predators"
+  },
+  "401803465": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-03-22",
+    "home": "New York Islanders",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803466": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-03-22",
+    "home": "Dallas Stars",
+    "away": "Vegas Golden Knights"
+  },
+  "401803467": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-03-22",
+    "home": "Calgary Flames",
+    "away": "Tampa Bay Lightning"
+  },
+  "401803468": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-03-22",
+    "home": "Anaheim Ducks",
+    "away": "Buffalo Sabres"
+  },
+  "401803469": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-03-22",
+    "home": "Utah Mammoth",
+    "away": "Los Angeles Kings"
+  },
+  "401803470": {
+    "home_ml": 160,
+    "away_ml": -192,
+    "date": "2026-03-23",
+    "home": "New York Rangers",
+    "away": "Ottawa Senators"
+  },
+  "401803471": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-03-24",
+    "home": "Boston Bruins",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803472": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-03-24",
+    "home": "Montreal Canadiens",
+    "away": "Carolina Hurricanes"
+  },
+  "401803473": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-03-24",
+    "home": "Detroit Red Wings",
+    "away": "Ottawa Senators"
+  },
+  "401803474": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-03-24",
+    "home": "Florida Panthers",
+    "away": "Seattle Kraken"
+  },
+  "401803475": {
+    "home_ml": -166,
+    "away_ml": 140,
+    "date": "2026-03-24",
+    "home": "New York Islanders",
+    "away": "Chicago Blackhawks"
+  },
+  "401803476": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-03-24",
+    "home": "Philadelphia Flyers",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803477": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-03-24",
+    "home": "Pittsburgh Penguins",
+    "away": "Colorado Avalanche"
+  },
+  "401803478": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-03-24",
+    "home": "Tampa Bay Lightning",
+    "away": "Minnesota Wild"
+  },
+  "401803479": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-03-24",
+    "home": "St. Louis Blues",
+    "away": "Washington Capitals"
+  },
+  "401803480": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-03-24",
+    "home": "Nashville Predators",
+    "away": "San Jose Sharks"
+  },
+  "401803481": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-03-24",
+    "home": "Dallas Stars",
+    "away": "New Jersey Devils"
+  },
+  "401803482": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-03-24",
+    "home": "Winnipeg Jets",
+    "away": "Vegas Golden Knights"
+  },
+  "401803484": {
+    "home_ml": 124,
+    "away_ml": -148,
+    "date": "2026-03-24",
+    "home": "Calgary Flames",
+    "away": "Los Angeles Kings"
+  },
+  "401803483": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-03-24",
+    "home": "Utah Mammoth",
+    "away": "Edmonton Oilers"
+  },
+  "401803485": {
+    "home_ml": 150,
+    "away_ml": -180,
+    "date": "2026-03-24",
+    "home": "Vancouver Canucks",
+    "away": "Anaheim Ducks"
+  },
+  "401803486": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-03-25",
+    "home": "Buffalo Sabres",
+    "away": "Boston Bruins"
+  },
+  "401803487": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-03-25",
+    "home": "Toronto Maple Leafs",
+    "away": "New York Rangers"
+  },
+  "401803488": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-03-26",
+    "home": "Montreal Canadiens",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803489": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-03-26",
+    "home": "Ottawa Senators",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803490": {
+    "home_ml": -290,
+    "away_ml": 235,
+    "date": "2026-03-26",
+    "home": "Tampa Bay Lightning",
+    "away": "Seattle Kraken"
+  },
+  "401803491": {
+    "home_ml": 140,
+    "away_ml": -166,
+    "date": "2026-03-26",
+    "home": "Florida Panthers",
+    "away": "Minnesota Wild"
+  },
+  "401803492": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-03-26",
+    "home": "New York Islanders",
+    "away": "Dallas Stars"
+  },
+  "401803493": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-03-26",
+    "home": "Philadelphia Flyers",
+    "away": "Chicago Blackhawks"
+  },
+  "401803494": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-03-26",
+    "home": "St. Louis Blues",
+    "away": "San Jose Sharks"
+  },
+  "401803495": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-03-26",
+    "home": "Nashville Predators",
+    "away": "New Jersey Devils"
+  },
+  "401803496": {
+    "home_ml": 154,
+    "away_ml": -185,
+    "date": "2026-03-26",
+    "home": "Winnipeg Jets",
+    "away": "Colorado Avalanche"
+  },
+  "401803497": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-03-26",
+    "home": "Utah Mammoth",
+    "away": "Washington Capitals"
+  },
+  "401803498": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-03-26",
+    "home": "Calgary Flames",
+    "away": "Anaheim Ducks"
+  },
+  "401803499": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-03-26",
+    "home": "Vegas Golden Knights",
+    "away": "Edmonton Oilers"
+  },
+  "401803500": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-03-26",
+    "home": "Vancouver Canucks",
+    "away": "Los Angeles Kings"
+  },
+  "401803501": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-03-27",
+    "home": "Buffalo Sabres",
+    "away": "Detroit Red Wings"
+  },
+  "401803502": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-03-27",
+    "home": "New York Rangers",
+    "away": "Chicago Blackhawks"
+  },
+  "401803503": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-03-28",
+    "home": "Tampa Bay Lightning",
+    "away": "Ottawa Senators"
+  },
+  "401803504": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-03-28",
+    "home": "New York Islanders",
+    "away": "Florida Panthers"
+  },
+  "401803505": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-03-28",
+    "home": "Edmonton Oilers",
+    "away": "Anaheim Ducks"
+  },
+  "401803506": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-03-28",
+    "home": "Boston Bruins",
+    "away": "Minnesota Wild"
+  },
+  "401803507": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-03-28",
+    "home": "Pittsburgh Penguins",
+    "away": "Dallas Stars"
+  },
+  "401803508": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-03-28",
+    "home": "Carolina Hurricanes",
+    "away": "New Jersey Devils"
+  },
+  "401803509": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-03-28",
+    "home": "Columbus Blue Jackets",
+    "away": "San Jose Sharks"
+  },
+  "401803510": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-03-28",
+    "home": "Buffalo Sabres",
+    "away": "Seattle Kraken"
+  },
+  "401803511": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-03-28",
+    "home": "St. Louis Blues",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803512": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-03-28",
+    "home": "Nashville Predators",
+    "away": "Montreal Canadiens"
+  },
+  "401803513": {
+    "home_ml": -270,
+    "away_ml": 220,
+    "date": "2026-03-28",
+    "home": "Colorado Avalanche",
+    "away": "Winnipeg Jets"
+  },
+  "401803514": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-03-28",
+    "home": "Detroit Red Wings",
+    "away": "Philadelphia Flyers"
+  },
+  "401803515": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-03-28",
+    "home": "Los Angeles Kings",
+    "away": "Utah Mammoth"
+  },
+  "401803516": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-03-28",
+    "home": "Calgary Flames",
+    "away": "Vancouver Canucks"
+  },
+  "401803517": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-03-28",
+    "home": "Vegas Golden Knights",
+    "away": "Washington Capitals"
+  },
+  "401803518": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-03-29",
+    "home": "New York Rangers",
+    "away": "Florida Panthers"
+  },
+  "401803519": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-03-29",
+    "home": "Tampa Bay Lightning",
+    "away": "Nashville Predators"
+  },
+  "401803520": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-03-29",
+    "home": "Carolina Hurricanes",
+    "away": "Montreal Canadiens"
+  },
+  "401803521": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-03-29",
+    "home": "Columbus Blue Jackets",
+    "away": "Boston Bruins"
+  },
+  "401803522": {
+    "home_ml": -170,
+    "away_ml": 142,
+    "date": "2026-03-29",
+    "home": "New Jersey Devils",
+    "away": "Chicago Blackhawks"
+  },
+  "401803523": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-03-29",
+    "home": "Philadelphia Flyers",
+    "away": "Dallas Stars"
+  },
+  "401803524": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-03-30",
+    "home": "New York Islanders",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803525": {
+    "home_ml": -395,
+    "away_ml": 310,
+    "date": "2026-03-30",
+    "home": "Colorado Avalanche",
+    "away": "Calgary Flames"
+  },
+  "401803526": {
+    "home_ml": -360,
+    "away_ml": 285,
+    "date": "2026-03-30",
+    "home": "Vegas Golden Knights",
+    "away": "Vancouver Canucks"
+  },
+  "401803527": {
+    "home_ml": -192,
+    "away_ml": 160,
+    "date": "2026-03-30",
+    "home": "Anaheim Ducks",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803528": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-03-30",
+    "home": "San Jose Sharks",
+    "away": "St. Louis Blues"
+  },
+  "401803529": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-03-31",
+    "home": "Boston Bruins",
+    "away": "Dallas Stars"
+  },
+  "401803530": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-03-31",
+    "home": "Buffalo Sabres",
+    "away": "New York Islanders"
+  },
+  "401803531": {
+    "home_ml": -170,
+    "away_ml": 142,
+    "date": "2026-03-31",
+    "home": "Tampa Bay Lightning",
+    "away": "Montreal Canadiens"
+  },
+  "401803532": {
+    "home_ml": 150,
+    "away_ml": -180,
+    "date": "2026-03-31",
+    "home": "Florida Panthers",
+    "away": "Ottawa Senators"
+  },
+  "401803533": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-03-31",
+    "home": "New York Rangers",
+    "away": "New Jersey Devils"
+  },
+  "401803534": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-03-31",
+    "home": "Pittsburgh Penguins",
+    "away": "Detroit Red Wings"
+  },
+  "401803535": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-03-31",
+    "home": "Washington Capitals",
+    "away": "Philadelphia Flyers"
+  },
+  "401803536": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-03-31",
+    "home": "Columbus Blue Jackets",
+    "away": "Carolina Hurricanes"
+  },
+  "401803537": {
+    "home_ml": 130,
+    "away_ml": -155,
+    "date": "2026-03-31",
+    "home": "Chicago Blackhawks",
+    "away": "Winnipeg Jets"
+  },
+  "401803538": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-03-31",
+    "home": "Edmonton Oilers",
+    "away": "Seattle Kraken"
+  },
+  "401803539": {
+    "home_ml": -470,
+    "away_ml": 360,
+    "date": "2026-04-01",
+    "home": "Colorado Avalanche",
+    "away": "Vancouver Canucks"
+  },
+  "401803540": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-01",
+    "home": "Los Angeles Kings",
+    "away": "St. Louis Blues"
+  },
+  "401803541": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-01",
+    "home": "San Jose Sharks",
+    "away": "Anaheim Ducks"
+  },
+  "401803542": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-02",
+    "home": "Ottawa Senators",
+    "away": "Buffalo Sabres"
+  },
+  "401803543": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-02",
+    "home": "Tampa Bay Lightning",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803544": {
+    "home_ml": 136,
+    "away_ml": -162,
+    "date": "2026-04-02",
+    "home": "Florida Panthers",
+    "away": "Boston Bruins"
+  },
+  "401803546": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-02",
+    "home": "New York Rangers",
+    "away": "Montreal Canadiens"
+  },
+  "401803547": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-02",
+    "home": "Philadelphia Flyers",
+    "away": "Detroit Red Wings"
+  },
+  "401803548": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-04-02",
+    "home": "Carolina Hurricanes",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803545": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-02",
+    "home": "New Jersey Devils",
+    "away": "Washington Capitals"
+  },
+  "401803549": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-02",
+    "home": "Dallas Stars",
+    "away": "Winnipeg Jets"
+  },
+  "401803550": {
+    "home_ml": -425,
+    "away_ml": 330,
+    "date": "2026-04-02",
+    "home": "Minnesota Wild",
+    "away": "Vancouver Canucks"
+  },
+  "401803551": {
+    "home_ml": -230,
+    "away_ml": 190,
+    "date": "2026-04-02",
+    "home": "Edmonton Oilers",
+    "away": "Chicago Blackhawks"
+  },
+  "401803552": {
+    "home_ml": -238,
+    "away_ml": 195,
+    "date": "2026-04-02",
+    "home": "Vegas Golden Knights",
+    "away": "Calgary Flames"
+  },
+  "401803553": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-04-02",
+    "home": "San Jose Sharks",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803554": {
+    "home_ml": 120,
+    "away_ml": -142,
+    "date": "2026-04-02",
+    "home": "Seattle Kraken",
+    "away": "Utah Mammoth"
+  },
+  "401803555": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-02",
+    "home": "Los Angeles Kings",
+    "away": "Nashville Predators"
+  },
+  "401803556": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-03",
+    "home": "New York Islanders",
+    "away": "Philadelphia Flyers"
+  },
+  "401803557": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-04-03",
+    "home": "Anaheim Ducks",
+    "away": "St. Louis Blues"
+  },
+  "401803558": {
+    "home_ml": 124,
+    "away_ml": -148,
+    "date": "2026-04-04",
+    "home": "New York Rangers",
+    "away": "Detroit Red Wings"
+  },
+  "401803559": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-04-04",
+    "home": "Ottawa Senators",
+    "away": "Minnesota Wild"
+  },
+  "401803560": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-04-04",
+    "home": "Dallas Stars",
+    "away": "Colorado Avalanche"
+  },
+  "401803561": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-04-04",
+    "home": "Tampa Bay Lightning",
+    "away": "Boston Bruins"
+  },
+  "401803562": {
+    "home_ml": -245,
+    "away_ml": 200,
+    "date": "2026-04-04",
+    "home": "Pittsburgh Penguins",
+    "away": "Florida Panthers"
+  },
+  "401803563": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-04",
+    "home": "New Jersey Devils",
+    "away": "Montreal Canadiens"
+  },
+  "401803564": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-04",
+    "home": "Washington Capitals",
+    "away": "Buffalo Sabres"
+  },
+  "401803565": {
+    "home_ml": -258,
+    "away_ml": 210,
+    "date": "2026-04-04",
+    "home": "Carolina Hurricanes",
+    "away": "New York Islanders"
+  },
+  "401803566": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-04",
+    "home": "Columbus Blue Jackets",
+    "away": "Winnipeg Jets"
+  },
+  "401803567": {
+    "home_ml": 190,
+    "away_ml": -230,
+    "date": "2026-04-04",
+    "home": "Vancouver Canucks",
+    "away": "Utah Mammoth"
+  },
+  "401803568": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-04-04",
+    "home": "Los Angeles Kings",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803569": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-04",
+    "home": "Edmonton Oilers",
+    "away": "Vegas Golden Knights"
+  },
+  "401803570": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-04",
+    "home": "Anaheim Ducks",
+    "away": "Calgary Flames"
+  },
+  "401803571": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-04",
+    "home": "San Jose Sharks",
+    "away": "Nashville Predators"
+  },
+  "401803572": {
+    "home_ml": -170,
+    "away_ml": 142,
+    "date": "2026-04-04",
+    "home": "Seattle Kraken",
+    "away": "Chicago Blackhawks"
+  },
+  "401803573": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-04-05",
+    "home": "Detroit Red Wings",
+    "away": "Minnesota Wild"
+  },
+  "401803574": {
+    "home_ml": -250,
+    "away_ml": 205,
+    "date": "2026-04-05",
+    "home": "Pittsburgh Penguins",
+    "away": "Florida Panthers"
+  },
+  "401803575": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-05",
+    "home": "Philadelphia Flyers",
+    "away": "Boston Bruins"
+  },
+  "401803576": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-04-05",
+    "home": "Ottawa Senators",
+    "away": "Carolina Hurricanes"
+  },
+  "401803577": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-05",
+    "home": "Montreal Canadiens",
+    "away": "New Jersey Devils"
+  },
+  "401803578": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-05",
+    "home": "New York Rangers",
+    "away": "Washington Capitals"
+  },
+  "401803579": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-04-05",
+    "home": "Colorado Avalanche",
+    "away": "St. Louis Blues"
+  },
+  "401803603": {
+    "home_ml": -305,
+    "away_ml": 245,
+    "date": "2026-04-09",
+    "home": "New York Islanders",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803598": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-09",
+    "home": "Buffalo Sabres",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803599": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-04-09",
+    "home": "Montreal Canadiens",
+    "away": "Tampa Bay Lightning"
+  },
+  "401803600": {
+    "home_ml": -395,
+    "away_ml": 310,
+    "date": "2026-04-09",
+    "home": "Ottawa Senators",
+    "away": "Florida Panthers"
+  },
+  "401803601": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-09",
+    "home": "Detroit Red Wings",
+    "away": "Philadelphia Flyers"
+  },
+  "401803602": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-09",
+    "home": "New Jersey Devils",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803604": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-09",
+    "home": "St. Louis Blues",
+    "away": "Winnipeg Jets"
+  },
+  "401803606": {
+    "home_ml": 154,
+    "away_ml": -185,
+    "date": "2026-04-09",
+    "home": "Chicago Blackhawks",
+    "away": "Carolina Hurricanes"
+  },
+  "401803605": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-09",
+    "home": "Dallas Stars",
+    "away": "Minnesota Wild"
+  },
+  "401803607": {
+    "home_ml": -340,
+    "away_ml": 270,
+    "date": "2026-04-09",
+    "home": "Colorado Avalanche",
+    "away": "Calgary Flames"
+  },
+  "401803608": {
+    "home_ml": -180,
+    "away_ml": 150,
+    "date": "2026-04-09",
+    "home": "Utah Mammoth",
+    "away": "Nashville Predators"
+  },
+  "401803609": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-04-09",
+    "home": "Anaheim Ducks",
+    "away": "San Jose Sharks"
+  },
+  "401803610": {
+    "home_ml": 160,
+    "away_ml": -192,
+    "date": "2026-04-09",
+    "home": "Seattle Kraken",
+    "away": "Vegas Golden Knights"
+  },
+  "401803611": {
+    "home_ml": -290,
+    "away_ml": 235,
+    "date": "2026-04-09",
+    "home": "Los Angeles Kings",
+    "away": "Vancouver Canucks"
+  },
+  "401803612": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-11",
+    "home": "Boston Bruins",
+    "away": "Tampa Bay Lightning"
+  },
+  "401803613": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-04-11",
+    "home": "New York Islanders",
+    "away": "Ottawa Senators"
+  },
+  "401803614": {
+    "home_ml": 130,
+    "away_ml": -155,
+    "date": "2026-04-11",
+    "home": "Pittsburgh Penguins",
+    "away": "Washington Capitals"
+  },
+  "401803615": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-11",
+    "home": "Los Angeles Kings",
+    "away": "Edmonton Oilers"
+  },
+  "401803616": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-04-11",
+    "home": "Detroit Red Wings",
+    "away": "New Jersey Devils"
+  },
+  "401803617": {
+    "home_ml": 124,
+    "away_ml": -148,
+    "date": "2026-04-11",
+    "home": "Chicago Blackhawks",
+    "away": "St. Louis Blues"
+  },
+  "401803618": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-11",
+    "home": "Nashville Predators",
+    "away": "Minnesota Wild"
+  },
+  "401803619": {
+    "home_ml": -180,
+    "away_ml": 150,
+    "date": "2026-04-11",
+    "home": "Dallas Stars",
+    "away": "New York Rangers"
+  },
+  "401803620": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-11",
+    "home": "Utah Mammoth",
+    "away": "Carolina Hurricanes"
+  },
+  "401803621": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-11",
+    "home": "Toronto Maple Leafs",
+    "away": "Florida Panthers"
+  },
+  "401803622": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-04-11",
+    "home": "Montreal Canadiens",
+    "away": "Columbus Blue Jackets"
+  },
+  "401803623": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-11",
+    "home": "Winnipeg Jets",
+    "away": "Philadelphia Flyers"
+  },
+  "401803624": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-04-11",
+    "home": "Seattle Kraken",
+    "away": "Calgary Flames"
+  },
+  "401803625": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-04-11",
+    "home": "Colorado Avalanche",
+    "away": "Vegas Golden Knights"
+  },
+  "401803626": {
+    "home_ml": -192,
+    "away_ml": 160,
+    "date": "2026-04-11",
+    "home": "San Jose Sharks",
+    "away": "Vancouver Canucks"
+  },
+  "401803627": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-12",
+    "home": "Washington Capitals",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803628": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-12",
+    "home": "New York Islanders",
+    "away": "Montreal Canadiens"
+  },
+  "401803629": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-04-12",
+    "home": "Columbus Blue Jackets",
+    "away": "Boston Bruins"
+  },
+  "401803630": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-12",
+    "home": "New Jersey Devils",
+    "away": "Ottawa Senators"
+  },
+  "401803631": {
+    "home_ml": -325,
+    "away_ml": 260,
+    "date": "2026-04-12",
+    "home": "Anaheim Ducks",
+    "away": "Vancouver Canucks"
+  },
+  "401803632": {
+    "home_ml": 136,
+    "away_ml": -162,
+    "date": "2026-04-12",
+    "home": "Calgary Flames",
+    "away": "Utah Mammoth"
+  },
+  "401803633": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-04-13",
+    "home": "Tampa Bay Lightning",
+    "away": "Detroit Red Wings"
+  },
+  "401803634": {
+    "home_ml": 130,
+    "away_ml": -155,
+    "date": "2026-04-13",
+    "home": "Florida Panthers",
+    "away": "New York Rangers"
+  },
+  "401803635": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-13",
+    "home": "Philadelphia Flyers",
+    "away": "Carolina Hurricanes"
+  },
+  "401803636": {
+    "home_ml": 160,
+    "away_ml": -192,
+    "date": "2026-04-13",
+    "home": "Toronto Maple Leafs",
+    "away": "Dallas Stars"
+  },
+  "401803637": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-04-13",
+    "home": "St. Louis Blues",
+    "away": "Minnesota Wild"
+  },
+  "401803638": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-13",
+    "home": "Nashville Predators",
+    "away": "San Jose Sharks"
+  },
+  "401803639": {
+    "home_ml": 164,
+    "away_ml": -198,
+    "date": "2026-04-13",
+    "home": "Chicago Blackhawks",
+    "away": "Buffalo Sabres"
+  },
+  "401803640": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-13",
+    "home": "Edmonton Oilers",
+    "away": "Colorado Avalanche"
+  },
+  "401803642": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-04-13",
+    "home": "Seattle Kraken",
+    "away": "Los Angeles Kings"
+  },
+  "401803641": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-04-13",
+    "home": "Vegas Golden Knights",
+    "away": "Winnipeg Jets"
+  },
+  "401803643": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-14",
+    "home": "Boston Bruins",
+    "away": "New Jersey Devils"
+  },
+  "401803644": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-04-14",
+    "home": "New York Islanders",
+    "away": "Carolina Hurricanes"
+  },
+  "401803645": {
+    "home_ml": 245,
+    "away_ml": -305,
+    "date": "2026-04-14",
+    "home": "Philadelphia Flyers",
+    "away": "Montreal Canadiens"
+  },
+  "401803646": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-14",
+    "home": "Columbus Blue Jackets",
+    "away": "Washington Capitals"
+  },
+  "401803647": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-04-14",
+    "home": "Minnesota Wild",
+    "away": "Anaheim Ducks"
+  },
+  "401803648": {
+    "home_ml": -218,
+    "away_ml": 180,
+    "date": "2026-04-14",
+    "home": "Utah Mammoth",
+    "away": "Winnipeg Jets"
+  },
+  "401803649": {
+    "home_ml": 130,
+    "away_ml": -155,
+    "date": "2026-04-14",
+    "home": "Calgary Flames",
+    "away": "Colorado Avalanche"
+  },
+  "401803650": {
+    "home_ml": -218,
+    "away_ml": 180,
+    "date": "2026-04-14",
+    "home": "St. Louis Blues",
+    "away": "Pittsburgh Penguins"
+  },
+  "401803651": {
+    "home_ml": 136,
+    "away_ml": -162,
+    "date": "2026-04-14",
+    "home": "Vancouver Canucks",
+    "away": "Los Angeles Kings"
+  },
+  "401803652": {
+    "home_ml": 124,
+    "away_ml": -148,
+    "date": "2026-04-15",
+    "home": "Buffalo Sabres",
+    "away": "Dallas Stars"
+  },
+  "401803653": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-04-15",
+    "home": "Tampa Bay Lightning",
+    "away": "New York Rangers"
+  },
+  "401803654": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-04-15",
+    "home": "Florida Panthers",
+    "away": "Detroit Red Wings"
+  },
+  "401803655": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-04-15",
+    "home": "Ottawa Senators",
+    "away": "Toronto Maple Leafs"
+  },
+  "401803656": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-15",
+    "home": "Chicago Blackhawks",
+    "away": "San Jose Sharks"
+  },
+  "401803657": {
+    "home_ml": -325,
+    "away_ml": 260,
+    "date": "2026-04-15",
+    "home": "Vegas Golden Knights",
+    "away": "Seattle Kraken"
+  },
+  "401803660": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-16",
+    "home": "Utah Mammoth",
+    "away": "St. Louis Blues"
+  },
+  "401803658": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-16",
+    "home": "Nashville Predators",
+    "away": "Anaheim Ducks"
+  },
+  "401803659": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-16",
+    "home": "Winnipeg Jets",
+    "away": "San Jose Sharks"
+  },
+  "401803661": {
+    "home_ml": 145,
+    "away_ml": -175,
+    "date": "2026-04-16",
+    "home": "Calgary Flames",
+    "away": "Los Angeles Kings"
+  },
+  "401803662": {
+    "home_ml": -355,
+    "away_ml": 280,
+    "date": "2026-04-16",
+    "home": "Edmonton Oilers",
+    "away": "Vancouver Canucks"
+  },
+  "401803663": {
+    "home_ml": -218,
+    "away_ml": 180,
+    "date": "2026-04-16",
+    "home": "Colorado Avalanche",
+    "away": "Seattle Kraken"
+  },
+  "401869715": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-18",
+    "home": "Carolina Hurricanes",
+    "away": "Ottawa Senators"
+  },
+  "401869716": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-18",
+    "home": "Dallas Stars",
+    "away": "Minnesota Wild"
+  },
+  "401869717": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-04-18",
+    "home": "Pittsburgh Penguins",
+    "away": "Philadelphia Flyers"
+  },
+  "401869721": {
+    "home_ml": -290,
+    "away_ml": 235,
+    "date": "2026-04-19",
+    "home": "Colorado Avalanche",
+    "away": "Los Angeles Kings"
+  },
+  "401869718": {
+    "home_ml": -180,
+    "away_ml": 150,
+    "date": "2026-04-19",
+    "home": "Tampa Bay Lightning",
+    "away": "Montreal Canadiens"
+  },
+  "401869719": {
+    "home_ml": -166,
+    "away_ml": 140,
+    "date": "2026-04-19",
+    "home": "Buffalo Sabres",
+    "away": "Boston Bruins"
+  },
+  "401869720": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-19",
+    "home": "Vegas Golden Knights",
+    "away": "Utah Mammoth"
+  },
+  "401869794": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-20",
+    "home": "Pittsburgh Penguins",
+    "away": "Philadelphia Flyers"
+  },
+  "401869781": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-20",
+    "home": "Carolina Hurricanes",
+    "away": "Ottawa Senators"
+  },
+  "401869780": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-04-20",
+    "home": "Dallas Stars",
+    "away": "Minnesota Wild"
+  },
+  "401869722": {
+    "home_ml": -192,
+    "away_ml": 160,
+    "date": "2026-04-20",
+    "home": "Edmonton Oilers",
+    "away": "Anaheim Ducks"
+  },
+  "401869769": {
+    "home_ml": -185,
+    "away_ml": 154,
+    "date": "2026-04-21",
+    "home": "Tampa Bay Lightning",
+    "away": "Montreal Canadiens"
+  },
+  "401869757": {
+    "home_ml": -166,
+    "away_ml": 140,
+    "date": "2026-04-21",
+    "home": "Buffalo Sabres",
+    "away": "Boston Bruins"
+  },
+  "401869756": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-04-21",
+    "home": "Vegas Golden Knights",
+    "away": "Utah Mammoth"
+  },
+  "401869792": {
+    "home_ml": -270,
+    "away_ml": 220,
+    "date": "2026-04-21",
+    "home": "Colorado Avalanche",
+    "away": "Los Angeles Kings"
+  },
+  "401869796": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-22",
+    "home": "Philadelphia Flyers",
+    "away": "Pittsburgh Penguins"
+  },
+  "401869782": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-04-22",
+    "home": "Minnesota Wild",
+    "away": "Dallas Stars"
+  },
+  "401869768": {
+    "home_ml": -198,
+    "away_ml": 164,
+    "date": "2026-04-22",
+    "home": "Edmonton Oilers",
+    "away": "Anaheim Ducks"
+  },
+  "401869759": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-23",
+    "home": "Boston Bruins",
+    "away": "Buffalo Sabres"
+  },
+  "401869783": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-23",
+    "home": "Ottawa Senators",
+    "away": "Carolina Hurricanes"
+  },
+  "401869793": {
+    "home_ml": 136,
+    "away_ml": -162,
+    "date": "2026-04-23",
+    "home": "Los Angeles Kings",
+    "away": "Colorado Avalanche"
+  },
+  "401869771": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-24",
+    "home": "Montreal Canadiens",
+    "away": "Tampa Bay Lightning"
+  },
+  "401869758": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-24",
+    "home": "Utah Mammoth",
+    "away": "Vegas Golden Knights"
+  },
+  "401869770": {
+    "home_ml": 120,
+    "away_ml": -142,
+    "date": "2026-04-24",
+    "home": "Anaheim Ducks",
+    "away": "Edmonton Oilers"
+  },
+  "401869786": {
+    "home_ml": 120,
+    "away_ml": -142,
+    "date": "2026-04-25",
+    "home": "Ottawa Senators",
+    "away": "Carolina Hurricanes"
+  },
+  "401869784": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-04-25",
+    "home": "Minnesota Wild",
+    "away": "Dallas Stars"
+  },
+  "401869799": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-25",
+    "home": "Philadelphia Flyers",
+    "away": "Pittsburgh Penguins"
+  },
+  "401869762": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-26",
+    "home": "Boston Bruins",
+    "away": "Buffalo Sabres"
+  },
+  "401869795": {
+    "home_ml": 150,
+    "away_ml": -180,
+    "date": "2026-04-26",
+    "home": "Los Angeles Kings",
+    "away": "Colorado Avalanche"
+  },
+  "401869773": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-26",
+    "home": "Montreal Canadiens",
+    "away": "Tampa Bay Lightning"
+  },
+  "401869772": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-04-26",
+    "home": "Anaheim Ducks",
+    "away": "Edmonton Oilers"
+  },
+  "401869801": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-27",
+    "home": "Pittsburgh Penguins",
+    "away": "Philadelphia Flyers"
+  },
+  "401869760": {
+    "home_ml": 114,
+    "away_ml": -135,
+    "date": "2026-04-27",
+    "home": "Utah Mammoth",
+    "away": "Vegas Golden Knights"
+  },
+  "401869764": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-04-28",
+    "home": "Buffalo Sabres",
+    "away": "Boston Bruins"
+  },
+  "401869785": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-28",
+    "home": "Dallas Stars",
+    "away": "Minnesota Wild"
+  },
+  "401869774": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-28",
+    "home": "Edmonton Oilers",
+    "away": "Anaheim Ducks"
+  },
+  "401869775": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-04-29",
+    "home": "Tampa Bay Lightning",
+    "away": "Montreal Canadiens"
+  },
+  "401869802": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-29",
+    "home": "Philadelphia Flyers",
+    "away": "Pittsburgh Penguins"
+  },
+  "401869761": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-04-29",
+    "home": "Vegas Golden Knights",
+    "away": "Utah Mammoth"
+  },
+  "401869787": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-04-30",
+    "home": "Minnesota Wild",
+    "away": "Dallas Stars"
+  },
+  "401869776": {
+    "home_ml": 105,
+    "away_ml": -125,
+    "date": "2026-04-30",
+    "home": "Anaheim Ducks",
+    "away": "Edmonton Oilers"
+  },
+  "401869777": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-05-01",
+    "home": "Montreal Canadiens",
+    "away": "Tampa Bay Lightning"
+  },
+  "401869765": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-05-01",
+    "home": "Boston Bruins",
+    "away": "Buffalo Sabres"
+  },
+  "401869763": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-05-01",
+    "home": "Utah Mammoth",
+    "away": "Vegas Golden Knights"
+  },
+  "401871166": {
+    "home_ml": -250,
+    "away_ml": 205,
+    "date": "2026-05-02",
+    "home": "Carolina Hurricanes",
+    "away": "Philadelphia Flyers"
+  },
+  "401869779": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-05-03",
+    "home": "Tampa Bay Lightning",
+    "away": "Montreal Canadiens"
+  },
+  "401871302": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-05-03",
+    "home": "Colorado Avalanche",
+    "away": "Minnesota Wild"
+  },
+  "401871411": {
+    "home_ml": -270,
+    "away_ml": 220,
+    "date": "2026-05-04",
+    "home": "Carolina Hurricanes",
+    "away": "Philadelphia Flyers"
+  },
+  "401871423": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-05-04",
+    "home": "Vegas Golden Knights",
+    "away": "Anaheim Ducks"
+  },
+  "401871417": {
+    "home_ml": -205,
+    "away_ml": 170,
+    "date": "2026-05-05",
+    "home": "Colorado Avalanche",
+    "away": "Minnesota Wild"
+  },
+  "401871404": {
+    "home_ml": -142,
+    "away_ml": 120,
+    "date": "2026-05-06",
+    "home": "Buffalo Sabres",
+    "away": "Montreal Canadiens"
+  },
+  "401871424": {
+    "home_ml": -155,
+    "away_ml": 130,
+    "date": "2026-05-06",
+    "home": "Vegas Golden Knights",
+    "away": "Anaheim Ducks"
+  },
+  "401871412": {
+    "home_ml": 140,
+    "away_ml": -166,
+    "date": "2026-05-07",
+    "home": "Philadelphia Flyers",
+    "away": "Carolina Hurricanes"
+  },
+  "401871405": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-05-08",
+    "home": "Buffalo Sabres",
+    "away": "Montreal Canadiens"
+  },
+  "401871425": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-05-08",
+    "home": "Anaheim Ducks",
+    "away": "Vegas Golden Knights"
+  },
+  "401871413": {
+    "home_ml": 164,
+    "away_ml": -198,
+    "date": "2026-05-09",
+    "home": "Philadelphia Flyers",
+    "away": "Carolina Hurricanes"
+  },
+  "401871418": {
+    "home_ml": 110,
+    "away_ml": -130,
+    "date": "2026-05-09",
+    "home": "Minnesota Wild",
+    "away": "Colorado Avalanche"
+  },
+  "401871406": {
+    "home_ml": -135,
+    "away_ml": 114,
+    "date": "2026-05-10",
+    "home": "Montreal Canadiens",
+    "away": "Buffalo Sabres"
+  },
+  "401871426": {
+    "home_ml": -125,
+    "away_ml": 105,
+    "date": "2026-05-10",
+    "home": "Anaheim Ducks",
+    "away": "Vegas Golden Knights"
+  },
+  "401871419": {
+    "home_ml": 130,
+    "away_ml": -155,
+    "date": "2026-05-11",
+    "home": "Minnesota Wild",
+    "away": "Colorado Avalanche"
+  },
+  "401871407": {
+    "home_ml": -148,
+    "away_ml": 124,
+    "date": "2026-05-12",
+    "home": "Montreal Canadiens",
+    "away": "Buffalo Sabres"
+  },
+  "401871427": {
+    "home_ml": -162,
+    "away_ml": 136,
+    "date": "2026-05-12",
+    "home": "Vegas Golden Knights",
+    "away": "Anaheim Ducks"
+  },
+  "401871420": {
+    "home_ml": -230,
+    "away_ml": 190,
+    "date": "2026-05-13",
+    "home": "Colorado Avalanche",
+    "away": "Minnesota Wild"
+  },
+  "401871408": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-14",
+    "home": "Buffalo Sabres",
+    "away": "Montreal Canadiens"
+  },
+  "401871428": {
+    "home_ml": -130,
+    "away_ml": 110,
+    "date": "2026-05-14",
+    "home": "Anaheim Ducks",
+    "away": "Vegas Golden Knights"
+  },
+  "401871409": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-05-16",
+    "home": "Montreal Canadiens",
+    "away": "Buffalo Sabres"
+  },
+  "401871410": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-18",
+    "home": "Buffalo Sabres",
+    "away": "Montreal Canadiens"
+  },
+  "401872903": {
+    "home_ml": -175,
+    "away_ml": 145,
+    "date": "2026-05-20",
+    "home": "Colorado Avalanche",
+    "away": "Vegas Golden Knights"
+  },
+  "401873383": {
+    "home_ml": -218,
+    "away_ml": 180,
+    "date": "2026-05-21",
+    "home": "Carolina Hurricanes",
+    "away": "Montreal Canadiens"
+  }
+}
