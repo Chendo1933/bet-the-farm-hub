@@ -1,6 +1,6 @@
 {
   "date": "2026-05-23",
-  "snapshot_time": "2026-05-23T19:59:46.206794+00:00",
+  "snapshot_time": "2026-05-23T20:53:42.731152+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -87,12 +87,12 @@
       {
         "home": "Philadelphia Phillies",
         "away": "Cleveland Guardians",
-        "commence": "2026-05-23T20:36:00Z",
+        "commence": "2026-05-23T22:01:00Z",
         "spread": -1.5,
         "total": 7.0,
-        "ml_home": -178,
-        "ml_away": 150,
-        "snapshot_time": "2026-05-23T19:59:46.206794+00:00"
+        "ml_home": -174,
+        "ml_away": 146,
+        "snapshot_time": "2026-05-23T20:53:42.731152+00:00"
       }
     ]
   }
