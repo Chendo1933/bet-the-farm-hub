@@ -1,0 +1,4951 @@
+{
+  "401814702": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-03-25",
+    "home": "San Francisco Giants",
+    "away": "New York Yankees"
+  },
+  "401814693": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-03-26",
+    "home": "New York Mets",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814696": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-26",
+    "home": "Milwaukee Brewers",
+    "away": "Chicago White Sox"
+  },
+  "401814698": {
+    "home_ml": -207,
+    "away_ml": 169,
+    "date": "2026-03-26",
+    "home": "Chicago Cubs",
+    "away": "Washington Nationals"
+  },
+  "401814692": {
+    "home_ml": -145,
+    "away_ml": 120,
+    "date": "2026-03-26",
+    "home": "Baltimore Orioles",
+    "away": "Minnesota Twins"
+  },
+  "401814689": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-03-26",
+    "home": "Cincinnati Reds",
+    "away": "Boston Red Sox"
+  },
+  "401814695": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-03-26",
+    "home": "Houston Astros",
+    "away": "Los Angeles Angels"
+  },
+  "401814701": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-03-26",
+    "home": "San Diego Padres",
+    "away": "Detroit Tigers"
+  },
+  "401814694": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-03-26",
+    "home": "Philadelphia Phillies",
+    "away": "Texas Rangers"
+  },
+  "401814697": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-03-26",
+    "home": "St. Louis Cardinals",
+    "away": "Tampa Bay Rays"
+  },
+  "401814699": {
+    "home_ml": -286,
+    "away_ml": 229,
+    "date": "2026-03-26",
+    "home": "Los Angeles Dodgers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814700": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-03-26",
+    "home": "Seattle Mariners",
+    "away": "Cleveland Guardians"
+  },
+  "401814721": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-03-27",
+    "home": "San Francisco Giants",
+    "away": "New York Yankees"
+  },
+  "401814688": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-03-27",
+    "home": "Toronto Blue Jays",
+    "away": "Athletics"
+  },
+  "401814690": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-27",
+    "home": "Miami Marlins",
+    "away": "Colorado Rockies"
+  },
+  "401814691": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-03-27",
+    "home": "Atlanta Braves",
+    "away": "Kansas City Royals"
+  },
+  "401814703": {
+    "home_ml": -169,
+    "away_ml": 140,
+    "date": "2026-03-27",
+    "home": "Houston Astros",
+    "away": "Los Angeles Angels"
+  },
+  "401814705": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-03-27",
+    "home": "Seattle Mariners",
+    "away": "Cleveland Guardians"
+  },
+  "401814706": {
+    "home_ml": -130,
+    "away_ml": 108,
+    "date": "2026-03-27",
+    "home": "San Diego Padres",
+    "away": "Detroit Tigers"
+  },
+  "401814704": {
+    "home_ml": -240,
+    "away_ml": 194,
+    "date": "2026-03-27",
+    "home": "Los Angeles Dodgers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814716": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-03-28",
+    "home": "St. Louis Cardinals",
+    "away": "Tampa Bay Rays"
+  },
+  "401814717": {
+    "home_ml": -252,
+    "away_ml": 203,
+    "date": "2026-03-28",
+    "home": "Chicago Cubs",
+    "away": "Washington Nationals"
+  },
+  "401814707": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-28",
+    "home": "Toronto Blue Jays",
+    "away": "Athletics"
+  },
+  "401814711": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-03-28",
+    "home": "Baltimore Orioles",
+    "away": "Minnesota Twins"
+  },
+  "401814713": {
+    "home_ml": -154,
+    "away_ml": 128,
+    "date": "2026-03-28",
+    "home": "Philadelphia Phillies",
+    "away": "Texas Rangers"
+  },
+  "401814708": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-03-28",
+    "home": "Cincinnati Reds",
+    "away": "Boston Red Sox"
+  },
+  "401814709": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-28",
+    "home": "Miami Marlins",
+    "away": "Colorado Rockies"
+  },
+  "401814712": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-03-28",
+    "home": "New York Mets",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814714": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-03-28",
+    "home": "Houston Astros",
+    "away": "Los Angeles Angels"
+  },
+  "401814715": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-28",
+    "home": "Milwaukee Brewers",
+    "away": "Chicago White Sox"
+  },
+  "401814710": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-03-28",
+    "home": "Atlanta Braves",
+    "away": "Kansas City Royals"
+  },
+  "401814734": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-03-28",
+    "home": "San Francisco Giants",
+    "away": "New York Yankees"
+  },
+  "401814720": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-03-28",
+    "home": "San Diego Padres",
+    "away": "Detroit Tigers"
+  },
+  "401814718": {
+    "home_ml": -252,
+    "away_ml": 203,
+    "date": "2026-03-28",
+    "home": "Los Angeles Dodgers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814719": {
+    "home_ml": -193,
+    "away_ml": 158,
+    "date": "2026-03-28",
+    "home": "Seattle Mariners",
+    "away": "Cleveland Guardians"
+  },
+  "401814725": {
+    "home_ml": -153,
+    "away_ml": 126,
+    "date": "2026-03-29",
+    "home": "Atlanta Braves",
+    "away": "Kansas City Royals"
+  },
+  "401814726": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-03-29",
+    "home": "Baltimore Orioles",
+    "away": "Minnesota Twins"
+  },
+  "401814728": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-03-29",
+    "home": "Philadelphia Phillies",
+    "away": "Texas Rangers"
+  },
+  "401814722": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-03-29",
+    "home": "Toronto Blue Jays",
+    "away": "Athletics"
+  },
+  "401814723": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-03-29",
+    "home": "Cincinnati Reds",
+    "away": "Boston Red Sox"
+  },
+  "401814724": {
+    "home_ml": -194,
+    "away_ml": 159,
+    "date": "2026-03-29",
+    "home": "Miami Marlins",
+    "away": "Colorado Rockies"
+  },
+  "401814727": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-03-29",
+    "home": "New York Mets",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814729": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-03-29",
+    "home": "Houston Astros",
+    "away": "Los Angeles Angels"
+  },
+  "401814730": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-03-29",
+    "home": "Milwaukee Brewers",
+    "away": "Chicago White Sox"
+  },
+  "401814731": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-03-29",
+    "home": "St. Louis Cardinals",
+    "away": "Tampa Bay Rays"
+  },
+  "401814732": {
+    "home_ml": -243,
+    "away_ml": 197,
+    "date": "2026-03-29",
+    "home": "Chicago Cubs",
+    "away": "Washington Nationals"
+  },
+  "401814733": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-03-29",
+    "home": "Seattle Mariners",
+    "away": "Cleveland Guardians"
+  },
+  "401814743": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-03-30",
+    "home": "Kansas City Royals",
+    "away": "Minnesota Twins"
+  },
+  "401814739": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-03-30",
+    "home": "Baltimore Orioles",
+    "away": "Texas Rangers"
+  },
+  "401814736": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-03-30",
+    "home": "Miami Marlins",
+    "away": "Chicago White Sox"
+  },
+  "401814738": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-03-30",
+    "home": "Cincinnati Reds",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814740": {
+    "home_ml": -177,
+    "away_ml": 146,
+    "date": "2026-03-30",
+    "home": "Philadelphia Phillies",
+    "away": "Washington Nationals"
+  },
+  "401814737": {
+    "home_ml": -293,
+    "away_ml": 234,
+    "date": "2026-03-30",
+    "home": "Toronto Blue Jays",
+    "away": "Colorado Rockies"
+  },
+  "401814735": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-03-30",
+    "home": "Atlanta Braves",
+    "away": "Athletics"
+  },
+  "401814741": {
+    "home_ml": -194,
+    "away_ml": 159,
+    "date": "2026-03-30",
+    "home": "Chicago Cubs",
+    "away": "Los Angeles Angels"
+  },
+  "401814745": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-03-30",
+    "home": "Milwaukee Brewers",
+    "away": "Tampa Bay Rays"
+  },
+  "401814744": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-03-30",
+    "home": "St. Louis Cardinals",
+    "away": "New York Mets"
+  },
+  "401814742": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-03-30",
+    "home": "Houston Astros",
+    "away": "Boston Red Sox"
+  },
+  "401814748": {
+    "home_ml": -103,
+    "away_ml": -117,
+    "date": "2026-03-30",
+    "home": "Seattle Mariners",
+    "away": "New York Yankees"
+  },
+  "401814749": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-03-30",
+    "home": "San Diego Padres",
+    "away": "San Francisco Giants"
+  },
+  "401814746": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-30",
+    "home": "Los Angeles Dodgers",
+    "away": "Cleveland Guardians"
+  },
+  "401814747": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-03-30",
+    "home": "Arizona Diamondbacks",
+    "away": "Detroit Tigers"
+  },
+  "401814754": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-03-31",
+    "home": "Baltimore Orioles",
+    "away": "Texas Rangers"
+  },
+  "401814751": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-03-31",
+    "home": "Miami Marlins",
+    "away": "Chicago White Sox"
+  },
+  "401814753": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-03-31",
+    "home": "Cincinnati Reds",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814755": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-03-31",
+    "home": "Philadelphia Phillies",
+    "away": "Washington Nationals"
+  },
+  "401814752": {
+    "home_ml": -271,
+    "away_ml": 218,
+    "date": "2026-03-31",
+    "home": "Toronto Blue Jays",
+    "away": "Colorado Rockies"
+  },
+  "401814750": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-03-31",
+    "home": "Atlanta Braves",
+    "away": "Athletics"
+  },
+  "401814756": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-03-31",
+    "home": "Chicago Cubs",
+    "away": "Los Angeles Angels"
+  },
+  "401814759": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-03-31",
+    "home": "Milwaukee Brewers",
+    "away": "Tampa Bay Rays"
+  },
+  "401814758": {
+    "home_ml": 126,
+    "away_ml": -153,
+    "date": "2026-03-31",
+    "home": "St. Louis Cardinals",
+    "away": "New York Mets"
+  },
+  "401814757": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-03-31",
+    "home": "Houston Astros",
+    "away": "Boston Red Sox"
+  },
+  "401814761": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-03-31",
+    "home": "Arizona Diamondbacks",
+    "away": "Detroit Tigers"
+  },
+  "401814762": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-03-31",
+    "home": "Seattle Mariners",
+    "away": "New York Yankees"
+  },
+  "401814763": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-03-31",
+    "home": "San Diego Padres",
+    "away": "San Francisco Giants"
+  },
+  "401814760": {
+    "home_ml": -286,
+    "away_ml": 229,
+    "date": "2026-03-31",
+    "home": "Los Angeles Dodgers",
+    "away": "Cleveland Guardians"
+  },
+  "401814764": {
+    "home_ml": -232,
+    "away_ml": 189,
+    "date": "2026-04-01",
+    "home": "Atlanta Braves",
+    "away": "Athletics"
+  },
+  "401814768": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-01",
+    "home": "Baltimore Orioles",
+    "away": "Texas Rangers"
+  },
+  "401814767": {
+    "home_ml": 120,
+    "away_ml": -145,
+    "date": "2026-04-01",
+    "home": "Cincinnati Reds",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814769": {
+    "home_ml": -285,
+    "away_ml": 228,
+    "date": "2026-04-01",
+    "home": "Philadelphia Phillies",
+    "away": "Washington Nationals"
+  },
+  "401814766": {
+    "home_ml": -280,
+    "away_ml": 224,
+    "date": "2026-04-01",
+    "home": "Toronto Blue Jays",
+    "away": "Colorado Rockies"
+  },
+  "401814765": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-01",
+    "home": "Miami Marlins",
+    "away": "Chicago White Sox"
+  },
+  "401814773": {
+    "home_ml": 133,
+    "away_ml": -161,
+    "date": "2026-04-01",
+    "home": "St. Louis Cardinals",
+    "away": "New York Mets"
+  },
+  "401814774": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-01",
+    "home": "Milwaukee Brewers",
+    "away": "Tampa Bay Rays"
+  },
+  "401814771": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-01",
+    "home": "Houston Astros",
+    "away": "Boston Red Sox"
+  },
+  "401814770": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-01",
+    "home": "Chicago Cubs",
+    "away": "Los Angeles Angels"
+  },
+  "401814776": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-01",
+    "home": "Arizona Diamondbacks",
+    "away": "Detroit Tigers"
+  },
+  "401814777": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-01",
+    "home": "Seattle Mariners",
+    "away": "New York Yankees"
+  },
+  "401814778": {
+    "home_ml": -153,
+    "away_ml": 126,
+    "date": "2026-04-01",
+    "home": "San Diego Padres",
+    "away": "San Francisco Giants"
+  },
+  "401814772": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-04-01",
+    "home": "Kansas City Royals",
+    "away": "Minnesota Twins"
+  },
+  "401814775": {
+    "home_ml": -308,
+    "away_ml": 244,
+    "date": "2026-04-01",
+    "home": "Los Angeles Dodgers",
+    "away": "Cleveland Guardians"
+  },
+  "401814779": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-02",
+    "home": "Kansas City Royals",
+    "away": "Minnesota Twins"
+  },
+  "401814781": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-02",
+    "home": "Arizona Diamondbacks",
+    "away": "Atlanta Braves"
+  },
+  "401814782": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-02",
+    "home": "San Francisco Giants",
+    "away": "New York Mets"
+  },
+  "401814785": {
+    "home_ml": 234,
+    "away_ml": -293,
+    "date": "2026-04-03",
+    "home": "Washington Nationals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401814788": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-03",
+    "home": "Detroit Tigers",
+    "away": "St. Louis Cardinals"
+  },
+  "401814786": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-04-03",
+    "home": "New York Yankees",
+    "away": "Miami Marlins"
+  },
+  "401814787": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-03",
+    "home": "Boston Red Sox",
+    "away": "San Diego Padres"
+  },
+  "401867263": {
+    "home_ml": 163,
+    "away_ml": -199,
+    "date": "2026-04-03",
+    "home": "Chicago White Sox",
+    "away": "Toronto Blue Jays"
+  },
+  "401814789": {
+    "home_ml": -166,
+    "away_ml": 137,
+    "date": "2026-04-03",
+    "home": "Texas Rangers",
+    "away": "Cincinnati Reds"
+  },
+  "401814784": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-03",
+    "home": "Cleveland Guardians",
+    "away": "Chicago Cubs"
+  },
+  "401814792": {
+    "home_ml": 153,
+    "away_ml": -186,
+    "date": "2026-04-03",
+    "home": "Colorado Rockies",
+    "away": "Philadelphia Phillies"
+  },
+  "401814783": {
+    "home_ml": 100,
+    "away_ml": -121,
+    "date": "2026-04-03",
+    "home": "Pittsburgh Pirates",
+    "away": "Baltimore Orioles"
+  },
+  "401814791": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-03",
+    "home": "Minnesota Twins",
+    "away": "Tampa Bay Rays"
+  },
+  "401814796": {
+    "home_ml": 130,
+    "away_ml": -157,
+    "date": "2026-04-03",
+    "home": "Los Angeles Angels",
+    "away": "Seattle Mariners"
+  },
+  "401814793": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-03",
+    "home": "Arizona Diamondbacks",
+    "away": "Atlanta Braves"
+  },
+  "401814794": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-03",
+    "home": "Athletics",
+    "away": "Houston Astros"
+  },
+  "401814795": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-04-03",
+    "home": "San Francisco Giants",
+    "away": "New York Mets"
+  },
+  "401814802": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-04-04",
+    "home": "Detroit Tigers",
+    "away": "St. Louis Cardinals"
+  },
+  "401814804": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-04",
+    "home": "Kansas City Royals",
+    "away": "Milwaukee Brewers"
+  },
+  "401814806": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-04-04",
+    "home": "Chicago White Sox",
+    "away": "Toronto Blue Jays"
+  },
+  "401814797": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-04",
+    "home": "Pittsburgh Pirates",
+    "away": "Baltimore Orioles"
+  },
+  "401814799": {
+    "home_ml": 248,
+    "away_ml": -314,
+    "date": "2026-04-04",
+    "home": "Washington Nationals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401814809": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-04",
+    "home": "Athletics",
+    "away": "Houston Astros"
+  },
+  "401814801": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-04",
+    "home": "Boston Red Sox",
+    "away": "San Diego Padres"
+  },
+  "401814800": {
+    "home_ml": -201,
+    "away_ml": 164,
+    "date": "2026-04-04",
+    "home": "New York Yankees",
+    "away": "Miami Marlins"
+  },
+  "401814803": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-04",
+    "home": "Texas Rangers",
+    "away": "Cincinnati Reds"
+  },
+  "401814805": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-04",
+    "home": "Minnesota Twins",
+    "away": "Tampa Bay Rays"
+  },
+  "401867376": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-04",
+    "home": "Kansas City Royals",
+    "away": "Milwaukee Brewers"
+  },
+  "401814808": {
+    "home_ml": -113,
+    "away_ml": -107,
+    "date": "2026-04-04",
+    "home": "Arizona Diamondbacks",
+    "away": "Atlanta Braves"
+  },
+  "401814807": {
+    "home_ml": 214,
+    "away_ml": -267,
+    "date": "2026-04-04",
+    "home": "Colorado Rockies",
+    "away": "Philadelphia Phillies"
+  },
+  "401814810": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-04",
+    "home": "San Francisco Giants",
+    "away": "New York Mets"
+  },
+  "401814811": {
+    "home_ml": 131,
+    "away_ml": -158,
+    "date": "2026-04-04",
+    "home": "Los Angeles Angels",
+    "away": "Seattle Mariners"
+  },
+  "401814813": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-04-05",
+    "home": "Cleveland Guardians",
+    "away": "Chicago Cubs"
+  },
+  "401814812": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-05",
+    "home": "Pittsburgh Pirates",
+    "away": "Baltimore Orioles"
+  },
+  "401814814": {
+    "home_ml": 149,
+    "away_ml": -181,
+    "date": "2026-04-05",
+    "home": "Washington Nationals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401814815": {
+    "home_ml": -317,
+    "away_ml": 251,
+    "date": "2026-04-05",
+    "home": "New York Yankees",
+    "away": "Miami Marlins"
+  },
+  "401814816": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-05",
+    "home": "Boston Red Sox",
+    "away": "San Diego Padres"
+  },
+  "401814819": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-05",
+    "home": "Kansas City Royals",
+    "away": "Milwaukee Brewers"
+  },
+  "401814820": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-05",
+    "home": "Minnesota Twins",
+    "away": "Tampa Bay Rays"
+  },
+  "401814821": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-05",
+    "home": "Chicago White Sox",
+    "away": "Toronto Blue Jays"
+  },
+  "401814818": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-05",
+    "home": "Texas Rangers",
+    "away": "Cincinnati Reds"
+  },
+  "401814822": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-05",
+    "home": "Colorado Rockies",
+    "away": "Philadelphia Phillies"
+  },
+  "401814824": {
+    "home_ml": 110,
+    "away_ml": -133,
+    "date": "2026-04-05",
+    "home": "Athletics",
+    "away": "Houston Astros"
+  },
+  "401814825": {
+    "home_ml": -129,
+    "away_ml": 107,
+    "date": "2026-04-05",
+    "home": "San Francisco Giants",
+    "away": "New York Mets"
+  },
+  "401814826": {
+    "home_ml": 139,
+    "away_ml": -168,
+    "date": "2026-04-05",
+    "home": "Los Angeles Angels",
+    "away": "Seattle Mariners"
+  },
+  "401814823": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-05",
+    "home": "Arizona Diamondbacks",
+    "away": "Atlanta Braves"
+  },
+  "401867431": {
+    "home_ml": 100,
+    "away_ml": -121,
+    "date": "2026-04-05",
+    "home": "Cleveland Guardians",
+    "away": "Chicago Cubs"
+  },
+  "401814817": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-05",
+    "home": "Detroit Tigers",
+    "away": "St. Louis Cardinals"
+  },
+  "401814872": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-09",
+    "home": "Miami Marlins",
+    "away": "Cincinnati Reds"
+  },
+  "401814871": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-04-09",
+    "home": "New York Yankees",
+    "away": "Athletics"
+  },
+  "401814874": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-09",
+    "home": "Minnesota Twins",
+    "away": "Detroit Tigers"
+  },
+  "401814870": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-09",
+    "home": "New York Mets",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814873": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-09",
+    "home": "Kansas City Royals",
+    "away": "Chicago White Sox"
+  },
+  "401814875": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-09",
+    "home": "San Diego Padres",
+    "away": "Colorado Rockies"
+  },
+  "401814886": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-10",
+    "home": "Chicago Cubs",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814877": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-10",
+    "home": "Philadelphia Phillies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814880": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-10",
+    "home": "Detroit Tigers",
+    "away": "Miami Marlins"
+  },
+  "401814876": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-10",
+    "home": "Cincinnati Reds",
+    "away": "Los Angeles Angels"
+  },
+  "401814881": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-10",
+    "home": "Toronto Blue Jays",
+    "away": "Minnesota Twins"
+  },
+  "401814878": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-10",
+    "home": "New York Mets",
+    "away": "Athletics"
+  },
+  "401814882": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-10",
+    "home": "Tampa Bay Rays",
+    "away": "New York Yankees"
+  },
+  "401814879": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-04-10",
+    "home": "Atlanta Braves",
+    "away": "Cleveland Guardians"
+  },
+  "401814883": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-10",
+    "home": "Baltimore Orioles",
+    "away": "San Francisco Giants"
+  },
+  "401814885": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-10",
+    "home": "Kansas City Royals",
+    "away": "Chicago White Sox"
+  },
+  "401814887": {
+    "home_ml": -207,
+    "away_ml": 169,
+    "date": "2026-04-10",
+    "home": "Milwaukee Brewers",
+    "away": "Washington Nationals"
+  },
+  "401814884": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-10",
+    "home": "St. Louis Cardinals",
+    "away": "Boston Red Sox"
+  },
+  "401814888": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-04-10",
+    "home": "San Diego Padres",
+    "away": "Colorado Rockies"
+  },
+  "401814889": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-10",
+    "home": "Seattle Mariners",
+    "away": "Houston Astros"
+  },
+  "401814890": {
+    "home_ml": -240,
+    "away_ml": 194,
+    "date": "2026-04-10",
+    "home": "Los Angeles Dodgers",
+    "away": "Texas Rangers"
+  },
+  "401814892": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-11",
+    "home": "Philadelphia Phillies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814895": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-11",
+    "home": "Detroit Tigers",
+    "away": "Miami Marlins"
+  },
+  "401814901": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-11",
+    "home": "Chicago Cubs",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814896": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-04-11",
+    "home": "Toronto Blue Jays",
+    "away": "Minnesota Twins"
+  },
+  "401814891": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-11",
+    "home": "Cincinnati Reds",
+    "away": "Los Angeles Angels"
+  },
+  "401814893": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-11",
+    "home": "New York Mets",
+    "away": "Athletics"
+  },
+  "401814900": {
+    "home_ml": -194,
+    "away_ml": 159,
+    "date": "2026-04-11",
+    "home": "Kansas City Royals",
+    "away": "Chicago White Sox"
+  },
+  "401814897": {
+    "home_ml": 144,
+    "away_ml": -175,
+    "date": "2026-04-11",
+    "home": "Tampa Bay Rays",
+    "away": "New York Yankees"
+  },
+  "401814902": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-11",
+    "home": "Milwaukee Brewers",
+    "away": "Washington Nationals"
+  },
+  "401814894": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-11",
+    "home": "Atlanta Braves",
+    "away": "Cleveland Guardians"
+  },
+  "401814898": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-11",
+    "home": "Baltimore Orioles",
+    "away": "San Francisco Giants"
+  },
+  "401814899": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-11",
+    "home": "St. Louis Cardinals",
+    "away": "Boston Red Sox"
+  },
+  "401814903": {
+    "home_ml": -173,
+    "away_ml": 143,
+    "date": "2026-04-11",
+    "home": "San Diego Padres",
+    "away": "Colorado Rockies"
+  },
+  "401814905": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-11",
+    "home": "Los Angeles Dodgers",
+    "away": "Texas Rangers"
+  },
+  "401814904": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-11",
+    "home": "Seattle Mariners",
+    "away": "Houston Astros"
+  },
+  "401814907": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-12",
+    "home": "Philadelphia Phillies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814913": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-12",
+    "home": "Baltimore Orioles",
+    "away": "San Francisco Giants"
+  },
+  "401814911": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-12",
+    "home": "Toronto Blue Jays",
+    "away": "Minnesota Twins"
+  },
+  "401814906": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-12",
+    "home": "Cincinnati Reds",
+    "away": "Los Angeles Angels"
+  },
+  "401814908": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-12",
+    "home": "New York Mets",
+    "away": "Athletics"
+  },
+  "401814910": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-04-12",
+    "home": "Detroit Tigers",
+    "away": "Miami Marlins"
+  },
+  "401814912": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-12",
+    "home": "Tampa Bay Rays",
+    "away": "New York Yankees"
+  },
+  "401814915": {
+    "home_ml": -185,
+    "away_ml": 152,
+    "date": "2026-04-12",
+    "home": "Kansas City Royals",
+    "away": "Chicago White Sox"
+  },
+  "401814917": {
+    "home_ml": -219,
+    "away_ml": 179,
+    "date": "2026-04-12",
+    "home": "Milwaukee Brewers",
+    "away": "Washington Nationals"
+  },
+  "401814914": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-12",
+    "home": "St. Louis Cardinals",
+    "away": "Boston Red Sox"
+  },
+  "401814916": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-12",
+    "home": "Chicago Cubs",
+    "away": "Pittsburgh Pirates"
+  },
+  "401814918": {
+    "home_ml": -226,
+    "away_ml": 184,
+    "date": "2026-04-12",
+    "home": "San Diego Padres",
+    "away": "Colorado Rockies"
+  },
+  "401814919": {
+    "home_ml": -193,
+    "away_ml": 159,
+    "date": "2026-04-12",
+    "home": "Seattle Mariners",
+    "away": "Houston Astros"
+  },
+  "401814920": {
+    "home_ml": -143,
+    "away_ml": 118,
+    "date": "2026-04-12",
+    "home": "Los Angeles Dodgers",
+    "away": "Texas Rangers"
+  },
+  "401814909": {
+    "home_ml": -188,
+    "away_ml": 155,
+    "date": "2026-04-12",
+    "home": "Atlanta Braves",
+    "away": "Cleveland Guardians"
+  },
+  "401814928": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-13",
+    "home": "Seattle Mariners",
+    "away": "Houston Astros"
+  },
+  "401814922": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-13",
+    "home": "Baltimore Orioles",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814923": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-13",
+    "home": "Philadelphia Phillies",
+    "away": "Chicago Cubs"
+  },
+  "401814925": {
+    "home_ml": -232,
+    "away_ml": 189,
+    "date": "2026-04-13",
+    "home": "Pittsburgh Pirates",
+    "away": "Washington Nationals"
+  },
+  "401814921": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-13",
+    "home": "New York Yankees",
+    "away": "Los Angeles Angels"
+  },
+  "401814924": {
+    "home_ml": -150,
+    "away_ml": 124,
+    "date": "2026-04-13",
+    "home": "Atlanta Braves",
+    "away": "Miami Marlins"
+  },
+  "401814926": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-13",
+    "home": "Minnesota Twins",
+    "away": "Boston Red Sox"
+  },
+  "401814927": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-04-13",
+    "home": "St. Louis Cardinals",
+    "away": "Cleveland Guardians"
+  },
+  "401814930": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-04-13",
+    "home": "Athletics",
+    "away": "Texas Rangers"
+  },
+  "401814929": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-13",
+    "home": "Los Angeles Dodgers",
+    "away": "New York Mets"
+  },
+  "401814932": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-04-14",
+    "home": "Baltimore Orioles",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814933": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-14",
+    "home": "Philadelphia Phillies",
+    "away": "Chicago Cubs"
+  },
+  "401814934": {
+    "home_ml": -128,
+    "away_ml": 107,
+    "date": "2026-04-14",
+    "home": "Detroit Tigers",
+    "away": "Kansas City Royals"
+  },
+  "401814936": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-14",
+    "home": "Cincinnati Reds",
+    "away": "San Francisco Giants"
+  },
+  "401814937": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-04-14",
+    "home": "Pittsburgh Pirates",
+    "away": "Washington Nationals"
+  },
+  "401814931": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-04-14",
+    "home": "New York Yankees",
+    "away": "Los Angeles Angels"
+  },
+  "401814935": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-14",
+    "home": "Atlanta Braves",
+    "away": "Miami Marlins"
+  },
+  "401814938": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-14",
+    "home": "Minnesota Twins",
+    "away": "Boston Red Sox"
+  },
+  "401814941": {
+    "home_ml": 117,
+    "away_ml": -142,
+    "date": "2026-04-14",
+    "home": "Chicago White Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401814942": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-14",
+    "home": "Milwaukee Brewers",
+    "away": "Toronto Blue Jays"
+  },
+  "401814939": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-04-14",
+    "home": "St. Louis Cardinals",
+    "away": "Cleveland Guardians"
+  },
+  "401814940": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-14",
+    "home": "Houston Astros",
+    "away": "Colorado Rockies"
+  },
+  "401814944": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-14",
+    "home": "San Diego Padres",
+    "away": "Seattle Mariners"
+  },
+  "401814945": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-04-14",
+    "home": "Athletics",
+    "away": "Texas Rangers"
+  },
+  "401814943": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-04-14",
+    "home": "Los Angeles Dodgers",
+    "away": "New York Mets"
+  },
+  "401814947": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-15",
+    "home": "Baltimore Orioles",
+    "away": "Arizona Diamondbacks"
+  },
+  "401814954": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-15",
+    "home": "St. Louis Cardinals",
+    "away": "Cleveland Guardians"
+  },
+  "401814953": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-15",
+    "home": "Minnesota Twins",
+    "away": "Boston Red Sox"
+  },
+  "401814948": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-04-15",
+    "home": "Philadelphia Phillies",
+    "away": "Chicago Cubs"
+  },
+  "401814949": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-04-15",
+    "home": "Detroit Tigers",
+    "away": "Kansas City Royals"
+  },
+  "401814951": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-15",
+    "home": "Cincinnati Reds",
+    "away": "San Francisco Giants"
+  },
+  "401814952": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-04-15",
+    "home": "Pittsburgh Pirates",
+    "away": "Washington Nationals"
+  },
+  "401814946": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-04-15",
+    "home": "New York Yankees",
+    "away": "Los Angeles Angels"
+  },
+  "401814950": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-15",
+    "home": "Atlanta Braves",
+    "away": "Miami Marlins"
+  },
+  "401814956": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-15",
+    "home": "Chicago White Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401814957": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-04-15",
+    "home": "Milwaukee Brewers",
+    "away": "Toronto Blue Jays"
+  },
+  "401814955": {
+    "home_ml": -196,
+    "away_ml": 161,
+    "date": "2026-04-15",
+    "home": "Houston Astros",
+    "away": "Colorado Rockies"
+  },
+  "401814959": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-15",
+    "home": "San Diego Padres",
+    "away": "Seattle Mariners"
+  },
+  "401814960": {
+    "home_ml": -117,
+    "away_ml": -103,
+    "date": "2026-04-15",
+    "home": "Athletics",
+    "away": "Texas Rangers"
+  },
+  "401814958": {
+    "home_ml": -194,
+    "away_ml": 159,
+    "date": "2026-04-15",
+    "home": "Los Angeles Dodgers",
+    "away": "New York Mets"
+  },
+  "401814965": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-04-16",
+    "home": "Pittsburgh Pirates",
+    "away": "Washington Nationals"
+  },
+  "401814964": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-16",
+    "home": "Cincinnati Reds",
+    "away": "San Francisco Giants"
+  },
+  "401814963": {
+    "home_ml": -105,
+    "away_ml": -114,
+    "date": "2026-04-16",
+    "home": "Detroit Tigers",
+    "away": "Kansas City Royals"
+  },
+  "401814961": {
+    "home_ml": -308,
+    "away_ml": 244,
+    "date": "2026-04-16",
+    "home": "New York Yankees",
+    "away": "Los Angeles Angels"
+  },
+  "401814968": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-16",
+    "home": "Milwaukee Brewers",
+    "away": "Toronto Blue Jays"
+  },
+  "401814967": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-04-16",
+    "home": "Chicago White Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401814970": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-16",
+    "home": "Athletics",
+    "away": "Texas Rangers"
+  },
+  "401814962": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-16",
+    "home": "Cleveland Guardians",
+    "away": "Baltimore Orioles"
+  },
+  "401814966": {
+    "home_ml": -177,
+    "away_ml": 146,
+    "date": "2026-04-16",
+    "home": "Houston Astros",
+    "away": "Colorado Rockies"
+  },
+  "401814969": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-04-16",
+    "home": "San Diego Padres",
+    "away": "Seattle Mariners"
+  },
+  "401814979": {
+    "home_ml": -150,
+    "away_ml": 124,
+    "date": "2026-04-17",
+    "home": "Chicago Cubs",
+    "away": "New York Mets"
+  },
+  "401814972": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-17",
+    "home": "Cleveland Guardians",
+    "away": "Baltimore Orioles"
+  },
+  "401814971": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-17",
+    "home": "Philadelphia Phillies",
+    "away": "Atlanta Braves"
+  },
+  "401814977": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-17",
+    "home": "Pittsburgh Pirates",
+    "away": "Tampa Bay Rays"
+  },
+  "401814976": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-17",
+    "home": "Washington Nationals",
+    "away": "San Francisco Giants"
+  },
+  "401814974": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-17",
+    "home": "New York Yankees",
+    "away": "Kansas City Royals"
+  },
+  "401814975": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-17",
+    "home": "Miami Marlins",
+    "away": "Milwaukee Brewers"
+  },
+  "401814973": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-17",
+    "home": "Boston Red Sox",
+    "away": "Detroit Tigers"
+  },
+  "401814978": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-04-17",
+    "home": "Minnesota Twins",
+    "away": "Cincinnati Reds"
+  },
+  "401814980": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-17",
+    "home": "Houston Astros",
+    "away": "St. Louis Cardinals"
+  },
+  "401814981": {
+    "home_ml": 258,
+    "away_ml": -328,
+    "date": "2026-04-17",
+    "home": "Colorado Rockies",
+    "away": "Los Angeles Dodgers"
+  },
+  "401814983": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-17",
+    "home": "Los Angeles Angels",
+    "away": "San Diego Padres"
+  },
+  "401814982": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-17",
+    "home": "Athletics",
+    "away": "Chicago White Sox"
+  },
+  "401814984": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-17",
+    "home": "Seattle Mariners",
+    "away": "Texas Rangers"
+  },
+  "401814985": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-17",
+    "home": "Arizona Diamondbacks",
+    "away": "Toronto Blue Jays"
+  },
+  "401814989": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-04-18",
+    "home": "New York Yankees",
+    "away": "Kansas City Royals"
+  },
+  "401814993": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-18",
+    "home": "Minnesota Twins",
+    "away": "Cincinnati Reds"
+  },
+  "401814994": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-18",
+    "home": "Chicago Cubs",
+    "away": "New York Mets"
+  },
+  "401814992": {
+    "home_ml": -161,
+    "away_ml": 133,
+    "date": "2026-04-18",
+    "home": "Pittsburgh Pirates",
+    "away": "Tampa Bay Rays"
+  },
+  "401814991": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-18",
+    "home": "Washington Nationals",
+    "away": "San Francisco Giants"
+  },
+  "401814997": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-18",
+    "home": "Athletics",
+    "away": "Chicago White Sox"
+  },
+  "401814988": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-18",
+    "home": "Boston Red Sox",
+    "away": "Detroit Tigers"
+  },
+  "401814990": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-18",
+    "home": "Miami Marlins",
+    "away": "Milwaukee Brewers"
+  },
+  "401814987": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-18",
+    "home": "Cleveland Guardians",
+    "away": "Baltimore Orioles"
+  },
+  "401814995": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-18",
+    "home": "Houston Astros",
+    "away": "St. Louis Cardinals"
+  },
+  "401814986": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-18",
+    "home": "Philadelphia Phillies",
+    "away": "Atlanta Braves"
+  },
+  "401814999": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-18",
+    "home": "Seattle Mariners",
+    "away": "Texas Rangers"
+  },
+  "401814996": {
+    "home_ml": 234,
+    "away_ml": -293,
+    "date": "2026-04-18",
+    "home": "Colorado Rockies",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815000": {
+    "home_ml": -150,
+    "away_ml": 124,
+    "date": "2026-04-18",
+    "home": "Arizona Diamondbacks",
+    "away": "Toronto Blue Jays"
+  },
+  "401814998": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-18",
+    "home": "Los Angeles Angels",
+    "away": "San Diego Padres"
+  },
+  "401815004": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-04-19",
+    "home": "New York Yankees",
+    "away": "Kansas City Royals"
+  },
+  "401815006": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-19",
+    "home": "Washington Nationals",
+    "away": "San Francisco Giants"
+  },
+  "401815007": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-19",
+    "home": "Pittsburgh Pirates",
+    "away": "Tampa Bay Rays"
+  },
+  "401815002": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-19",
+    "home": "Cleveland Guardians",
+    "away": "Baltimore Orioles"
+  },
+  "401815005": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-19",
+    "home": "Miami Marlins",
+    "away": "Milwaukee Brewers"
+  },
+  "401815008": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-19",
+    "home": "Minnesota Twins",
+    "away": "Cincinnati Reds"
+  },
+  "401815010": {
+    "home_ml": -154,
+    "away_ml": 128,
+    "date": "2026-04-19",
+    "home": "Houston Astros",
+    "away": "St. Louis Cardinals"
+  },
+  "401815009": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-19",
+    "home": "Chicago Cubs",
+    "away": "New York Mets"
+  },
+  "401815011": {
+    "home_ml": 169,
+    "away_ml": -207,
+    "date": "2026-04-19",
+    "home": "Colorado Rockies",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815012": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-19",
+    "home": "Athletics",
+    "away": "Chicago White Sox"
+  },
+  "401815013": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-04-19",
+    "home": "Los Angeles Angels",
+    "away": "San Diego Padres"
+  },
+  "401815014": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-19",
+    "home": "Seattle Mariners",
+    "away": "Texas Rangers"
+  },
+  "401815015": {
+    "home_ml": -103,
+    "away_ml": -117,
+    "date": "2026-04-19",
+    "home": "Arizona Diamondbacks",
+    "away": "Toronto Blue Jays"
+  },
+  "401815003": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-19",
+    "home": "Boston Red Sox",
+    "away": "Detroit Tigers"
+  },
+  "401815001": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-19",
+    "home": "Philadelphia Phillies",
+    "away": "Atlanta Braves"
+  },
+  "401815018": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-20",
+    "home": "Boston Red Sox",
+    "away": "Detroit Tigers"
+  },
+  "401815019": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-20",
+    "home": "Cleveland Guardians",
+    "away": "Houston Astros"
+  },
+  "401815017": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-20",
+    "home": "Tampa Bay Rays",
+    "away": "Cincinnati Reds"
+  },
+  "401815020": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-04-20",
+    "home": "Miami Marlins",
+    "away": "St. Louis Cardinals"
+  },
+  "401815016": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-20",
+    "home": "Washington Nationals",
+    "away": "Atlanta Braves"
+  },
+  "401815021": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-20",
+    "home": "Kansas City Royals",
+    "away": "Baltimore Orioles"
+  },
+  "401815022": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-20",
+    "home": "Chicago Cubs",
+    "away": "Philadelphia Phillies"
+  },
+  "401815023": {
+    "home_ml": 163,
+    "away_ml": -199,
+    "date": "2026-04-20",
+    "home": "Colorado Rockies",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815025": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-20",
+    "home": "Los Angeles Angels",
+    "away": "Toronto Blue Jays"
+  },
+  "401815024": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-04-20",
+    "home": "Seattle Mariners",
+    "away": "Athletics"
+  },
+  "401815028": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-21",
+    "home": "Cleveland Guardians",
+    "away": "Houston Astros"
+  },
+  "401815027": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-21",
+    "home": "Tampa Bay Rays",
+    "away": "Cincinnati Reds"
+  },
+  "401815029": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-21",
+    "home": "Detroit Tigers",
+    "away": "Milwaukee Brewers"
+  },
+  "401815032": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-21",
+    "home": "Miami Marlins",
+    "away": "St. Louis Cardinals"
+  },
+  "401815026": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-21",
+    "home": "Washington Nationals",
+    "away": "Atlanta Braves"
+  },
+  "401815031": {
+    "home_ml": -121,
+    "away_ml": 100,
+    "date": "2026-04-21",
+    "home": "Boston Red Sox",
+    "away": "New York Yankees"
+  },
+  "401815030": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-21",
+    "home": "New York Mets",
+    "away": "Minnesota Twins"
+  },
+  "401815033": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-21",
+    "home": "Kansas City Royals",
+    "away": "Baltimore Orioles"
+  },
+  "401815034": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-21",
+    "home": "Chicago Cubs",
+    "away": "Philadelphia Phillies"
+  },
+  "401815035": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-21",
+    "home": "Texas Rangers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815036": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-04-21",
+    "home": "Colorado Rockies",
+    "away": "San Diego Padres"
+  },
+  "401815040": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-21",
+    "home": "Los Angeles Angels",
+    "away": "Toronto Blue Jays"
+  },
+  "401815037": {
+    "home_ml": -173,
+    "away_ml": 143,
+    "date": "2026-04-21",
+    "home": "Seattle Mariners",
+    "away": "Athletics"
+  },
+  "401815038": {
+    "home_ml": -140,
+    "away_ml": 116,
+    "date": "2026-04-21",
+    "home": "Arizona Diamondbacks",
+    "away": "Chicago White Sox"
+  },
+  "401815039": {
+    "home_ml": 144,
+    "away_ml": -175,
+    "date": "2026-04-21",
+    "home": "San Francisco Giants",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815047": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-22",
+    "home": "Miami Marlins",
+    "away": "St. Louis Cardinals"
+  },
+  "401815042": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-22",
+    "home": "Tampa Bay Rays",
+    "away": "Cincinnati Reds"
+  },
+  "401815043": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-04-22",
+    "home": "Cleveland Guardians",
+    "away": "Houston Astros"
+  },
+  "401815048": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-04-22",
+    "home": "Kansas City Royals",
+    "away": "Baltimore Orioles"
+  },
+  "401815055": {
+    "home_ml": -150,
+    "away_ml": 124,
+    "date": "2026-04-22",
+    "home": "Los Angeles Angels",
+    "away": "Toronto Blue Jays"
+  },
+  "401815052": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-04-22",
+    "home": "Seattle Mariners",
+    "away": "Athletics"
+  },
+  "401815044": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-22",
+    "home": "Detroit Tigers",
+    "away": "Milwaukee Brewers"
+  },
+  "401815041": {
+    "home_ml": 139,
+    "away_ml": -168,
+    "date": "2026-04-22",
+    "home": "Washington Nationals",
+    "away": "Atlanta Braves"
+  },
+  "401815046": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-04-22",
+    "home": "Boston Red Sox",
+    "away": "New York Yankees"
+  },
+  "401815045": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-22",
+    "home": "New York Mets",
+    "away": "Minnesota Twins"
+  },
+  "401815049": {
+    "home_ml": -193,
+    "away_ml": 159,
+    "date": "2026-04-22",
+    "home": "Chicago Cubs",
+    "away": "Philadelphia Phillies"
+  },
+  "401815050": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-22",
+    "home": "Texas Rangers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815051": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-22",
+    "home": "Colorado Rockies",
+    "away": "San Diego Padres"
+  },
+  "401815053": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-22",
+    "home": "Arizona Diamondbacks",
+    "away": "Chicago White Sox"
+  },
+  "401815054": {
+    "home_ml": 169,
+    "away_ml": -207,
+    "date": "2026-04-22",
+    "home": "San Francisco Giants",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815056": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-23",
+    "home": "Washington Nationals",
+    "away": "Atlanta Braves"
+  },
+  "401815057": {
+    "home_ml": -233,
+    "away_ml": 189,
+    "date": "2026-04-23",
+    "home": "Detroit Tigers",
+    "away": "Milwaukee Brewers"
+  },
+  "401815060": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-23",
+    "home": "Chicago Cubs",
+    "away": "Philadelphia Phillies"
+  },
+  "401815062": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-23",
+    "home": "Colorado Rockies",
+    "away": "San Diego Padres"
+  },
+  "401815063": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-23",
+    "home": "Arizona Diamondbacks",
+    "away": "Chicago White Sox"
+  },
+  "401815064": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-23",
+    "home": "San Francisco Giants",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815059": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-23",
+    "home": "Boston Red Sox",
+    "away": "New York Yankees"
+  },
+  "401815058": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-23",
+    "home": "New York Mets",
+    "away": "Minnesota Twins"
+  },
+  "401815061": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-23",
+    "home": "Texas Rangers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815068": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-24",
+    "home": "Cincinnati Reds",
+    "away": "Detroit Tigers"
+  },
+  "401815065": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-24",
+    "home": "Baltimore Orioles",
+    "away": "Boston Red Sox"
+  },
+  "401815066": {
+    "home_ml": 100,
+    "away_ml": -121,
+    "date": "2026-04-24",
+    "home": "Toronto Blue Jays",
+    "away": "Cleveland Guardians"
+  },
+  "401815067": {
+    "home_ml": -207,
+    "away_ml": 169,
+    "date": "2026-04-24",
+    "home": "New York Mets",
+    "away": "Colorado Rockies"
+  },
+  "401815069": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-24",
+    "home": "Tampa Bay Rays",
+    "away": "Minnesota Twins"
+  },
+  "401815070": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-04-24",
+    "home": "Atlanta Braves",
+    "away": "Philadelphia Phillies"
+  },
+  "401815071": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-24",
+    "home": "Kansas City Royals",
+    "away": "Los Angeles Angels"
+  },
+  "401815074": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-24",
+    "home": "Milwaukee Brewers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815076": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-24",
+    "home": "Chicago White Sox",
+    "away": "Washington Nationals"
+  },
+  "401815072": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-04-24",
+    "home": "Texas Rangers",
+    "away": "Athletics"
+  },
+  "401815073": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-24",
+    "home": "Houston Astros",
+    "away": "New York Yankees"
+  },
+  "401815075": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-04-24",
+    "home": "St. Louis Cardinals",
+    "away": "Seattle Mariners"
+  },
+  "401815077": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-24",
+    "home": "Los Angeles Dodgers",
+    "away": "Chicago Cubs"
+  },
+  "401815078": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-04-24",
+    "home": "San Francisco Giants",
+    "away": "Miami Marlins"
+  },
+  "401815080": {
+    "home_ml": -124,
+    "away_ml": 103,
+    "date": "2026-04-25",
+    "home": "Baltimore Orioles",
+    "away": "Boston Red Sox"
+  },
+  "401815090": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-04-25",
+    "home": "St. Louis Cardinals",
+    "away": "Seattle Mariners"
+  },
+  "401815081": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-04-25",
+    "home": "Toronto Blue Jays",
+    "away": "Cleveland Guardians"
+  },
+  "401815093": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-25",
+    "home": "San Francisco Giants",
+    "away": "Miami Marlins"
+  },
+  "401815084": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-25",
+    "home": "Tampa Bay Rays",
+    "away": "Minnesota Twins"
+  },
+  "401815091": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-25",
+    "home": "Chicago White Sox",
+    "away": "Washington Nationals"
+  },
+  "401815094": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-25",
+    "home": "Arizona Diamondbacks",
+    "away": "San Diego Padres"
+  },
+  "401815087": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-25",
+    "home": "Texas Rangers",
+    "away": "Athletics"
+  },
+  "401815086": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-25",
+    "home": "Kansas City Royals",
+    "away": "Los Angeles Angels"
+  },
+  "401815088": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-04-25",
+    "home": "Houston Astros",
+    "away": "New York Yankees"
+  },
+  "401815089": {
+    "home_ml": -138,
+    "away_ml": 115,
+    "date": "2026-04-25",
+    "home": "Milwaukee Brewers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815083": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-25",
+    "home": "Cincinnati Reds",
+    "away": "Detroit Tigers"
+  },
+  "401815085": {
+    "home_ml": -127,
+    "away_ml": 105,
+    "date": "2026-04-25",
+    "home": "Atlanta Braves",
+    "away": "Philadelphia Phillies"
+  },
+  "401815092": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-04-25",
+    "home": "Los Angeles Dodgers",
+    "away": "Chicago Cubs"
+  },
+  "401815095": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-26",
+    "home": "Baltimore Orioles",
+    "away": "Boston Red Sox"
+  },
+  "401815100": {
+    "home_ml": -219,
+    "away_ml": 179,
+    "date": "2026-04-26",
+    "home": "Atlanta Braves",
+    "away": "Philadelphia Phillies"
+  },
+  "401815096": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-26",
+    "home": "Toronto Blue Jays",
+    "away": "Cleveland Guardians"
+  },
+  "401815097": {
+    "home_ml": -271,
+    "away_ml": 218,
+    "date": "2026-04-26",
+    "home": "New York Mets",
+    "away": "Colorado Rockies"
+  },
+  "401815098": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-04-26",
+    "home": "Cincinnati Reds",
+    "away": "Detroit Tigers"
+  },
+  "401815099": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-26",
+    "home": "Tampa Bay Rays",
+    "away": "Minnesota Twins"
+  },
+  "401815103": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-26",
+    "home": "Houston Astros",
+    "away": "New York Yankees"
+  },
+  "401815104": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-26",
+    "home": "Milwaukee Brewers",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815106": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-26",
+    "home": "Chicago White Sox",
+    "away": "Washington Nationals"
+  },
+  "401815105": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-04-26",
+    "home": "St. Louis Cardinals",
+    "away": "Seattle Mariners"
+  },
+  "401815102": {
+    "home_ml": -124,
+    "away_ml": 103,
+    "date": "2026-04-26",
+    "home": "Texas Rangers",
+    "away": "Athletics"
+  },
+  "401815108": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-26",
+    "home": "San Francisco Giants",
+    "away": "Miami Marlins"
+  },
+  "401815109": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-26",
+    "home": "Arizona Diamondbacks",
+    "away": "San Diego Padres"
+  },
+  "401815101": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-26",
+    "home": "Kansas City Royals",
+    "away": "Los Angeles Angels"
+  },
+  "401815107": {
+    "home_ml": -128,
+    "away_ml": 107,
+    "date": "2026-04-26",
+    "home": "Los Angeles Dodgers",
+    "away": "Chicago Cubs"
+  },
+  "401870380": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-04-26",
+    "home": "New York Mets",
+    "away": "Colorado Rockies"
+  },
+  "401815112": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-27",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays"
+  },
+  "401815111": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-04-27",
+    "home": "Pittsburgh Pirates",
+    "away": "St. Louis Cardinals"
+  },
+  "401815110": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-27",
+    "home": "Toronto Blue Jays",
+    "away": "Boston Red Sox"
+  },
+  "401815113": {
+    "home_ml": -128,
+    "away_ml": 106,
+    "date": "2026-04-27",
+    "home": "Chicago White Sox",
+    "away": "Los Angeles Angels"
+  },
+  "401815115": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-04-27",
+    "home": "Minnesota Twins",
+    "away": "Seattle Mariners"
+  },
+  "401815114": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-04-27",
+    "home": "Texas Rangers",
+    "away": "New York Yankees"
+  },
+  "401815116": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-27",
+    "home": "San Diego Padres",
+    "away": "Chicago Cubs"
+  },
+  "401815117": {
+    "home_ml": -286,
+    "away_ml": 229,
+    "date": "2026-04-27",
+    "home": "Los Angeles Dodgers",
+    "away": "Miami Marlins"
+  },
+  "401815124": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-28",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays"
+  },
+  "401815121": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-04-28",
+    "home": "Baltimore Orioles",
+    "away": "Houston Astros"
+  },
+  "401815119": {
+    "home_ml": -199,
+    "away_ml": 163,
+    "date": "2026-04-28",
+    "home": "Cincinnati Reds",
+    "away": "Colorado Rockies"
+  },
+  "401815122": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-04-28",
+    "home": "Philadelphia Phillies",
+    "away": "San Francisco Giants"
+  },
+  "401815123": {
+    "home_ml": -161,
+    "away_ml": 133,
+    "date": "2026-04-28",
+    "home": "Pittsburgh Pirates",
+    "away": "St. Louis Cardinals"
+  },
+  "401815118": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-28",
+    "home": "Toronto Blue Jays",
+    "away": "Boston Red Sox"
+  },
+  "401815125": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-04-28",
+    "home": "New York Mets",
+    "away": "Washington Nationals"
+  },
+  "401815120": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-04-28",
+    "home": "Atlanta Braves",
+    "away": "Detroit Tigers"
+  },
+  "401815126": {
+    "home_ml": 114,
+    "away_ml": -137,
+    "date": "2026-04-28",
+    "home": "Chicago White Sox",
+    "away": "Los Angeles Angels"
+  },
+  "401815127": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-28",
+    "home": "Milwaukee Brewers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815129": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-04-28",
+    "home": "Minnesota Twins",
+    "away": "Seattle Mariners"
+  },
+  "401815128": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-04-28",
+    "home": "Texas Rangers",
+    "away": "New York Yankees"
+  },
+  "401815130": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-04-28",
+    "home": "San Diego Padres",
+    "away": "Chicago Cubs"
+  },
+  "401815131": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-04-28",
+    "home": "Athletics",
+    "away": "Kansas City Royals"
+  },
+  "401815132": {
+    "home_ml": -280,
+    "away_ml": 224,
+    "date": "2026-04-28",
+    "home": "Los Angeles Dodgers",
+    "away": "Miami Marlins"
+  },
+  "401815139": {
+    "home_ml": -119,
+    "away_ml": -101,
+    "date": "2026-04-29",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays"
+  },
+  "401815141": {
+    "home_ml": 103,
+    "away_ml": -124,
+    "date": "2026-04-29",
+    "home": "Chicago White Sox",
+    "away": "Los Angeles Angels"
+  },
+  "401815144": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-04-29",
+    "home": "Minnesota Twins",
+    "away": "Seattle Mariners"
+  },
+  "401815143": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-04-29",
+    "home": "Texas Rangers",
+    "away": "New York Yankees"
+  },
+  "401815133": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-04-29",
+    "home": "Toronto Blue Jays",
+    "away": "Boston Red Sox"
+  },
+  "401815147": {
+    "home_ml": -267,
+    "away_ml": 214,
+    "date": "2026-04-29",
+    "home": "Los Angeles Dodgers",
+    "away": "Miami Marlins"
+  },
+  "401815145": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-04-29",
+    "home": "San Diego Padres",
+    "away": "Chicago Cubs"
+  },
+  "401815134": {
+    "home_ml": -167,
+    "away_ml": 138,
+    "date": "2026-04-29",
+    "home": "Cincinnati Reds",
+    "away": "Colorado Rockies"
+  },
+  "401815138": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-04-29",
+    "home": "Pittsburgh Pirates",
+    "away": "St. Louis Cardinals"
+  },
+  "401815140": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-04-29",
+    "home": "New York Mets",
+    "away": "Washington Nationals"
+  },
+  "401815135": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-04-29",
+    "home": "Atlanta Braves",
+    "away": "Detroit Tigers"
+  },
+  "401815142": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-04-29",
+    "home": "Milwaukee Brewers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815146": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-04-29",
+    "home": "Athletics",
+    "away": "Kansas City Royals"
+  },
+  "401815149": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-04-30",
+    "home": "Atlanta Braves",
+    "away": "Detroit Tigers"
+  },
+  "401815150": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-04-30",
+    "home": "Baltimore Orioles",
+    "away": "Houston Astros"
+  },
+  "401815151": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-04-30",
+    "home": "Philadelphia Phillies",
+    "away": "San Francisco Giants"
+  },
+  "401815152": {
+    "home_ml": -232,
+    "away_ml": 189,
+    "date": "2026-04-30",
+    "home": "Pittsburgh Pirates",
+    "away": "St. Louis Cardinals"
+  },
+  "401815148": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-04-30",
+    "home": "Cincinnati Reds",
+    "away": "Colorado Rockies"
+  },
+  "401815153": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-04-30",
+    "home": "New York Mets",
+    "away": "Washington Nationals"
+  },
+  "401815154": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-04-30",
+    "home": "Milwaukee Brewers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815156": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-04-30",
+    "home": "Athletics",
+    "away": "Kansas City Royals"
+  },
+  "401871088": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-04-30",
+    "home": "Baltimore Orioles",
+    "away": "Houston Astros"
+  },
+  "401871107": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-04-30",
+    "home": "Philadelphia Phillies",
+    "away": "San Francisco Giants"
+  },
+  "401815155": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-04-30",
+    "home": "Minnesota Twins",
+    "away": "Toronto Blue Jays"
+  },
+  "401815164": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-01",
+    "home": "Chicago Cubs",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815163": {
+    "home_ml": -124,
+    "away_ml": 103,
+    "date": "2026-05-01",
+    "home": "Detroit Tigers",
+    "away": "Texas Rangers"
+  },
+  "401815158": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-01",
+    "home": "Pittsburgh Pirates",
+    "away": "Cincinnati Reds"
+  },
+  "401815160": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-05-01",
+    "home": "Washington Nationals",
+    "away": "Milwaukee Brewers"
+  },
+  "401815157": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-01",
+    "home": "New York Yankees",
+    "away": "Baltimore Orioles"
+  },
+  "401815159": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-05-01",
+    "home": "Boston Red Sox",
+    "away": "Houston Astros"
+  },
+  "401815161": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-01",
+    "home": "Miami Marlins",
+    "away": "Philadelphia Phillies"
+  },
+  "401815162": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-01",
+    "home": "Tampa Bay Rays",
+    "away": "San Francisco Giants"
+  },
+  "401815166": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-01",
+    "home": "Minnesota Twins",
+    "away": "Toronto Blue Jays"
+  },
+  "401815165": {
+    "home_ml": 144,
+    "away_ml": -175,
+    "date": "2026-05-01",
+    "home": "St. Louis Cardinals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815167": {
+    "home_ml": 141,
+    "away_ml": -171,
+    "date": "2026-05-01",
+    "home": "Colorado Rockies",
+    "away": "Atlanta Braves"
+  },
+  "401815171": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-01",
+    "home": "Los Angeles Angels",
+    "away": "New York Mets"
+  },
+  "401815168": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-01",
+    "home": "San Diego Padres",
+    "away": "Chicago White Sox"
+  },
+  "401815169": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-05-01",
+    "home": "Athletics",
+    "away": "Cleveland Guardians"
+  },
+  "401815170": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-01",
+    "home": "Seattle Mariners",
+    "away": "Kansas City Royals"
+  },
+  "401815172": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-05-02",
+    "home": "New York Yankees",
+    "away": "Baltimore Orioles"
+  },
+  "401815181": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-05-02",
+    "home": "Minnesota Twins",
+    "away": "Toronto Blue Jays"
+  },
+  "401815179": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-05-02",
+    "home": "Chicago Cubs",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815173": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-02",
+    "home": "Pittsburgh Pirates",
+    "away": "Cincinnati Reds"
+  },
+  "401815175": {
+    "home_ml": 114,
+    "away_ml": -137,
+    "date": "2026-05-02",
+    "home": "Washington Nationals",
+    "away": "Milwaukee Brewers"
+  },
+  "401815184": {
+    "home_ml": -138,
+    "away_ml": 115,
+    "date": "2026-05-02",
+    "home": "Athletics",
+    "away": "Cleveland Guardians"
+  },
+  "401815174": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-02",
+    "home": "Boston Red Sox",
+    "away": "Houston Astros"
+  },
+  "401815176": {
+    "home_ml": -130,
+    "away_ml": 108,
+    "date": "2026-05-02",
+    "home": "Miami Marlins",
+    "away": "Philadelphia Phillies"
+  },
+  "401815177": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-05-02",
+    "home": "Tampa Bay Rays",
+    "away": "San Francisco Giants"
+  },
+  "401815178": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-02",
+    "home": "Detroit Tigers",
+    "away": "Texas Rangers"
+  },
+  "401815180": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-05-02",
+    "home": "St. Louis Cardinals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815182": {
+    "home_ml": 179,
+    "away_ml": -219,
+    "date": "2026-05-02",
+    "home": "Colorado Rockies",
+    "away": "Atlanta Braves"
+  },
+  "401815183": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-05-02",
+    "home": "San Diego Padres",
+    "away": "Chicago White Sox"
+  },
+  "401815186": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-05-02",
+    "home": "Los Angeles Angels",
+    "away": "New York Mets"
+  },
+  "401815185": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-05-02",
+    "home": "Seattle Mariners",
+    "away": "Kansas City Royals"
+  },
+  "401815196": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-03",
+    "home": "Minnesota Twins",
+    "away": "Toronto Blue Jays"
+  },
+  "401815187": {
+    "home_ml": -286,
+    "away_ml": 229,
+    "date": "2026-05-03",
+    "home": "New York Yankees",
+    "away": "Baltimore Orioles"
+  },
+  "401815188": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-05-03",
+    "home": "Pittsburgh Pirates",
+    "away": "Cincinnati Reds"
+  },
+  "401815189": {
+    "home_ml": -181,
+    "away_ml": 149,
+    "date": "2026-05-03",
+    "home": "Boston Red Sox",
+    "away": "Houston Astros"
+  },
+  "401815190": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-05-03",
+    "home": "Washington Nationals",
+    "away": "Milwaukee Brewers"
+  },
+  "401815191": {
+    "home_ml": 112,
+    "away_ml": -135,
+    "date": "2026-05-03",
+    "home": "Miami Marlins",
+    "away": "Philadelphia Phillies"
+  },
+  "401815192": {
+    "home_ml": -128,
+    "away_ml": 107,
+    "date": "2026-05-03",
+    "home": "Tampa Bay Rays",
+    "away": "San Francisco Giants"
+  },
+  "401815195": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-05-03",
+    "home": "St. Louis Cardinals",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815194": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-05-03",
+    "home": "Chicago Cubs",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815197": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-05-03",
+    "home": "Colorado Rockies",
+    "away": "Atlanta Braves"
+  },
+  "401815199": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-05-03",
+    "home": "Athletics",
+    "away": "Cleveland Guardians"
+  },
+  "401815201": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-03",
+    "home": "Los Angeles Angels",
+    "away": "New York Mets"
+  },
+  "401815198": {
+    "home_ml": -167,
+    "away_ml": 138,
+    "date": "2026-05-03",
+    "home": "San Diego Padres",
+    "away": "Chicago White Sox"
+  },
+  "401815200": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-03",
+    "home": "Seattle Mariners",
+    "away": "Kansas City Royals"
+  },
+  "401815193": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-05-03",
+    "home": "Detroit Tigers",
+    "away": "Texas Rangers"
+  },
+  "401815210": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-05-04",
+    "home": "Colorado Rockies",
+    "away": "New York Mets"
+  },
+  "401815203": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-05-04",
+    "home": "Detroit Tigers",
+    "away": "Boston Red Sox"
+  },
+  "401815204": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-04",
+    "home": "Miami Marlins",
+    "away": "Philadelphia Phillies"
+  },
+  "401815205": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-05-04",
+    "home": "Tampa Bay Rays",
+    "away": "Toronto Blue Jays"
+  },
+  "401815202": {
+    "home_ml": -232,
+    "away_ml": 189,
+    "date": "2026-05-04",
+    "home": "New York Yankees",
+    "away": "Baltimore Orioles"
+  },
+  "401815206": {
+    "home_ml": -225,
+    "away_ml": 183,
+    "date": "2026-05-04",
+    "home": "Chicago Cubs",
+    "away": "Cincinnati Reds"
+  },
+  "401815207": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-04",
+    "home": "Kansas City Royals",
+    "away": "Cleveland Guardians"
+  },
+  "401815209": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-05-04",
+    "home": "St. Louis Cardinals",
+    "away": "Milwaukee Brewers"
+  },
+  "401815208": {
+    "home_ml": 163,
+    "away_ml": -199,
+    "date": "2026-05-04",
+    "home": "Houston Astros",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815212": {
+    "home_ml": -161,
+    "away_ml": 133,
+    "date": "2026-05-04",
+    "home": "Los Angeles Angels",
+    "away": "Chicago White Sox"
+  },
+  "401815211": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-05-04",
+    "home": "Seattle Mariners",
+    "away": "Atlanta Braves"
+  },
+  "401815213": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-04",
+    "home": "San Francisco Giants",
+    "away": "San Diego Padres"
+  },
+  "401815214": {
+    "home_ml": -219,
+    "away_ml": 179,
+    "date": "2026-05-05",
+    "home": "Philadelphia Phillies",
+    "away": "Athletics"
+  },
+  "401815215": {
+    "home_ml": -138,
+    "away_ml": 115,
+    "date": "2026-05-05",
+    "home": "Miami Marlins",
+    "away": "Baltimore Orioles"
+  },
+  "401815216": {
+    "home_ml": -161,
+    "away_ml": 133,
+    "date": "2026-05-05",
+    "home": "Detroit Tigers",
+    "away": "Boston Red Sox"
+  },
+  "401815219": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-05-05",
+    "home": "Tampa Bay Rays",
+    "away": "Toronto Blue Jays"
+  },
+  "401815217": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-05-05",
+    "home": "Washington Nationals",
+    "away": "Minnesota Twins"
+  },
+  "401815218": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-05",
+    "home": "New York Yankees",
+    "away": "Texas Rangers"
+  },
+  "401815220": {
+    "home_ml": -166,
+    "away_ml": 137,
+    "date": "2026-05-05",
+    "home": "Chicago Cubs",
+    "away": "Cincinnati Reds"
+  },
+  "401815221": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-05-05",
+    "home": "Kansas City Royals",
+    "away": "Cleveland Guardians"
+  },
+  "401815222": {
+    "home_ml": 184,
+    "away_ml": -227,
+    "date": "2026-05-05",
+    "home": "Houston Astros",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815226": {
+    "home_ml": -117,
+    "away_ml": -103,
+    "date": "2026-05-05",
+    "home": "Los Angeles Angels",
+    "away": "Chicago White Sox"
+  },
+  "401815225": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-05-05",
+    "home": "Seattle Mariners",
+    "away": "Atlanta Braves"
+  },
+  "401815227": {
+    "home_ml": -130,
+    "away_ml": 108,
+    "date": "2026-05-05",
+    "home": "Arizona Diamondbacks",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815228": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-05",
+    "home": "San Francisco Giants",
+    "away": "San Diego Padres"
+  },
+  "401815234": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-06",
+    "home": "Tampa Bay Rays",
+    "away": "Toronto Blue Jays"
+  },
+  "401815238": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-06",
+    "home": "St. Louis Cardinals",
+    "away": "Milwaukee Brewers"
+  },
+  "401815237": {
+    "home_ml": 179,
+    "away_ml": -219,
+    "date": "2026-05-06",
+    "home": "Houston Astros",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815243": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-06",
+    "home": "San Francisco Giants",
+    "away": "San Diego Padres"
+  },
+  "401815241": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-05-06",
+    "home": "Los Angeles Angels",
+    "away": "Chicago White Sox"
+  },
+  "401815240": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-06",
+    "home": "Seattle Mariners",
+    "away": "Atlanta Braves"
+  },
+  "401815229": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-06",
+    "home": "Philadelphia Phillies",
+    "away": "Athletics"
+  },
+  "401815230": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-05-06",
+    "home": "Miami Marlins",
+    "away": "Baltimore Orioles"
+  },
+  "401815231": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-06",
+    "home": "Detroit Tigers",
+    "away": "Boston Red Sox"
+  },
+  "401815232": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-05-06",
+    "home": "Washington Nationals",
+    "away": "Minnesota Twins"
+  },
+  "401815233": {
+    "home_ml": -171,
+    "away_ml": 141,
+    "date": "2026-05-06",
+    "home": "New York Yankees",
+    "away": "Texas Rangers"
+  },
+  "401815235": {
+    "home_ml": -169,
+    "away_ml": 140,
+    "date": "2026-05-06",
+    "home": "Chicago Cubs",
+    "away": "Cincinnati Reds"
+  },
+  "401815236": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-06",
+    "home": "Kansas City Royals",
+    "away": "Cleveland Guardians"
+  },
+  "401815239": {
+    "home_ml": 133,
+    "away_ml": -161,
+    "date": "2026-05-06",
+    "home": "Colorado Rockies",
+    "away": "New York Mets"
+  },
+  "401815242": {
+    "home_ml": 109,
+    "away_ml": -132,
+    "date": "2026-05-06",
+    "home": "Arizona Diamondbacks",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815248": {
+    "home_ml": -158,
+    "away_ml": 131,
+    "date": "2026-05-07",
+    "home": "New York Yankees",
+    "away": "Texas Rangers"
+  },
+  "401815246": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-05-07",
+    "home": "Washington Nationals",
+    "away": "Minnesota Twins"
+  },
+  "401815250": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-05-07",
+    "home": "Kansas City Royals",
+    "away": "Cleveland Guardians"
+  },
+  "401815249": {
+    "home_ml": -207,
+    "away_ml": 169,
+    "date": "2026-05-07",
+    "home": "Chicago Cubs",
+    "away": "Cincinnati Reds"
+  },
+  "401871498": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-07",
+    "home": "Colorado Rockies",
+    "away": "New York Mets"
+  },
+  "401815251": {
+    "home_ml": -117,
+    "away_ml": -103,
+    "date": "2026-05-07",
+    "home": "Arizona Diamondbacks",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815244": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-07",
+    "home": "Philadelphia Phillies",
+    "away": "Athletics"
+  },
+  "401815245": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-05-07",
+    "home": "Miami Marlins",
+    "away": "Baltimore Orioles"
+  },
+  "401815247": {
+    "home_ml": -121,
+    "away_ml": 100,
+    "date": "2026-05-07",
+    "home": "Boston Red Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401815252": {
+    "home_ml": -169,
+    "away_ml": 139,
+    "date": "2026-05-07",
+    "home": "San Diego Padres",
+    "away": "St. Louis Cardinals"
+  },
+  "401815256": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-05-08",
+    "home": "Cincinnati Reds",
+    "away": "Houston Astros"
+  },
+  "401815255": {
+    "home_ml": -232,
+    "away_ml": 189,
+    "date": "2026-05-08",
+    "home": "Philadelphia Phillies",
+    "away": "Colorado Rockies"
+  },
+  "401815254": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-08",
+    "home": "Baltimore Orioles",
+    "away": "Athletics"
+  },
+  "401815253": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-08",
+    "home": "Toronto Blue Jays",
+    "away": "Los Angeles Angels"
+  },
+  "401815258": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-08",
+    "home": "Boston Red Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401815259": {
+    "home_ml": -141,
+    "away_ml": 117,
+    "date": "2026-05-08",
+    "home": "Miami Marlins",
+    "away": "Washington Nationals"
+  },
+  "401815257": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-08",
+    "home": "Cleveland Guardians",
+    "away": "Minnesota Twins"
+  },
+  "401815261": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-08",
+    "home": "Kansas City Royals",
+    "away": "Detroit Tigers"
+  },
+  "401815262": {
+    "home_ml": 107,
+    "away_ml": -128,
+    "date": "2026-05-08",
+    "home": "Milwaukee Brewers",
+    "away": "New York Yankees"
+  },
+  "401815263": {
+    "home_ml": 115,
+    "away_ml": -138,
+    "date": "2026-05-08",
+    "home": "Chicago White Sox",
+    "away": "Seattle Mariners"
+  },
+  "401815260": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-08",
+    "home": "Texas Rangers",
+    "away": "Chicago Cubs"
+  },
+  "401815265": {
+    "home_ml": 102,
+    "away_ml": -122,
+    "date": "2026-05-08",
+    "home": "Arizona Diamondbacks",
+    "away": "New York Mets"
+  },
+  "401815267": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-05-08",
+    "home": "San Diego Padres",
+    "away": "St. Louis Cardinals"
+  },
+  "401815264": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-08",
+    "home": "Los Angeles Dodgers",
+    "away": "Atlanta Braves"
+  },
+  "401815266": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-08",
+    "home": "San Francisco Giants",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815268": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-09",
+    "home": "Toronto Blue Jays",
+    "away": "Los Angeles Angels"
+  },
+  "401815269": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-05-09",
+    "home": "Baltimore Orioles",
+    "away": "Athletics"
+  },
+  "401815271": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-09",
+    "home": "Cincinnati Reds",
+    "away": "Houston Astros"
+  },
+  "401815274": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-09",
+    "home": "Miami Marlins",
+    "away": "Washington Nationals"
+  },
+  "401815270": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-05-09",
+    "home": "Philadelphia Phillies",
+    "away": "Colorado Rockies"
+  },
+  "401815272": {
+    "home_ml": -127,
+    "away_ml": 105,
+    "date": "2026-05-09",
+    "home": "Cleveland Guardians",
+    "away": "Minnesota Twins"
+  },
+  "401815275": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-09",
+    "home": "Texas Rangers",
+    "away": "Chicago Cubs"
+  },
+  "401815276": {
+    "home_ml": -130,
+    "away_ml": 108,
+    "date": "2026-05-09",
+    "home": "Kansas City Royals",
+    "away": "Detroit Tigers"
+  },
+  "401815277": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-09",
+    "home": "Milwaukee Brewers",
+    "away": "New York Yankees"
+  },
+  "401815278": {
+    "home_ml": 109,
+    "away_ml": -131,
+    "date": "2026-05-09",
+    "home": "Chicago White Sox",
+    "away": "Seattle Mariners"
+  },
+  "401815280": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-09",
+    "home": "Arizona Diamondbacks",
+    "away": "New York Mets"
+  },
+  "401815282": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-05-09",
+    "home": "San Diego Padres",
+    "away": "St. Louis Cardinals"
+  },
+  "401815281": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-09",
+    "home": "San Francisco Giants",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815279": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-09",
+    "home": "Los Angeles Dodgers",
+    "away": "Atlanta Braves"
+  },
+  "401815289": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-10",
+    "home": "Miami Marlins",
+    "away": "Washington Nationals"
+  },
+  "401815284": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-10",
+    "home": "Baltimore Orioles",
+    "away": "Athletics"
+  },
+  "401815285": {
+    "home_ml": -314,
+    "away_ml": 248,
+    "date": "2026-05-10",
+    "home": "Philadelphia Phillies",
+    "away": "Colorado Rockies"
+  },
+  "401815288": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-05-10",
+    "home": "Boston Red Sox",
+    "away": "Tampa Bay Rays"
+  },
+  "401815283": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-10",
+    "home": "Toronto Blue Jays",
+    "away": "Los Angeles Angels"
+  },
+  "401815286": {
+    "home_ml": -121,
+    "away_ml": 100,
+    "date": "2026-05-10",
+    "home": "Cincinnati Reds",
+    "away": "Houston Astros"
+  },
+  "401815287": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-10",
+    "home": "Cleveland Guardians",
+    "away": "Minnesota Twins"
+  },
+  "401815292": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-05-10",
+    "home": "Milwaukee Brewers",
+    "away": "New York Yankees"
+  },
+  "401815293": {
+    "home_ml": 117,
+    "away_ml": -141,
+    "date": "2026-05-10",
+    "home": "Chicago White Sox",
+    "away": "Seattle Mariners"
+  },
+  "401815290": {
+    "home_ml": -123,
+    "away_ml": 102,
+    "date": "2026-05-10",
+    "home": "Texas Rangers",
+    "away": "Chicago Cubs"
+  },
+  "401815296": {
+    "home_ml": -126,
+    "away_ml": 104,
+    "date": "2026-05-10",
+    "home": "San Francisco Giants",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815294": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-05-10",
+    "home": "Los Angeles Dodgers",
+    "away": "Atlanta Braves"
+  },
+  "401815295": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-10",
+    "home": "Arizona Diamondbacks",
+    "away": "New York Mets"
+  },
+  "401815297": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-10",
+    "home": "San Diego Padres",
+    "away": "St. Louis Cardinals"
+  },
+  "401815291": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-05-10",
+    "home": "Kansas City Royals",
+    "away": "Detroit Tigers"
+  },
+  "401815298": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-05-11",
+    "home": "Cleveland Guardians",
+    "away": "Los Angeles Angels"
+  },
+  "401815299": {
+    "home_ml": 124,
+    "away_ml": -149,
+    "date": "2026-05-11",
+    "home": "Baltimore Orioles",
+    "away": "New York Yankees"
+  },
+  "401815300": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-05-11",
+    "home": "Toronto Blue Jays",
+    "away": "Tampa Bay Rays"
+  },
+  "401815301": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-11",
+    "home": "Texas Rangers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815302": {
+    "home_ml": 129,
+    "away_ml": -156,
+    "date": "2026-05-11",
+    "home": "Houston Astros",
+    "away": "Seattle Mariners"
+  },
+  "401815303": {
+    "home_ml": -192,
+    "away_ml": 157,
+    "date": "2026-05-11",
+    "home": "Los Angeles Dodgers",
+    "away": "San Francisco Giants"
+  },
+  "401815304": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-12",
+    "home": "Cleveland Guardians",
+    "away": "Los Angeles Angels"
+  },
+  "401815308": {
+    "home_ml": 119,
+    "away_ml": -144,
+    "date": "2026-05-12",
+    "home": "Baltimore Orioles",
+    "away": "New York Yankees"
+  },
+  "401815306": {
+    "home_ml": -299,
+    "away_ml": 238,
+    "date": "2026-05-12",
+    "home": "Pittsburgh Pirates",
+    "away": "Colorado Rockies"
+  },
+  "401815311": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-12",
+    "home": "Cincinnati Reds",
+    "away": "Washington Nationals"
+  },
+  "401815309": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-12",
+    "home": "Boston Red Sox",
+    "away": "Philadelphia Phillies"
+  },
+  "401815310": {
+    "home_ml": -102,
+    "away_ml": -118,
+    "date": "2026-05-12",
+    "home": "Toronto Blue Jays",
+    "away": "Tampa Bay Rays"
+  },
+  "401815307": {
+    "home_ml": -143,
+    "away_ml": 119,
+    "date": "2026-05-12",
+    "home": "New York Mets",
+    "away": "Detroit Tigers"
+  },
+  "401815305": {
+    "home_ml": -122,
+    "away_ml": 102,
+    "date": "2026-05-12",
+    "home": "Atlanta Braves",
+    "away": "Chicago Cubs"
+  },
+  "401815313": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-12",
+    "home": "Chicago White Sox",
+    "away": "Kansas City Royals"
+  },
+  "401815314": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-12",
+    "home": "Minnesota Twins",
+    "away": "Miami Marlins"
+  },
+  "401815315": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-12",
+    "home": "Milwaukee Brewers",
+    "away": "San Diego Padres"
+  },
+  "401815312": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-05-12",
+    "home": "Texas Rangers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815316": {
+    "home_ml": 148,
+    "away_ml": -180,
+    "date": "2026-05-12",
+    "home": "Houston Astros",
+    "away": "Seattle Mariners"
+  },
+  "401815318": {
+    "home_ml": -156,
+    "away_ml": 129,
+    "date": "2026-05-12",
+    "home": "Athletics",
+    "away": "St. Louis Cardinals"
+  },
+  "401815317": {
+    "home_ml": -349,
+    "away_ml": 273,
+    "date": "2026-05-12",
+    "home": "Los Angeles Dodgers",
+    "away": "San Francisco Giants"
+  },
+  "401815323": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-05-13",
+    "home": "Baltimore Orioles",
+    "away": "New York Yankees"
+  },
+  "401815319": {
+    "home_ml": -158,
+    "away_ml": 131,
+    "date": "2026-05-13",
+    "home": "Cleveland Guardians",
+    "away": "Los Angeles Angels"
+  },
+  "401815321": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-13",
+    "home": "Pittsburgh Pirates",
+    "away": "Colorado Rockies"
+  },
+  "401815326": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-13",
+    "home": "Cincinnati Reds",
+    "away": "Washington Nationals"
+  },
+  "401815324": {
+    "home_ml": -131,
+    "away_ml": 108,
+    "date": "2026-05-13",
+    "home": "Boston Red Sox",
+    "away": "Philadelphia Phillies"
+  },
+  "401815325": {
+    "home_ml": -150,
+    "away_ml": 124,
+    "date": "2026-05-13",
+    "home": "Toronto Blue Jays",
+    "away": "Tampa Bay Rays"
+  },
+  "401815322": {
+    "home_ml": -114,
+    "away_ml": -106,
+    "date": "2026-05-13",
+    "home": "New York Mets",
+    "away": "Detroit Tigers"
+  },
+  "401815320": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-13",
+    "home": "Atlanta Braves",
+    "away": "Chicago Cubs"
+  },
+  "401815328": {
+    "home_ml": -105,
+    "away_ml": -114,
+    "date": "2026-05-13",
+    "home": "Chicago White Sox",
+    "away": "Kansas City Royals"
+  },
+  "401815329": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-13",
+    "home": "Minnesota Twins",
+    "away": "Miami Marlins"
+  },
+  "401815330": {
+    "home_ml": -168,
+    "away_ml": 139,
+    "date": "2026-05-13",
+    "home": "Milwaukee Brewers",
+    "away": "San Diego Padres"
+  },
+  "401815327": {
+    "home_ml": -111,
+    "away_ml": -109,
+    "date": "2026-05-13",
+    "home": "Texas Rangers",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815331": {
+    "home_ml": 108,
+    "away_ml": -130,
+    "date": "2026-05-13",
+    "home": "Houston Astros",
+    "away": "Seattle Mariners"
+  },
+  "401815333": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-05-13",
+    "home": "Athletics",
+    "away": "St. Louis Cardinals"
+  },
+  "401815332": {
+    "home_ml": -251,
+    "away_ml": 202,
+    "date": "2026-05-13",
+    "home": "Los Angeles Dodgers",
+    "away": "San Francisco Giants"
+  },
+  "401815335": {
+    "home_ml": -180,
+    "away_ml": 148,
+    "date": "2026-05-14",
+    "home": "Pittsburgh Pirates",
+    "away": "Colorado Rockies"
+  },
+  "401815338": {
+    "home_ml": -162,
+    "away_ml": 134,
+    "date": "2026-05-14",
+    "home": "Cincinnati Reds",
+    "away": "Washington Nationals"
+  },
+  "401815336": {
+    "home_ml": -157,
+    "away_ml": 130,
+    "date": "2026-05-14",
+    "home": "New York Mets",
+    "away": "Detroit Tigers"
+  },
+  "401815340": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-14",
+    "home": "Minnesota Twins",
+    "away": "Miami Marlins"
+  },
+  "401815341": {
+    "home_ml": -142,
+    "away_ml": 118,
+    "date": "2026-05-14",
+    "home": "Milwaukee Brewers",
+    "away": "San Diego Padres"
+  },
+  "401815342": {
+    "home_ml": -102,
+    "away_ml": -119,
+    "date": "2026-05-14",
+    "home": "Houston Astros",
+    "away": "Seattle Mariners"
+  },
+  "401815344": {
+    "home_ml": -122,
+    "away_ml": 101,
+    "date": "2026-05-14",
+    "home": "Athletics",
+    "away": "St. Louis Cardinals"
+  },
+  "401815337": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-14",
+    "home": "Boston Red Sox",
+    "away": "Philadelphia Phillies"
+  },
+  "401815334": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-14",
+    "home": "Atlanta Braves",
+    "away": "Chicago Cubs"
+  },
+  "401815339": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-14",
+    "home": "Chicago White Sox",
+    "away": "Kansas City Royals"
+  },
+  "401815343": {
+    "home_ml": -186,
+    "away_ml": 153,
+    "date": "2026-05-14",
+    "home": "Los Angeles Dodgers",
+    "away": "San Francisco Giants"
+  },
+  "401815350": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-15",
+    "home": "Pittsburgh Pirates",
+    "away": "Philadelphia Phillies"
+  },
+  "401815351": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-05-15",
+    "home": "Detroit Tigers",
+    "away": "Toronto Blue Jays"
+  },
+  "401815345": {
+    "home_ml": 119,
+    "away_ml": -143,
+    "date": "2026-05-15",
+    "home": "Washington Nationals",
+    "away": "Baltimore Orioles"
+  },
+  "401815347": {
+    "home_ml": -142,
+    "away_ml": 118,
+    "date": "2026-05-15",
+    "home": "Cleveland Guardians",
+    "away": "Cincinnati Reds"
+  },
+  "401815348": {
+    "home_ml": -128,
+    "away_ml": 107,
+    "date": "2026-05-15",
+    "home": "Tampa Bay Rays",
+    "away": "Miami Marlins"
+  },
+  "401815354": {
+    "home_ml": -110,
+    "away_ml": -109,
+    "date": "2026-05-15",
+    "home": "Minnesota Twins",
+    "away": "Milwaukee Brewers"
+  },
+  "401815346": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-05-15",
+    "home": "Atlanta Braves",
+    "away": "Boston Red Sox"
+  },
+  "401815349": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-05-15",
+    "home": "New York Mets",
+    "away": "New York Yankees"
+  },
+  "401815352": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-05-15",
+    "home": "Chicago White Sox",
+    "away": "Chicago Cubs"
+  },
+  "401815355": {
+    "home_ml": -105,
+    "away_ml": -114,
+    "date": "2026-05-15",
+    "home": "Houston Astros",
+    "away": "Texas Rangers"
+  },
+  "401815353": {
+    "home_ml": -109,
+    "away_ml": -111,
+    "date": "2026-05-15",
+    "home": "St. Louis Cardinals",
+    "away": "Kansas City Royals"
+  },
+  "401815356": {
+    "home_ml": -102,
+    "away_ml": -119,
+    "date": "2026-05-15",
+    "home": "Colorado Rockies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815357": {
+    "home_ml": 158,
+    "away_ml": -193,
+    "date": "2026-05-15",
+    "home": "Los Angeles Angels",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815358": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-15",
+    "home": "Seattle Mariners",
+    "away": "San Diego Padres"
+  },
+  "401815359": {
+    "home_ml": -131,
+    "away_ml": 109,
+    "date": "2026-05-15",
+    "home": "Athletics",
+    "away": "San Francisco Giants"
+  },
+  "401815366": {
+    "home_ml": -120,
+    "away_ml": -101,
+    "date": "2026-05-16",
+    "home": "Detroit Tigers",
+    "away": "Toronto Blue Jays"
+  },
+  "401815368": {
+    "home_ml": -114,
+    "away_ml": -106,
+    "date": "2026-05-16",
+    "home": "St. Louis Cardinals",
+    "away": "Kansas City Royals"
+  },
+  "401815371": {
+    "home_ml": 119,
+    "away_ml": -144,
+    "date": "2026-05-16",
+    "home": "Colorado Rockies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815360": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-05-16",
+    "home": "Washington Nationals",
+    "away": "Baltimore Orioles"
+  },
+  "401815365": {
+    "home_ml": 141,
+    "away_ml": -171,
+    "date": "2026-05-16",
+    "home": "Pittsburgh Pirates",
+    "away": "Philadelphia Phillies"
+  },
+  "401815363": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-16",
+    "home": "Tampa Bay Rays",
+    "away": "Miami Marlins"
+  },
+  "401815362": {
+    "home_ml": -151,
+    "away_ml": 125,
+    "date": "2026-05-16",
+    "home": "Cleveland Guardians",
+    "away": "Cincinnati Reds"
+  },
+  "401815367": {
+    "home_ml": -107,
+    "away_ml": -113,
+    "date": "2026-05-16",
+    "home": "Chicago White Sox",
+    "away": "Chicago Cubs"
+  },
+  "401815369": {
+    "home_ml": 109,
+    "away_ml": -132,
+    "date": "2026-05-16",
+    "home": "Minnesota Twins",
+    "away": "Milwaukee Brewers"
+  },
+  "401815370": {
+    "home_ml": 128,
+    "away_ml": -155,
+    "date": "2026-05-16",
+    "home": "Houston Astros",
+    "away": "Texas Rangers"
+  },
+  "401815361": {
+    "home_ml": -129,
+    "away_ml": 107,
+    "date": "2026-05-16",
+    "home": "Atlanta Braves",
+    "away": "Boston Red Sox"
+  },
+  "401815364": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-05-16",
+    "home": "New York Mets",
+    "away": "New York Yankees"
+  },
+  "401815373": {
+    "home_ml": -175,
+    "away_ml": 144,
+    "date": "2026-05-16",
+    "home": "Seattle Mariners",
+    "away": "San Diego Padres"
+  },
+  "401815372": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-16",
+    "home": "Los Angeles Angels",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815374": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-16",
+    "home": "Athletics",
+    "away": "San Francisco Giants"
+  },
+  "401815378": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-17",
+    "home": "Tampa Bay Rays",
+    "away": "Miami Marlins"
+  },
+  "401815375": {
+    "home_ml": 100,
+    "away_ml": -120,
+    "date": "2026-05-17",
+    "home": "Washington Nationals",
+    "away": "Baltimore Orioles"
+  },
+  "401815376": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-05-17",
+    "home": "Atlanta Braves",
+    "away": "Boston Red Sox"
+  },
+  "401815380": {
+    "home_ml": -131,
+    "away_ml": 108,
+    "date": "2026-05-17",
+    "home": "Pittsburgh Pirates",
+    "away": "Philadelphia Phillies"
+  },
+  "401815377": {
+    "home_ml": -161,
+    "away_ml": 133,
+    "date": "2026-05-17",
+    "home": "Cleveland Guardians",
+    "away": "Cincinnati Reds"
+  },
+  "401815379": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-05-17",
+    "home": "New York Mets",
+    "away": "New York Yankees"
+  },
+  "401815381": {
+    "home_ml": -102,
+    "away_ml": -119,
+    "date": "2026-05-17",
+    "home": "Detroit Tigers",
+    "away": "Toronto Blue Jays"
+  },
+  "401815382": {
+    "home_ml": 109,
+    "away_ml": -132,
+    "date": "2026-05-17",
+    "home": "Chicago White Sox",
+    "away": "Chicago Cubs"
+  },
+  "401815384": {
+    "home_ml": 107,
+    "away_ml": -129,
+    "date": "2026-05-17",
+    "home": "Minnesota Twins",
+    "away": "Milwaukee Brewers"
+  },
+  "401815385": {
+    "home_ml": 104,
+    "away_ml": -126,
+    "date": "2026-05-17",
+    "home": "Houston Astros",
+    "away": "Texas Rangers"
+  },
+  "401815383": {
+    "home_ml": -120,
+    "away_ml": 100,
+    "date": "2026-05-17",
+    "home": "St. Louis Cardinals",
+    "away": "Kansas City Royals"
+  },
+  "401815386": {
+    "home_ml": 119,
+    "away_ml": -144,
+    "date": "2026-05-17",
+    "home": "Colorado Rockies",
+    "away": "Arizona Diamondbacks"
+  },
+  "401815389": {
+    "home_ml": -149,
+    "away_ml": 123,
+    "date": "2026-05-17",
+    "home": "Athletics",
+    "away": "San Francisco Giants"
+  },
+  "401815387": {
+    "home_ml": 123,
+    "away_ml": -149,
+    "date": "2026-05-17",
+    "home": "Los Angeles Angels",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815388": {
+    "home_ml": -153,
+    "away_ml": 126,
+    "date": "2026-05-17",
+    "home": "Seattle Mariners",
+    "away": "San Diego Padres"
+  },
+  "401815390": {
+    "home_ml": -114,
+    "away_ml": -105,
+    "date": "2026-05-18",
+    "home": "Miami Marlins",
+    "away": "Atlanta Braves"
+  },
+  "401815391": {
+    "home_ml": -142,
+    "away_ml": 118,
+    "date": "2026-05-18",
+    "home": "Tampa Bay Rays",
+    "away": "Baltimore Orioles"
+  },
+  "401815392": {
+    "home_ml": -125,
+    "away_ml": 104,
+    "date": "2026-05-18",
+    "home": "Philadelphia Phillies",
+    "away": "Cincinnati Reds"
+  },
+  "401815393": {
+    "home_ml": -162,
+    "away_ml": 134,
+    "date": "2026-05-18",
+    "home": "Detroit Tigers",
+    "away": "Cleveland Guardians"
+  },
+  "401815394": {
+    "home_ml": 104,
+    "away_ml": -125,
+    "date": "2026-05-18",
+    "home": "Washington Nationals",
+    "away": "New York Mets"
+  },
+  "401815395": {
+    "home_ml": -177,
+    "away_ml": 146,
+    "date": "2026-05-18",
+    "home": "New York Yankees",
+    "away": "Toronto Blue Jays"
+  },
+  "401815396": {
+    "home_ml": -108,
+    "away_ml": -111,
+    "date": "2026-05-18",
+    "home": "Kansas City Royals",
+    "away": "Boston Red Sox"
+  },
+  "401815397": {
+    "home_ml": -115,
+    "away_ml": -105,
+    "date": "2026-05-18",
+    "home": "Minnesota Twins",
+    "away": "Houston Astros"
+  },
+  "401815398": {
+    "home_ml": -163,
+    "away_ml": 135,
+    "date": "2026-05-18",
+    "home": "Chicago Cubs",
+    "away": "Milwaukee Brewers"
+  },
+  "401815399": {
+    "home_ml": 114,
+    "away_ml": -138,
+    "date": "2026-05-18",
+    "home": "Colorado Rockies",
+    "away": "Texas Rangers"
+  },
+  "401815400": {
+    "home_ml": 107,
+    "away_ml": -129,
+    "date": "2026-05-18",
+    "home": "Los Angeles Angels",
+    "away": "Athletics"
+  },
+  "401815401": {
+    "home_ml": -162,
+    "away_ml": 134,
+    "date": "2026-05-18",
+    "home": "Seattle Mariners",
+    "away": "Chicago White Sox"
+  },
+  "401815402": {
+    "home_ml": 124,
+    "away_ml": -149,
+    "date": "2026-05-18",
+    "home": "San Diego Padres",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815403": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-18",
+    "home": "Arizona Diamondbacks",
+    "away": "San Francisco Giants"
+  },
+  "401815404": {
+    "home_ml": 118,
+    "away_ml": -143,
+    "date": "2026-05-19",
+    "home": "Miami Marlins",
+    "away": "Atlanta Braves"
+  },
+  "401815405": {
+    "home_ml": -120,
+    "away_ml": -101,
+    "date": "2026-05-19",
+    "home": "Tampa Bay Rays",
+    "away": "Baltimore Orioles"
+  },
+  "401815406": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-19",
+    "home": "Philadelphia Phillies",
+    "away": "Cincinnati Reds"
+  },
+  "401815407": {
+    "home_ml": 135,
+    "away_ml": -163,
+    "date": "2026-05-19",
+    "home": "Detroit Tigers",
+    "away": "Cleveland Guardians"
+  },
+  "401815408": {
+    "home_ml": 111,
+    "away_ml": -134,
+    "date": "2026-05-19",
+    "home": "Washington Nationals",
+    "away": "New York Mets"
+  },
+  "401815409": {
+    "home_ml": -132,
+    "away_ml": 109,
+    "date": "2026-05-19",
+    "home": "New York Yankees",
+    "away": "Toronto Blue Jays"
+  },
+  "401815410": {
+    "home_ml": 113,
+    "away_ml": -136,
+    "date": "2026-05-19",
+    "home": "Kansas City Royals",
+    "away": "Boston Red Sox"
+  },
+  "401815411": {
+    "home_ml": -138,
+    "away_ml": 115,
+    "date": "2026-05-19",
+    "home": "Minnesota Twins",
+    "away": "Houston Astros"
+  },
+  "401815412": {
+    "home_ml": 104,
+    "away_ml": -125,
+    "date": "2026-05-19",
+    "home": "Chicago Cubs",
+    "away": "Milwaukee Brewers"
+  },
+  "401815413": {
+    "home_ml": -110,
+    "away_ml": -110,
+    "date": "2026-05-19",
+    "home": "St. Louis Cardinals",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815414": {
+    "home_ml": -112,
+    "away_ml": -108,
+    "date": "2026-05-19",
+    "home": "Colorado Rockies",
+    "away": "Texas Rangers"
+  },
+  "401815415": {
+    "home_ml": -142,
+    "away_ml": 118,
+    "date": "2026-05-19",
+    "home": "Los Angeles Angels",
+    "away": "Athletics"
+  },
+  "401815416": {
+    "home_ml": -137,
+    "away_ml": 114,
+    "date": "2026-05-19",
+    "home": "Seattle Mariners",
+    "away": "Chicago White Sox"
+  },
+  "401815417": {
+    "home_ml": 143,
+    "away_ml": -174,
+    "date": "2026-05-19",
+    "home": "San Diego Padres",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815418": {
+    "home_ml": -126,
+    "away_ml": 105,
+    "date": "2026-05-19",
+    "home": "Arizona Diamondbacks",
+    "away": "San Francisco Giants"
+  },
+  "401815421": {
+    "home_ml": -157,
+    "away_ml": 130,
+    "date": "2026-05-20",
+    "home": "Philadelphia Phillies",
+    "away": "Cincinnati Reds"
+  },
+  "401815420": {
+    "home_ml": -117,
+    "away_ml": -103,
+    "date": "2026-05-20",
+    "home": "Tampa Bay Rays",
+    "away": "Baltimore Orioles"
+  },
+  "401815426": {
+    "home_ml": -136,
+    "away_ml": 113,
+    "date": "2026-05-20",
+    "home": "Minnesota Twins",
+    "away": "Houston Astros"
+  },
+  "401815429": {
+    "home_ml": 102,
+    "away_ml": -123,
+    "date": "2026-05-20",
+    "home": "Colorado Rockies",
+    "away": "Texas Rangers"
+  },
+  "401815433": {
+    "home_ml": -112,
+    "away_ml": -107,
+    "date": "2026-05-20",
+    "home": "Arizona Diamondbacks",
+    "away": "San Francisco Giants"
+  },
+  "401815431": {
+    "home_ml": -144,
+    "away_ml": 119,
+    "date": "2026-05-20",
+    "home": "Seattle Mariners",
+    "away": "Chicago White Sox"
+  },
+  "401815419": {
+    "home_ml": 153,
+    "away_ml": -186,
+    "date": "2026-05-20",
+    "home": "Miami Marlins",
+    "away": "Atlanta Braves"
+  },
+  "401815422": {
+    "home_ml": -105,
+    "away_ml": -115,
+    "date": "2026-05-20",
+    "home": "Detroit Tigers",
+    "away": "Cleveland Guardians"
+  },
+  "401815423": {
+    "home_ml": 105,
+    "away_ml": -126,
+    "date": "2026-05-20",
+    "home": "Washington Nationals",
+    "away": "New York Mets"
+  },
+  "401815424": {
+    "home_ml": -166,
+    "away_ml": 137,
+    "date": "2026-05-20",
+    "home": "New York Yankees",
+    "away": "Toronto Blue Jays"
+  },
+  "401815425": {
+    "home_ml": -114,
+    "away_ml": -105,
+    "date": "2026-05-20",
+    "home": "Kansas City Royals",
+    "away": "Boston Red Sox"
+  },
+  "401815427": {
+    "home_ml": -125,
+    "away_ml": 104,
+    "date": "2026-05-20",
+    "home": "Chicago Cubs",
+    "away": "Milwaukee Brewers"
+  },
+  "401815428": {
+    "home_ml": -118,
+    "away_ml": -102,
+    "date": "2026-05-20",
+    "home": "St. Louis Cardinals",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815432": {
+    "home_ml": 162,
+    "away_ml": -198,
+    "date": "2026-05-20",
+    "home": "San Diego Padres",
+    "away": "Los Angeles Dodgers"
+  },
+  "401815430": {
+    "home_ml": 104,
+    "away_ml": -125,
+    "date": "2026-05-20",
+    "home": "Los Angeles Angels",
+    "away": "Athletics"
+  },
+  "401815435": {
+    "home_ml": -131,
+    "away_ml": 108,
+    "date": "2026-05-21",
+    "home": "Detroit Tigers",
+    "away": "Cleveland Guardians"
+  },
+  "401815438": {
+    "home_ml": -101,
+    "away_ml": -120,
+    "date": "2026-05-21",
+    "home": "St. Louis Cardinals",
+    "away": "Pittsburgh Pirates"
+  },
+  "401815436": {
+    "home_ml": -108,
+    "away_ml": -112,
+    "date": "2026-05-21",
+    "home": "Washington Nationals",
+    "away": "New York Mets"
+  },
+  "401815434": {
+    "home_ml": 114,
+    "away_ml": -137,
+    "date": "2026-05-21",
+    "home": "Miami Marlins",
+    "away": "Atlanta Braves"
+  },
+  "401815437": {
+    "home_ml": -149,
+    "away_ml": 124,
+    "date": "2026-05-21",
+    "home": "New York Yankees",
+    "away": "Toronto Blue Jays"
+  },
+  "401815439": {
+    "home_ml": -122,
+    "away_ml": 101,
+    "date": "2026-05-21",
+    "home": "Los Angeles Angels",
+    "away": "Athletics"
+  },
+  "401815440": {
+    "home_ml": -218,
+    "away_ml": 178,
+    "date": "2026-05-21",
+    "home": "Arizona Diamondbacks",
+    "away": "Colorado Rockies"
+  }
+}
