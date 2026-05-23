@@ -25,13 +25,24 @@ Usage:
 """
 from __future__ import annotations
 
+import argparse
 import glob
 import json
+import os
 import re
+import urllib.request
 from collections import defaultdict
 from pathlib import Path
 
-GATE = 65   # current live min_calibrated_score for MLB ML
+GATE = 65          # current live min_calibrated_score for MLB ML
+SHADOW_BAND = (60, 64)   # the +EV-but-unbet band we're paper-validating forward
+# Promotion gate: enough OUT-OF-SAMPLE sample AND still clearly profitable.
+PROMOTE_MIN_N   = 60
+PROMOTE_MIN_ROI = 5.0    # percent
+# Forward-validation cutoff. The 60-64 edge was DISCOVERED on picks through
+# 2026-05-22, so promoting on those is circular (in-sample). The watch verdict
+# only counts picks ON/AFTER this date — genuine out-of-sample confirmation.
+VALIDATION_START = "2026-05-23"
 
 
 def _norm(n: str) -> str:
@@ -88,14 +99,17 @@ def build_results_index() -> dict:
     return idx
 
 
-def main():
-    results = build_results_index()
-
-    buckets = defaultdict(lambda: {"n": 0, "w": 0, "units": 0.0, "imp": 0.0})
-    matched = unmatched = no_odds = 0
-
+def collect_graded(results: dict, since: str | None = None) -> tuple[list[tuple[int, int, bool]], dict]:
+    """Return ([(score, odds, won), ...], stats) for every MLB ML pick we can
+    join to a final score. Single source of truth for both the table and the
+    forward-watch notification. `since` (YYYY-MM-DD) restricts to picks on/after
+    that date — used for out-of-sample forward validation."""
+    graded: list[tuple[int, int, bool]] = []
+    stats = {"matched": 0, "unmatched": 0, "no_odds": 0}
     for f in sorted(glob.glob("data/picks/*.json")):
         date = Path(f).stem
+        if since and date[:10] < since:
+            continue
         d = json.loads(Path(f).read_text())
         games = results.get(date, {})
         for p in d.get("picks", []):
@@ -106,32 +120,117 @@ def main():
                 continue
             odds = parse_odds(p.get("pickLabel"))
             if odds is None:
-                no_odds += 1
+                stats["no_odds"] += 1
                 continue
-            home = _norm(p.get("home", "")); away = _norm(p.get("away", ""))
-            side = p.get("atsPick")
-            res = games.get((home, away))
+            res = games.get((_norm(p.get("home", "")), _norm(p.get("away", ""))))
             if not res:
-                unmatched += 1
+                stats["unmatched"] += 1
                 continue
-            matched += 1
+            stats["matched"] += 1
             hs, as_ = res
             if hs == as_:
                 continue
             home_won = hs > as_
-            pick_won = home_won if side == "home" else (not home_won)
-            b = score_bucket(score)
-            bk = buckets[b]
-            bk["n"] += 1
-            bk["imp"] += implied(odds)
-            if pick_won:
-                bk["w"] += 1; bk["units"] += american_profit(odds)
-            else:
-                bk["units"] -= 1.0
+            won = home_won if p.get("atsPick") == "home" else (not home_won)
+            graded.append((score, odds, won))
+    return graded, stats
+
+
+def band_stats(graded: list[tuple[int, int, bool]], lo: int, hi: int) -> dict:
+    """Win%/ROI for picks with lo <= score <= hi (hi=None → no upper bound)."""
+    sub = [g for g in graded if g[0] >= lo and (hi is None or g[0] <= hi)]
+    n = len(sub)
+    if n == 0:
+        return {"n": 0, "win_pct": 0.0, "roi_pct": 0.0}
+    w = sum(1 for g in sub if g[2])
+    units = sum(american_profit(g[1]) if g[2] else -1.0 for g in sub)
+    return {"n": n, "win_pct": 100 * w / n, "roi_pct": 100 * units / n}
+
+
+def _send_ntfy(title: str, body: str) -> bool:
+    """Push a one-line watch summary. Title stays ASCII (HTTP header is
+    latin-1); emoji ride in the Tags header. No-op if WEBHOOK_URL unset."""
+    webhook = os.environ.get("WEBHOOK_URL", "").strip()
+    if not webhook:
+        print("WEBHOOK_URL not set — watch summary printed, not pushed")
+        return False
+    if "ntfy.sh" in webhook or "/ntfy/" in webhook:
+        req = urllib.request.Request(
+            webhook, data=body.encode("utf-8"),
+            headers={"Title": title, "Priority": "3", "Tags": "bar_chart,microscope"},
+            method="POST")
+    else:
+        payload = json.dumps({"content": f"{title}\n{body}",
+                              "text": f"{title}\n{body}"}).encode("utf-8")
+        req = urllib.request.Request(
+            webhook, data=payload,
+            headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(req, timeout=10) as r:
+        return 200 <= r.status < 300
+
+
+def watch(results: dict) -> None:
+    """Forward-validation check on the 60-64 shadow band — the hands-off way
+    to decide if the live gate should drop from 65. Prints + pushes one line."""
+    # Out-of-sample only: picks on/after VALIDATION_START. This is the honest
+    # forward test — the in-sample 91 picks that revealed the edge don't count.
+    graded, stats = collect_graded(results, since=VALIDATION_START)
+    lo, hi = SHADOW_BAND
+    shadow = band_stats(graded, lo, hi)
+    live = band_stats(graded, GATE, None)
+
+    ready = shadow["n"] >= PROMOTE_MIN_N and shadow["roi_pct"] >= PROMOTE_MIN_ROI
+    if shadow["n"] < PROMOTE_MIN_N:
+        verdict = (f"accumulating ({shadow['n']}/{PROMOTE_MIN_N} picks since "
+                   f"{VALIDATION_START}) — keep paper-validating")
+        tag = "ACCUMULATING"
+    elif ready:
+        verdict = (f"READY to promote — {shadow['n']} picks, "
+                   f"ROI {shadow['roi_pct']:+.1f}% (>= {PROMOTE_MIN_ROI:+.0f}%)")
+        tag = "READY"
+    else:
+        verdict = (f"FAILED forward test — {shadow['n']} picks but ROI "
+                   f"{shadow['roi_pct']:+.1f}% (< {PROMOTE_MIN_ROI:+.0f}%); keep gate at {GATE}")
+        tag = "FAILED"
+
+    body = (f"MLB ML gate watch · {stats['matched']} graded picks\n"
+            f"shadow {lo}-{hi}: n={shadow['n']} win {shadow['win_pct']:.1f}% "
+            f"ROI {shadow['roi_pct']:+.1f}%\n"
+            f"live >={GATE}: n={live['n']} win {live['win_pct']:.1f}% "
+            f"ROI {live['roi_pct']:+.1f}%\n"
+            f"verdict: {verdict}")
+    print(body)
+    _send_ntfy(f"BTF cal-watch: 60-64 band {tag}", body)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--notify", action="store_true",
+                    help="Forward-watch mode: push the 60-64 shadow-band record "
+                         "+ promote verdict to WEBHOOK_URL (for the weekly cron).")
+    args = ap.parse_args()
+
+    results = build_results_index()
+
+    if args.notify:
+        watch(results)
+        return
+
+    graded, gstats = collect_graded(results)
+    buckets = defaultdict(lambda: {"n": 0, "w": 0, "units": 0.0, "imp": 0.0})
+    for score, odds, won in graded:
+        b = score_bucket(score)
+        bk = buckets[b]
+        bk["n"] += 1
+        bk["imp"] += implied(odds)
+        if won:
+            bk["w"] += 1; bk["units"] += american_profit(odds)
+        else:
+            bk["units"] -= 1.0
 
     print("MLB moneyline calibration audit")
-    print(f"  picks matched to a final score: {matched}  "
-          f"(unmatched {unmatched}, no-odds {no_odds})\n")
+    print(f"  picks matched to a final score: {gstats['matched']}  "
+          f"(unmatched {gstats['unmatched']}, no-odds {gstats['no_odds']})\n")
 
     print("═══ Win% & ROI by calibrated score bucket ═══")
     print(f"  {'score':<7} {'n':>4} {'win%':>6} {'impl%':>6} {'edge':>6} {'ROI':>8}")
@@ -158,33 +257,14 @@ def main():
         print(f"  cal≥{GATE} (what we BET): {gate['n']} · "
               f"win {100*gate['w']/gate['n']:.1f}% · ROI {100*gate['units']/gate['n']:+.1f}%")
 
-    # Threshold sweep — ROI if we required score ≥ T
+    # Threshold sweep — ROI if we required score ≥ T (reuses `graded`)
     print("\n═══ Threshold sweep: ROI if we only bet score ≥ T ═══")
     print(f"  {'cutoff':<7} {'n':>4} {'win%':>6} {'ROI':>8}")
-    raw = []
-    for f in sorted(glob.glob("data/picks/*.json")):
-        date = Path(f).stem
-        d = json.loads(Path(f).read_text())
-        games = results.get(date, {})
-        for p in d.get("picks", []):
-            if p.get("sport") != "MLB" or p.get("betType") != "ml":
-                continue
-            score = p.get("score100"); odds = parse_odds(p.get("pickLabel"))
-            if score is None or odds is None:
-                continue
-            res = games.get((_norm(p.get("home", "")), _norm(p.get("away", ""))))
-            if not res or res[0] == res[1]:
-                continue
-            home_won = res[0] > res[1]
-            won = home_won if p.get("atsPick") == "home" else (not home_won)
-            raw.append((score, odds, won))
     for T in (55, 60, 62, 65, 68, 70, 72, 75):
-        sub = [r for r in raw if r[0] >= T]
-        if len(sub) < 10:
+        st = band_stats(graded, T, None)
+        if st["n"] < 10:
             continue
-        n = len(sub); w = sum(1 for r in sub if r[2])
-        units = sum(american_profit(r[1]) if r[2] else -1.0 for r in sub)
-        print(f"  ≥{T:<6} {n:>4} {100*w/n:>5.1f}% {100*units/n:>+7.1f}%")
+        print(f"  ≥{T:<6} {st['n']:>4} {st['win_pct']:>5.1f}% {st['roi_pct']:>+7.1f}%")
 
     print("\nReads: (1) if win%/ROI rise with score → the score has real signal;")
     print("(2) edge>0 in the bet buckets → we're beating the price; (3) the")
