@@ -1,6 +1,6 @@
 {
   "date": "2026-05-24",
-  "snapshot_time": "2026-05-24T18:57:29.714373+00:00",
+  "snapshot_time": "2026-05-24T20:01:43.176511+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -88,11 +88,11 @@
         "home": "San Francisco Giants",
         "away": "Chicago White Sox",
         "commence": "2026-05-24T20:06:00Z",
-        "spread": -1.5,
+        "spread": 1.5,
         "total": 8.0,
         "ml_home": -124,
         "ml_away": 106,
-        "snapshot_time": "2026-05-24T18:57:29.714373+00:00"
+        "snapshot_time": "2026-05-24T20:01:43.176511+00:00"
       },
       {
         "home": "Arizona Diamondbacks",
@@ -102,7 +102,7 @@
         "total": 8.5,
         "ml_home": -198,
         "ml_away": 166,
-        "snapshot_time": "2026-05-24T18:57:29.714373+00:00"
+        "snapshot_time": "2026-05-24T20:01:43.176511+00:00"
       },
       {
         "home": "San Diego Padres",
@@ -112,7 +112,7 @@
         "total": 7.5,
         "ml_home": -178,
         "ml_away": 150,
-        "snapshot_time": "2026-05-24T18:57:29.714373+00:00"
+        "snapshot_time": "2026-05-24T20:01:43.176511+00:00"
       },
       {
         "home": "Atlanta Braves",
@@ -120,9 +120,9 @@
         "commence": "2026-05-24T20:11:00Z",
         "spread": -1.5,
         "total": 8.5,
-        "ml_home": -164,
-        "ml_away": 138,
-        "snapshot_time": "2026-05-24T18:57:29.714373+00:00"
+        "ml_home": -152,
+        "ml_away": 128,
+        "snapshot_time": "2026-05-24T20:01:43.176511+00:00"
       }
     ]
   }
