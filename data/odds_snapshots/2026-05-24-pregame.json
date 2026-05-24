@@ -1,6 +1,6 @@
 {
   "date": "2026-05-24",
-  "snapshot_time": "2026-05-24T20:01:43.176511+00:00",
+  "snapshot_time": "2026-05-24T21:43:26.135141+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -123,6 +123,16 @@
         "ml_home": -152,
         "ml_away": 128,
         "snapshot_time": "2026-05-24T20:01:43.176511+00:00"
+      },
+      {
+        "home": "Baltimore Orioles",
+        "away": "Detroit Tigers",
+        "commence": "2026-05-24T22:06:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -130,
+        "ml_away": 110,
+        "snapshot_time": "2026-05-24T21:43:26.135141+00:00"
       }
     ]
   }
