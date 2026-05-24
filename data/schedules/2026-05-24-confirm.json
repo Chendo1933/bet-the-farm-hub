@@ -1,0 +1,194 @@
+{
+  "date": "2026-05-24",
+  "logged": "2026-05-24T17:31:39.211038+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "San Antonio Spurs",
+      "away": "Oklahoma City Thunder",
+      "date": "May 24",
+      "time": "8:10 PM ET",
+      "spread": -2.5,
+      "total": 219.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "nhl",
+      "home": "Vegas Golden Knights",
+      "away": "Colorado Avalanche",
+      "date": "May 24",
+      "time": "8:20 PM ET",
+      "spread": 1.5,
+      "total": 5.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Detroit Tigers",
+      "date": "May 24",
+      "time": "12:36 PM ET",
+      "spread": 1.5,
+      "total": 6.5,
+      "spreadMove": 3,
+      "totalMove": -1
+    },
+    {
+      "sport": "mlb",
+      "home": "Boston Red Sox",
+      "away": "Minnesota Twins",
+      "date": "May 24",
+      "time": "1:36 PM ET",
+      "spread": -1.5,
+      "total": 7,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Philadelphia Phillies",
+      "away": "Cleveland Guardians",
+      "date": "May 24",
+      "time": "1:36 PM ET",
+      "spread": 1.5,
+      "total": 7,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "New York Yankees",
+      "away": "Tampa Bay Rays",
+      "date": "May 24",
+      "time": "1:36 PM ET",
+      "spread": -1.5,
+      "total": 7,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Miami Marlins",
+      "away": "New York Mets",
+      "date": "May 24",
+      "time": "1:41 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Cincinnati Reds",
+      "away": "St. Louis Cardinals",
+      "date": "May 24",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 10,
+      "spreadMove": 3,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Kansas City Royals",
+      "away": "Seattle Mariners",
+      "date": "May 24",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "date": "May 24",
+      "time": "2:11 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Chicago Cubs",
+      "away": "Houston Astros",
+      "date": "May 24",
+      "time": "2:21 PM ET",
+      "spread": -1.5,
+      "total": 7,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "San Francisco Giants",
+      "away": "Chicago White Sox",
+      "date": "May 24",
+      "time": "4:06 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Arizona Diamondbacks",
+      "away": "Colorado Rockies",
+      "date": "May 24",
+      "time": "4:11 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "San Diego Padres",
+      "away": "Athletics",
+      "date": "May 24",
+      "time": "4:11 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Atlanta Braves",
+      "away": "Washington Nationals",
+      "date": "May 24",
+      "time": "4:11 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Detroit Tigers",
+      "date": "May 24",
+      "time": "6:06 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Los Angeles Angels",
+      "away": "Texas Rangers",
+      "date": "May 24",
+      "time": "7:21 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
