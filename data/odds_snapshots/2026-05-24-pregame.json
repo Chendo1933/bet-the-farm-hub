@@ -1,6 +1,6 @@
 {
   "date": "2026-05-24",
-  "snapshot_time": "2026-05-24T16:48:55.318415+00:00",
+  "snapshot_time": "2026-05-24T17:49:24.583525+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -37,12 +37,12 @@
       {
         "home": "Cincinnati Reds",
         "away": "St. Louis Cardinals",
-        "commence": "2026-05-24T17:41:00Z",
+        "commence": "2026-05-24T18:11:00Z",
         "spread": -1.5,
         "total": 9.5,
         "ml_home": -120,
         "ml_away": 102,
-        "snapshot_time": "2026-05-24T16:48:55.318415+00:00"
+        "snapshot_time": "2026-05-24T17:49:24.583525+00:00"
       },
       {
         "home": "Miami Marlins",
@@ -62,7 +62,7 @@
         "total": 8.0,
         "ml_home": 108,
         "ml_away": -126,
-        "snapshot_time": "2026-05-24T16:48:55.318415+00:00"
+        "snapshot_time": "2026-05-24T17:49:24.583525+00:00"
       },
       {
         "home": "Milwaukee Brewers",
@@ -72,7 +72,17 @@
         "total": 8.0,
         "ml_home": 132,
         "ml_away": -156,
-        "snapshot_time": "2026-05-24T16:48:55.318415+00:00"
+        "snapshot_time": "2026-05-24T17:49:24.583525+00:00"
+      },
+      {
+        "home": "Chicago Cubs",
+        "away": "Houston Astros",
+        "commence": "2026-05-24T18:21:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -178,
+        "ml_away": 150,
+        "snapshot_time": "2026-05-24T17:49:24.583525+00:00"
       }
     ]
   }
