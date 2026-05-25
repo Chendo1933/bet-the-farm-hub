@@ -1,0 +1,160 @@
+{
+  "date": "2026-05-25",
+  "logged": "2026-05-25T13:30:46.924463",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 65,
+    "supported_bet_types": [
+      "ml"
+    ],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Baltimore Orioles",
+        "away": "Tampa Bay Rays",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-126)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -126,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 53%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.4"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -126"
+          }
+        ],
+        "date": "May 25",
+        "time": "1:36 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY251335TBBAL-TB",
+      "market_title": "Tampa Bay vs Baltimore Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 56,
+      "yes_bid_cents": 55,
+      "last_price_cents": 56,
+      "previous_yes_ask_cents": 57,
+      "volume_24h": "717626.76",
+      "use_price_cents": 56,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.65,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 1.68,
+      "contracts": 3,
+      "edge_pct": 0.09,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Kansas City Royals",
+        "away": "New York Yankees",
+        "atsPick": null,
+        "spread": null,
+        "total": 9,
+        "pickedTeam": "Under",
+        "pickLabel": "Under 9",
+        "score100": 57,
+        "rawScore100": 67,
+        "odds": -110,
+        "tier": "good",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Kansas City Royals 43% / New York Yankees 44% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc9 Proj 7.7 < line 9 (+1.3 Under edge)"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +14.5% edge vs implied"
+          }
+        ],
+        "date": "May 25",
+        "time": "3:41 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.5419999999999999,
+      "would_grade": true
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ou",
+        "home": "Athletics",
+        "away": "Seattle Mariners",
+        "atsPick": null,
+        "spread": null,
+        "total": 10.5,
+        "pickedTeam": "Under",
+        "pickLabel": "Under 10.5",
+        "score100": 56,
+        "rawScore100": 66,
+        "odds": -108,
+        "tier": "lean",
+        "factors": [
+          {
+            "t": "neu",
+            "l": "\ud83d\udcca O/U: Athletics 47% / Seattle Mariners 46% Over"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc9 Proj 7.9 < line 10.5 (+2.6 Under edge)"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcc8 +12.9% edge vs implied"
+          }
+        ],
+        "date": "May 25",
+        "time": "9:41 PM ET"
+      },
+      "track": "paper",
+      "model_prob": 0.536,
+      "would_grade": true
+    }
+  ],
+  "summary": {
+    "picks_total": 10,
+    "picks_eligible_after_filter": 1,
+    "orders_would_place": 1,
+    "total_stake_dollars": 1.68,
+    "remaining_daily_capacity": 9.53,
+    "skipped_by_reason": {},
+    "paper_candidates": 2,
+    "paper_bet_types_tracked": [
+      "f5_ou",
+      "ou",
+      "spread"
+    ],
+    "bankroll_used_dollars": 37.36,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 37.36
+  }
+}
