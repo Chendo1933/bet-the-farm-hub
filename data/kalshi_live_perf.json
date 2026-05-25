@@ -7,6 +7,150 @@
   "total_pnl_dollars": -0.46,
   "roi_pct": -2.49,
   "win_pct": 50.0,
+  "by_team": {
+    "Atlanta Braves": {
+      "w": 2,
+      "l": 2,
+      "stake": 7.75,
+      "pnl": -1.75,
+      "roi_pct": -22.6
+    },
+    "Tampa Bay Rays": {
+      "w": 3,
+      "l": 0,
+      "stake": 6.52,
+      "pnl": 5.48,
+      "roi_pct": 84.0
+    },
+    "Colorado Avalanche": {
+      "w": 0,
+      "l": 3,
+      "stake": 4.19,
+      "pnl": -4.19,
+      "roi_pct": -100.0
+    }
+  },
+  "by_band": {
+    "65+": {
+      "w": 5,
+      "l": 5,
+      "stake": 18.46,
+      "pnl": -0.46,
+      "roi_pct": -2.5
+    }
+  },
+  "bets": [
+    {
+      "date": "2026-05-18",
+      "team": "Atlanta Braves",
+      "sport": "MLB",
+      "score": 75,
+      "odds": -105,
+      "outcome": "loss",
+      "stake": 2.5,
+      "pnl": -2.5
+    },
+    {
+      "date": "2026-05-18",
+      "team": "Tampa Bay Rays",
+      "sport": "MLB",
+      "score": 80,
+      "odds": -144,
+      "outcome": "win",
+      "stake": 1.74,
+      "pnl": 1.26
+    },
+    {
+      "date": "2026-05-19",
+      "team": "Atlanta Braves",
+      "sport": "MLB",
+      "score": 71,
+      "odds": -143,
+      "outcome": "win",
+      "stake": 1.14,
+      "pnl": 0.86
+    },
+    {
+      "date": "2026-05-19",
+      "team": "Tampa Bay Rays",
+      "sport": "MLB",
+      "score": 75,
+      "odds": -112,
+      "outcome": "win",
+      "stake": 2.08,
+      "pnl": 1.92
+    },
+    {
+      "date": "2026-05-20",
+      "team": "Colorado Avalanche",
+      "sport": "NHL",
+      "score": 80,
+      "odds": -175,
+      "outcome": "loss",
+      "stake": 1.24,
+      "pnl": -1.24
+    },
+    {
+      "date": "2026-05-20",
+      "team": "Tampa Bay Rays",
+      "sport": "MLB",
+      "score": 80,
+      "odds": -145,
+      "outcome": "win",
+      "stake": 2.7,
+      "pnl": 2.3
+    },
+    {
+      "date": "2026-05-21",
+      "team": "Atlanta Braves",
+      "sport": "MLB",
+      "score": 80,
+      "odds": -143,
+      "outcome": "win",
+      "stake": 2.28,
+      "pnl": 1.72
+    },
+    {
+      "date": "2026-05-22",
+      "team": "Colorado Avalanche",
+      "sport": "NHL",
+      "score": 80,
+      "odds": -185,
+      "outcome": "loss",
+      "stake": 1.24,
+      "pnl": -1.24
+    },
+    {
+      "date": "2026-05-23",
+      "team": "Atlanta Braves",
+      "sport": "MLB",
+      "score": 80,
+      "odds": -168,
+      "outcome": "loss",
+      "stake": 1.83,
+      "pnl": -1.83
+    },
+    {
+      "date": "2026-05-24",
+      "team": "Colorado Avalanche",
+      "sport": "NHL",
+      "score": 75,
+      "odds": -148,
+      "outcome": "loss",
+      "stake": 1.71,
+      "pnl": -1.71
+    },
+    {
+      "date": "2026-05-25",
+      "team": "Tampa Bay Rays",
+      "sport": "MLB",
+      "score": 75,
+      "odds": -126,
+      "outcome": null,
+      "stake": 1.68,
+      "pnl": 0.0
+    }
+  ],
   "daily": [
     {
       "date": "2026-05-10",

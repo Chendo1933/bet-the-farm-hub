@@ -593,6 +593,7 @@ def _reconcile_live_orders(files, hist_idx):
     """
     print(f"\n── Live orders reconcile ─────────────────────────────────")
     daily_summaries = []
+    all_bets = []   # per-bet detail for the ops dashboard (team/score/outcome)
     total_wins = total_losses = total_placed = 0
     total_stake = total_pnl = 0.0
 
@@ -649,6 +650,13 @@ def _reconcile_live_orders(files, hist_idx):
                 ungraded += 1
 
             annotated.append(ann)
+            if pick.get("pickedTeam"):
+                all_bets.append({
+                    "date": file_date, "team": pick.get("pickedTeam"),
+                    "sport": pick.get("sport"), "score": pick.get("score100"),
+                    "odds": pick.get("odds"), "outcome": outcome,
+                    "stake": round(stake_d, 2), "pnl": ann.get("pnl_dollars"),
+                })
 
         daily = {
             "date": file_date,
@@ -673,6 +681,27 @@ def _reconcile_live_orders(files, hist_idx):
         total_placed += daily["placed"]; total_wins += wins; total_losses += losses
         total_stake += stake; total_pnl += pnl
 
+    # Aggregates for the ops dashboard: by team and by calibrated-score band.
+    def _agg(keyfn):
+        out = {}
+        for b in all_bets:
+            if b["outcome"] not in ("win", "loss"):
+                continue
+            k = keyfn(b)
+            if k is None:
+                continue
+            s = out.setdefault(k, {"w": 0, "l": 0, "stake": 0.0, "pnl": 0.0})
+            s["w" if b["outcome"] == "win" else "l"] += 1
+            s["stake"] += b["stake"] or 0
+            s["pnl"] += b["pnl"] or 0
+        for s in out.values():
+            s["stake"] = round(s["stake"], 2); s["pnl"] = round(s["pnl"], 2)
+            n = s["w"] + s["l"]
+            s["roi_pct"] = round(100 * s["pnl"] / s["stake"], 1) if s["stake"] else 0
+        return out
+    by_team = _agg(lambda b: b["team"])
+    by_band = _agg(lambda b: ("65+" if (b["score"] or 0) >= 65 else "60-64") if b["score"] else None)
+
     overall = {
         "days": len(daily_summaries),
         "total_orders_placed": total_placed,
@@ -681,6 +710,9 @@ def _reconcile_live_orders(files, hist_idx):
         "total_pnl_dollars": round(total_pnl, 2),
         "roi_pct": round((total_pnl/total_stake*100) if total_stake else 0, 2),
         "win_pct": round((total_wins/(total_wins+total_losses)*100) if (total_wins+total_losses) else 0, 1),
+        "by_team": by_team,
+        "by_band": by_band,
+        "bets": all_bets,
         "daily": daily_summaries,
     }
     LIVE_PERF_OUT.write_text(json.dumps(overall, indent=2, default=str))
