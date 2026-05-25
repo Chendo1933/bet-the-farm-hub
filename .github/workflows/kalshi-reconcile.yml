@@ -42,11 +42,17 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json 2>/dev/null || true
+          # Stage BOTH tracks' outputs. The live ones (kalshi_live_perf.json +
+          # the kalshi_orders/ grade annotations) were previously omitted, so
+          # reconcile rebuilt the real-money record every night and then threw
+          # it away — the committed copy (and the recap notification that reads
+          # it) stayed frozen at whatever was last committed. Commit all four.
+          git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json \
+                  data/kalshi_live_perf.json data/kalshi_orders/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No reconcile changes to commit"
           else
-            git commit -m "kalshi: reconcile dry-run PnL $(date -d 'yesterday' +'%Y-%m-%d')"
+            git commit -m "kalshi: reconcile PnL (live + paper) $(date -d 'yesterday' +'%Y-%m-%d')"
             git pull --rebase origin main || true
             git push --force-with-lease
             echo "✅ Reconcile committed"
@@ -60,4 +66,4 @@ jobs:
           workflow: ${{ github.workflow }}
           job:      reconcile
           run-url:  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          context:  "Kalshi PnL reconciliation — kalshi_dryrun_perf.json is stale until manual rerun"
+          context:  "Kalshi PnL reconciliation — live + paper perf records are stale until manual rerun"
