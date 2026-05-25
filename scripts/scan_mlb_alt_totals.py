@@ -94,13 +94,34 @@ def main():
                     help="Minimum (our_prob - ask) edge to surface (default 0.04)")
     args = ap.parse_args()
 
-    date = args.date or datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    now_et = datetime.now(ZoneInfo("America/New_York"))
+    date = args.date or now_et.strftime("%Y-%m-%d")
     sched = Path(f"data/schedules/{date}.json")
     if not sched.exists():
         sys.exit(f"No schedule snapshot at {sched}")
-    games = [g for g in json.loads(sched.read_text()).get("games", [])
-             if (g.get("sport") or "").lower() == "mlb" and g.get("total") is not None]
-    print(f"MLB alt-total scan · {date} · {len(games)} games · min edge {args.min_edge:+.0%}\n")
+    all_mlb = [g for g in json.loads(sched.read_text()).get("games", [])
+               if (g.get("sport") or "").lower() == "mlb" and g.get("total") is not None]
+
+    # Only PREGAME games are bettable — a started game's orderbook prices the
+    # LIVE state, not pregame, so our pregame-anchored model is invalid for it.
+    def _start_et(g):
+        t = (g.get("time") or "").replace(" ET", "").strip()
+        try:
+            hm = datetime.strptime(t, "%I:%M %p")
+            return now_et.replace(hour=hm.hour, minute=hm.minute, second=0, microsecond=0)
+        except ValueError:
+            return None
+    games = []
+    started = 0
+    for g in all_mlb:
+        st = _start_et(g)
+        if st is not None and st <= now_et:
+            started += 1
+            continue
+        games.append(g)
+    print(f"MLB alt-total scan · {date} {now_et:%H:%M} ET · "
+          f"{len(games)} pregame ({started} already started, skipped) · "
+          f"min edge {args.min_edge:+.0%}\n")
 
     # Pull all open KXMLBTOTAL markets once, group by the AWAYHOME code.
     md = _get(f"{KALSHI}/markets?series_ticker=KXMLBTOTAL&status=open&limit=500")
