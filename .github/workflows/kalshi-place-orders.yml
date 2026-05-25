@@ -88,6 +88,18 @@ jobs:
             echo "✅ Live order receipts committed"
           fi
 
+      # Send the "today's bets" push from THIS job rather than a separate
+      # workflow_run-triggered workflow. The old Kalshi Daily Plan workflow sat
+      # 4 workflow_run levels deep (Stats→Picks→Dry-Run→Place→Plan) after the
+      # chain was re-headed on Stats, and GitHub doesn't propagate workflow_run
+      # events that deep — so it silently stopped firing. Sending it inline here
+      # (same pattern as the failsafe) makes it depth-independent.
+      - name: Send today's-bets notification
+        if: steps.check_secrets.outputs.configured == 'true'
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: python scripts/kalshi/daily_summary.py --mode plan
+
       - name: Notify on failure
         if: failure()
         uses: ./.github/actions/notify-failure

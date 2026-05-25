@@ -1,17 +1,17 @@
 name: Kalshi Daily Plan
 
-# Fires after Kalshi Place Orders (Live) completes — at ~12:10 PM ET.
-# By then place_orders.py has written today's receipts to
-# data/kalshi_orders/{today}.json. We send a push notification with
-# the actual just-placed bets so the operator can see what real
-# money went out today (no more "we won/lost yesterday but didn't
-# place any today" confusion that the recap-only version produced).
+# MANUAL FALLBACK ONLY. The automatic "today's bets" push is now sent INLINE by
+# the Kalshi Place Orders (Live) job (and the failsafe job) — not here.
 #
-# Read-only: never modifies config, never places orders.
+# Why: this used to trigger on Place Orders completion, but after the bet chain
+# was re-headed on Stats Update (Stats→Picks→Dry-Run→Place→Plan) it sat 4
+# workflow_run levels deep, and GitHub does NOT propagate workflow_run events
+# that deep — so it silently stopped firing (no run created at all). Sending the
+# push from inside the Place Orders job makes it depth-independent. This file is
+# kept so you can re-send today's plan on demand via "Run workflow"; the
+# workflow_run trigger is removed to avoid a double push if GitHub ever delivers
+# the deep event.
 on:
-  workflow_run:
-    workflows: ["Kalshi Place Orders (Live)"]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
