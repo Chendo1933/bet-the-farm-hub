@@ -1,6 +1,6 @@
 {
   "date": "2026-05-25",
-  "snapshot_time": "2026-05-25T22:02:29.506029+00:00",
+  "snapshot_time": "2026-05-25T23:54:29.701931+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -113,6 +113,40 @@
         "ml_home": -152,
         "ml_away": 128,
         "snapshot_time": "2026-05-25T22:02:29.506029+00:00"
+      },
+      {
+        "home": "Los Angeles Dodgers",
+        "away": "Colorado Rockies",
+        "commence": "2026-05-26T01:11:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -335,
+        "ml_away": 270,
+        "snapshot_time": "2026-05-25T23:54:29.701931+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Carolina Hurricanes",
+        "commence": "2026-05-26T00:20:00Z",
+        "spread": 1.5,
+        "total": 5.5,
+        "ml_home": 125,
+        "ml_away": -146,
+        "snapshot_time": "2026-05-25T23:54:29.701931+00:00"
+      }
+    ],
+    "nba": [
+      {
+        "home": "Cleveland Cavaliers",
+        "away": "New York Knicks",
+        "commence": "2026-05-26T00:10:00Z",
+        "spread": 2.5,
+        "total": 218.5,
+        "ml_home": 114,
+        "ml_away": -135,
+        "snapshot_time": "2026-05-25T23:54:29.701931+00:00"
       }
     ]
   }
