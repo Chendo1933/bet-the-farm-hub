@@ -18223,6 +18223,279 @@
           "l": "\ud83d\udcb0 Good value at -102"
         }
       ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Colorado Avalanche ML (-148)",
+      "home": "Vegas Golden Knights",
+      "away": "Colorado Avalanche",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -148,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 76% vs implied 57%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -148"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "NHL",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 5.5",
+      "home": "Vegas Golden Knights",
+      "away": "Colorado Avalanche",
+      "spread": null,
+      "total": 5.5,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": 114,
+      "outcome": "loss",
+      "margin": 2.5,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Vegas Golden Knights 44% / Colorado Avalanche 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83e\udd45 Above-avg goaltending (avg SV% 90.7%) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +10.8% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Pittsburgh Pirates ML (+139)",
+      "home": "Toronto Blue Jays",
+      "away": "Pittsburgh Pirates",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 139,
+      "outcome": "win",
+      "margin": 3,
+      "units": 1.39,
+      "homeScore": 1,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 49% vs implied 40%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +139"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Minnesota Twins ML (+130)",
+      "home": "Boston Red Sox",
+      "away": "Minnesota Twins",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 130,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.3,
+      "homeScore": 5,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 50% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +130"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Tampa Bay Rays ML (+108)",
+      "home": "New York Yankees",
+      "away": "Tampa Bay Rays",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 108,
+      "outcome": "loss",
+      "margin": 2,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 0,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +108"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Milwaukee Brewers ML (+148)",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 148,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 61% vs implied 39%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +148"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 8",
+      "home": "Milwaukee Brewers",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": 8,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -108,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.9259,
+      "homeScore": 1,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Milwaukee Brewers 48% / Los Angeles Dodgers 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Both bullpens elite (3.47/2.90 ERA) \u2192 late-inning Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.8% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Atlanta Braves ML (-170)",
+      "home": "Atlanta Braves",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -170,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 68% win rate vs 60% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.3"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8.5",
+      "home": "Atlanta Braves",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": 8.5,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -104,
+      "outcome": "loss",
+      "margin": 5.5,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Atlanta Braves 48% / Washington Nationals 66% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.0% edge vs implied"
+        }
+      ]
     }
   ]
 }
