@@ -168,6 +168,46 @@ def _stage_recommendation(cfg: dict, live_perf: dict | None) -> tuple[str, str]:
 # outcomes have been graded and PnL written. Does NOT mention today's
 # auto-bets because dry-run hasn't run yet at this point.
 
+def _live_breakdown() -> tuple[dict, dict]:
+    """Aggregate ALL graded live orders by team and by calibrated-score band.
+    Lets the recap show whether the model's edge is broad (many teams) and
+    whether the newly-enabled 60-64 band (gate lowered 65→60 on 2026-05-25) is
+    actually pulling its weight vs the original 65+ band.
+
+    Returns (by_team, by_band), each value = {w,l,pnl,stake}.
+    """
+    by_team: dict = {}
+    by_band: dict = {}
+    for f in sorted(Path(ORDERS_DIR).glob("*.json")):
+        try:
+            d = json.loads(f.read_text())
+        except Exception:
+            continue
+        for o in d.get("placed_orders", []):
+            if o.get("test"):
+                continue
+            oc = o.get("outcome")
+            if oc not in ("win", "loss"):
+                continue   # only graded bets count toward the record
+            pick = o.get("dryrun_pick", {})
+            team = pick.get("pickedTeam") or "?"
+            score = pick.get("score100") or 0
+            pnl = o.get("pnl_dollars") or 0.0
+            stake = o.get("stake_dollars") or 0.0
+            band = "65+" if score >= 65 else "60-64"
+            for bucket, key in ((by_team, team), (by_band, band)):
+                s = bucket.setdefault(key, {"w": 0, "l": 0, "pnl": 0.0, "stake": 0.0})
+                s["w" if oc == "win" else "l"] += 1
+                s["pnl"] += pnl
+                s["stake"] += stake
+    return by_team, by_band
+
+
+def _short_team(name: str) -> str:
+    """'Tampa Bay Rays' → 'Rays'. Falls back to the full name."""
+    return name.split()[-1] if name and name != "?" else (name or "?")
+
+
 def build_recap(date_key: str) -> tuple[str, str]:
     """Returns (title, body) for the recap notification.
 
@@ -219,6 +259,24 @@ def build_recap(date_key: str) -> tuple[str, str]:
         lines.append(f"  7d: {live_7d['placed']} placed · "
                      f"{live_7d['wins']}W {live_7d['losses']}L · "
                      f"${live_7d['pnl']:+.2f}")
+
+    # ── LIVE breakdown: by team + by score band (all-time, graded) ──────
+    by_team, by_band = _live_breakdown()
+    if by_team:
+        ranked = sorted(by_team.items(), key=lambda x: x[1]["pnl"], reverse=True)
+        team_strs = [f"{_short_team(t)} {s['w']}-{s['l']} ${s['pnl']:+.2f}"
+                     for t, s in ranked]
+        lines.append("  by team: " + " · ".join(team_strs))
+    if by_band:
+        band_strs = []
+        for band in ("65+", "60-64"):
+            s = by_band.get(band)
+            if not s or (s["w"] + s["l"]) == 0:
+                continue
+            roi = 100 * s["pnl"] / s["stake"] if s["stake"] else 0
+            band_strs.append(f"{band} {s['w']}-{s['l']} ({roi:+.0f}%)")
+        if band_strs:
+            lines.append("  by score: " + " · ".join(band_strs))
 
     # ── PAPER TRACK (simulated — O/U validation) ────────────────────────
     lines.append("")
