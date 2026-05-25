@@ -25,13 +25,17 @@
     "consistency / local testing without env vars set."
   ],
 
-  "min_calibrated_score": 65,
+  "min_calibrated_score": 60,
   "min_calibrated_score_doc": [
-    "Only auto-place picks at calibrated score ≥ this value. Empirically:",
-    "  cal 65-67 ML hits 91% (n=11)",
-    "  cal 60-64 ML hits 65% (n=54)",
-    "Set high to start (only chase the sharpest signal). Lower if you want",
-    "more volume."
+    "Only auto-place picks at calibrated score ≥ this value.",
+    "Lowered 65→60 on 2026-05-25. The ≥65 gate only ever cleared ~5 teams",
+    "(Rays/Braves/Yankees/Brewers/Cubs) → the same 2-3 bets daily, and it",
+    "blocked teams the model genuinely likes but prices fairly (the Dodgers",
+    "and Guardians both topped out at 63, never bet). Calibration audit (256",
+    "graded picks) showed the 60-64 band is +EV: 59% win / +12.7% ROI (n=91),",
+    "~2.4x the volume at ~the same ROI as ≥65. Caveat: that's in-sample; the",
+    "weekly calibration-watch tracks the 60-64 band forward. Do NOT raise",
+    "above 65 — the sweep showed ≥68 collapses to +2.7%."
   ],
 
   "supported_bet_types": ["ml"],
