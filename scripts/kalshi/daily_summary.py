@@ -278,6 +278,14 @@ def build_recap(date_key: str) -> tuple[str, str]:
         if band_strs:
             lines.append("  by score: " + " · ".join(band_strs))
 
+    # ── CLV: did the market move toward our picks? (sharpest edge signal) ──
+    clv = _load_perf("data/kalshi_clv_perf.json")
+    cs = (clv or {}).get("summary") or {}
+    if cs.get("n"):
+        flag = "✅" if cs["avg_clv_pct"] > 0 else "⚠️"
+        lines.append(f"  CLV: {cs['avg_clv_pct']:+.1f}% avg · beat close "
+                     f"{cs['beat_close']}/{cs['n']} {flag}")
+
     # ── PAPER TRACK (simulated — O/U validation) ────────────────────────
     lines.append("")
     lines.append("📝 PAPER (O/U sim)")

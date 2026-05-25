@@ -38,6 +38,11 @@ jobs:
         # No deps needed — reconcile.py uses only stdlib.
         run: python scripts/kalshi/reconcile.py
 
+      - name: Update CLV (closing-line value) for live MLB ML bets
+        # Compares entry (morning snapshot) vs close (pregame snapshot), de-vigged.
+        # Sharpest edge signal; runs overnight once both snapshots + results exist.
+        run: python scripts/clv_tracker.py --quiet
+
       - name: Commit reconciled PnL data
         run: |
           git config user.name  "github-actions[bot]"
@@ -49,7 +54,7 @@ jobs:
           # it) stayed frozen at whatever was last committed. Commit all four.
           git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json \
                   data/kalshi_live_perf.json data/kalshi_orders/ \
-                  data/kalshi_alt_total_perf.json 2>/dev/null || true
+                  data/kalshi_alt_total_perf.json data/kalshi_clv_perf.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No reconcile changes to commit"
           else

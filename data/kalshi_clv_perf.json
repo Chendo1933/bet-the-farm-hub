@@ -1,0 +1,38 @@
+{
+  "summary": {
+    "n": 3,
+    "avg_clv_pct": -1.2,
+    "beat_close_pct": 0.0,
+    "beat_close": 0,
+    "graded": 2
+  },
+  "bets": [
+    {
+      "date": "2026-05-21",
+      "team": "Atlanta Braves",
+      "entry_prob": 0.5545,
+      "close_prob": 0.5545,
+      "clv": 0.0,
+      "beat_close": false,
+      "outcome": "win"
+    },
+    {
+      "date": "2026-05-23",
+      "team": "Atlanta Braves",
+      "entry_prob": 0.6274,
+      "close_prob": 0.6068,
+      "clv": -0.0207,
+      "beat_close": false,
+      "outcome": "loss"
+    },
+    {
+      "date": "2026-05-25",
+      "team": "Tampa Bay Rays",
+      "entry_prob": 0.5198,
+      "close_prob": 0.5045,
+      "clv": -0.0154,
+      "beat_close": false,
+      "outcome": null
+    }
+  ]
+}
