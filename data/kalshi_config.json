@@ -57,7 +57,14 @@
     "sport. Paper tracks are unaffected by this gate."
   ],
 
-  "paper_supported_bet_types": ["ou", "f5_ou", "spread"],
+  "paper_supported_bet_types": ["ou", "f5_ou", "spread", "alt_total"],
+  "alt_total_min_edge": 0.05,
+  "alt_total_min_edge_doc": [
+    "Min edge (our P(side) − Kalshi ask) for an MLB alt-total paper pick.",
+    "0.05 = 5 points. Alt-total candidates come from the market-anchored",
+    "AltTotalEngine (σ=3.8) priced against Kalshi's KXMLBTOTAL ladder, pregame",
+    "only, with thin/stale-book filters. Paper-only until validated."
+  ],
   "paper_supported_bet_types_doc": [
     "What bet types are tracked in the PAPER (simulated, never placed)",
     "performance track. Set to ['ou'] so O/U picks get graded against",

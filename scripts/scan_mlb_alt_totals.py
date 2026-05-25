@@ -93,17 +93,41 @@ def main():
     ap.add_argument("--min-edge", type=float, default=0.04,
                     help="Minimum (our_prob - ask) edge to surface (default 0.04)")
     args = ap.parse_args()
+    res = find_value_picks(args.date, min_edge=args.min_edge)
+    print(f"MLB alt-total scan · {res['date']} {res['now']:%H:%M} ET · "
+          f"{res['pregame']} pregame ({res['started']} started, skipped) · "
+          f"min edge {args.min_edge:+.0%}\n")
+    cands = res["candidates"]
+    if cands:
+        print(f"{'edge':>5}  {'game':<34} {'mkt':>4}  bet (liquid, sane book)")
+        for c in cands:
+            print(f"  {100*c['edge']:>+3.0f}  {c['away'][:16]+' @ '+c['home'][:14]:<34} "
+                  f"{c['market_total']:>4}  {c['side'].upper()} {c['line']} @ "
+                  f"{100*c['price']:.0f}¢ (our {100*c['our_prob']:.0f}%)")
+    else:
+        print("No +EV alt-total bets clear the threshold today (after liquidity/sanity filters).")
+    if res["skipped"]:
+        print(f"\nSkipped {len(res['skipped'])} game(s) — book too thin/stale to trust:")
+        for s in res["skipped"]:
+            opx = f"{100*s['over_at_main']:.0f}¢" if s["over_at_main"] is not None else "no size"
+            print(f"  · {s['away'][:16]} @ {s['home'][:14]} (mkt {s['market_total']}): over {s['near_line']} = {opx}")
 
+
+def find_value_picks(date: str | None = None, min_edge: float = 0.05,
+                     line_window: float = 3.5) -> dict:
+    """Core reusable scan. Returns dict with date/now/pregame/started/candidates/
+    skipped. candidates = [{away,home,market_total,line,side,price,our_prob,edge,
+    ticker}], pregame-only, phantom/stale-book filtered. Used by the CLI here and
+    by dry_run.py's paper-track generation."""
     now_et = datetime.now(ZoneInfo("America/New_York"))
-    date = args.date or now_et.strftime("%Y-%m-%d")
+    date = date or now_et.strftime("%Y-%m-%d")
     sched = Path(f"data/schedules/{date}.json")
     if not sched.exists():
-        sys.exit(f"No schedule snapshot at {sched}")
+        return {"date": date, "now": now_et, "pregame": 0, "started": 0,
+                "candidates": [], "skipped": []}
     all_mlb = [g for g in json.loads(sched.read_text()).get("games", [])
                if (g.get("sport") or "").lower() == "mlb" and g.get("total") is not None]
 
-    # Only PREGAME games are bettable — a started game's orderbook prices the
-    # LIVE state, not pregame, so our pregame-anchored model is invalid for it.
     def _start_et(g):
         t = (g.get("time") or "").replace(" ET", "").strip()
         try:
@@ -111,19 +135,14 @@ def main():
             return now_et.replace(hour=hm.hour, minute=hm.minute, second=0, microsecond=0)
         except ValueError:
             return None
-    games = []
-    started = 0
+    games, started = [], 0
     for g in all_mlb:
         st = _start_et(g)
         if st is not None and st <= now_et:
             started += 1
             continue
         games.append(g)
-    print(f"MLB alt-total scan · {date} {now_et:%H:%M} ET · "
-          f"{len(games)} pregame ({started} already started, skipped) · "
-          f"min edge {args.min_edge:+.0%}\n")
 
-    # Pull all open KXMLBTOTAL markets once, group by the AWAYHOME code.
     md = _get(f"{KALSHI}/markets?series_ticker=KXMLBTOTAL&status=open&limit=500")
     by_code: dict[str, list[tuple[int, str]]] = {}
     for m in (md or {}).get("markets", []):
@@ -132,18 +151,16 @@ def main():
             by_code.setdefault(mt.group(1), []).append((int(mt.group(2)), m["ticker"]))
 
     eng = AltTotalEngine()
-    candidates = []
-    skipped = []
+    candidates, skipped = [], []
     for g in games:
         away, home, total = g["away"], g["home"], g["total"]
-        code = (ABBR.get(away, "?") + ABBR.get(home, "?"))
-        ladder = by_code.get(code)
+        ladder = by_code.get(ABBR.get(away, "?") + ABBR.get(home, "?"))
         if not ladder:
             continue
-        priced = []
+        priced, tickers = [], {}
         for idx, ticker in sorted(ladder):
-            line = idx - 0.5                       # suffix N = "Over (N-0.5)"
-            if abs(line - total) > 3.5:            # stay in the calibrated range
+            line = idx - 0.5
+            if abs(line - total) > line_window:
                 continue
             yes_ask, no_ask = best_asks(ticker)
             time.sleep(0.05)
@@ -151,36 +168,23 @@ def main():
                 continue
             priced.append((line, yes_ask if yes_ask is not None else 1.0,
                            no_ask if no_ask is not None else 1.0))
+            tickers[line] = ticker
         if not priced:
             continue
-        # Sanity gate: the over-price at the line nearest the market total must
-        # sit near 50¢. If it's wildly off, the book is stale/unreliable for this
-        # game (or our total anchor is wrong) — skip rather than chase a phantom.
         near = min(priced, key=lambda x: abs(x[0] - total))
-        near_over = near[1]
-        if near_over is None or not (0.35 <= near_over <= 0.65):
-            skipped.append((away, home, total, near[0], near_over))
+        if near[1] is None or not (0.35 <= near[1] <= 0.65):
+            skipped.append({"away": away, "home": home, "market_total": total,
+                            "near_line": near[0], "over_at_main": near[1]})
             continue
-        best = eng.best_value_line(total, priced, min_edge=args.min_edge)
+        best = eng.best_value_line(total, priced, min_edge=min_edge)
         if best:
-            candidates.append((best["edge"], away, home, total, best))
-
-    if candidates:
-        candidates.sort(reverse=True)
-        print(f"{'edge':>5}  {'game':<34} {'mkt':>4}  bet (liquid, sane book)")
-        for edge, away, home, total, b in candidates:
-            side = b["side"].upper()
-            print(f"  {100*edge:>+3.0f}  {away[:16]+' @ '+home[:14]:<34} {total:>4}  "
-                  f"{side} {b['line']} @ {100*b['market_price']:.0f}¢ (our {100*b['our_prob']:.0f}%)")
-    else:
-        print("No +EV alt-total bets clear the threshold today (after liquidity/sanity filters).")
-
-    if skipped:
-        print(f"\nSkipped {len(skipped)} game(s) — book too thin/stale to trust "
-              f"(over@main not near 50¢):")
-        for away, home, total, ln, op in skipped:
-            opx = f"{100*op:.0f}¢" if op is not None else "no size"
-            print(f"  · {away[:16]} @ {home[:14]} (mkt {total}): over {ln} = {opx}")
+            candidates.append({"away": away, "home": home, "market_total": total,
+                               "line": best["line"], "side": best["side"],
+                               "price": best["market_price"], "our_prob": best["our_prob"],
+                               "edge": best["edge"], "ticker": tickers.get(best["line"])})
+    candidates.sort(key=lambda c: c["edge"], reverse=True)
+    return {"date": date, "now": now_et, "pregame": len(games), "started": started,
+            "candidates": candidates, "skipped": skipped}
 
 
 if __name__ == "__main__":

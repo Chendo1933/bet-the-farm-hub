@@ -33,6 +33,7 @@ ORDERS_DIR  = Path("data/kalshi_orders")    # Phase 3 live order receipts
 HISTORY     = Path("data/pick_history.json")
 PERF_OUT    = Path("data/kalshi_dryrun_perf.json")
 LIVE_PERF_OUT = Path("data/kalshi_live_perf.json")  # Phase 3 real-money PnL
+ALT_TOTAL_PERF_OUT = Path("data/kalshi_alt_total_perf.json")  # MLB alt-total paper
 
 
 def _pick_key(p: dict) -> tuple:
@@ -282,6 +283,36 @@ def _spread_outcome_for_pick(pick: dict, spread_meta: dict, file_date: str) -> t
     return (None, None)
 
 
+def _alt_total_outcome_for_pick(pick: dict, file_date: str) -> tuple[str | None, dict | None]:
+    """Grade an MLB alt-total paper pick against the actual final total.
+    pick has home/away/line/side ('over'/'under'). Returns (outcome, info) or
+    (None, None) if the game isn't final yet / not found."""
+    home = pick.get("home", ""); away = pick.get("away", "")
+    line = pick.get("line"); side = (pick.get("side") or "").lower()
+    if not home or not away or line is None or side not in ("over", "under"):
+        return (None, None)
+    rp = Path(f"data/results/{file_date}.json")
+    if not rp.exists():
+        return (None, None)
+    try:
+        data = json.loads(rp.read_text())
+    except Exception:
+        return (None, None)
+    for g in data.get("sports", {}).get("mlb", []):
+        if not isinstance(g, dict):
+            continue
+        if (g.get("home_db") or g.get("home")) != home or (g.get("away_db") or g.get("away")) != away:
+            continue
+        hs = g.get("home_score"); as_ = g.get("away_score")
+        if hs is None or as_ is None:
+            return (None, None)
+        actual = hs + as_
+        over = actual > line   # lines are .5 → no push
+        outcome = "win" if (over if side == "over" else not over) else "loss"
+        return (outcome, {"actual_total": actual, "line": line, "side": side})
+    return (None, None)
+
+
 def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: bool = True) -> dict | None:
     """
     Reconcile the paper-track orders (paper_orders[]) from a dry-run file
@@ -289,14 +320,16 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
     when the file has no paper_orders array (older snapshots — silently
     skipped).
 
-    Three bet types handled here:
-      ou      → graded against full-game total via pick_history.json
-      f5_ou   → graded against F5 total via data/results/{date}.json
-      spread  → graded against final score vs the Kalshi line we bet
-                (spread_meta.spread_line_bet)
+    Bet types handled here:
+      ou        → graded against full-game total via pick_history.json
+      f5_ou     → graded against F5 total via data/results/{date}.json
+      spread    → graded against final score vs the Kalshi line we bet
+      alt_total → graded against final total at the REAL Kalshi price (kept in
+                  a SEPARATE sub-aggregate so its variable-price PnL doesn't
+                  distort the flat-110 O/U numbers)
 
-    Math: paper bets graded at standard -110 juice. Win = +$1.00 profit,
-    loss = -$1.10 stake. Comparable to break-even 52.4% hit rate.
+    Math: ou/f5_ou/spread graded at standard -110 juice (win +$1.00 / loss
+    -$1.10). alt_total graded at its actual Kalshi contract price.
     """
     data = json.loads(path.read_text())
     file_date = data.get("date", path.stem)
@@ -308,11 +341,40 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
     wins = losses = pushes = ungraded = 0
     STAKE_PER_PICK   = 1.10
     PROFIT_PER_WIN   = 1.00
+    # alt_total kept separate (variable Kalshi price, not flat -110)
+    alt = {"placed": 0, "wins": 0, "losses": 0, "ungraded": 0,
+           "cost": 0.0, "pnl": 0.0}
 
     for o in paper_orders:
         pick = o.get("pick", {})
         bet_type = pick.get("betType", "")
         ann = dict(o)
+
+        # ── Alt-total grading (real Kalshi price, separate aggregate) ──
+        if bet_type == "alt_total":
+            outcome, info = _alt_total_outcome_for_pick(pick, file_date)
+            if info:
+                ann["alt_grade_info"] = info
+            price = float((o.get("alt_meta") or {}).get("kalshi_price") or 0.0)
+            ann["alt"] = True
+            if outcome is None or price <= 0:
+                ann["outcome"] = None
+                ann["reconcile_status"] = "ungraded_no_score"
+                ann["pnl_dollars"] = 0.0
+                alt["ungraded"] += 1
+                annotated.append(ann)
+                continue
+            ann["outcome"] = outcome
+            # 1 contract: cost = price, payout = $1 if win. pnl = 1-price / -price.
+            pnl = round((1.0 - price) if outcome == "win" else -price, 4)
+            ann["pnl_dollars"] = pnl
+            ann["reconcile_status"] = "graded"
+            alt["placed"] += 1
+            alt["cost"] += price
+            alt["pnl"] += pnl
+            alt["wins" if outcome == "win" else "losses"] += 1
+            annotated.append(ann)
+            continue
 
         # ── F5 grading path ────────────────────────────────────────────
         if bet_type == "f5_ou":
@@ -392,7 +454,8 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
 
     placed = wins + losses + pushes + ungraded
     stake = placed * STAKE_PER_PICK
-    pnl = sum(a.get("pnl_dollars") or 0 for a in annotated)
+    # Flat -110 pnl excludes alt_total (its variable-price pnl is tracked apart).
+    pnl = sum(a.get("pnl_dollars") or 0 for a in annotated if not a.get("alt"))
     daily = {
         "date": file_date,
         "placed": placed,
@@ -401,6 +464,16 @@ def _reconcile_paper_orders_one_file(path: Path, hist_idx: dict, write_back: boo
         "total_pnl_dollars": round(pnl, 2),
         "roi_pct": round((pnl / stake * 100) if stake else 0, 2),
     }
+    if alt["placed"] or alt["ungraded"]:
+        graded = alt["wins"] + alt["losses"]
+        daily["alt_total"] = {
+            "placed": alt["placed"], "wins": alt["wins"], "losses": alt["losses"],
+            "ungraded": alt["ungraded"],
+            "cost_dollars": round(alt["cost"], 2),
+            "pnl_dollars": round(alt["pnl"], 2),
+            "roi_pct": round((alt["pnl"] / alt["cost"] * 100) if alt["cost"] else 0, 2),
+            "win_pct": round((100 * alt["wins"] / graded) if graded else 0, 1),
+        }
 
     if write_back:
         data["paper_orders"] = annotated
@@ -473,6 +546,30 @@ def main():
         print(f"  Record: {p_wins}-{p_losses} ({paper_overall['win_pct']:.1f}%) over {p_placed} graded paper picks")
         print(f"  PnL: ${p_pnl:+.2f}    ROI: {paper_overall['roi_pct']:+.1f}%  (need ≥0% to enable live)")
     print(f"  ✅ Wrote {PERF_OUT}")
+
+    # ── ALT-TOTAL paper track (MLB, real Kalshi price, separate aggregate) ──
+    alt_daily = [d["alt_total"] | {"date": d["date"]} for d in paper_daily if d.get("alt_total")]
+    if alt_daily:
+        a_w = sum(d["wins"] for d in alt_daily); a_l = sum(d["losses"] for d in alt_daily)
+        a_cost = sum(d["cost_dollars"] for d in alt_daily)
+        a_pnl = sum(d["pnl_dollars"] for d in alt_daily)
+        a_graded = a_w + a_l
+        alt_overall = {
+            "days": len(alt_daily), "wins": a_w, "losses": a_l,
+            "graded": a_graded,
+            "ungraded": sum(d["ungraded"] for d in alt_daily),
+            "total_cost_dollars": round(a_cost, 2),
+            "total_pnl_dollars": round(a_pnl, 2),
+            "roi_pct": round((a_pnl / a_cost * 100) if a_cost else 0, 2),
+            "win_pct": round((100 * a_w / a_graded) if a_graded else 0, 1),
+            "track": "paper_alt_total", "daily": alt_daily,
+        }
+        ALT_TOTAL_PERF_OUT.write_text(json.dumps(alt_overall, indent=2, default=str))
+        print(f"\n── Alt-total paper aggregate (MLB, real price) ────────────")
+        if a_graded:
+            print(f"  Record: {a_w}-{a_l} ({alt_overall['win_pct']:.1f}%) · "
+                  f"PnL ${a_pnl:+.2f} · ROI {alt_overall['roi_pct']:+.1f}% over {a_graded} graded")
+        print(f"  ✅ Wrote {ALT_TOTAL_PERF_OUT}")
 
     # Still update the per-day reconcile fields on the legacy orders[]
     # array (so the hub panel can show ML simulated outcomes as historical

@@ -732,6 +732,34 @@ def main():
             spread_made += 1
         print(f"  Spread paper track: {len(spread_eligible)} eligible → {spread_made} mapped to Kalshi markets")
 
+    # ── MLB alt-total paper picks (market-anchored, Kalshi alt ladder) ──
+    # Not from the hub picks file — synthesized from the AltTotalEngine against
+    # Kalshi's KXMLBTOTAL alt ladder (pregame only, phantom/stale-book filtered).
+    # See scripts/alt_total_engine_mlb.py + scan_mlb_alt_totals.py.
+    if "alt_total" in paper_supported:
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+            from scan_mlb_alt_totals import find_value_picks
+            min_edge = float(cfg.get("alt_total_min_edge") or 0.05)
+            res = find_value_picks(date_key, min_edge=min_edge)
+            for c in res["candidates"]:
+                paper_orders.append({
+                    "pick": {
+                        "sport": "MLB", "betType": "alt_total",
+                        "home": c["home"], "away": c["away"],
+                        "line": c["line"], "side": c["side"],
+                        "market_total": c["market_total"],
+                        "pickLabel": f"{c['side'].upper()} {c['line']} ({c['away']} @ {c['home']} total)",
+                    },
+                    "track": "paper", "would_grade": True,
+                    "alt_meta": {"kalshi_price": c["price"], "our_prob": c["our_prob"],
+                                 "edge": c["edge"], "ticker": c.get("ticker")},
+                })
+            print(f"  Alt-total paper track: {res['pregame']} pregame games → "
+                  f"{len(res['candidates'])} +EV candidate(s) (min edge {min_edge:+.0%})")
+        except Exception as e:
+            print(f"  ⚠ alt-total paper scan failed ({type(e).__name__}: {e})")
+
     summary = {
         "picks_total": len(all_picks),
         "picks_eligible_after_filter": len(eligible),

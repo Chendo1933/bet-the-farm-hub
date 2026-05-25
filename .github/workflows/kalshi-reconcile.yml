@@ -48,7 +48,8 @@ jobs:
           # it away — the committed copy (and the recap notification that reads
           # it) stayed frozen at whatever was last committed. Commit all four.
           git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json \
-                  data/kalshi_live_perf.json data/kalshi_orders/ 2>/dev/null || true
+                  data/kalshi_live_perf.json data/kalshi_orders/ \
+                  data/kalshi_alt_total_perf.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No reconcile changes to commit"
           else
