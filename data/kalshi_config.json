@@ -42,6 +42,17 @@
     "for the parallel paper-trade track."
   ],
 
+  "live_excluded_sports": ["NHL"],
+  "live_excluded_sports_doc": [
+    "Sports BLOCKED from live auto-placement (uppercase, matches pick.sport).",
+    "NHL excluded 2026-05-25: live NHL ML went 0-3 / -100% ROI (-$4.19, all",
+    "Colorado Avalanche heavy favorites) — it was the entire drag on the",
+    "record while MLB ran +26%. Our 254-game NHL study found no favorite edge",
+    "(only small underdogs are +EV, parked for next season), and the NHL",
+    "season is nearly over. MLB-only for now. Empty the list to re-enable a",
+    "sport. Paper tracks are unaffected by this gate."
+  ],
+
   "paper_supported_bet_types": ["ou", "f5_ou", "spread"],
   "paper_supported_bet_types_doc": [
     "What bet types are tracked in the PAPER (simulated, never placed)",

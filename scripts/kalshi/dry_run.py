@@ -498,13 +498,22 @@ def main():
     all_picks = data.get("picks", [])
     print(f"  {len(all_picks)} pick(s) in file")
 
-    # Filter to supported bet types (ML only in Phase 2) AND score floor.
+    # Filter to supported bet types (ML only in Phase 2) AND score floor AND
+    # not a live-excluded sport (e.g. NHL — no favorite edge, was -100% ROI).
     supported = set(cfg.get("supported_bet_types") or ["ml"])
     min_score = int(cfg.get("min_calibrated_score") or 0)
-    eligible = [p for p in all_picks
-                if p.get("betType") in supported
-                and (p.get("score100") or 0) >= min_score]
-    print(f"  {len(eligible)} eligible after score≥{min_score} + bet-type filter")
+    excluded_sports = {s.upper() for s in (cfg.get("live_excluded_sports") or [])}
+    def _live_ok(p):
+        return (p.get("betType") in supported
+                and (p.get("score100") or 0) >= min_score
+                and (p.get("sport") or "").upper() not in excluded_sports)
+    eligible = [p for p in all_picks if _live_ok(p)]
+    n_excl = sum(1 for p in all_picks
+                 if p.get("betType") in supported
+                 and (p.get("score100") or 0) >= min_score
+                 and (p.get("sport") or "").upper() in excluded_sports)
+    extra = f" (− {n_excl} blocked: sports {sorted(excluded_sports)})" if n_excl else ""
+    print(f"  {len(eligible)} eligible after score≥{min_score} + bet-type filter{extra}")
 
     # Map each eligible pick to a Kalshi market (live API call).
     client = KalshiClient(environment=active_env)
