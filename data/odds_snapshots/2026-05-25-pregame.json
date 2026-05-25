@@ -1,6 +1,6 @@
 {
   "date": "2026-05-25",
-  "snapshot_time": "2026-05-25T17:27:06.471849+00:00",
+  "snapshot_time": "2026-05-25T19:13:07.470236+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -43,6 +43,26 @@
         "ml_home": -220,
         "ml_away": 184,
         "snapshot_time": "2026-05-25T17:27:06.471849+00:00"
+      },
+      {
+        "home": "Kansas City Royals",
+        "away": "New York Yankees",
+        "commence": "2026-05-25T19:41:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": 114,
+        "ml_away": -134,
+        "snapshot_time": "2026-05-25T19:13:07.470236+00:00"
+      },
+      {
+        "home": "New York Mets",
+        "away": "Cincinnati Reds",
+        "commence": "2026-05-25T20:11:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -138,
+        "ml_away": 118,
+        "snapshot_time": "2026-05-25T19:13:07.470236+00:00"
       }
     ]
   }
