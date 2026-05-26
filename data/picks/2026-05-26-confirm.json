@@ -1,0 +1,266 @@
+{
+  "date": "2026-05-26",
+  "logged": "2026-05-26T18:42:05.378790+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Vegas Golden Knights",
+      "away": "Colorado Avalanche",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Colorado Avalanche",
+      "pickLabel": "Colorado Avalanche ML (-115)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -115,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 76% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +10.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ],
+      "date": "May 26",
+      "time": "9:20 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Baltimore Orioles",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-112)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -112,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ],
+      "date": "May 26",
+      "time": "6:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Boston Red Sox",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-110)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -110,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 64% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -110"
+        }
+      ],
+      "date": "May 26",
+      "time": "6:46 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Chicago White Sox",
+      "away": "Minnesota Twins",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 7.5",
+      "score100": 58,
+      "rawScore100": 68,
+      "odds": -114,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Chicago White Sox 61% / Minnesota Twins 59% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.9 > line 7.5 (+1.4 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.79 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.8% edge vs implied"
+        }
+      ],
+      "date": "May 26",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Kansas City Royals",
+      "away": "New York Yankees",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8.5",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -101,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Kansas City Royals 43% / New York Yankees 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.1% edge vs implied"
+        }
+      ],
+      "date": "May 26",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "Seattle Mariners",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -114,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 47% / Seattle Mariners 46% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 7.9 < line 9.5 (+1.6 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +11.6% edge vs implied"
+        }
+      ],
+      "date": "May 26",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "San Diego Padres",
+      "away": "Philadelphia Phillies",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -111,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: San Diego Padres 43% / Philadelphia Phillies 47% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfdf\ufe0f Pitcher park (PF 0.93) \u2192 Under lean"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Strong bullpens (avg 3.58 ERA) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.2% edge vs implied"
+        }
+      ],
+      "date": "May 26",
+      "time": "9:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Francisco Giants",
+      "away": "Arizona Diamondbacks",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Arizona Diamondbacks",
+      "pickLabel": "Arizona Diamondbacks ML (-105)",
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": -105,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 56% win rate vs 49% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.9"
+        }
+      ],
+      "date": "May 26",
+      "time": "9:46 PM ET"
+    }
+  ],
+  "all_picks_count": 8,
+  "filter_stats": {
+    "prefilter": 23,
+    "sub60": 13,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 8,
+    "dropped": 15
+  }
+}
