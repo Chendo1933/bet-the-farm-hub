@@ -1,6 +1,6 @@
 {
   "date": "2026-05-27",
-  "snapshot_time": "2026-05-27T22:28:08.613262+00:00",
+  "snapshot_time": "2026-05-27T23:53:24.727874+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -93,6 +93,28 @@
         "ml_home": 132,
         "ml_away": -156,
         "snapshot_time": "2026-05-27T22:28:08.613262+00:00"
+      },
+      {
+        "home": "Texas Rangers",
+        "away": "Houston Astros",
+        "commence": "2026-05-28T00:06:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -146,
+        "ml_away": 124,
+        "snapshot_time": "2026-05-27T23:53:24.727874+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Carolina Hurricanes",
+        "commence": "2026-05-28T00:15:00Z",
+        "spread": 1.5,
+        "total": 5.5,
+        "ml_home": 122,
+        "ml_away": -146,
+        "snapshot_time": "2026-05-27T23:53:24.727874+00:00"
       }
     ]
   }
