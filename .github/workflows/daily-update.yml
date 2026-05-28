@@ -63,15 +63,32 @@ jobs:
           git add index.html data/odds_snapshots/ data/weather/ data/pitcher_data.json
           if git diff --staged --quiet; then
             echo "Nothing changed — hub already up to date"
-          else
-            git commit -m "auto: update stats + injuries $(date +'%Y-%m-%d')"
-            # Rebase onto any commits that landed while we were running
-            # (e.g. a kalshi-reconcile pushing during the same window).
-            # Without this, force-with-lease silently drops the race loser.
-            git pull --rebase origin main || true
-            git push --force-with-lease
-            echo "✅ Pushed updated stats + injuries"
+            exit 0
           fi
+          git commit -m "auto: update stats + injuries $(date +'%Y-%m-%d')"
+          # Retry the rebase+push: a transient GitHub-side error
+          # (`fatal error in commit_refs`) killed this two days in a row when
+          # the first attempt failed and the workflow gave up. Each attempt
+          # fetches fresh, rebases ours on top, and retries with backoff.
+          for i in 1 2 3 4; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort 2>/dev/null || true
+              echo "Rebase failed on attempt $i — resetting and retrying"
+              git fetch origin main && git reset --hard origin/main
+              # Re-stage and re-commit our changes on top of the fresh remote
+              git add index.html data/odds_snapshots/ data/weather/ data/pitcher_data.json
+              git diff --staged --quiet && { echo "Nothing to push after reset"; exit 0; }
+              git commit -m "auto: update stats + injuries $(date +'%Y-%m-%d')"
+            fi
+            if git push --force-with-lease; then
+              echo "✅ Pushed updated stats + injuries (attempt $i)"
+              exit 0
+            fi
+            echo "Push failed on attempt $i — sleeping $((i*15))s and retrying"
+            sleep $((i*15))
+          done
+          echo "✗ Push failed after 4 attempts"
+          exit 1
 
       - name: Notify on failure
         if: failure()

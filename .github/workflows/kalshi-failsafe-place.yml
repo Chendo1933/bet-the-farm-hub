@@ -42,15 +42,26 @@ jobs:
         run: |
           ET_DATE=$(TZ='America/New_York' date +%F)
           echo "et_date=$ET_DATE" >> $GITHUB_OUTPUT
+          # The 12:30pm Backup/Verify logger writes data/picks/{date}-confirm.json,
+          # NOT the plain {date}.json. On stats-failure days when the main pick
+          # logger gets skipped, the -confirm file is our only picks. The earlier
+          # version of this check ignored it → failsafe couldn't act. Use either.
+          PICKS=""
+          if [ -f "data/picks/${ET_DATE}.json" ]; then
+            PICKS="data/picks/${ET_DATE}.json"
+          elif [ -f "data/picks/${ET_DATE}-confirm.json" ]; then
+            PICKS="data/picks/${ET_DATE}-confirm.json"
+          fi
+          echo "picks_file=$PICKS" >> $GITHUB_OUTPUT
           if [ -f "data/kalshi_dryrun/${ET_DATE}.json" ]; then
             echo "run=false" >> $GITHUB_OUTPUT
             echo "Morning dry-run snapshot present for ${ET_DATE} — chain ran, failsafe NOT needed."
-          elif [ ! -f "data/picks/${ET_DATE}.json" ]; then
+          elif [ -z "$PICKS" ]; then
             echo "run=false" >> $GITHUB_OUTPUT
-            echo "No picks file for ${ET_DATE} (off day or both loggers down) — nothing to place."
+            echo "No picks file for ${ET_DATE} (plain or -confirm) — nothing to place."
           else
             echo "run=true" >> $GITHUB_OUTPUT
-            echo "::warning::No morning dry-run snapshot for ${ET_DATE} but picks exist — ACTIVATING failsafe placement."
+            echo "::warning::No morning dry-run snapshot for ${ET_DATE} but picks exist ($PICKS) — ACTIVATING failsafe placement."
           fi
 
       - name: Check trade secrets configured
@@ -83,7 +94,8 @@ jobs:
           KALSHI_ENVIRONMENT: ${{ vars.KALSHI_ENVIRONMENT || 'live' }}
           KALSHI_API_KEY_ID:  ${{ secrets.KALSHI_API_KEY_ID }}
           KALSHI_PRIVATE_KEY: ${{ secrets.KALSHI_PRIVATE_KEY }}
-        run: python scripts/kalshi/dry_run.py
+        # Use the picks file resolved by decide (may be -confirm on stats-failure days).
+        run: python scripts/kalshi/dry_run.py --picks-file "${{ steps.decide.outputs.picks_file }}"
 
       - name: Place live orders (trade key)
         if: steps.decide.outputs.run == 'true' && steps.check_secrets.outputs.configured == 'true'
