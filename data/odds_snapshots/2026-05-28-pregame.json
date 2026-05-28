@@ -1,0 +1,19 @@
+{
+  "date": "2026-05-28",
+  "snapshot_time": "2026-05-28T23:06:12.526128+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Texas Rangers",
+        "away": "Houston Astros",
+        "commence": "2026-05-29T00:06:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-05-28T23:06:12.526128+00:00"
+      }
+    ]
+  }
+}
