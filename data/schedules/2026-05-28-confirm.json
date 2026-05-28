@@ -1,0 +1,62 @@
+{
+  "date": "2026-05-28",
+  "logged": "2026-05-28T19:12:18.366483+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "San Antonio Spurs",
+      "away": "Oklahoma City Thunder",
+      "date": "May 28",
+      "time": "8:40 PM ET",
+      "spread": -3.5,
+      "total": 218.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Boston Red Sox",
+      "away": "Atlanta Braves",
+      "date": "May 28",
+      "time": "4:10 PM ET",
+      "spread": 1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Toronto Blue Jays",
+      "date": "May 28",
+      "time": "6:36 PM ET",
+      "spread": -1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Pittsburgh Pirates",
+      "away": "Chicago Cubs",
+      "date": "May 28",
+      "time": "6:41 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Texas Rangers",
+      "away": "Houston Astros",
+      "date": "May 28",
+      "time": "8:06 PM ET",
+      "spread": -1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
