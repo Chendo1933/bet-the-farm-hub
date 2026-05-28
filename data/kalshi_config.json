@@ -8,12 +8,18 @@
     "All caps default to safe values; raise gradually as confidence builds."
   ],
 
-  "auto_trading_enabled": true,
+  "auto_trading_enabled": false,
   "auto_trading_enabled_doc": [
     "Master kill switch. Default false. When false, Phase 3 order-placement",
     "runs are skipped entirely. Even when true, individual safety caps below",
-    "still apply. Flip to true ONLY after Phase 2 dry-run mode has been",
-    "validated for at least 1 week."
+    "still apply.",
+    "",
+    "PAUSED 2026-05-27 — rebuilding from the bottom up the right way. 12 live",
+    "bets returned 5-5 / -2.5% ROI with CLV -1.2% (yellow flag from the least",
+    "noisy signal we have). Paper -22.7%. Re-enable ONLY after BOTH:",
+    "  (1) CLV >= +1% over >= 20 graded paper/shadow bets, AND",
+    "  (2) Paper ROI >= 0% on the market we want to promote.",
+    "Re-enable ONE market at a time, smallest stakes, watch CLV daily."
   ],
 
   "environment": "live",
