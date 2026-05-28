@@ -44,15 +44,21 @@
     "above 65 — the sweep showed ≥68 collapses to +2.7%."
   ],
 
-  "supported_bet_types": ["ml"],
+  "supported_bet_types": [],
   "supported_bet_types_doc": [
-    "What bet types are eligible for LIVE auto-placement (real money).",
-    "Currently ML only. Spread/total need their own Kalshi market mapping",
-    "logic and have separate considerations. See paper_supported_bet_types",
-    "for the parallel paper-trade track."
+    "GROUND ZERO 2026-05-27: EMPTY. No live bet type is enabled. The only path",
+    "to live is via the market-anchored MLB alt-total engine, and ONLY when its",
+    "paper track meets the promotion gate (ROI >= 0% AND CLV >= +1% over >= 20",
+    "bets). When promoted, this becomes ['alt_total'] — never 'ml' again under",
+    "the prediction-model architecture. ML may come back later, but ONLY after",
+    "the same paper + CLV gates clear it on its own merit."
   ],
 
-  "live_excluded_sports": ["NHL"],
+  "_dropped_live_excluded_sports_doc": [
+    "Removed 2026-05-27. Was ['NHL']. Irrelevant — only MLB matters now."
+  ],
+
+  "live_excluded_sports": [],
   "live_excluded_sports_doc": [
     "Sports BLOCKED from live auto-placement (uppercase, matches pick.sport).",
     "NHL excluded 2026-05-25: live NHL ML went 0-3 / -100% ROI (-$4.19, all",
@@ -63,7 +69,13 @@
     "sport. Paper tracks are unaffected by this gate."
   ],
 
-  "paper_supported_bet_types": ["ou", "f5_ou", "spread", "alt_total"],
+  "paper_supported_bet_types": ["alt_total"],
+  "_paper_supported_bet_types_history_doc": [
+    "GROUND ZERO 2026-05-27: trimmed from ['ou','f5_ou','spread','alt_total'] to",
+    "just ['alt_total']. O/U/F5 ran -22.7% in paper — that prediction-based",
+    "model is being dropped. Spread paper was for NBA/NHL/NFL; we're MLB-only.",
+    "One market, paper-validated, then promoted. Nothing else."
+  ],
   "alt_total_min_edge": 0.05,
   "alt_total_min_edge_doc": [
     "Min edge (our P(side) − Kalshi ask) for an MLB alt-total paper pick.",
