@@ -18496,6 +18496,68 @@
           "l": "\ud83d\udcc8 +6.0% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-05-28",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (-143)",
+      "home": "Boston Red Sox",
+      "away": "Atlanta Braves",
+      "spread": null,
+      "total": null,
+      "score100": 80,
+      "rawScore100": 66,
+      "odds": -143,
+      "outcome": "win",
+      "margin": 8,
+      "units": 0.6993,
+      "homeScore": 2,
+      "awayScore": 10,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 56%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -143"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-28",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Chicago Cubs ML (+144)",
+      "home": "Pittsburgh Pirates",
+      "away": "Chicago Cubs",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 144,
+      "outcome": "win",
+      "margin": 5,
+      "units": 1.44,
+      "homeScore": 2,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 39%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +144"
+        }
+      ]
     }
   ]
 }
