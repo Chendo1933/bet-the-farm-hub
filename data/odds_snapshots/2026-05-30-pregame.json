@@ -1,6 +1,6 @@
 {
   "date": "2026-05-30",
-  "snapshot_time": "2026-05-30T18:56:34.936942+00:00",
+  "snapshot_time": "2026-05-30T20:03:37.174802+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -22,7 +22,7 @@
         "total": 7.5,
         "ml_home": 106,
         "ml_away": -124,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Texas Rangers",
@@ -30,9 +30,9 @@
         "commence": "2026-05-30T20:06:00Z",
         "spread": 1.5,
         "total": 8.0,
-        "ml_home": -120,
-        "ml_away": 102,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "ml_home": -118,
+        "ml_away": 100,
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Pittsburgh Pirates",
@@ -40,9 +40,9 @@
         "commence": "2026-05-30T20:06:00Z",
         "spread": -1.5,
         "total": 8.5,
-        "ml_home": -146,
-        "ml_away": 124,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "ml_home": -148,
+        "ml_away": 126,
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Washington Nationals",
@@ -52,7 +52,7 @@
         "total": 7.5,
         "ml_home": 110,
         "ml_away": -130,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Cleveland Guardians",
@@ -62,7 +62,7 @@
         "total": 6.5,
         "ml_home": -130,
         "ml_away": 110,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Houston Astros",
@@ -72,7 +72,7 @@
         "total": 8.5,
         "ml_home": -102,
         "ml_away": -116,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "Tampa Bay Rays",
@@ -80,19 +80,19 @@
         "commence": "2026-05-30T20:11:00Z",
         "spread": -1.5,
         "total": 7.0,
-        "ml_home": -162,
-        "ml_away": 136,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "ml_home": -172,
+        "ml_away": 144,
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       },
       {
         "home": "New York Mets",
         "away": "Miami Marlins",
-        "commence": "2026-05-30T20:11:00Z",
+        "commence": "2026-05-30T20:31:00Z",
         "spread": -1.5,
         "total": 7.0,
         "ml_home": -130,
         "ml_away": 110,
-        "snapshot_time": "2026-05-30T18:56:34.936942+00:00"
+        "snapshot_time": "2026-05-30T20:03:37.174802+00:00"
       }
     ]
   }
