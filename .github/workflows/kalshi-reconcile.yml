@@ -38,10 +38,14 @@ jobs:
         # No deps needed — reconcile.py uses only stdlib.
         run: python scripts/kalshi/reconcile.py
 
-      - name: Update CLV (closing-line value) for live MLB ML bets
-        # Compares entry (morning snapshot) vs close (pregame snapshot), de-vigged.
-        # Sharpest edge signal; runs overnight once both snapshots + results exist.
+      - name: Update CLV (paper alt-total + legacy live ML)
+        # Paper alt-total CLV is the GROUND ZERO promotion-gate input.
         run: python scripts/clv_tracker.py --quiet
+
+      - name: Evaluate promotion gate
+        # Writes data/promotion_gate.json. Recap reads it; nothing fires yet —
+        # gate only opens after paper alt-total clears its bars.
+        run: python scripts/promotion_gate.py
 
       - name: Commit reconciled PnL data
         run: |
@@ -54,7 +58,8 @@ jobs:
           # it) stayed frozen at whatever was last committed. Commit all four.
           git add data/kalshi_dryrun/ data/kalshi_dryrun_perf.json \
                   data/kalshi_live_perf.json data/kalshi_orders/ \
-                  data/kalshi_alt_total_perf.json data/kalshi_clv_perf.json 2>/dev/null || true
+                  data/kalshi_alt_total_perf.json data/kalshi_clv_perf.json \
+                  data/promotion_gate.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No reconcile changes to commit"
           else

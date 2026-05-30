@@ -3,198 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BTF Operations</title>
+<title>BTF Ops — MLB Ground Zero</title>
 <style>
   :root{
-    --gold:#c9a84c; --green:#22c55e; --red:#ef4444; --muted:#7a95b4;
+    --gold:#c9a84c; --green:#22c55e; --red:#ef4444; --yellow:#eab308; --muted:#7a95b4;
     --bg:#0d1117; --surface:#161b22; --surface2:#1c232c; --border:#21262d;
     --text:#e6edf3; --text2:#8b949e;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:14px;max-width:1000px;margin:0 auto;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:14px;max-width:920px;margin:0 auto;-webkit-font-smoothing:antialiased}
   h1{font-size:18px;letter-spacing:.5px}
-  h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin:22px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin:24px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px}
   .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
   .sub{color:var(--text2);font-size:12px}
   .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.5px}
   .b-on{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.4)}
   .b-off{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.4)}
+  .b-pause{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.4)}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
   .stat{font-size:24px;font-weight:700;line-height:1.1}
   .label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-  .pos{color:var(--green)} .neg{color:var(--red)} .neu{color:var(--muted)}
+  .pos{color:var(--green)} .neg{color:var(--red)} .neu{color:var(--muted)} .yel{color:var(--yellow)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--border)}
   th{color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
   td.r,th.r{text-align:right}
-  .pill{font-size:11px;padding:2px 7px;border-radius:6px;background:var(--surface2);color:var(--text2)}
-  .win{color:var(--green)} .loss{color:var(--red)} .pend{color:var(--muted)}
-  .row{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px}
+  .gate{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:6px}
+  .gate-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+  .gate-row+.gate-row{border-top:1px solid var(--border)}
+  .progress{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+  .progress > div{height:100%;background:var(--gold);transition:width .3s}
   .empty{color:var(--text2);font-style:italic;padding:8px 2px}
-  .foot{margin-top:26px;color:var(--text2);font-size:11px;text-align:center}
-  a{color:var(--gold)}
-  .flag{font-size:12px}
+  .foot{margin-top:30px;color:var(--text2);font-size:11px;text-align:center}
 </style>
 </head>
 <body>
 <div class="top">
-  <h1>⚾ BTF Operations</h1>
+  <h1>⚾ BTF Operations · MLB Ground Zero</h1>
   <div class="sub" id="status">loading…</div>
 </div>
 
-<h2>Today · <span id="today"></span></h2>
-<div id="today-status" class="row" style="margin-bottom:10px"></div>
-<div id="today-live"></div>
-<div id="today-paper" style="margin-top:8px"></div>
+<h2>Promotion gate — the only path to live</h2>
+<div id="gate"></div>
 
-<h2>Live performance &amp; CLV</h2>
-<div class="grid" id="perf-cards"></div>
-<div style="margin-top:12px"><div class="label">By team (graded)</div><div id="by-team"></div></div>
-<div style="margin-top:12px"><div class="label">By calibrated-score band</div><div id="by-band"></div></div>
-
-<h2>Paper-track validation</h2>
+<h2>Paper alt-total · the active market</h2>
 <div class="grid" id="paper-cards"></div>
 
-<h2>Engine / market — today's alt-total candidates</h2>
-<div id="engine"></div>
+<h2>Today · <span id="today"></span></h2>
+<div id="today-section"></div>
+
+<h2>Pipeline status</h2>
+<div id="pipeline" class="grid"></div>
 
 <div class="foot">
-  Reads committed Kalshi data from GitHub · live betting: MLB ML only ·
-  everything else paper-validating · <span id="gen"></span>
+  Single market · paper-only until promotion gate clears
+  · <span id="gen"></span> · auto-refresh 5 min
 </div>
 
 <script>
 const RAW="https://raw.githubusercontent.com/Chendo1933/bet-the-farm-hub/main/data/";
-const bust=()=>"?t="+Math.floor(Date.now()/60000);     // 1-min cache bust
-async function J(path){ try{ const r=await fetch(RAW+path+bust()); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
-function etDate(offset=0){ const d=new Date(Date.now()+offset*864e5); const s=d.toLocaleString("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}); return s.slice(0,10); }
+const bust=()=>"?t="+Math.floor(Date.now()/60000);
+async function J(p){ try{ const r=await fetch(RAW+p+bust()); return r.ok?await r.json():null;}catch(e){return null;} }
+function etDate(off=0){ return new Date(Date.now()+off*864e5).toLocaleString("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).slice(0,10); }
 const money=v=>(v>=0?"+$":"-$")+Math.abs(v).toFixed(2);
-const pct=v=>(v>=0?"+":"")+(v).toFixed(1)+"%";
+const pct=v=>(v>=0?"+":"")+v.toFixed(1)+"%";
 const cls=v=>v>0?"pos":v<0?"neg":"neu";
-const team=n=>(n||"").split(" ").slice(-1)[0];
 const esc=s=>(s==null?"":(""+s)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function team(n){return (n||"").split(" ").slice(-1)[0];}
+function card(label,stat,sub,c){
+  return `<div class="card"><div class="label">${label}</div><div class="stat ${c||''}">${stat}</div><div class="sub">${sub||""}</div></div>`;
+}
 
 async function load(){
   const today=etDate();
   document.getElementById("today").textContent=today;
   document.getElementById("gen").textContent="refreshed "+new Date().toLocaleTimeString();
 
-  const [cfg,live,clv,paper,alt]=await Promise.all([
-    J("kalshi_config.json"),J("kalshi_live_perf.json"),J("kalshi_clv_perf.json"),
-    J("kalshi_dryrun_perf.json"),J("kalshi_alt_total_perf.json")
+  const [cfg,gate,clv,alt]=await Promise.all([
+    J("kalshi_config.json"), J("promotion_gate.json"),
+    J("kalshi_clv_perf.json"), J("kalshi_alt_total_perf.json")
   ]);
-  // dated files: try today, fall back to yesterday
-  let orders=await J("kalshi_orders/"+today+".json");
   let dry=await J("kalshi_dryrun/"+today+".json");
-  let dayUsed=today;
-  if(!orders){ orders=await J("kalshi_orders/"+etDate(-1)+".json"); }
-  if(!dry){ dry=await J("kalshi_dryrun/"+etDate(-1)+".json"); dayUsed=etDate(-1); }
+  if(!dry) dry=await J("kalshi_dryrun/"+etDate(-1)+".json");
 
-  // ── Status strip ──
+  // ── Status badge ──
   const on=cfg&&cfg.auto_trading_enabled;
-  document.getElementById("status").innerHTML=
-    `<span class="badge ${on?'b-on':'b-off'}">${on?'AUTO-TRADING ON':'AUTO-TRADING OFF'}</span>`;
-  if(cfg){
-    const ts=document.getElementById("today-status");
-    const ex=(cfg.live_excluded_sports||[]).join(", ")||"none";
-    ts.innerHTML=
-      `<span class="chip">Live: ${(cfg.supported_bet_types||[]).join("/").toUpperCase()} · cal≥${cfg.min_calibrated_score}</span>`+
-      `<span class="chip">Excluded: ${esc(ex)}</span>`+
-      `<span class="chip">Env: ${esc(cfg.environment)}</span>`+
-      `<span class="chip">Kelly ${cfg.kelly_fraction} · cap ${(cfg.max_stake_pct_of_bankroll*100)}%/$${cfg.max_stake_hard_ceiling_dollars}</span>`;
-  }
+  document.getElementById("status").innerHTML = on
+    ? `<span class="badge b-on">AUTO-TRADING ON</span>`
+    : `<span class="badge b-pause">PAUSED — paper validating</span>`;
 
-  // ── Today's live bets ──
-  const tl=document.getElementById("today-live");
-  const placed=(orders&&orders.placed_orders||[]).filter(o=>!o.test);
-  if(placed.length){
-    let rows=placed.map(o=>{
-      const p=o.dryrun_pick||{}; const oc=o.outcome;
-      const ocCls=oc==="win"?"win":oc==="loss"?"loss":"pend";
-      const pnl=o.pnl_dollars;
-      return `<tr><td>${esc(p.pickedTeam||"?")}</td><td>${esc(p.pickLabel||"")}</td>
-        <td class="r">${o.contracts}× @ ${o.price_cents}¢</td>
-        <td class="r">$${(o.stake_dollars||0).toFixed(2)}</td>
-        <td class="r ${ocCls}">${oc?oc.toUpperCase():"pending"}${pnl!=null&&oc?" "+money(pnl):""}</td></tr>`;
-    }).join("");
-    tl.innerHTML=`<div class="label">Live bets placed (${orders.date})</div><div class="card" style="padding:4px 8px"><table>
-      <tr><th>Team</th><th>Bet</th><th class="r">Size</th><th class="r">Stake</th><th class="r">Result</th></tr>${rows}</table></div>`;
+  // ── Promotion gate (headline) ──
+  const gm = ((gate||{}).markets||{}).paper_alt_total;
+  const g = document.getElementById("gate");
+  if(gm){
+    const icon={READY:"✅",ACCUMULATING:"⏳",FAILED:"🚫"}[gm.status]||"·";
+    const cssStatus = gm.status==="READY"?"pos":gm.status==="FAILED"?"neg":"yel";
+    const th = gm.thresholds||{};
+    const pctN = Math.min(100, 100*(gm.n_effective||0)/(th.min_n||20));
+    g.innerHTML = `<div class="gate">
+      <div class="gate-row"><div><span class="stat ${cssStatus}">${icon} ${gm.status}</span></div>
+        <div class="sub">${esc(gm.reason||"")}</div></div>
+      <div class="gate-row"><div class="label">Sample</div>
+        <div>${gm.n_effective||0} / ${th.min_n||20} bets
+          <div class="progress" style="width:140px"><div style="width:${pctN}%"></div></div>
+        </div></div>
+      <div class="gate-row"><div class="label">Paper ROI</div>
+        <div class="${cls(gm.roi_pct||0)}">${pct(gm.roi_pct||0)} · need ≥ ${pct(th.min_roi_pct||0)}</div></div>
+      <div class="gate-row"><div class="label">Avg CLV</div>
+        <div class="${cls(gm.avg_clv_pct||0)}">${pct(gm.avg_clv_pct||0)} · need ≥ ${pct(th.min_clv_pct||1)}</div></div>
+    </div>`;
   } else {
-    tl.innerHTML=`<div class="label">Live bets</div><div class="card empty">No live bets placed ${orders?("for "+orders.date):"yet today"}.</div>`;
+    g.innerHTML = `<div class="empty">Promotion gate not yet computed (waiting for first reconcile).</div>`;
   }
 
-  // ── Today's paper candidates ──
-  const tp=document.getElementById("today-paper");
-  const po=(dry&&dry.paper_orders||[]);
-  if(po.length){
-    const by={};
-    po.forEach(o=>{const t=(o.pick||{}).betType||"?";(by[t]=by[t]||[]).push(o);});
-    let html=`<div class="label">Paper candidates (${dayUsed})</div><div class="row">`;
-    Object.entries(by).forEach(([t,arr])=>html+=`<span class="chip">${t.toUpperCase()}: ${arr.length}</span>`);
-    html+=`</div>`; tp.innerHTML=html;
-  } else { tp.innerHTML=`<div class="label">Paper candidates</div><div class="empty">None generated ${dayUsed}.</div>`; }
-
-  // ── Performance cards ──
-  const pc=document.getElementById("perf-cards");
-  if(live){
-    const cs=(clv&&clv.summary)||{};
-    pc.innerHTML=[
-      card("Live record", `${live.wins}-${live.losses}`, live.win_pct!=null?live.win_pct.toFixed(0)+"% win":"" , "neu"),
-      card("Live ROI", pct(live.roi_pct||0), money(live.total_pnl_dollars||0)+" PnL", cls(live.roi_pct||0)),
-      card("CLV (avg)", cs.n?pct(cs.avg_clv_pct||0):"—", cs.n?`beat close ${cs.beat_close}/${cs.n}`:"no data", cls(cs.avg_clv_pct||0)),
-      card("Stake (total)", "$"+(live.total_stake_dollars||0).toFixed(0), `${live.total_orders_placed||0} orders`, "neu"),
-    ].join("");
-  } else pc.innerHTML=`<div class="card empty">No live performance data yet.</div>`;
-
-  // ── By team ──
-  document.getElementById("by-team").innerHTML=aggTable(live&&live.by_team, "Team", true);
-  // ── By band ──
-  document.getElementById("by-band").innerHTML=aggTable(live&&live.by_band, "Band", false);
-
-  // ── Paper validation cards ──
-  const pcards=document.getElementById("paper-cards");
-  const ouw=paper?paper.wins:0, oul=paper?paper.losses:0;
-  pcards.innerHTML=[
-    card("Paper O/U+F5", paper?`${ouw}-${oul}`:"—", paper?pct(paper.roi_pct||0)+" ROI":"no data", paper?cls(paper.roi_pct||0):"neu"),
-    card("Alt-total paper", alt?`${alt.wins}-${alt.losses}`:"—", alt?pct(alt.roi_pct||0)+" ROI · "+(alt.graded||0)+" graded":"accruing", alt?cls(alt.roi_pct||0):"neu"),
-    card("Promotion gate", "ROI ≥ 0%", "needs forward + sample", "neu"),
+  // ── Paper alt-total cards ──
+  const pc = document.getElementById("paper-cards");
+  const ps = ((clv||{}).paper_alt_total||{}).summary || {};
+  pc.innerHTML = [
+    card("Graded bets", alt?.graded || 0, "of 20 target", "neu"),
+    card("Paper ROI", alt?.graded ? pct(alt.roi_pct||0) : "—", alt?.graded ? money(alt.total_pnl_dollars||0)+" PnL" : "no data", alt?.graded ? cls(alt.roi_pct||0) : "neu"),
+    card("Avg CLV", ps.n ? pct(ps.avg_clv_pct||0) : "—", ps.n ? `beat close ${ps.beat_close}/${ps.n}` : "no data", ps.n ? cls(ps.avg_clv_pct||0) : "neu"),
+    card("Win rate", alt?.graded ? (alt.win_pct||0).toFixed(0)+"%" : "—", alt?.graded ? `${alt.wins}-${alt.losses}` : "no data", "neu"),
   ].join("");
 
-  // ── Engine: today's alt-total candidates ──
-  const eng=document.getElementById("engine");
-  const altc=po.filter(o=>(o.pick||{}).betType==="alt_total");
+  // ── Today's candidates ──
+  const ts = document.getElementById("today-section");
+  const altc = ((dry||{}).paper_orders||[]).filter(o => (o.pick||{}).betType === "alt_total");
   if(altc.length){
-    let rows=altc.map(o=>{const p=o.pick||{};const m=o.alt_meta||{};
-      return `<tr><td>${esc(team(p.away))} @ ${esc(team(p.home))}</td>
-        <td>${esc((p.side||"").toUpperCase())} ${esc(p.line)}</td>
+    let rows = altc.map(o=>{const p=o.pick||{};const m=o.alt_meta||{};
+      return `<tr>
+        <td>${esc(team(p.away))} @ ${esc(team(p.home))}</td>
+        <td>mkt ${esc(p.market_total)} → ${esc((p.side||"").toUpperCase())} ${esc(p.line)}</td>
         <td class="r">${m.our_prob!=null?(100*m.our_prob).toFixed(0)+"%":"—"}</td>
         <td class="r">${m.kalshi_price!=null?(100*m.kalshi_price).toFixed(0)+"¢":"—"}</td>
-        <td class="r pos">${m.edge!=null?"+"+(100*m.edge).toFixed(0):"—"}</td></tr>`;}).join("");
-    eng.innerHTML=`<div class="card" style="padding:4px 8px"><table>
+        <td class="r pos">${m.edge!=null?"+"+(100*m.edge).toFixed(0):"—"}</td>
+      </tr>`;}).join("");
+    ts.innerHTML = `<div class="card" style="padding:4px 8px"><table>
       <tr><th>Game</th><th>Bet</th><th class="r">Our P</th><th class="r">Kalshi</th><th class="r">Edge</th></tr>${rows}</table></div>`;
   } else {
-    eng.innerHTML=`<div class="empty">No alt-total candidates ${dayUsed} (thin/started books filtered, or scan not yet run).</div>`;
+    ts.innerHTML = `<div class="empty">No alt-total candidates yet ${today} (thin/started books filtered, or chain hasn't run).</div>`;
   }
-}
 
-function card(label,stat,sub,c){
-  return `<div class="card"><div class="label">${label}</div><div class="stat ${c||''}">${stat}</div><div class="sub">${sub||""}</div></div>`;
+  // ── Pipeline status strip ──
+  const pp = document.getElementById("pipeline");
+  pp.innerHTML = [
+    card("Auto-trading", on ? "ON" : "OFF", on ? "live" : "paused — paper only", on ? "pos" : "yel"),
+    card("Live bet types", (cfg?.supported_bet_types||[]).join(" / ").toUpperCase() || "—", "real-money markets", "neu"),
+    card("Paper bet types", (cfg?.paper_supported_bet_types||[]).join(" / ").toUpperCase() || "—", "validation only", "neu"),
+    card("Bankroll", cfg?.bankroll_dollars!=null ? "$" + Number(cfg.bankroll_dollars).toFixed(0) : "—", "fallback only", "neu"),
+  ].join("");
 }
-function aggTable(obj,head,sortByPnl){
-  if(!obj||!Object.keys(obj).length) return `<div class="empty">No graded bets yet.</div>`;
-  let rows=Object.entries(obj);
-  if(sortByPnl) rows.sort((a,b)=>b[1].pnl-a[1].pnl);
-  let body=rows.map(([k,s])=>`<tr><td>${esc(k)}</td>
-    <td class="r">${s.w}-${s.l}</td>
-    <td class="r ${cls(s.pnl)}">${money(s.pnl)}</td>
-    <td class="r ${cls(s.roi_pct)}">${pct(s.roi_pct||0)}</td></tr>`).join("");
-  return `<div class="card" style="padding:4px 8px"><table>
-    <tr><th>${head}</th><th class="r">W-L</th><th class="r">PnL</th><th class="r">ROI</th></tr>${body}</table></div>`;
-}
-load();
-setInterval(load, 5*60*1000); // auto-refresh every 5 min
+load(); setInterval(load, 5*60*1000);
 </script>
 </body>
 </html>

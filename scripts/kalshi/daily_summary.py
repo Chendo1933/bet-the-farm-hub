@@ -231,87 +231,43 @@ def build_recap(date_key: str) -> tuple[str, str]:
     live_7d  = _rolling_pnl(live_perf, 7)
     stage_label, advice = _stage_recommendation(cfg, live_perf)
 
-    lines = [f"🌙 BTF Recap · {date_key}", ""]
+    # ── GROUND ZERO RECAP ────────────────────────────────────────────────
+    # MLB-only, paper alt-total is the single market, live is paused. Strip the
+    # legacy ML/by-team/by-band/O/U sections — they're noise under the new arch.
+    auto_on = bool(cfg.get("auto_trading_enabled"))
+    status_word = "AUTO-TRADING ON" if auto_on else "PAUSED (paper validating)"
+    lines = [f"🌙 BTF Recap · {date_key} · {status_word}", ""]
 
-    # ── LIVE TRACK (real money — ML auto-placed) ────────────────────────
-    lines.append("💰 LIVE (ML)")
-    if last_live and last_live.get("placed", 0) > 0:
-        prev = last_live
-        lines.append(f"  Yesterday: {prev.get('placed',0)} placed · "
-                     f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
-                     f"${prev.get('total_pnl_dollars',0):+.2f} "
-                     f"({prev.get('roi_pct',0):+.1f}% ROI)")
-        # Per-order detail with ticker + PnL
-        date = prev.get("date")
-        orders = _load_orders(date) if date else None
-        if orders and orders.get("placed_orders"):
-            for o in orders["placed_orders"]:
-                if o.get("test"): continue
-                ticker = o.get("ticker", "?")
-                short = ticker.rsplit("-", 1)[-1] if "-" in ticker else ticker
-                pnl = o.get("pnl_dollars")
-                pnl_str = f"${pnl:+.2f}" if pnl is not None else "(ungraded)"
-                icon = "✅" if (pnl and pnl > 0) else ("❌" if (pnl and pnl < 0) else "⏳")
-                lines.append(f"    {icon} {short} {pnl_str}")
+    # ── Paper alt-total — the active market ──
+    alt = _load_perf("data/kalshi_alt_total_perf.json") or {}
+    graded = alt.get("graded") or 0
+    lines.append("📊 Paper alt-total")
+    if graded:
+        lines.append(f"  Record: {alt.get('wins',0)}-{alt.get('losses',0)} ({alt.get('win_pct',0):.0f}%) "
+                     f"over {graded} graded · ROI {alt.get('roi_pct',0):+.1f}% · "
+                     f"PnL ${alt.get('total_pnl_dollars',0):+.2f}")
     else:
-        lines.append("  Yesterday: no orders placed")
-    if live_7d["days"] > 0:
-        lines.append(f"  7d: {live_7d['placed']} placed · "
-                     f"{live_7d['wins']}W {live_7d['losses']}L · "
-                     f"${live_7d['pnl']:+.2f}")
+        lines.append("  No graded paper bets yet — accruing.")
 
-    # ── LIVE breakdown: by team + by score band (all-time, graded) ──────
-    by_team, by_band = _live_breakdown()
-    if by_team:
-        ranked = sorted(by_team.items(), key=lambda x: x[1]["pnl"], reverse=True)
-        team_strs = [f"{_short_team(t)} {s['w']}-{s['l']} ${s['pnl']:+.2f}"
-                     for t, s in ranked]
-        lines.append("  by team: " + " · ".join(team_strs))
-    if by_band:
-        band_strs = []
-        for band in ("65+", "60-64"):
-            s = by_band.get(band)
-            if not s or (s["w"] + s["l"]) == 0:
-                continue
-            roi = 100 * s["pnl"] / s["stake"] if s["stake"] else 0
-            band_strs.append(f"{band} {s['w']}-{s['l']} ({roi:+.0f}%)")
-        if band_strs:
-            lines.append("  by score: " + " · ".join(band_strs))
-
-    # ── CLV: did the market move toward our picks? (sharpest edge signal) ──
-    clv = _load_perf("data/kalshi_clv_perf.json")
-    cs = (clv or {}).get("summary") or {}
+    # ── CLV (paper alt-total primary, legacy ML kept as fallback) ──
+    clv = _load_perf("data/kalshi_clv_perf.json") or {}
+    ps = (clv.get("paper_alt_total") or {}).get("summary") or {}
+    ls = (clv.get("live_ml")         or {}).get("summary") or {}
+    cs = ps if ps.get("n") else ls
     if cs.get("n"):
         flag = "✅" if cs["avg_clv_pct"] > 0 else "⚠️"
-        lines.append(f"  CLV: {cs['avg_clv_pct']:+.1f}% avg · beat close "
-                     f"{cs['beat_close']}/{cs['n']} {flag}")
+        label = "paper-alt" if cs is ps else "ml-legacy"
+        lines.append(f"  CLV ({label}): {cs['avg_clv_pct']:+.2f}% avg · "
+                     f"beat close {cs['beat_close']}/{cs['n']} {flag}")
 
-    # ── PAPER TRACK (simulated — O/U validation) ────────────────────────
-    lines.append("")
-    lines.append("📝 PAPER (O/U sim)")
-    if last_paper and last_paper.get("placed", 0) > 0:
-        prev = last_paper
-        lines.append(f"  Yesterday: {prev.get('placed',0)} simulated · "
-                     f"{prev.get('wins',0)}W {prev.get('losses',0)}L · "
-                     f"${prev.get('total_pnl_dollars',0):+.2f} "
-                     f"({prev.get('roi_pct',0):+.1f}% ROI)")
-    else:
-        lines.append("  Yesterday: no O/U picks simulated yet")
-    if paper_7d["days"] > 0:
-        lines.append(f"  7d: {paper_7d['placed']} simulated · "
-                     f"{paper_7d['wins']}W {paper_7d['losses']}L · "
-                     f"${paper_7d['pnl']:+.2f}")
-        # The big question: is paper O/U at break-even yet?
-        if paper_7d["wins"] + paper_7d["losses"] >= 20:
-            hit_pct = 100 * paper_7d["wins"] / (paper_7d["wins"] + paper_7d["losses"])
-            status = "✓ above break-even" if hit_pct >= 52.4 else "↗ below break-even"
-            lines.append(f"  Hit rate: {hit_pct:.1f}%  ({status} 52.4%)")
-
-    # Stage advisor
-    lines.append("")
-    lines.append(f"STAGE: {stage_label}")
-    if advice:
-        lines.append(advice)
+    # ── Promotion gate — the only path to live ──
+    gate = _load_perf("data/promotion_gate.json") or {}
+    gm = (gate.get("markets") or {}).get("paper_alt_total")
+    if gm:
+        icon = {"READY": "✅", "ACCUMULATING": "⏳", "FAILED": "🚫"}.get(gm["status"], "·")
+        lines.append("")
+        lines.append(f"🎯 Promotion gate: {icon} {gm['status']}")
+        lines.append(f"   {gm['reason']}")
 
     return f"BTF Recap · {date_key}", "\n".join(lines)
 

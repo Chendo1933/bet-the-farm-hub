@@ -1,30 +1,44 @@
 #!/usr/bin/env python3
 """
-Closing-Line Value (CLV) tracker for our live MLB ML bets.
+Closing-Line Value (CLV) tracker — MLB Ground Zero edition.
 
-WHY CLV
-  Win/loss is hopelessly noisy at small samples (our live record is ~12 bets).
-  CLV measures whether the market moved TOWARD our pick after we bet — i.e. did
-  we get a better number than the closing line. The closing line is the sharpest
-  price in the market, so beating it is the most reliable early indicator of a
-  real edge, long before W/L stabilizes. Positive average CLV ⇒ the model is
-  finding genuine value; flat/negative CLV ⇒ we're just along for the variance.
+CLV is the sharpest, least-noisy edge signal — meaningful at small samples where
+W/L is pure variance. Under Ground Zero (one market: MLB alt-totals, paper-only
+until proven), CLV on paper alt-total candidates IS the promotion gate's input.
 
-METHOD (de-vigged sportsbook lines, apples-to-apples)
-  For each live MLB ML bet:
-    entry  = de-vigged implied P(our team) from the MORNING odds snapshot
-             (≈ when our chain places, ~9am ET)
-    close  = de-vigged implied P(our team) from the PREGAME snapshot
-             (≈ game time — the closing line)
-    CLV    = close − entry   (in probability points)
-  Positive CLV = the line moved our way after we bet (we beat the close).
+  PROMOTION GATE: paper alt-total ROI >= 0% AND avg CLV >= +1% over >= 20 bets.
 
-  Snapshots: data/odds_snapshots/{date}-{morning,pregame}.json (both-side
-  moneylines per game → proper de-vig). Pregame coverage began 2026-05-21, so
-  only bets on/after that are gradeable; it accrues every day going forward.
+TWO MARKETS GRADED HERE
+  paper_alt_total  (PRIMARY — the only active market post-Ground-Zero)
+    "Shadow CLV": re-price each paper candidate at the CLOSING market total
+    using the same calibrated AltTotalEngine that priced it at entry. If the
+    closing total moved TOWARD the side we papered, +CLV (our edge was real;
+    we caught the market early). If it moved AWAY, -CLV.
+
+    entry_p = engine.<side>_prob(morning_market_total, alt_line)
+    close_p = engine.<side>_prob(close_market_total,   alt_line)
+    CLV     = close_p - entry_p
+
+  live_ml          (LEGACY — kept for the historical record; nothing new added)
+    De-vigged sportsbook morning vs pregame moneyline for the bet's side. Live
+    ML is dropped under Ground Zero, so this stops accumulating.
+
+DATA SOURCES
+  data/odds_snapshots/{date}-morning.json  (entry total)
+  data/odds_snapshots/{date}-pregame.json  (close total + closing moneylines)
+  data/kalshi_dryrun/{date}.json           (paper alt-total candidates)
+  data/kalshi_orders/{date}.json           (legacy live ML receipts)
+
+OUTPUT
+  data/kalshi_clv_perf.json:
+    {
+      "updated":   "...",
+      "paper_alt_total": { "summary": {...}, "bets": [...] },
+      "live_ml":         { "summary": {...}, "bets": [...] }
+    }
 
 Usage:
-  python3 scripts/clv_tracker.py            # report + write data/kalshi_clv_perf.json
+  python3 scripts/clv_tracker.py            # write + print
   python3 scripts/clv_tracker.py --quiet    # write only
 """
 from __future__ import annotations
@@ -32,18 +46,24 @@ from __future__ import annotations
 import argparse
 import glob
 import json
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
-ORDERS_DIR = "data/kalshi_orders"
-SNAP_DIR = "data/odds_snapshots"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from alt_total_engine_mlb import AltTotalEngine
+
 CLV_PERF_OUT = Path("data/kalshi_clv_perf.json")
+ORDERS_DIR   = "data/kalshi_orders"      # legacy live ML
+DRYRUN_DIR   = "data/kalshi_dryrun"      # paper alt-total
+SNAP_DIR     = "data/odds_snapshots"
 
 
 def _norm(n: str) -> str:
     return {"Oakland Athletics": "Athletics", "Sacramento Athletics": "Athletics"}.get(n, n)
 
 
-def am_to_prob(ml: float) -> float:
+def _am_to_prob(ml: float) -> float:
     return (-ml) / ((-ml) + 100) if ml < 0 else 100 / (ml + 100)
 
 
@@ -57,27 +77,70 @@ def _load_snap(date: str, label: str) -> dict | None:
         return None
 
 
-def _game_ml(snap: dict | None, home: str, away: str):
-    """Return (ml_home, ml_away) for the game, or None."""
+def _find_game(snap: dict | None, home: str, away: str) -> dict | None:
     if not snap:
         return None
     for g in snap.get("games", {}).get("mlb", []):
         if _norm(g.get("home", "")) == home and _norm(g.get("away", "")) == away:
-            if g.get("ml_home") is not None and g.get("ml_away") is not None:
-                return (g["ml_home"], g["ml_away"])
+            return g
     return None
 
 
-def _novig_team(ml_home: float, ml_away: float, team_is_home: bool) -> float | None:
-    ih = am_to_prob(ml_home); ia = am_to_prob(ml_away)
-    vig = ih + ia
-    if vig <= 0:
+# ── PAPER ALT-TOTAL (PRIMARY under Ground Zero) ───────────────────────────────
+def collect_paper_alt_total() -> list[dict]:
+    """Shadow CLV: re-price each paper alt-total bet at the closing market total
+    and compare to entry. Uses data already on disk — no new fetches needed."""
+    eng = AltTotalEngine()
+    rows: list[dict] = []
+    for f in sorted(glob.glob(f"{DRYRUN_DIR}/*.json")):
+        d = json.loads(Path(f).read_text())
+        date = d.get("date") or Path(f).stem
+        pre = _load_snap(date, "pregame")
+        if not pre:
+            continue   # no closing snapshot yet — can't grade CLV
+        for o in d.get("paper_orders", []) or []:
+            p = o.get("pick") or {}
+            if p.get("betType") != "alt_total":
+                continue
+            entry_total = p.get("market_total")
+            line = p.get("line"); side = (p.get("side") or "").lower()
+            home = _norm(p.get("home", "")); away = _norm(p.get("away", ""))
+            if entry_total is None or line is None or side not in ("over", "under"):
+                continue
+            game = _find_game(pre, home, away)
+            close_total = game.get("total") if game else None
+            if close_total is None:
+                continue
+            prob = eng.over_prob if side == "over" else eng.under_prob
+            entry_p = prob(entry_total, line)
+            close_p = prob(close_total, line)
+            rows.append({
+                "date": date, "away": away, "home": home,
+                "line": line, "side": side,
+                "entry_total": entry_total, "close_total": close_total,
+                "entry_prob": round(entry_p, 4), "close_prob": round(close_p, 4),
+                "clv": round(close_p - entry_p, 4),
+                "beat_close": close_p > entry_p,
+                # the outcome (graded against final total) is tracked in the
+                # alt-total perf file by reconcile — left out here on purpose.
+            })
+    return rows
+
+
+# ── LIVE ML (LEGACY — no new data once auto-trading is off) ──────────────────
+def _ml_for_team(g: dict | None, team_is_home: bool):
+    if not g:
         return None
+    ih = _am_to_prob(g.get("ml_home")) if g.get("ml_home") is not None else None
+    ia = _am_to_prob(g.get("ml_away")) if g.get("ml_away") is not None else None
+    if ih is None or ia is None:
+        return None
+    vig = ih + ia
     return (ih / vig) if team_is_home else (ia / vig)
 
 
-def collect_clv() -> list[dict]:
-    rows = []
+def collect_live_ml() -> list[dict]:
+    rows: list[dict] = []
     for f in sorted(glob.glob(f"{ORDERS_DIR}/*.json")):
         d = json.loads(Path(f).read_text())
         date = d.get("date")
@@ -86,18 +149,16 @@ def collect_clv() -> list[dict]:
                 continue
             p = o.get("dryrun_pick", {})
             if (p.get("sport") or "").upper() != "MLB":
-                continue   # snapshots are MLB-only; NHL ML not gradeable here
+                continue
             team = _norm(p.get("pickedTeam") or "")
             home = _norm(p.get("home") or ""); away = _norm(p.get("away") or "")
-            if not team or not home or not away:
+            if not team:
                 continue
-            em = _game_ml(_load_snap(date, "morning"), home, away)
-            cm = _game_ml(_load_snap(date, "pregame"), home, away)
-            if not em or not cm:
-                continue
+            mg = _find_game(_load_snap(date, "morning"), home, away)
+            cg = _find_game(_load_snap(date, "pregame"), home, away)
             team_is_home = (team == home)
-            entry = _novig_team(*em, team_is_home)
-            close = _novig_team(*cm, team_is_home)
+            entry = _ml_for_team(mg, team_is_home)
+            close = _ml_for_team(cg, team_is_home)
             if entry is None or close is None:
                 continue
             rows.append({
@@ -110,52 +171,63 @@ def collect_clv() -> list[dict]:
     return rows
 
 
-def summarize(rows: list[dict]) -> dict:
+# ── Aggregation + I/O ────────────────────────────────────────────────────────
+def _summarize(rows: list[dict]) -> dict:
     n = len(rows)
     if n == 0:
         return {"n": 0}
-    avg = sum(r["clv"] for r in rows) / n
     beat = sum(1 for r in rows if r["beat_close"])
-    # CLV among wins vs losses — a calibration sanity check on whether CLV tracks results
-    graded = [r for r in rows if r["outcome"] in ("win", "loss")]
     return {
         "n": n,
-        "avg_clv_pct": round(100 * avg, 2),
-        "beat_close_pct": round(100 * beat / n, 1),
+        "avg_clv_pct": round(100 * sum(r["clv"] for r in rows) / n, 2),
         "beat_close": beat,
-        "graded": len(graded),
+        "beat_close_pct": round(100 * beat / n, 1),
     }
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--quiet", action="store_true", help="write perf file only")
+    ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
 
-    rows = collect_clv()
-    summary = summarize(rows)
-    CLV_PERF_OUT.write_text(json.dumps({"summary": summary, "bets": rows}, indent=2))
+    paper = collect_paper_alt_total()
+    live = collect_live_ml()
+    out = {
+        "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "paper_alt_total": {"summary": _summarize(paper), "bets": paper},
+        "live_ml":         {"summary": _summarize(live),  "bets": live},
+    }
+    CLV_PERF_OUT.write_text(json.dumps(out, indent=2))
 
     if args.quiet:
         return
 
-    print("Closing-Line Value (CLV) · live MLB ML bets\n")
-    if not rows:
-        print("  No gradeable bets yet (need morning+pregame snapshots; pregame "
-              "coverage began 2026-05-21).")
-        return
-    print(f"  {'date':<11} {'team':<16} {'entry':>6} {'close':>6} {'CLV':>7} {'result':>7}")
-    for r in rows:
-        arrow = "↑" if r["clv"] > 0 else ("↓" if r["clv"] < 0 else "·")
-        print(f"  {r['date']:<11} {r['team'][:16]:<16} {100*r['entry_prob']:>5.1f}% "
-              f"{100*r['close_prob']:>5.1f}% {100*r['clv']:>+5.1f} {arrow}  "
-              f"{(r['outcome'] or 'pending'):>7}")
-    print()
-    print(f"  Bets: {summary['n']} · beat the close: {summary['beat_close']}/{summary['n']} "
-          f"({summary['beat_close_pct']:.0f}%) · avg CLV: {summary['avg_clv_pct']:+.2f}%")
-    print(f"  ✅ Wrote {CLV_PERF_OUT}")
-    print("\n  Read: avg CLV > 0 (and beat-close > 50%) = the market consistently")
-    print("  moves toward our picks → real edge, even before W/L confirms it.")
+    print("Closing-Line Value · MLB Ground Zero\n")
+    ps, ls = out["paper_alt_total"]["summary"], out["live_ml"]["summary"]
+
+    print("═══ PAPER alt-total (the active market) ═══")
+    if ps["n"]:
+        print(f"  n={ps['n']} · avg CLV {ps['avg_clv_pct']:+.2f}% · "
+              f"beat close {ps['beat_close']}/{ps['n']} ({ps['beat_close_pct']:.0f}%)")
+        for r in paper[-8:]:
+            arrow = "↑" if r["clv"] > 0 else ("↓" if r["clv"] < 0 else "·")
+            print(f"  {r['date']}  {r['side'].upper()} {r['line']:>5} "
+                  f"{r['away'][:14]+'@'+r['home'][:14]:<30}  "
+                  f"entry {100*r['entry_prob']:>5.1f}% close {100*r['close_prob']:>5.1f}%  "
+                  f"{100*r['clv']:>+5.1f} {arrow}")
+    else:
+        print("  no graded bets yet — waiting for paper candidates + pregame snapshot")
+
+    print("\n═══ LIVE ML (legacy — no new data) ═══")
+    if ls["n"]:
+        print(f"  n={ls['n']} · avg CLV {ls['avg_clv_pct']:+.2f}% · "
+              f"beat close {ls['beat_close']}/{ls['n']}")
+    else:
+        print("  no graded live bets")
+
+    print(f"\n  ✅ Wrote {CLV_PERF_OUT}")
+    print("  Read: avg CLV > 0 → market moves toward our picks → real edge.")
+    print("  Promotion gate: paper alt-total ROI >= 0% AND avg CLV >= +1% over >= 20 bets.")
 
 
 if __name__ == "__main__":

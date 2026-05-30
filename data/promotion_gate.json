@@ -1,0 +1,20 @@
+{
+  "updated": "2026-05-30T00:51:00+00:00",
+  "markets": {
+    "paper_alt_total": {
+      "market": "paper_alt_total",
+      "status": "ACCUMULATING",
+      "reason": "n=0/20 (graded 0 \u00b7 CLV 0)",
+      "n_effective": 0,
+      "graded_outcomes": 0,
+      "clv_n": 0,
+      "roi_pct": 0.0,
+      "avg_clv_pct": 0.0,
+      "thresholds": {
+        "min_n": 20,
+        "min_roi_pct": 0.0,
+        "min_clv_pct": 1.0
+      }
+    }
+  }
+}
