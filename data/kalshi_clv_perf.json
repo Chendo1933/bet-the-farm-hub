@@ -1,10 +1,84 @@
 {
-  "updated": "2026-05-30T09:48:23+00:00",
+  "updated": "2026-05-30T17:56:03+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 0
+      "n": 5,
+      "avg_clv_pct": 0.0,
+      "beat_close": 0,
+      "beat_close_pct": 0.0
     },
-    "bets": []
+    "bets": [
+      {
+        "date": "2026-05-29",
+        "away": "San Francisco Giants",
+        "home": "Colorado Rockies",
+        "line": 13.5,
+        "side": "under",
+        "entry_total": 10.5,
+        "close_total": 10.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-29",
+        "away": "New York Yankees",
+        "home": "Athletics",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9.5,
+        "close_total": 9.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-30",
+        "away": "San Francisco Giants",
+        "home": "Colorado Rockies",
+        "line": 9.5,
+        "side": "over",
+        "entry_total": 11,
+        "close_total": 11.0,
+        "close_source": "midday",
+        "entry_prob": 0.6535,
+        "close_prob": 0.6535,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-30",
+        "away": "Detroit Tigers",
+        "home": "Chicago White Sox",
+        "line": 10.5,
+        "side": "under",
+        "entry_total": 7.5,
+        "close_total": 7.5,
+        "close_source": "pregame",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-30",
+        "away": "New York Yankees",
+        "home": "Athletics",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9.5,
+        "close_total": 9.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      }
+    ]
   },
   "live_ml": {
     "summary": {

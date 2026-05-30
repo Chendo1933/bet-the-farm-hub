@@ -78,15 +78,37 @@ def _load_snap(date: str, label: str) -> dict | None:
 
 
 def _find_game(snap: dict | None, home: str, away: str) -> dict | None:
+    """Return the LATEST entry for this game in the snapshot. The midday snapshot
+    accumulates multiple sweeps, so a game can appear twice with different totals
+    as the line moves; the per-entry `snapshot_time` orders them. Returning the
+    latest is what we want for 'closing total'."""
     if not snap:
         return None
+    best = None
+    best_t = ""
     for g in snap.get("games", {}).get("mlb", []):
         if _norm(g.get("home", "")) == home and _norm(g.get("away", "")) == away:
-            return g
-    return None
+            st = g.get("snapshot_time") or ""
+            if best is None or st > best_t:
+                best = g; best_t = st
+    return best
 
 
 # ── PAPER ALT-TOTAL (PRIMARY under Ground Zero) ───────────────────────────────
+def _latest_close_total(date: str, home: str, away: str) -> tuple[float | None, str | None]:
+    """Return (close_total, source_label). Prefer the LATEST snapshot that
+    actually contains the game — pregame, then midday, then morning. The
+    pregame sweep finishes ~7pm ET so it can miss late west-coast games
+    (the Odds API window varies); without this fallback those games get
+    silently dropped from CLV. Returns (None, None) if no snapshot has it."""
+    for label in ("pregame", "midday", "morning"):
+        snap = _load_snap(date, label)
+        g = _find_game(snap, home, away)
+        if g and g.get("total") is not None:
+            return (g["total"], label)
+    return (None, None)
+
+
 def collect_paper_alt_total() -> list[dict]:
     """Shadow CLV: re-price each paper alt-total bet at the closing market total
     and compare to entry. Uses data already on disk — no new fetches needed."""
@@ -95,9 +117,6 @@ def collect_paper_alt_total() -> list[dict]:
     for f in sorted(glob.glob(f"{DRYRUN_DIR}/*.json")):
         d = json.loads(Path(f).read_text())
         date = d.get("date") or Path(f).stem
-        pre = _load_snap(date, "pregame")
-        if not pre:
-            continue   # no closing snapshot yet — can't grade CLV
         for o in d.get("paper_orders", []) or []:
             p = o.get("pick") or {}
             if p.get("betType") != "alt_total":
@@ -107,10 +126,9 @@ def collect_paper_alt_total() -> list[dict]:
             home = _norm(p.get("home", "")); away = _norm(p.get("away", ""))
             if entry_total is None or line is None or side not in ("over", "under"):
                 continue
-            game = _find_game(pre, home, away)
-            close_total = game.get("total") if game else None
+            close_total, src = _latest_close_total(date, home, away)
             if close_total is None:
-                continue
+                continue   # no snapshot has the game — truly ungradeable
             prob = eng.over_prob if side == "over" else eng.under_prob
             entry_p = prob(entry_total, line)
             close_p = prob(close_total, line)
@@ -118,11 +136,10 @@ def collect_paper_alt_total() -> list[dict]:
                 "date": date, "away": away, "home": home,
                 "line": line, "side": side,
                 "entry_total": entry_total, "close_total": close_total,
+                "close_source": src,
                 "entry_prob": round(entry_p, 4), "close_prob": round(close_p, 4),
                 "clv": round(close_p - entry_p, 4),
                 "beat_close": close_p > entry_p,
-                # the outcome (graded against final total) is tracked in the
-                # alt-total perf file by reconcile — left out here on purpose.
             })
     return rows
 
