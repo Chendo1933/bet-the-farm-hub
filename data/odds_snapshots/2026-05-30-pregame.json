@@ -1,6 +1,6 @@
 {
   "date": "2026-05-30",
-  "snapshot_time": "2026-05-30T22:44:46.193442+00:00",
+  "snapshot_time": "2026-05-30T23:50:20.365638+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -113,6 +113,16 @@
         "ml_home": 112,
         "ml_away": -132,
         "snapshot_time": "2026-05-30T22:44:46.193442+00:00"
+      },
+      {
+        "home": "Colorado Rockies",
+        "away": "San Francisco Giants",
+        "commence": "2026-05-31T01:11:00Z",
+        "spread": 1.5,
+        "total": 11.0,
+        "ml_home": -102,
+        "ml_away": -116,
+        "snapshot_time": "2026-05-30T23:50:20.365638+00:00"
       }
     ],
     "nba": [
@@ -124,7 +134,7 @@
         "total": 212.5,
         "ml_home": -148,
         "ml_away": 124,
-        "snapshot_time": "2026-05-30T22:44:46.193442+00:00"
+        "snapshot_time": "2026-05-30T23:50:20.365638+00:00"
       }
     ]
   }
