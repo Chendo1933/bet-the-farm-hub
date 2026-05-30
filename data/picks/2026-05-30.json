@@ -1,0 +1,312 @@
+{
+  "date": "2026-05-30",
+  "logged": "2026-05-30T11:21:36.013100+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago White Sox",
+      "away": "Detroit Tigers",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Chicago White Sox",
+      "pickLabel": "Chicago White Sox ML (+104)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 104,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 47%"
+        }
+      ],
+      "date": "May 30",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Chicago White Sox",
+      "away": "Detroit Tigers",
+      "atsPick": "home",
+      "spread": 1.5,
+      "total": null,
+      "pickedTeam": "Chicago White Sox",
+      "pickLabel": "Chicago White Sox +1.5",
+      "score100": 62,
+      "rawScore100": 65,
+      "odds": -162,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home ATS 80% (16-4)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +20.9% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.728 / WHIP 1.31 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 2 out (?/?)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home dog (+54% hist.)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 55% vs 47% implied (+104) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 50% W)"
+        }
+      ],
+      "date": "May 30",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Houston Astros",
+      "away": "Milwaukee Brewers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-114)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -114,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 64% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -114"
+        }
+      ],
+      "date": "May 30",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Tampa Bay Rays",
+      "away": "Los Angeles Angels",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-163)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -163,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.3"
+        }
+      ],
+      "date": "May 30",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Cincinnati Reds",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-144)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -144,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 56%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -144"
+        }
+      ],
+      "date": "May 30",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "St. Louis Cardinals",
+      "away": "Chicago Cubs",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+119)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 119,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 54% vs implied 44%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +119"
+        }
+      ],
+      "date": "May 30",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Athletics",
+      "away": "New York Yankees",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (-155)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": -155,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.4"
+        }
+      ],
+      "date": "May 30",
+      "time": "10:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Athletics",
+      "away": "New York Yankees",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 9.5",
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -107,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Athletics 47% / New York Yankees 44% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc9 Proj 8.3 < line 9.5 (+1.2 Under edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.8% edge vs implied"
+        }
+      ],
+      "date": "May 30",
+      "time": "10:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "Arizona Diamondbacks",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Arizona Diamondbacks",
+      "pickLabel": "Arizona Diamondbacks ML (+130)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 130,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +130"
+        }
+      ],
+      "date": "May 30",
+      "time": "10:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Los Angeles Dodgers",
+      "away": "Philadelphia Phillies",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Los Angeles Dodgers",
+      "pickLabel": "Los Angeles Dodgers ML (-131)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -131,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +7.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -131"
+        }
+      ],
+      "date": "May 30",
+      "time": "10:11 PM ET"
+    }
+  ],
+  "all_picks_count": 10,
+  "filter_stats": {
+    "prefilter": 22,
+    "sub60": 9,
+    "mlbFav": 2,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 10,
+    "dropped": 12
+  }
+}
