@@ -1,0 +1,107 @@
+{
+  "date": "2026-05-31",
+  "logged": "2026-05-31T11:41:25.952683+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Pittsburgh Pirates",
+      "away": "Minnesota Twins",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 7.5",
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -112,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Pittsburgh Pirates 53% / Minnesota Twins 59% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 8.8 > line 7.5 (+1.3 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.7% edge vs implied"
+        }
+      ],
+      "date": "May 31",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Cincinnati Reds",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-136)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -136,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 69% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +7.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -136"
+        }
+      ],
+      "date": "May 31",
+      "time": "1:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Seattle Mariners",
+      "away": "Arizona Diamondbacks",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Arizona Diamondbacks",
+      "pickLabel": "Arizona Diamondbacks ML (+130)",
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 130,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +130"
+        }
+      ],
+      "date": "May 31",
+      "time": "4:11 PM ET"
+    }
+  ],
+  "all_picks_count": 3,
+  "filter_stats": {
+    "prefilter": 14,
+    "sub60": 8,
+    "mlbFav": 3,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 3,
+    "dropped": 11
+  }
+}
