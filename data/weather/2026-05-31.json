@@ -1,0 +1,143 @@
+{
+  "date": "2026-05-31",
+  "fetched_at": "2026-05-31T11:40:45.592417+00:00",
+  "parks": {
+    "Baltimore Orioles": {
+      "is_dome": false,
+      "park": "Camden Yards",
+      "wind_mph": 2,
+      "wind_from_deg": 0,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 71,
+      "game_time_utc": "2026-05-31T16:15:00+00:00"
+    },
+    "Washington Nationals": {
+      "is_dome": false,
+      "park": "Nationals Park",
+      "wind_mph": 2,
+      "wind_from_deg": 315,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 72,
+      "game_time_utc": "2026-05-31T17:35:00+00:00"
+    },
+    "Pittsburgh Pirates": {
+      "is_dome": false,
+      "park": "PNC Park",
+      "wind_mph": 2,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 110,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 71,
+      "game_time_utc": "2026-05-31T17:35:00+00:00"
+    },
+    "Cleveland Guardians": {
+      "is_dome": false,
+      "park": "Progressive Field",
+      "wind_mph": 7,
+      "wind_from_deg": 45,
+      "outfield_bearing_deg": 0,
+      "wind_out_component": -4.9,
+      "wind_label": "in from CF",
+      "temp_f": 73,
+      "game_time_utc": "2026-05-31T17:40:00+00:00"
+    },
+    "Tampa Bay Rays": {
+      "is_dome": true,
+      "park": "Tropicana Field"
+    },
+    "Cincinnati Reds": {
+      "is_dome": false,
+      "park": "Great American Ball Park",
+      "wind_mph": 3,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 100,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 73,
+      "game_time_utc": "2026-05-31T17:40:00+00:00"
+    },
+    "New York Mets": {
+      "is_dome": false,
+      "park": "Citi Field",
+      "wind_mph": 8,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 3.4,
+      "wind_label": "crosswind",
+      "temp_f": 72,
+      "game_time_utc": "2026-05-31T17:40:00+00:00"
+    },
+    "Chicago White Sox": {
+      "is_dome": false,
+      "park": "Rate Field",
+      "wind_mph": 5,
+      "wind_from_deg": 67.5,
+      "outfield_bearing_deg": 40,
+      "wind_out_component": -4.4,
+      "wind_label": "in from CF",
+      "temp_f": 64,
+      "game_time_utc": "2026-05-31T18:10:00+00:00"
+    },
+    "Houston Astros": {
+      "is_dome": true,
+      "park": "Daikin Park"
+    },
+    "Texas Rangers": {
+      "is_dome": true,
+      "park": "Globe Life Field"
+    },
+    "Colorado Rockies": {
+      "is_dome": false,
+      "park": "Coors Field",
+      "wind_mph": 8,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 0,
+      "wind_out_component": 0.0,
+      "wind_label": "crosswind",
+      "temp_f": 80,
+      "game_time_utc": "2026-05-31T19:10:00+00:00"
+    },
+    "Athletics": {
+      "is_dome": false,
+      "park": "Sutter Health Park",
+      "wind_mph": 5,
+      "wind_from_deg": 315,
+      "outfield_bearing_deg": 135,
+      "wind_out_component": 5.0,
+      "wind_label": "out to CF",
+      "temp_f": 83,
+      "game_time_utc": "2026-05-31T20:05:00+00:00"
+    },
+    "Seattle Mariners": {
+      "is_dome": true,
+      "park": "T-Mobile Park"
+    },
+    "Los Angeles Dodgers": {
+      "is_dome": false,
+      "park": "Dodger Stadium",
+      "wind_mph": 10,
+      "wind_from_deg": 225,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 9.4,
+      "wind_label": "out to CF",
+      "temp_f": 79,
+      "game_time_utc": "2026-05-31T20:10:00+00:00"
+    },
+    "St. Louis Cardinals": {
+      "is_dome": false,
+      "park": "Busch Stadium",
+      "wind_mph": 6,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": -5.2,
+      "wind_label": "in from CF",
+      "temp_f": 83,
+      "game_time_utc": "2026-05-31T23:20:00+00:00"
+    }
+  }
+}
