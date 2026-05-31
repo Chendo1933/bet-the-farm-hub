@@ -1,0 +1,184 @@
+{
+  "date": "2026-05-31",
+  "logged": "2026-05-31T11:42:05.887737",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Cincinnati Reds",
+        "away": "Atlanta Braves",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-136)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -136,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 69% vs implied 55%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +7.1"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -136"
+          }
+        ],
+        "date": "May 31",
+        "time": "1:41 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26MAY311340ATLCIN-ATL",
+      "market_title": "Atlanta vs Cincinnati Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 57,
+      "yes_bid_cents": 56,
+      "last_price_cents": 57,
+      "previous_yes_ask_cents": 56,
+      "volume_24h": "340858.42",
+      "use_price_cents": 57,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.65,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 1.14,
+      "contracts": 2,
+      "edge_pct": 0.08,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Washington Nationals",
+        "away": "San Diego Padres",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (San Diego Padres @ Washington Nationals total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26MAY311335SDWSH-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Chicago White Sox",
+        "away": "Detroit Tigers",
+        "line": 10.5,
+        "side": "under",
+        "market_total": 7.5,
+        "pickLabel": "UNDER 10.5 (Detroit Tigers @ Chicago White Sox total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.73,
+        "our_prob": 0.7850823976887276,
+        "edge": 0.05508239768872758,
+        "ticker": "KXMLBTOTAL-26MAY311410DETCWS-11"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Athletics",
+        "away": "New York Yankees",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 10,
+        "pickLabel": "UNDER 12.5 (New York Yankees @ Athletics total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.69,
+        "our_prob": 0.744697113569311,
+        "edge": 0.05469711356931106,
+        "ticker": "KXMLBTOTAL-26MAY311605NYYATH-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Baltimore Orioles",
+        "away": "Toronto Blue Jays",
+        "line": 11.5,
+        "side": "under",
+        "market_total": 8,
+        "pickLabel": "UNDER 11.5 (Toronto Blue Jays @ Baltimore Orioles total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26MAY311215TORBAL-12"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Colorado Rockies",
+        "away": "San Francisco Giants",
+        "line": 7.5,
+        "side": "over",
+        "market_total": 11,
+        "pickLabel": "OVER 7.5 (San Francisco Giants @ Colorado Rockies total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26MAY311510SFCOL-8"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 3,
+    "picks_eligible_after_filter": 1,
+    "orders_would_place": 1,
+    "total_stake_dollars": 1.14,
+    "remaining_daily_capacity": 9.55,
+    "skipped_by_reason": {},
+    "paper_candidates": 5,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
