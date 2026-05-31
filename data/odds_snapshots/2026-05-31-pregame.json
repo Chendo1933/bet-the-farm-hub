@@ -1,6 +1,6 @@
 {
   "date": "2026-05-31",
-  "snapshot_time": "2026-05-31T16:53:19.689390+00:00",
+  "snapshot_time": "2026-05-31T17:52:15.801487+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -72,7 +72,7 @@
         "total": 8.0,
         "ml_home": -130,
         "ml_away": 110,
-        "snapshot_time": "2026-05-31T16:53:19.689390+00:00"
+        "snapshot_time": "2026-05-31T17:52:15.801487+00:00"
       },
       {
         "home": "Houston Astros",
@@ -82,7 +82,27 @@
         "total": 7.5,
         "ml_home": 168,
         "ml_away": -200,
-        "snapshot_time": "2026-05-31T16:53:19.689390+00:00"
+        "snapshot_time": "2026-05-31T17:52:15.801487+00:00"
+      },
+      {
+        "home": "Texas Rangers",
+        "away": "Kansas City Royals",
+        "commence": "2026-05-31T18:36:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-05-31T17:52:15.801487+00:00"
+      },
+      {
+        "home": "Colorado Rockies",
+        "away": "San Francisco Giants",
+        "commence": "2026-05-31T19:11:00Z",
+        "spread": 1.5,
+        "total": 11.0,
+        "ml_home": -104,
+        "ml_away": -112,
+        "snapshot_time": "2026-05-31T17:52:15.801487+00:00"
       }
     ]
   }
