@@ -1,6 +1,6 @@
 {
   "date": "2026-05-31",
-  "snapshot_time": "2026-05-31T17:52:15.801487+00:00",
+  "snapshot_time": "2026-05-31T18:59:25.058031+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -102,7 +102,37 @@
         "total": 11.0,
         "ml_home": -104,
         "ml_away": -112,
-        "snapshot_time": "2026-05-31T17:52:15.801487+00:00"
+        "snapshot_time": "2026-05-31T18:59:25.058031+00:00"
+      },
+      {
+        "home": "Athletics",
+        "away": "New York Yankees",
+        "commence": "2026-05-31T20:05:00Z",
+        "spread": 1.5,
+        "total": 10.0,
+        "ml_home": 153,
+        "ml_away": -186,
+        "snapshot_time": "2026-05-31T18:59:25.058031+00:00"
+      },
+      {
+        "home": "Seattle Mariners",
+        "away": "Arizona Diamondbacks",
+        "commence": "2026-05-31T20:11:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-05-31T18:59:25.058031+00:00"
+      },
+      {
+        "home": "Los Angeles Dodgers",
+        "away": "Philadelphia Phillies",
+        "commence": "2026-05-31T20:11:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -235,
+        "ml_away": 194,
+        "snapshot_time": "2026-05-31T18:59:25.058031+00:00"
       }
     ]
   }
