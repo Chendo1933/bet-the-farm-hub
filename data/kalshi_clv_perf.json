@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-30T17:56:03+00:00",
+  "updated": "2026-05-31T10:05:38+00:00",
   "paper_alt_total": {
     "summary": {
       "n": 5,
@@ -44,7 +44,7 @@
         "side": "over",
         "entry_total": 11,
         "close_total": 11.0,
-        "close_source": "midday",
+        "close_source": "pregame",
         "entry_prob": 0.6535,
         "close_prob": 0.6535,
         "clv": 0.0,

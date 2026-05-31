@@ -60,7 +60,13 @@
       "stake_dollars": 2.08,
       "contracts": 4,
       "edge_pct": 0.13,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 9,
+      "away_score": 2,
+      "payout_dollars": 0.0,
+      "pnl_dollars": -2.08,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -110,7 +116,13 @@
       "stake_dollars": 1.16,
       "contracts": 2,
       "edge_pct": 0.07,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 2,
+      "away_score": 5,
+      "payout_dollars": 2.0,
+      "pnl_dollars": 0.84,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -160,7 +172,13 @@
       "stake_dollars": 1.68,
       "contracts": 3,
       "edge_pct": 0.09,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 3,
+      "away_score": 4,
+      "payout_dollars": 0.0,
+      "pnl_dollars": -1.68,
+      "reconcile_status": "graded"
     }
   ],
   "paper_orders": [
@@ -182,7 +200,16 @@
         "our_prob": 0.6534814449663683,
         "edge": 0.0634814449663682,
         "ticker": "KXMLBTOTAL-26MAY302110SFCOL-10"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 11,
+        "line": 9.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.41,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -202,7 +229,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26MAY301410DETCWS-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 8,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.27,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -222,7 +258,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26MAY302205NYYATH-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 10,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.27,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -240,5 +285,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-05-30",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 3,
+      "wins": 3,
+      "losses": 0,
+      "ungraded": 0,
+      "cost_dollars": 2.05,
+      "pnl_dollars": 0.95,
+      "roi_pct": 46.34,
+      "win_pct": 100.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-05-30",
+    "placed": 3,
+    "wins": 1,
+    "losses": 2,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 4.92,
+    "total_payout_dollars": 2.0,
+    "total_pnl_dollars": -2.92,
+    "roi_pct": -59.35
   }
 }
