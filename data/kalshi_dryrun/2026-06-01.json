@@ -1,0 +1,102 @@
+{
+  "date": "2026-06-01",
+  "logged": "2026-06-01T15:59:44.750831",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Tampa Bay Rays",
+        "away": "Detroit Tigers",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Tampa Bay Rays",
+        "pickLabel": "Tampa Bay Rays ML (-163)",
+        "score100": 61,
+        "rawScore100": 61,
+        "odds": -163,
+        "tier": "good",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca 64% win rate vs 59% implied"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 RTG edge +2.8"
+          }
+        ],
+        "date": "Jun 1",
+        "time": "6:41 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN011840DETTB-TB",
+      "market_title": "Detroit vs Tampa Bay Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 61,
+      "yes_bid_cents": 60,
+      "last_price_cents": 60,
+      "previous_yes_ask_cents": 58,
+      "volume_24h": "347305.49",
+      "use_price_cents": 61,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.566,
+      "would_place": false,
+      "skip_reason": "no_edge",
+      "stake_dollars": 0,
+      "contracts": 0,
+      "edge_pct": -0.044,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Washington Nationals",
+        "away": "Miami Marlins",
+        "line": 10.5,
+        "side": "under",
+        "market_total": 8,
+        "pickLabel": "UNDER 10.5 (Miami Marlins @ Washington Nationals total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.69,
+        "our_prob": 0.744697113569311,
+        "edge": 0.05469711356931106,
+        "ticker": "KXMLBTOTAL-26JUN011845MIAWSH-11"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 6,
+    "picks_eligible_after_filter": 1,
+    "orders_would_place": 0,
+    "total_stake_dollars": 0,
+    "remaining_daily_capacity": 10.69,
+    "skipped_by_reason": {
+      "no_edge": 1
+    },
+    "paper_candidates": 1,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
