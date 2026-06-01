@@ -60,7 +60,13 @@
       "stake_dollars": 1.14,
       "contracts": 2,
       "edge_pct": 0.08,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 6,
+      "away_score": 4,
+      "payout_dollars": 0.0,
+      "pnl_dollars": -1.14,
+      "reconcile_status": "graded"
     }
   ],
   "paper_orders": [
@@ -82,7 +88,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.06148852541329752,
         "ticker": "KXMLBTOTAL-26MAY311335SDWSH-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 6,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.24,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -102,7 +117,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26MAY311410DETCWS-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 3,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.27,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -122,7 +146,16 @@
         "our_prob": 0.744697113569311,
         "edge": 0.05469711356931106,
         "ticker": "KXMLBTOTAL-26MAY311605NYYATH-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 21,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.69,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -142,7 +175,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26MAY311215TORBAL-12"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 14,
+        "line": 11.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.77,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -162,7 +204,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26MAY311510SFCOL-8"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 25,
+        "line": 7.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.23,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -180,5 +231,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-05-31",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 5,
+      "wins": 3,
+      "losses": 2,
+      "ungraded": 0,
+      "cost_dollars": 3.72,
+      "pnl_dollars": -0.72,
+      "roi_pct": -19.35,
+      "win_pct": 60.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-05-31",
+    "placed": 1,
+    "wins": 0,
+    "losses": 1,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 1.14,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": -1.14,
+    "roi_pct": -100.0
   }
 }

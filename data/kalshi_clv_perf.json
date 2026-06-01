@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-31T10:05:38+00:00",
+  "updated": "2026-06-01T13:24:54+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 5,
-      "avg_clv_pct": 0.0,
-      "beat_close": 0,
-      "beat_close_pct": 0.0
+      "n": 10,
+      "avg_clv_pct": 0.08,
+      "beat_close": 1,
+      "beat_close_pct": 10.0
     },
     "bets": [
       {
@@ -75,6 +75,76 @@
         "close_source": "midday",
         "entry_prob": 0.7851,
         "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-31",
+        "away": "San Diego Padres",
+        "home": "Washington Nationals",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-31",
+        "away": "Detroit Tigers",
+        "home": "Chicago White Sox",
+        "line": 10.5,
+        "side": "under",
+        "entry_total": 7.5,
+        "close_total": 8.0,
+        "close_source": "pregame",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7447,
+        "clv": -0.0404,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-31",
+        "away": "New York Yankees",
+        "home": "Athletics",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 10,
+        "close_total": 10.0,
+        "close_source": "pregame",
+        "entry_prob": 0.7447,
+        "close_prob": 0.7447,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-05-31",
+        "away": "Toronto Blue Jays",
+        "home": "Baltimore Orioles",
+        "line": 11.5,
+        "side": "under",
+        "entry_total": 8,
+        "close_total": 6.5,
+        "close_source": "midday",
+        "entry_prob": 0.8215,
+        "close_prob": 0.9059,
+        "clv": 0.0844,
+        "beat_close": true
+      },
+      {
+        "date": "2026-05-31",
+        "away": "San Francisco Giants",
+        "home": "Colorado Rockies",
+        "line": 7.5,
+        "side": "over",
+        "entry_total": 11,
+        "close_total": 11.0,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
         "clv": 0.0,
         "beat_close": false
       }
