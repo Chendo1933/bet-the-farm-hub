@@ -1,0 +1,123 @@
+{
+  "date": "2026-06-01",
+  "snapshot_time": "2026-06-01T15:58:10.851190+00:00",
+  "type": "morning",
+  "games": {
+    "nba": [
+      {
+        "home": "San Antonio Spurs",
+        "away": "New York Knicks",
+        "commence": "2026-06-04T00:40:00Z",
+        "spread": -4.5,
+        "total": 218.5,
+        "ml_home": -196,
+        "ml_away": 164,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      }
+    ],
+    "nhl": [
+      {
+        "home": "Carolina Hurricanes",
+        "away": "Vegas Golden Knights",
+        "commence": "2026-06-03T00:20:09Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -154,
+        "ml_away": 128,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      }
+    ],
+    "mlb": [
+      {
+        "home": "Tampa Bay Rays",
+        "away": "Detroit Tigers",
+        "commence": "2026-06-01T22:41:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -158,
+        "ml_away": 134,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Washington Nationals",
+        "away": "Miami Marlins",
+        "commence": "2026-06-01T22:46:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Cincinnati Reds",
+        "away": "Kansas City Royals",
+        "commence": "2026-06-01T23:11:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -190,
+        "ml_away": 160,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Minnesota Twins",
+        "away": "Chicago White Sox",
+        "commence": "2026-06-01T23:41:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -162,
+        "ml_away": 136,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Milwaukee Brewers",
+        "away": "San Francisco Giants",
+        "commence": "2026-06-01T23:41:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -146,
+        "ml_away": 124,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "St. Louis Cardinals",
+        "away": "Texas Rangers",
+        "commence": "2026-06-01T23:46:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 106,
+        "ml_away": -124,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Los Angeles Angels",
+        "away": "Colorado Rockies",
+        "commence": "2026-06-02T01:39:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -200,
+        "ml_away": 168,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Arizona Diamondbacks",
+        "away": "Los Angeles Dodgers",
+        "commence": "2026-06-02T01:41:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": 134,
+        "ml_away": -158,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      },
+      {
+        "home": "Seattle Mariners",
+        "away": "New York Mets",
+        "commence": "2026-06-02T01:41:00Z",
+        "spread": -1.5,
+        "total": 7.0,
+        "ml_home": -136,
+        "ml_away": 116,
+        "snapshot_time": "2026-06-01T15:58:10.851190+00:00"
+      }
+    ]
+  }
+}
