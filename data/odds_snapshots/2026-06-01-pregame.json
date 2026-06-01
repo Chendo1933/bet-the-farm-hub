@@ -1,0 +1,49 @@
+{
+  "date": "2026-06-01",
+  "snapshot_time": "2026-06-01T22:54:34.527132+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Cincinnati Reds",
+        "away": "Kansas City Royals",
+        "commence": "2026-06-01T23:11:00Z",
+        "spread": -1.5,
+        "total": 9.5,
+        "ml_home": -126,
+        "ml_away": 108,
+        "snapshot_time": "2026-06-01T22:54:34.527132+00:00"
+      },
+      {
+        "home": "Minnesota Twins",
+        "away": "Chicago White Sox",
+        "commence": "2026-06-01T23:41:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -144,
+        "ml_away": 122,
+        "snapshot_time": "2026-06-01T22:54:34.527132+00:00"
+      },
+      {
+        "home": "Milwaukee Brewers",
+        "away": "San Francisco Giants",
+        "commence": "2026-06-01T23:41:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -158,
+        "ml_away": 134,
+        "snapshot_time": "2026-06-01T22:54:34.527132+00:00"
+      },
+      {
+        "home": "St. Louis Cardinals",
+        "away": "Texas Rangers",
+        "commence": "2026-06-01T23:46:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 108,
+        "ml_away": -126,
+        "snapshot_time": "2026-06-01T22:54:34.527132+00:00"
+      }
+    ]
+  }
+}
