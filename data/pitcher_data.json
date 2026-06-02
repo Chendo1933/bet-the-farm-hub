@@ -7195,8 +7195,8 @@
     "822728": {
       "home_id": 571945,
       "home_name": "Miles Mikolas",
-      "away_id": null,
-      "away_name": null,
+      "away_id": 669199,
+      "away_name": "Lake Bachar",
       "home_team": "Washington Nationals",
       "away_team": "Miami Marlins"
     },
@@ -7287,6 +7287,126 @@
       "away_name": null,
       "home_team": "Seattle Mariners",
       "away_team": "New York Mets"
+    },
+    "822727": {
+      "home_id": 674841,
+      "home_name": "Andrew Alvarez",
+      "away_id": 676974,
+      "away_name": "Max Meyer",
+      "home_team": "Washington Nationals",
+      "away_team": "Miami Marlins"
+    },
+    "822973": {
+      "home_id": 607259,
+      "home_name": "Nick Martinez",
+      "away_id": 675512,
+      "away_name": "Troy Melton",
+      "home_team": "Tampa Bay Rays",
+      "away_team": "Detroit Tigers"
+    },
+    "823701": {
+      "home_id": 671737,
+      "home_name": "Taj Bradley",
+      "away_id": 607200,
+      "away_name": "Erick Fedde",
+      "home_team": "Minnesota Twins",
+      "away_team": "Chicago White Sox"
+    },
+    "823130": {
+      "home_id": 669923,
+      "home_name": "George Kirby",
+      "away_id": 642547,
+      "away_name": "Freddy Peralta",
+      "home_team": "Seattle Mariners",
+      "away_team": "New York Mets"
+    },
+    "823456": {
+      "home_id": 650911,
+      "home_name": "Cristopher S\u00e1nchez",
+      "away_id": 621111,
+      "away_name": "Walker Buehler",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "San Diego Padres"
+    },
+    "824755": {
+      "home_id": 801139,
+      "home_name": "Payton Tolle",
+      "away_id": 605135,
+      "away_name": "Chris Bassitt",
+      "home_team": "Boston Red Sox",
+      "away_team": "Baltimore Orioles"
+    },
+    "823540": {
+      "home_id": 543037,
+      "home_name": "Gerrit Cole",
+      "away_id": 668909,
+      "away_name": "Gavin Williams",
+      "home_team": "New York Yankees",
+      "away_team": "Cleveland Guardians"
+    },
+    "824509": {
+      "home_id": 663978,
+      "home_name": "Chris Paddack",
+      "away_id": 663568,
+      "away_name": "Stephen Kolek",
+      "home_team": "Cincinnati Reds",
+      "away_team": "Kansas City Royals"
+    },
+    "824917": {
+      "home_id": 656550,
+      "home_name": "Grant Holmes",
+      "away_id": 571578,
+      "away_name": "Patrick Corbin",
+      "home_team": "Atlanta Braves",
+      "away_team": "Toronto Blue Jays"
+    },
+    "823780": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 657277,
+      "away_name": "Logan Webb",
+      "home_team": "Milwaukee Brewers",
+      "away_team": "San Francisco Giants"
+    },
+    "823051": {
+      "home_id": 669467,
+      "home_name": "Andre Pallante",
+      "away_id": 669022,
+      "away_name": "MacKenzie Gore",
+      "home_team": "St. Louis Cardinals",
+      "away_team": "Texas Rangers"
+    },
+    "824671": {
+      "home_id": 607067,
+      "home_name": "Colin Rea",
+      "away_id": 605488,
+      "away_name": "Jeffrey Springs",
+      "home_team": "Chicago Cubs",
+      "away_team": "Athletics"
+    },
+    "824188": {
+      "home_id": 681293,
+      "home_name": "Spencer Arrighetti",
+      "away_id": 694973,
+      "away_name": "Paul Skenes",
+      "home_team": "Houston Astros",
+      "away_team": "Pittsburgh Pirates"
+    },
+    "824024": {
+      "home_id": 700712,
+      "home_name": "Walbert Ure\u00f1a",
+      "away_id": 547179,
+      "away_name": "Michael Lorenzen",
+      "home_team": "Los Angeles Angels",
+      "away_team": "Colorado Rockies"
+    },
+    "825077": {
+      "home_id": 668678,
+      "home_name": "Zac Gallen",
+      "away_id": 660271,
+      "away_name": "Shohei Ohtani",
+      "home_team": "Arizona Diamondbacks",
+      "away_team": "Los Angeles Dodgers"
     }
   },
   "game_logs": {
@@ -22563,7 +22683,8 @@
         "hr": 0,
         "bf": 25
       }
-    ]
+    ],
+    "669199": []
   },
   "dates_fetched": [
     "2026-03-22",
@@ -22642,6 +22763,8 @@
     "2026-05-31",
     "2026-06-01",
     "2026-06-01",
-    "2026-06-02"
+    "2026-06-02",
+    "2026-06-02",
+    "2026-06-03"
   ]
 }
