@@ -19297,6 +19297,184 @@
           "l": "\ud83d\udcb0 Good value at +130"
         }
       ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Tampa Bay Rays ML (-163)",
+      "home": "Tampa Bay Rays",
+      "away": "Detroit Tigers",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -163,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 9,
+      "awayScore": 10,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 64% win rate vs 59% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.8"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Over 8",
+      "home": "Washington Nationals",
+      "away": "Miami Marlins",
+      "spread": null,
+      "total": 8,
+      "score100": 57,
+      "rawScore100": 67,
+      "odds": -119,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.8403,
+      "homeScore": 3,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Washington Nationals 66% \u00b7 Miami Marlins 63%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.4 > line 8 (+1.4 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udf2c\ufe0f Wind 8mph in (-8 comp) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.5% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Chicago White Sox ML (+135)",
+      "home": "Minnesota Twins",
+      "away": "Chicago White Sox",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 135,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 9,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 56% vs implied 41%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +135"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Milwaukee Brewers ML (-156)",
+      "home": "Milwaukee Brewers",
+      "away": "San Francisco Giants",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -156,
+      "outcome": "win",
+      "margin": 14,
+      "units": 0.641,
+      "homeScore": 16,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.1"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "St. Louis Cardinals ML (+104)",
+      "home": "St. Louis Cardinals",
+      "away": "Texas Rangers",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 104,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 1,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 55% vs implied 47%"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Under 7.5",
+      "home": "Seattle Mariners",
+      "away": "New York Mets",
+      "spread": null,
+      "total": 7.5,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -124,
+      "outcome": "win",
+      "margin": 2.5,
+      "units": 0.8065,
+      "homeScore": 3,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Seattle Mariners 46% / New York Mets 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfdf\ufe0f Pitcher park (PF 0.93) \u2192 Under lean"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Both bullpens elite (3.11/3.21 ERA) \u2192 late-inning Under"
+        }
+      ]
     }
   ]
 }
