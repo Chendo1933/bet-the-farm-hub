@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-01T13:24:54+00:00",
+  "updated": "2026-06-02T11:55:49+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 10,
-      "avg_clv_pct": 0.08,
+      "n": 11,
+      "avg_clv_pct": -0.33,
       "beat_close": 1,
-      "beat_close_pct": 10.0
+      "beat_close_pct": 9.1
     },
     "bets": [
       {
@@ -146,6 +146,20 @@
         "entry_prob": 0.8215,
         "close_prob": 0.8215,
         "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-01",
+        "away": "Miami Marlins",
+        "home": "Washington Nationals",
+        "line": 10.5,
+        "side": "under",
+        "entry_total": 8,
+        "close_total": 8.5,
+        "close_source": "midday",
+        "entry_prob": 0.7447,
+        "close_prob": 0.7007,
+        "clv": -0.044,
         "beat_close": false
       }
     ]

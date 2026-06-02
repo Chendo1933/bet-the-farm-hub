@@ -56,7 +56,13 @@
       "stake_dollars": 0,
       "contracts": 0,
       "edge_pct": -0.044,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 9,
+      "away_score": 10,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     }
   ],
   "paper_orders": [
@@ -78,7 +84,16 @@
         "our_prob": 0.744697113569311,
         "edge": 0.05469711356931106,
         "ticker": "KXMLBTOTAL-26JUN011845MIAWSH-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 10,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.31,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -98,5 +113,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-01",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 1,
+      "wins": 1,
+      "losses": 0,
+      "ungraded": 0,
+      "cost_dollars": 0.69,
+      "pnl_dollars": 0.31,
+      "roi_pct": 44.93,
+      "win_pct": 100.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-01",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": 0.0,
+    "roi_pct": 0
   }
 }
