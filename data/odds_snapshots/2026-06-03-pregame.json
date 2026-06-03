@@ -1,0 +1,51 @@
+{
+  "date": "2026-06-03",
+  "snapshot_time": "2026-06-03T00:22:22.630842+00:00",
+  "type": "pregame",
+  "games": {
+    "nhl": [
+      {
+        "home": "Carolina Hurricanes",
+        "away": "Vegas Golden Knights",
+        "commence": "2026-06-03T00:25:00Z",
+        "spread": -1.5,
+        "total": 5.5,
+        "ml_home": -160,
+        "ml_away": 132,
+        "snapshot_time": "2026-06-03T00:22:22.630842+00:00"
+      }
+    ],
+    "mlb": [
+      {
+        "home": "Los Angeles Angels",
+        "away": "Colorado Rockies",
+        "commence": "2026-06-03T01:38:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -158,
+        "ml_away": 134,
+        "snapshot_time": "2026-06-03T00:22:22.630842+00:00"
+      },
+      {
+        "home": "Arizona Diamondbacks",
+        "away": "Los Angeles Dodgers",
+        "commence": "2026-06-03T01:40:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": -102,
+        "ml_away": -116,
+        "snapshot_time": "2026-06-03T00:22:22.630842+00:00"
+      },
+      {
+        "home": "Seattle Mariners",
+        "away": "New York Mets",
+        "commence": "2026-06-03T01:40:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -154,
+        "ml_away": 130,
+        "snapshot_time": "2026-06-03T00:22:22.630842+00:00"
+      }
+    ]
+  }
+}
