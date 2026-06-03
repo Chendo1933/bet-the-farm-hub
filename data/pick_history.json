@@ -19475,6 +19475,361 @@
           "l": "\ud83d\udd12 Both bullpens elite (3.11/3.21 ERA) \u2192 late-inning Under"
         }
       ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Carolina Hurricanes ML (-155)",
+      "home": "Carolina Hurricanes",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -155,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 58%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -155"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Tampa Bay Rays ML (-143)",
+      "home": "Tampa Bay Rays",
+      "away": "Detroit Tigers",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -143,
+      "outcome": "loss",
+      "margin": 8,
+      "units": -1.0,
+      "homeScore": 0,
+      "awayScore": 8,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 62% win rate vs 56% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.7"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "San Diego Padres ML (+113)",
+      "home": "Philadelphia Phillies",
+      "away": "San Diego Padres",
+      "spread": null,
+      "total": null,
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 113,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 3,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 53% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "good",
+      "pick": "Under 8",
+      "home": "Philadelphia Phillies",
+      "away": "San Diego Padres",
+      "spread": null,
+      "total": 8,
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -106,
+      "outcome": "win",
+      "margin": 3,
+      "units": 0.9434,
+      "homeScore": 3,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Philadelphia Phillies 45% / San Diego Padres 42% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Strong bullpens (avg 3.50 ERA) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.5% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 9",
+      "home": "Washington Nationals",
+      "away": "Miami Marlins",
+      "spread": null,
+      "total": 9,
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -107,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.9346,
+      "homeScore": 3,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Both teams Over-heavy (Washington Nationals 66% \u00b7 Miami Marlins 63%)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.8% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (-131)",
+      "home": "Atlanta Braves",
+      "away": "Toronto Blue Jays",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -131,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.7634,
+      "homeScore": 4,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 54%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -131"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 8",
+      "home": "Minnesota Twins",
+      "away": "Chicago White Sox",
+      "spread": null,
+      "total": 8,
+      "score100": 56,
+      "rawScore100": 66,
+      "odds": -109,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.9174,
+      "homeScore": 6,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Minnesota Twins 59% / Chicago White Sox 60% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 Proj 9.3 > line 8 (+1.3 Over edge)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfdf\ufe0f Mild hitter park (PF 1.03) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.62 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +13.2% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Under 7",
+      "home": "St. Louis Cardinals",
+      "away": "Texas Rangers",
+      "spread": null,
+      "total": 7,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -109,
+      "outcome": "loss",
+      "margin": 4,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: St. Louis Cardinals 46% / Texas Rangers 42% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udf2c\ufe0f Wind 10mph in (-9 comp) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.3% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Pittsburgh Pirates ML (-105)",
+      "home": "Houston Astros",
+      "away": "Pittsburgh Pirates",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": -105,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.9524,
+      "homeScore": 6,
+      "awayScore": 10,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 55% win rate vs 49% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.1"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 9",
+      "home": "Houston Astros",
+      "away": "Pittsburgh Pirates",
+      "spread": null,
+      "total": 9,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -109,
+      "outcome": "win",
+      "margin": 7,
+      "units": 0.9174,
+      "homeScore": 6,
+      "awayScore": 10,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Houston Astros 58% / Pittsburgh Pirates 53% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.62 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-02",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Los Angeles Dodgers ML (-122)",
+      "home": "Arizona Diamondbacks",
+      "away": "Los Angeles Dodgers",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -122,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.8197,
+      "homeScore": 5,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -122"
+        }
+      ]
     }
   ]
 }
