@@ -7345,8 +7345,8 @@
       "away_team": "Cleveland Guardians"
     },
     "824509": {
-      "home_id": 663978,
-      "home_name": "Chris Paddack",
+      "home_id": 695505,
+      "home_name": "Chase Burns",
       "away_id": 663568,
       "away_name": "Stephen Kolek",
       "home_team": "Cincinnati Reds",
@@ -7405,6 +7405,78 @@
       "home_name": "Zac Gallen",
       "away_id": 660271,
       "away_name": "Shohei Ohtani",
+      "home_team": "Arizona Diamondbacks",
+      "away_team": "Los Angeles Dodgers"
+    },
+    "823457": {
+      "home_id": 554430,
+      "home_name": "Zack Wheeler",
+      "away_id": 608337,
+      "away_name": "Lucas Giolito",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "San Diego Padres"
+    },
+    "824753": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 669432,
+      "away_name": "Trevor Rogers",
+      "home_team": "Boston Red Sox",
+      "away_team": "Baltimore Orioles"
+    },
+    "823542": {
+      "home_id": 607074,
+      "home_name": "Carlos Rod\u00f3n",
+      "away_id": 677944,
+      "away_name": "Slade Cecconi",
+      "home_team": "New York Yankees",
+      "away_team": "Cleveland Guardians"
+    },
+    "823779": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 605288,
+      "away_name": "Adrian Houser",
+      "home_team": "Milwaukee Brewers",
+      "away_team": "San Francisco Giants"
+    },
+    "824919": {
+      "home_id": 519242,
+      "home_name": "Chris Sale",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Atlanta Braves",
+      "away_team": "Toronto Blue Jays"
+    },
+    "823698": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Minnesota Twins",
+      "away_team": "Kansas City Royals"
+    },
+    "824672": {
+      "home_id": 684007,
+      "home_name": "Shota Imanaga",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Chicago Cubs",
+      "away_team": "Athletics"
+    },
+    "824185": {
+      "home_id": 678906,
+      "home_name": "Kai-Wei Teng",
+      "away_id": 683003,
+      "away_name": "Jared Jones",
+      "home_team": "Houston Astros",
+      "away_team": "Pittsburgh Pirates"
+    },
+    "825076": {
+      "home_id": 669194,
+      "home_name": "Ryne Nelson",
+      "away_id": 680736,
+      "away_name": "Justin Wrobleski",
       "home_team": "Arizona Diamondbacks",
       "away_team": "Los Angeles Dodgers"
     }
@@ -22765,6 +22837,8 @@
     "2026-06-01",
     "2026-06-02",
     "2026-06-02",
-    "2026-06-03"
+    "2026-06-03",
+    "2026-06-03",
+    "2026-06-04"
   ]
 }

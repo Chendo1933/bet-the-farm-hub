@@ -1,0 +1,136 @@
+{
+  "date": "2026-06-03",
+  "fetched_at": "2026-06-03T14:30:07.748291+00:00",
+  "parks": {
+    "Washington Nationals": {
+      "is_dome": false,
+      "park": "Nationals Park",
+      "wind_mph": 7,
+      "wind_from_deg": 0,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": -6.3,
+      "wind_label": "in from CF",
+      "temp_f": 79,
+      "game_time_utc": "2026-06-03T17:05:00+00:00"
+    },
+    "Tampa Bay Rays": {
+      "is_dome": true,
+      "park": "Tropicana Field"
+    },
+    "Minnesota Twins": {
+      "is_dome": false,
+      "park": "Target Field",
+      "wind_mph": 10,
+      "wind_from_deg": 202.5,
+      "outfield_bearing_deg": 90,
+      "wind_out_component": 3.8,
+      "wind_label": "crosswind",
+      "temp_f": 79,
+      "game_time_utc": "2026-06-03T17:40:00+00:00"
+    },
+    "Seattle Mariners": {
+      "is_dome": true,
+      "park": "T-Mobile Park"
+    },
+    "Philadelphia Phillies": {
+      "is_dome": false,
+      "park": "Citizens Bank Park",
+      "wind_mph": 10,
+      "wind_from_deg": 45,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": -9.7,
+      "wind_label": "in from CF",
+      "temp_f": 81,
+      "game_time_utc": "2026-06-03T22:40:00+00:00"
+    },
+    "Boston Red Sox": {
+      "is_dome": false,
+      "park": "Fenway Park",
+      "wind_mph": 5,
+      "wind_from_deg": 135,
+      "outfield_bearing_deg": 50,
+      "wind_out_component": -0.4,
+      "wind_label": "crosswind",
+      "temp_f": 79,
+      "game_time_utc": "2026-06-03T22:45:00+00:00"
+    },
+    "New York Yankees": {
+      "is_dome": false,
+      "park": "Yankee Stadium",
+      "wind_mph": 7,
+      "wind_from_deg": 180,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": 2.4,
+      "wind_label": "crosswind",
+      "temp_f": 78,
+      "game_time_utc": "2026-06-03T23:05:00+00:00"
+    },
+    "Cincinnati Reds": {
+      "is_dome": false,
+      "park": "Great American Ball Park",
+      "wind_mph": 3,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 100,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 80,
+      "game_time_utc": "2026-06-03T23:10:00+00:00"
+    },
+    "Atlanta Braves": {
+      "is_dome": false,
+      "park": "Truist Park",
+      "wind_mph": 5,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": -4.7,
+      "wind_label": "in from CF",
+      "temp_f": 76,
+      "game_time_utc": "2026-06-03T23:15:00+00:00"
+    },
+    "Milwaukee Brewers": {
+      "is_dome": true,
+      "park": "American Family Field"
+    },
+    "St. Louis Cardinals": {
+      "is_dome": false,
+      "park": "Busch Stadium",
+      "wind_mph": 6,
+      "wind_from_deg": 135,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": -1.6,
+      "wind_label": "crosswind",
+      "temp_f": 82,
+      "game_time_utc": "2026-06-03T23:45:00+00:00"
+    },
+    "Chicago Cubs": {
+      "is_dome": false,
+      "park": "Wrigley Field",
+      "wind_mph": 10,
+      "wind_from_deg": 112.5,
+      "outfield_bearing_deg": 30,
+      "wind_out_component": -1.3,
+      "wind_label": "crosswind",
+      "temp_f": 68,
+      "game_time_utc": "2026-06-04T00:05:00+00:00"
+    },
+    "Houston Astros": {
+      "is_dome": true,
+      "park": "Daikin Park"
+    },
+    "Los Angeles Angels": {
+      "is_dome": false,
+      "park": "Angel Stadium",
+      "wind_mph": 10,
+      "wind_from_deg": 225,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 9.7,
+      "wind_label": "out to CF",
+      "temp_f": 76,
+      "game_time_utc": "2026-06-04T01:38:00+00:00"
+    },
+    "Arizona Diamondbacks": {
+      "is_dome": true,
+      "park": "Chase Field"
+    }
+  }
+}
