@@ -1,0 +1,230 @@
+{
+  "date": "2026-06-04",
+  "logged": "2026-06-04T12:46:01.053656",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "NHL",
+        "betType": "ml",
+        "home": "Carolina Hurricanes",
+        "away": "Vegas Golden Knights",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Carolina Hurricanes",
+        "pickLabel": "Carolina Hurricanes ML (-162)",
+        "score100": 75,
+        "rawScore100": 65,
+        "odds": -162,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 70% vs implied 59%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +4.9"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -162"
+          }
+        ],
+        "date": "Jun 4",
+        "time": "8:15 PM ET"
+      },
+      "market_ticker": "KXNHLGAME-26JUN04VGKCAR-CAR",
+      "market_title": "Game 2: Vegas at Carolina Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 60,
+      "yes_bid_cents": 59,
+      "last_price_cents": 60,
+      "previous_yes_ask_cents": 60,
+      "volume_24h": "181521.55",
+      "use_price_cents": 60,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.65,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 0.6,
+      "contracts": 1,
+      "edge_pct": 0.05,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Arizona Diamondbacks",
+        "away": "Los Angeles Dodgers",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Los Angeles Dodgers",
+        "pickLabel": "Los Angeles Dodgers ML (-143)",
+        "score100": 67,
+        "rawScore100": 63,
+        "odds": -143,
+        "tier": "strong",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 65% vs implied 56%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +6.0"
+          }
+        ],
+        "date": "Jun 4",
+        "time": "9:41 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN042140LADAZ-LAD",
+      "market_title": "Los Angeles D vs Arizona Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 58,
+      "yes_bid_cents": 57,
+      "last_price_cents": 58,
+      "previous_yes_ask_cents": 60,
+      "volume_24h": "139104.96",
+      "use_price_cents": 58,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.602,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 0.0,
+      "contracts": 0,
+      "edge_pct": 0.022,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Chicago Cubs",
+        "away": "Athletics",
+        "line": 13.5,
+        "side": "under",
+        "market_total": 10,
+        "pickLabel": "UNDER 13.5 (Athletics @ Chicago Cubs total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.74,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.08148852541329754,
+        "ticker": "KXMLBTOTAL-26JUN042005ATHCHC-14"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Milwaukee Brewers",
+        "away": "San Francisco Giants",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (San Francisco Giants @ Milwaukee Brewers total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26JUN041410SFMIL-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Minnesota Twins",
+        "away": "Kansas City Royals",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Kansas City Royals @ Minnesota Twins total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26JUN041940KCMIN-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Arizona Diamondbacks",
+        "away": "Los Angeles Dodgers",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Los Angeles Dodgers @ Arizona Diamondbacks total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26JUN042140LADAZ-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Boston Red Sox",
+        "away": "Baltimore Orioles",
+        "line": 7.5,
+        "side": "over",
+        "market_total": 10.5,
+        "pickLabel": "OVER 7.5 (Baltimore Orioles @ Boston Red Sox total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.73,
+        "our_prob": 0.7850823976887276,
+        "edge": 0.05508239768872758,
+        "ticker": "KXMLBTOTAL-26JUN041335BALBOS-8"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 2,
+    "picks_eligible_after_filter": 2,
+    "orders_would_place": 2,
+    "total_stake_dollars": 0.6,
+    "remaining_daily_capacity": 10.09,
+    "skipped_by_reason": {},
+    "paper_candidates": 5,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
