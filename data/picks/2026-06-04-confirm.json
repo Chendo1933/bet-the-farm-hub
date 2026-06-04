@@ -1,0 +1,271 @@
+{
+  "date": "2026-06-04",
+  "logged": "2026-06-04T18:34:34.148586+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Carolina Hurricanes",
+      "away": "Vegas Golden Knights",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Carolina Hurricanes",
+      "pickLabel": "Carolina Hurricanes ML (-162)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -162,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 70% vs implied 59%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -162"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "8:20 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Yankees",
+      "away": "Cleveland Guardians",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (+106)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": 106,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +106"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "New York Yankees",
+      "away": "Cleveland Guardians",
+      "atsPick": "home",
+      "spread": 1.5,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees +1.5",
+      "score100": 62,
+      "rawScore100": 65,
+      "odds": -175,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 46%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +106"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+106) \u2192 auto-covers spread"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "1:36 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Milwaukee Brewers",
+      "away": "San Francisco Giants",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (+117)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": 117,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +7.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +117"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Milwaukee Brewers",
+      "away": "San Francisco Giants",
+      "atsPick": "home",
+      "spread": 1.5,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers +1.5",
+      "score100": 65,
+      "rawScore100": 68,
+      "odds": -144,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83c\udfe0 Home ATS 52%"
+        },
+        {
+          "t": "neg",
+          "l": "\u26a0\ufe0f -3.2% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 62%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26be Run diff edge +2.50/g"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.699 / WHIP 1.18 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 8 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfe0 Home dog (+54% hist.)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 63% vs 43% implied (+117) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 60% W)"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\udcc8 Late line moved 3.0 pts against pick"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +117 dog \u2192 auto-covers if wins"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "2:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Houston Astros",
+      "away": "Pittsburgh Pirates",
+      "atsPick": null,
+      "spread": null,
+      "total": 8.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 8.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -106,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Houston Astros 58% / Pittsburgh Pirates 53% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.81 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.8% edge vs implied"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "8:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Arizona Diamondbacks",
+      "away": "Los Angeles Dodgers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Los Angeles Dodgers",
+      "pickLabel": "Los Angeles Dodgers ML (-137)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -137,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 65% vs implied 55%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.0"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -137"
+        }
+      ],
+      "date": "Jun 4",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 7,
+  "filter_stats": {
+    "prefilter": 15,
+    "sub60": 8,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 7,
+    "dropped": 8
+  }
+}
