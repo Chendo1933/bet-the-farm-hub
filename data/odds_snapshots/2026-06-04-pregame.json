@@ -1,6 +1,6 @@
 {
   "date": "2026-06-04",
-  "snapshot_time": "2026-06-04T00:24:06.198654+00:00",
+  "snapshot_time": "2026-06-04T18:06:37.129340+00:00",
   "type": "pregame",
   "games": {
     "nba": [
@@ -35,6 +35,16 @@
         "ml_home": 176,
         "ml_away": -210,
         "snapshot_time": "2026-06-04T00:24:06.198654+00:00"
+      },
+      {
+        "home": "Milwaukee Brewers",
+        "away": "San Francisco Giants",
+        "commence": "2026-06-04T18:11:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -188,
+        "ml_away": 158,
+        "snapshot_time": "2026-06-04T18:06:37.129340+00:00"
       }
     ]
   }
