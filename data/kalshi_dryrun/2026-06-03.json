@@ -60,7 +60,13 @@
       "stake_dollars": 1.74,
       "contracts": 3,
       "edge_pct": 0.1,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 7,
+      "away_score": 3,
+      "payout_dollars": 3.0,
+      "pnl_dollars": 1.26,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -106,7 +112,13 @@
       "stake_dollars": 0,
       "contracts": 0,
       "edge_pct": -0.012,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 0,
+      "away_score": 1,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     }
   ],
   "paper_orders": [
@@ -128,7 +140,16 @@
         "our_prob": 0.7006655928711174,
         "edge": 0.05066559287111738,
         "ticker": "KXMLBTOTAL-26JUN032005ATHCHC-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 9,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.35,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -148,5 +169,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-03",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 1,
+      "wins": 1,
+      "losses": 0,
+      "ungraded": 0,
+      "cost_dollars": 0.65,
+      "pnl_dollars": 0.35,
+      "roi_pct": 53.85,
+      "win_pct": 100.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-03",
+    "placed": 1,
+    "wins": 1,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 1.74,
+    "total_payout_dollars": 3.0,
+    "total_pnl_dollars": 1.26,
+    "roi_pct": 72.41
   }
 }

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-03T12:27:16+00:00",
+  "updated": "2026-06-04T10:52:54+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 16,
-      "avg_clv_pct": 0.2,
+      "n": 17,
+      "avg_clv_pct": 0.19,
       "beat_close": 3,
-      "beat_close_pct": 18.8
+      "beat_close_pct": 17.6
     },
     "bets": [
       {
@@ -222,6 +222,20 @@
         "date": "2026-06-02",
         "away": "Colorado Rockies",
         "home": "Los Angeles Angels",
+        "line": 10.5,
+        "side": "under",
+        "entry_total": 8.5,
+        "close_total": 8.5,
+        "close_source": "midday",
+        "entry_prob": 0.7007,
+        "close_prob": 0.7007,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-03",
+        "away": "Athletics",
+        "home": "Chicago Cubs",
         "line": 10.5,
         "side": "under",
         "entry_total": 8.5,
