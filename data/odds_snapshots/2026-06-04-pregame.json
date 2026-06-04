@@ -1,20 +1,8 @@
 {
   "date": "2026-06-04",
-  "snapshot_time": "2026-06-04T18:06:37.129340+00:00",
+  "snapshot_time": "2026-06-04T22:15:21.071291+00:00",
   "type": "pregame",
   "games": {
-    "nba": [
-      {
-        "home": "San Antonio Spurs",
-        "away": "New York Knicks",
-        "commence": "2026-06-04T00:30:00Z",
-        "spread": -4.5,
-        "total": 217.5,
-        "ml_home": -184,
-        "ml_away": 154,
-        "snapshot_time": "2026-06-04T00:24:06.198654+00:00"
-      }
-    ],
     "mlb": [
       {
         "home": "Los Angeles Angels",
@@ -45,6 +33,38 @@
         "ml_home": -188,
         "ml_away": 158,
         "snapshot_time": "2026-06-04T18:06:37.129340+00:00"
+      },
+      {
+        "home": "Atlanta Braves",
+        "away": "Toronto Blue Jays",
+        "commence": "2026-06-04T23:15:00Z",
+        "spread": -1.5,
+        "total": 7.5,
+        "ml_home": -250,
+        "ml_away": 205,
+        "snapshot_time": "2026-06-04T22:15:21.071291+00:00"
+      },
+      {
+        "home": "Minnesota Twins",
+        "away": "Kansas City Royals",
+        "commence": "2026-06-04T23:41:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": -102,
+        "ml_away": -116,
+        "snapshot_time": "2026-06-04T22:15:21.071291+00:00"
+      }
+    ],
+    "nba": [
+      {
+        "home": "San Antonio Spurs",
+        "away": "New York Knicks",
+        "commence": "2026-06-04T00:30:00Z",
+        "spread": -4.5,
+        "total": 217.5,
+        "ml_home": -184,
+        "ml_away": 154,
+        "snapshot_time": "2026-06-04T00:24:06.198654+00:00"
       }
     ]
   }
