@@ -1,0 +1,164 @@
+{
+  "date": "2026-06-05",
+  "logged": "2026-06-05T12:39:07.594084",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Atlanta Braves",
+        "away": "Pittsburgh Pirates",
+        "atsPick": "home",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-149)",
+        "score100": 67,
+        "rawScore100": 63,
+        "odds": -149,
+        "tier": "strong",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 57%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 RTG edge +3.3"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -149"
+          }
+        ],
+        "date": "Jun 5",
+        "time": "7:16 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN051915PITATL-ATL",
+      "market_title": "Pittsburgh vs Atlanta Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 57,
+      "yes_bid_cents": 56,
+      "last_price_cents": 57,
+      "previous_yes_ask_cents": 59,
+      "volume_24h": "97809.23",
+      "use_price_cents": 57,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.602,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 0.57,
+      "contracts": 1,
+      "edge_pct": 0.032,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Colorado Rockies",
+        "away": "Milwaukee Brewers",
+        "line": 9.5,
+        "side": "over",
+        "market_total": 12,
+        "pickLabel": "OVER 9.5 (Milwaukee Brewers @ Colorado Rockies total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.6599999999999999,
+        "our_prob": 0.744697113569311,
+        "edge": 0.08469711356931109,
+        "ticker": "KXMLBTOTAL-26JUN052040MILCOL-10"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Chicago Cubs",
+        "away": "San Francisco Giants",
+        "line": 7.5,
+        "side": "over",
+        "market_total": 11,
+        "pickLabel": "OVER 7.5 (San Francisco Giants @ Chicago Cubs total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26JUN051420SFCHC-8"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Texas Rangers",
+        "away": "Cleveland Guardians",
+        "line": 10.5,
+        "side": "under",
+        "market_total": 7,
+        "pickLabel": "UNDER 10.5 (Cleveland Guardians @ Texas Rangers total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26JUN052015CLETEX-11"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Arizona Diamondbacks",
+        "away": "Washington Nationals",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Washington Nationals @ Arizona Diamondbacks total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26JUN052140WSHAZ-13"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 3,
+    "picks_eligible_after_filter": 1,
+    "orders_would_place": 1,
+    "total_stake_dollars": 0.57,
+    "remaining_daily_capacity": 10.12,
+    "skipped_by_reason": {},
+    "paper_candidates": 4,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
