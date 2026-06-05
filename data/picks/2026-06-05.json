@@ -1,0 +1,119 @@
+{
+  "date": "2026-06-05",
+  "logged": "2026-06-05T12:38:30.059136+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-149)",
+      "score100": 67,
+      "rawScore100": 63,
+      "odds": -149,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 57%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -149"
+        }
+      ],
+      "date": "Jun 5",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "St. Louis Cardinals",
+      "away": "Cincinnati Reds",
+      "atsPick": null,
+      "spread": null,
+      "total": 9,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -108,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: St. Louis Cardinals 46% / Cincinnati Reds 64% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udf2c\ufe0f Wind 12mph out (+6 comp) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.62 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +4.3% edge vs implied"
+        }
+      ],
+      "date": "Jun 5",
+      "time": "8:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "San Diego Padres",
+      "away": "New York Mets",
+      "atsPick": null,
+      "spread": null,
+      "total": 7,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": 104,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: San Diego Padres 42% / New York Mets 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfdf\ufe0f Pitcher park (PF 0.93) \u2192 Under lean"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Strong bullpens (avg 3.21 ERA) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +8.9% edge vs implied"
+        }
+      ],
+      "date": "Jun 5",
+      "time": "9:41 PM ET"
+    }
+  ],
+  "all_picks_count": 3,
+  "filter_stats": {
+    "prefilter": 19,
+    "sub60": 15,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 3,
+    "dropped": 16
+  }
+}
