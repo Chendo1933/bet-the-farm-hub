@@ -7481,10 +7481,10 @@
       "away_team": "Los Angeles Dodgers"
     },
     "824673": {
-      "home_id": null,
-      "home_name": null,
-      "away_id": null,
-      "away_name": null,
+      "home_id": 665795,
+      "home_name": "Edward Cabrera",
+      "away_id": 592662,
+      "away_name": "Robbie Ray",
       "home_team": "Chicago Cubs",
       "away_team": "San Francisco Giants"
     },
@@ -7497,48 +7497,48 @@
       "away_team": "Seattle Mariners"
     },
     "823455": {
-      "home_id": null,
-      "home_name": null,
+      "home_id": 666200,
+      "home_name": "Jes\u00fas Luzardo",
       "away_id": 641743,
       "away_name": "Anthony Kay",
       "home_team": "Philadelphia Phillies",
       "away_team": "Chicago White Sox"
     },
     "823538": {
-      "home_id": null,
-      "home_name": null,
-      "away_id": null,
-      "away_name": null,
+      "home_id": 677960,
+      "home_name": "Ryan Weathers",
+      "away_id": 543243,
+      "away_name": "Sonny Gray",
       "home_team": "New York Yankees",
       "away_team": "Boston Red Sox"
     },
     "822810": {
-      "home_id": null,
-      "home_name": null,
-      "away_id": null,
-      "away_name": null,
+      "home_id": 702056,
+      "home_name": "Trey Yesavage",
+      "away_id": 687064,
+      "away_name": "Brandon Young",
       "home_team": "Toronto Blue Jays",
       "away_team": "Baltimore Orioles"
     },
     "823860": {
-      "home_id": 663969,
-      "home_name": "Tyler Phillips",
+      "home_id": 687473,
+      "home_name": "Ryan Gusto",
       "away_id": 656876,
       "away_name": "Drew Rasmussen",
       "home_team": "Miami Marlins",
       "away_team": "Tampa Bay Rays"
     },
     "824914": {
-      "home_id": null,
-      "home_name": null,
-      "away_id": null,
-      "away_name": null,
+      "home_id": 527048,
+      "home_name": "Mart\u00edn P\u00e9rez",
+      "away_id": 656605,
+      "away_name": "Mitch Keller",
       "home_team": "Atlanta Braves",
       "away_team": "Pittsburgh Pirates"
     },
     "824186": {
-      "home_id": null,
-      "home_name": null,
+      "home_id": 663567,
+      "home_name": "Peter Lambert",
       "away_id": 678022,
       "away_name": "Jack Perkins",
       "home_team": "Houston Astros",
@@ -7593,12 +7593,132 @@
       "away_team": "New York Mets"
     },
     "823943": {
-      "home_id": null,
-      "home_name": null,
+      "home_id": 808963,
+      "home_name": "Roki Sasaki",
       "away_id": null,
       "away_name": null,
       "home_team": "Los Angeles Dodgers",
       "away_team": "Los Angeles Angels"
+    },
+    "824269": {
+      "home_id": 672456,
+      "home_name": "Keider Montero",
+      "away_id": 682243,
+      "away_name": "Bryce Miller",
+      "home_team": "Detroit Tigers",
+      "away_team": "Seattle Mariners"
+    },
+    "823697": {
+      "home_id": 657746,
+      "home_name": "Joe Ryan",
+      "away_id": 679883,
+      "away_name": "Luinder Avila",
+      "home_team": "Minnesota Twins",
+      "away_team": "Kansas City Royals"
+    },
+    "823048": {
+      "home_id": 669461,
+      "home_name": "Matthew Liberatore",
+      "away_id": 666157,
+      "away_name": "Nick Lodolo",
+      "home_team": "St. Louis Cardinals",
+      "away_team": "Cincinnati Reds"
+    },
+    "824669": {
+      "home_id": 676962,
+      "home_name": "Ben Brown",
+      "away_id": 694738,
+      "away_name": "Landen Roupp",
+      "home_team": "Chicago Cubs",
+      "away_team": "San Francisco Giants"
+    },
+    "822808": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 680694,
+      "away_name": "Kyle Bradish",
+      "home_team": "Toronto Blue Jays",
+      "away_team": "Baltimore Orioles"
+    },
+    "823454": {
+      "home_id": 691725,
+      "home_name": "Andrew Painter",
+      "away_id": 680732,
+      "away_name": "Sean Burke",
+      "home_team": "Philadelphia Phillies",
+      "away_team": "Chicago White Sox"
+    },
+    "825075": {
+      "home_id": 593958,
+      "home_name": "Eduardo Rodriguez",
+      "away_id": 641793,
+      "away_name": "Zack Littell",
+      "home_team": "Arizona Diamondbacks",
+      "away_team": "Washington Nationals"
+    },
+    "824184": {
+      "home_id": 837227,
+      "home_name": "Tatsuya Imai",
+      "away_id": 695034,
+      "away_name": "Kade Morris",
+      "home_team": "Houston Astros",
+      "away_team": "Athletics"
+    },
+    "824915": {
+      "home_id": 675911,
+      "home_name": "Spencer Strider",
+      "away_id": 677952,
+      "away_name": "Braxton Ashcraft",
+      "home_team": "Atlanta Braves",
+      "away_team": "Pittsburgh Pirates"
+    },
+    "823859": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 663556,
+      "away_name": "Shane McClanahan",
+      "home_team": "Miami Marlins",
+      "away_team": "Tampa Bay Rays"
+    },
+    "822891": {
+      "home_id": 683004,
+      "home_name": "Jack Leiter",
+      "away_id": 676440,
+      "away_name": "Tanner Bibee",
+      "home_team": "Texas Rangers",
+      "away_team": "Cleveland Guardians"
+    },
+    "823539": {
+      "home_id": 701542,
+      "home_name": "Will Warren",
+      "away_id": 624133,
+      "away_name": "Ranger Suarez",
+      "home_team": "New York Yankees",
+      "away_team": "Boston Red Sox"
+    },
+    "824351": {
+      "home_id": 685299,
+      "home_name": "Tanner Gordon",
+      "away_id": 694819,
+      "away_name": "Jacob Misiorowski",
+      "home_team": "Colorado Rockies",
+      "away_team": "Milwaukee Brewers"
+    },
+    "823942": {
+      "home_id": 808967,
+      "home_name": "Yoshinobu Yamamoto",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Los Angeles Dodgers",
+      "away_team": "Los Angeles Angels"
+    },
+    "823292": {
+      "home_id": 656288,
+      "home_name": "Griffin Canning",
+      "away_id": 690997,
+      "away_name": "Nolan McLean",
+      "home_team": "San Diego Padres",
+      "away_team": "New York Mets"
     }
   },
   "game_logs": {
@@ -22877,7 +22997,9 @@
       }
     ],
     "669199": [],
-    "678022": []
+    "678022": [],
+    "687473": [],
+    "695034": []
   },
   "dates_fetched": [
     "2026-03-22",
@@ -22962,6 +23084,8 @@
     "2026-06-03",
     "2026-06-04",
     "2026-06-04",
-    "2026-06-05"
+    "2026-06-05",
+    "2026-06-05",
+    "2026-06-06"
   ]
 }
