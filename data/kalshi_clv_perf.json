@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-04T10:52:54+00:00",
+  "updated": "2026-06-05T11:16:32+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 17,
-      "avg_clv_pct": 0.19,
-      "beat_close": 3,
-      "beat_close_pct": 17.6
+      "n": 22,
+      "avg_clv_pct": 1.03,
+      "beat_close": 5,
+      "beat_close_pct": 22.7
     },
     "bets": [
       {
@@ -245,6 +245,76 @@
         "close_prob": 0.7007,
         "clv": 0.0,
         "beat_close": false
+      },
+      {
+        "date": "2026-06-04",
+        "away": "Athletics",
+        "home": "Chicago Cubs",
+        "line": 13.5,
+        "side": "under",
+        "entry_total": 10,
+        "close_total": 10.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-04",
+        "away": "San Francisco Giants",
+        "home": "Milwaukee Brewers",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.0,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-04",
+        "away": "Kansas City Royals",
+        "home": "Minnesota Twins",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.0,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-04",
+        "away": "Los Angeles Dodgers",
+        "home": "Arizona Diamondbacks",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 8.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8537,
+        "clv": 0.0323,
+        "beat_close": true
+      },
+      {
+        "date": "2026-06-04",
+        "away": "Baltimore Orioles",
+        "home": "Boston Red Sox",
+        "line": 7.5,
+        "side": "over",
+        "entry_total": 10.5,
+        "close_total": 15.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.9824,
+        "clv": 0.1973,
+        "beat_close": true
       }
     ]
   },

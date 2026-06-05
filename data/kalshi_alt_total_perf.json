@@ -1,13 +1,13 @@
 {
-  "days": 6,
-  "wins": 13,
-  "losses": 4,
-  "graded": 17,
+  "days": 7,
+  "wins": 16,
+  "losses": 6,
+  "graded": 22,
   "ungraded": 0,
-  "total_cost_dollars": 11.68,
-  "total_pnl_dollars": 1.32,
-  "roi_pct": 11.3,
-  "win_pct": 76.5,
+  "total_cost_dollars": 15.43,
+  "total_pnl_dollars": 0.57,
+  "roi_pct": 3.69,
+  "win_pct": 72.7,
   "track": "paper_alt_total",
   "daily": [
     {
@@ -75,6 +75,17 @@
       "roi_pct": 53.85,
       "win_pct": 100.0,
       "date": "2026-06-03"
+    },
+    {
+      "placed": 5,
+      "wins": 3,
+      "losses": 2,
+      "ungraded": 0,
+      "cost_dollars": 3.75,
+      "pnl_dollars": -0.75,
+      "roi_pct": -20.0,
+      "win_pct": 60.0,
+      "date": "2026-06-04"
     }
   ]
 }
