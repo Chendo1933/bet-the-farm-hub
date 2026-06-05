@@ -1,6 +1,6 @@
 {
   "date": "2026-06-05",
-  "snapshot_time": "2026-06-05T17:44:51.607697+00:00",
+  "snapshot_time": "2026-06-05T21:14:59.539528+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -13,6 +13,26 @@
         "ml_home": -180,
         "ml_away": 152,
         "snapshot_time": "2026-06-05T17:44:51.607697+00:00"
+      },
+      {
+        "home": "Philadelphia Phillies",
+        "away": "Chicago White Sox",
+        "commence": "2026-06-05T22:41:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -184,
+        "ml_away": 154,
+        "snapshot_time": "2026-06-05T21:14:59.539528+00:00"
+      },
+      {
+        "home": "Detroit Tigers",
+        "away": "Seattle Mariners",
+        "commence": "2026-06-05T22:41:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 106,
+        "ml_away": -124,
+        "snapshot_time": "2026-06-05T21:14:59.539528+00:00"
       }
     ]
   }
