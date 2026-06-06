@@ -1,6 +1,6 @@
 {
   "date": "2026-06-06",
-  "snapshot_time": "2026-06-06T16:56:19.719951+00:00",
+  "snapshot_time": "2026-06-06T18:01:35.338839+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -20,9 +20,9 @@
         "commence": "2026-06-06T18:10:00Z",
         "spread": -1.5,
         "total": 8.5,
-        "ml_home": -146,
-        "ml_away": 124,
-        "snapshot_time": "2026-06-06T16:56:19.719951+00:00"
+        "ml_home": -142,
+        "ml_away": 120,
+        "snapshot_time": "2026-06-06T18:01:35.338839+00:00"
       },
       {
         "home": "St. Louis Cardinals",
@@ -32,7 +32,7 @@
         "total": 9.0,
         "ml_home": -126,
         "ml_away": 108,
-        "snapshot_time": "2026-06-06T16:56:19.719951+00:00"
+        "snapshot_time": "2026-06-06T18:01:35.338839+00:00"
       },
       {
         "home": "Chicago Cubs",
@@ -40,9 +40,19 @@
         "commence": "2026-06-06T18:21:00Z",
         "spread": -1.5,
         "total": 7.5,
-        "ml_home": -148,
-        "ml_away": 126,
-        "snapshot_time": "2026-06-06T16:56:19.719951+00:00"
+        "ml_home": -154,
+        "ml_away": 130,
+        "snapshot_time": "2026-06-06T18:01:35.338839+00:00"
+      },
+      {
+        "home": "Toronto Blue Jays",
+        "away": "Baltimore Orioles",
+        "commence": "2026-06-06T19:08:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-06-06T18:01:35.338839+00:00"
       }
     ]
   }
