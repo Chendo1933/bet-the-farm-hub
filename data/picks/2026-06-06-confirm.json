@@ -1,0 +1,200 @@
+{
+  "date": "2026-06-06",
+  "logged": "2026-06-06T17:42:26.535385+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "NHL",
+      "betType": "ml",
+      "home": "Vegas Golden Knights",
+      "away": "Carolina Hurricanes",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Carolina Hurricanes",
+      "pickLabel": "Carolina Hurricanes ML (-108)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -108,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -108"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "8:10 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Arizona Diamondbacks",
+      "away": "Washington Nationals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Washington Nationals",
+      "pickLabel": "Washington Nationals ML (+124)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 124,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 51% vs implied 43%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +124"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Arizona Diamondbacks",
+      "away": "Washington Nationals",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "Washington Nationals",
+      "pickLabel": "Washington Nationals +1.5",
+      "score100": 55,
+      "rawScore100": 63,
+      "odds": -157,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 71% (17-7)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +12.4% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 64%"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 10 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcaa Opp missing 1"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 51% vs 43% implied (+124) \u2014 strong ML value"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Atlanta Braves",
+      "away": "Pittsburgh Pirates",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-117)",
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -117,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 52%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -117"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Miami Marlins",
+      "away": "Tampa Bay Rays",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Tampa Bay Rays",
+      "pickLabel": "Tampa Bay Rays ML (-131)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -131,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 54%"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Yankees",
+      "away": "Boston Red Sox",
+      "atsPick": "home",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (-120)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": -120,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 58% win rate vs 52% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.3"
+        }
+      ],
+      "date": "Jun 6",
+      "time": "7:36 PM ET"
+    }
+  ],
+  "all_picks_count": 6,
+  "filter_stats": {
+    "prefilter": 17,
+    "sub60": 11,
+    "mlbFav": 0,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 6,
+    "dropped": 11
+  }
+}
