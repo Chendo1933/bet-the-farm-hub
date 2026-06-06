@@ -1,6 +1,6 @@
 {
   "date": "2026-06-06",
-  "snapshot_time": "2026-06-06T18:01:35.338839+00:00",
+  "snapshot_time": "2026-06-06T20:02:04.573042+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -53,6 +53,56 @@
         "ml_home": -112,
         "ml_away": -104,
         "snapshot_time": "2026-06-06T18:01:35.338839+00:00"
+      },
+      {
+        "home": "Philadelphia Phillies",
+        "away": "Chicago White Sox",
+        "commence": "2026-06-06T20:06:00Z",
+        "spread": -1.5,
+        "total": 9.5,
+        "ml_home": -134,
+        "ml_away": 116,
+        "snapshot_time": "2026-06-06T20:02:04.573042+00:00"
+      },
+      {
+        "home": "Arizona Diamondbacks",
+        "away": "Washington Nationals",
+        "commence": "2026-06-06T20:11:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -154,
+        "ml_away": 130,
+        "snapshot_time": "2026-06-06T20:02:04.573042+00:00"
+      },
+      {
+        "home": "Houston Astros",
+        "away": "Athletics",
+        "commence": "2026-06-06T20:11:00Z",
+        "spread": -1.5,
+        "total": 9.5,
+        "ml_home": -124,
+        "ml_away": 106,
+        "snapshot_time": "2026-06-06T20:02:04.573042+00:00"
+      },
+      {
+        "home": "Atlanta Braves",
+        "away": "Pittsburgh Pirates",
+        "commence": "2026-06-06T20:11:00Z",
+        "spread": 1.5,
+        "total": 8.0,
+        "ml_home": -110,
+        "ml_away": -106,
+        "snapshot_time": "2026-06-06T20:02:04.573042+00:00"
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "Tampa Bay Rays",
+        "commence": "2026-06-06T20:11:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 114,
+        "ml_away": -134,
+        "snapshot_time": "2026-06-06T20:02:04.573042+00:00"
       }
     ]
   }
