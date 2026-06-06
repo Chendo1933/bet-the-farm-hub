@@ -1,15 +1,15 @@
 {
-  "updated": "2026-06-05T11:16:32+00:00",
+  "updated": "2026-06-06T09:50:51+00:00",
   "markets": {
     "paper_alt_total": {
       "market": "paper_alt_total",
-      "status": "READY",
-      "reason": "ROI +3.7% (>=0.0) \u00b7 CLV +1.03% (>=+1.0) \u00b7 n=22",
-      "n_effective": 22,
-      "graded_outcomes": 22,
-      "clv_n": 22,
-      "roi_pct": 3.69,
-      "avg_clv_pct": 1.03,
+      "status": "FAILED",
+      "reason": "CLV +0.59% < +1.0 \u00b7 n=26",
+      "n_effective": 26,
+      "graded_outcomes": 26,
+      "clv_n": 26,
+      "roi_pct": 3.32,
+      "avg_clv_pct": 0.59,
       "thresholds": {
         "min_n": 20,
         "min_roi_pct": 0.0,

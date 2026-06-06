@@ -60,7 +60,13 @@
       "stake_dollars": 0.57,
       "contracts": 1,
       "edge_pct": 0.032,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 6,
+      "away_score": 3,
+      "payout_dollars": 1.0,
+      "pnl_dollars": 0.43,
+      "reconcile_status": "graded"
     }
   ],
   "paper_orders": [
@@ -82,7 +88,16 @@
         "our_prob": 0.744697113569311,
         "edge": 0.08469711356931109,
         "ticker": "KXMLBTOTAL-26JUN052040MILCOL-10"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 16,
+        "line": 9.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.34,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -102,7 +117,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.06148852541329752,
         "ticker": "KXMLBTOTAL-26JUN051420SFCHC-8"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 21,
+        "line": 7.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.24,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -122,7 +146,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26JUN052015CLETEX-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 5,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.23,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -142,7 +175,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26JUN052140WSHAZ-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 15,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.77,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -160,5 +202,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-05",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 4,
+      "wins": 3,
+      "losses": 1,
+      "ungraded": 0,
+      "cost_dollars": 2.96,
+      "pnl_dollars": 0.04,
+      "roi_pct": 1.35,
+      "win_pct": 75.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-05",
+    "placed": 1,
+    "wins": 1,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.57,
+    "total_payout_dollars": 1.0,
+    "total_pnl_dollars": 0.43,
+    "roi_pct": 75.44
   }
 }
