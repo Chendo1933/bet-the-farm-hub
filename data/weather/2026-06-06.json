@@ -1,0 +1,132 @@
+{
+  "date": "2026-06-06",
+  "fetched_at": "2026-06-06T11:26:26.949417+00:00",
+  "parks": {
+    "Detroit Tigers": {
+      "is_dome": false,
+      "park": "Comerica Park",
+      "wind_mph": 13,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 150,
+      "wind_out_component": 6.5,
+      "wind_label": "crosswind",
+      "temp_f": 82,
+      "game_time_utc": "2026-06-06T17:10:00+00:00"
+    },
+    "Minnesota Twins": {
+      "is_dome": false,
+      "park": "Target Field",
+      "wind_mph": 0,
+      "temp_f": 82,
+      "error": "no wind direction"
+    },
+    "St. Louis Cardinals": {
+      "is_dome": false,
+      "park": "Busch Stadium",
+      "wind_mph": 7,
+      "wind_from_deg": 225,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 6.8,
+      "wind_label": "out to CF",
+      "temp_f": 88,
+      "game_time_utc": "2026-06-06T18:15:00+00:00"
+    },
+    "Chicago Cubs": {
+      "is_dome": false,
+      "park": "Wrigley Field",
+      "wind_mph": 10,
+      "wind_from_deg": 67.5,
+      "outfield_bearing_deg": 30,
+      "wind_out_component": -7.9,
+      "wind_label": "in from CF",
+      "temp_f": 72,
+      "game_time_utc": "2026-06-06T18:20:00+00:00"
+    },
+    "Toronto Blue Jays": {
+      "is_dome": true,
+      "park": "Rogers Centre"
+    },
+    "Philadelphia Phillies": {
+      "is_dome": false,
+      "park": "Citizens Bank Park",
+      "wind_mph": 15,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 13.0,
+      "wind_label": "out to CF",
+      "temp_f": 93,
+      "game_time_utc": "2026-06-06T20:05:00+00:00"
+    },
+    "Arizona Diamondbacks": {
+      "is_dome": true,
+      "park": "Chase Field"
+    },
+    "Houston Astros": {
+      "is_dome": true,
+      "park": "Daikin Park"
+    },
+    "Atlanta Braves": {
+      "is_dome": false,
+      "park": "Truist Park",
+      "wind_mph": 5,
+      "wind_from_deg": 180,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": 1.7,
+      "wind_label": "crosswind",
+      "temp_f": 87,
+      "game_time_utc": "2026-06-06T20:10:00+00:00"
+    },
+    "Miami Marlins": {
+      "is_dome": true,
+      "park": "loanDepot Park"
+    },
+    "Texas Rangers": {
+      "is_dome": true,
+      "park": "Globe Life Field"
+    },
+    "New York Yankees": {
+      "is_dome": false,
+      "park": "Yankee Stadium",
+      "wind_mph": 15,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": 14.1,
+      "wind_label": "out to CF",
+      "temp_f": 87,
+      "game_time_utc": "2026-06-06T23:35:00+00:00"
+    },
+    "Colorado Rockies": {
+      "is_dome": false,
+      "park": "Coors Field",
+      "wind_mph": 14,
+      "wind_from_deg": 202.5,
+      "outfield_bearing_deg": 0,
+      "wind_out_component": 12.9,
+      "wind_label": "out to CF",
+      "temp_f": 85,
+      "game_time_utc": "2026-06-07T01:10:00+00:00"
+    },
+    "Los Angeles Dodgers": {
+      "is_dome": false,
+      "park": "Dodger Stadium",
+      "wind_mph": 10,
+      "wind_from_deg": 202.5,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 10.0,
+      "wind_label": "out to CF",
+      "temp_f": 69,
+      "game_time_utc": "2026-06-07T02:10:00+00:00"
+    },
+    "San Diego Padres": {
+      "is_dome": false,
+      "park": "Petco Park",
+      "wind_mph": 5,
+      "wind_from_deg": 180,
+      "outfield_bearing_deg": 70,
+      "wind_out_component": 1.7,
+      "wind_label": "crosswind",
+      "temp_f": 65,
+      "game_time_utc": "2026-06-07T02:10:00+00:00"
+    }
+  }
+}
