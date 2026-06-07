@@ -1,6 +1,6 @@
 {
   "date": "2026-06-07",
-  "snapshot_time": "2026-06-07T19:02:36.053067+00:00",
+  "snapshot_time": "2026-06-07T23:56:22.035829+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -133,6 +133,16 @@
         "ml_home": -108,
         "ml_away": -108,
         "snapshot_time": "2026-06-07T19:02:36.053067+00:00"
+      },
+      {
+        "home": "Chicago Cubs",
+        "away": "San Francisco Giants",
+        "commence": "2026-06-08T00:31:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -126,
+        "ml_away": 108,
+        "snapshot_time": "2026-06-07T23:56:22.035829+00:00"
       }
     ]
   }
