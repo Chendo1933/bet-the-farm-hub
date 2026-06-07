@@ -1,0 +1,99 @@
+{
+  "date": "2026-06-07",
+  "snapshot_time": "2026-06-07T17:02:30.433100+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Atlanta Braves",
+        "away": "Pittsburgh Pirates",
+        "commence": "2026-06-07T17:36:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -152,
+        "ml_away": 128,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "New York Yankees",
+        "away": "Boston Red Sox",
+        "commence": "2026-06-07T17:36:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -154,
+        "ml_away": 130,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Philadelphia Phillies",
+        "away": "Chicago White Sox",
+        "commence": "2026-06-07T17:36:00Z",
+        "spread": -1.5,
+        "total": 9.0,
+        "ml_home": -172,
+        "ml_away": 144,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Toronto Blue Jays",
+        "away": "Baltimore Orioles",
+        "commence": "2026-06-07T17:38:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -136,
+        "ml_away": 116,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Detroit Tigers",
+        "away": "Seattle Mariners",
+        "commence": "2026-06-07T17:41:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -118,
+        "ml_away": 100,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Miami Marlins",
+        "away": "Tampa Bay Rays",
+        "commence": "2026-06-07T17:41:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": -102,
+        "ml_away": -116,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Houston Astros",
+        "away": "Athletics",
+        "commence": "2026-06-07T18:11:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": -108,
+        "ml_away": -108,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "Minnesota Twins",
+        "away": "Kansas City Royals",
+        "commence": "2026-06-07T18:11:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": 102,
+        "ml_away": -120,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      },
+      {
+        "home": "St. Louis Cardinals",
+        "away": "Cincinnati Reds",
+        "commence": "2026-06-07T18:16:00Z",
+        "spread": -1.5,
+        "total": 9.5,
+        "ml_home": -144,
+        "ml_away": 122,
+        "snapshot_time": "2026-06-07T17:02:30.433100+00:00"
+      }
+    ]
+  }
+}
