@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-06T09:50:51+00:00",
+  "updated": "2026-06-07T10:18:43+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 26,
-      "avg_clv_pct": 0.59,
-      "beat_close": 5,
-      "beat_close_pct": 19.2
+      "n": 29,
+      "avg_clv_pct": 0.5,
+      "beat_close": 6,
+      "beat_close_pct": 20.7
     },
     "bets": [
       {
@@ -367,6 +367,48 @@
         "entry_total": 9,
         "close_total": 9.0,
         "close_source": "midday",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-06",
+        "away": "Chicago White Sox",
+        "home": "Philadelphia Phillies",
+        "line": 13.5,
+        "side": "under",
+        "entry_total": 10,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8537,
+        "clv": 0.0323,
+        "beat_close": true
+      },
+      {
+        "date": "2026-06-06",
+        "away": "Milwaukee Brewers",
+        "home": "Colorado Rockies",
+        "line": 13.5,
+        "side": "under",
+        "entry_total": 10.5,
+        "close_total": 11.0,
+        "close_source": "pregame",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7447,
+        "clv": -0.0404,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-06",
+        "away": "Washington Nationals",
+        "home": "Arizona Diamondbacks",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.0,
+        "close_source": "pregame",
         "entry_prob": 0.8215,
         "close_prob": 0.8215,
         "clv": 0.0,
