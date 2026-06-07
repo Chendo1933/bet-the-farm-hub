@@ -20197,6 +20197,138 @@
           "l": "\ud83d\udcc8 +8.9% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-06-06",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Carolina Hurricanes ML (-108)",
+      "home": "Vegas Golden Knights",
+      "away": "Carolina Hurricanes",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -108,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -108"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-06",
+      "sport": "MLB",
+      "betType": "ou",
+      "tier": "lean",
+      "pick": "Over 9.5",
+      "home": "St. Louis Cardinals",
+      "away": "Cincinnati Reds",
+      "spread": null,
+      "total": 9.5,
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -105,
+      "outcome": "win",
+      "margin": 1.5,
+      "units": 0.9524,
+      "homeScore": 6,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: St. Louis Cardinals 46% / Cincinnati Reds 64% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udf2c\ufe0f Wind 7mph out (+7 comp) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.65 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.1% edge vs implied"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-06",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Washington Nationals ML (+135)",
+      "home": "Arizona Diamondbacks",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 135,
+      "outcome": "win",
+      "margin": 5,
+      "units": 1.35,
+      "homeScore": 1,
+      "awayScore": 6,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 50% vs implied 41%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +135"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-06",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "Atlanta Braves ML (-115)",
+      "home": "Atlanta Braves",
+      "away": "Pittsburgh Pirates",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": -115,
+      "outcome": "win",
+      "margin": 3,
+      "units": 0.8696,
+      "homeScore": 6,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 51%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +3.5"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -115"
+        }
+      ]
     }
   ]
 }
