@@ -1,6 +1,6 @@
 {
   "date": "2026-06-08",
-  "snapshot_time": "2026-06-08T21:09:39.239835+00:00",
+  "snapshot_time": "2026-06-08T23:05:53.222676+00:00",
   "type": "pregame",
   "games": {
     "mlb": [
@@ -13,6 +13,16 @@
         "ml_home": 112,
         "ml_away": -132,
         "snapshot_time": "2026-06-08T21:09:39.239835+00:00"
+      },
+      {
+        "home": "Toronto Blue Jays",
+        "away": "Philadelphia Phillies",
+        "commence": "2026-06-08T23:08:00Z",
+        "spread": 1.5,
+        "total": 7.5,
+        "ml_home": 150,
+        "ml_away": -178,
+        "snapshot_time": "2026-06-08T23:05:53.222676+00:00"
       }
     ]
   }
