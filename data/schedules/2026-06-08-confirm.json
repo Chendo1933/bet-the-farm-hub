@@ -1,0 +1,106 @@
+{
+  "date": "2026-06-08",
+  "logged": "2026-06-08T18:42:16.674620+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nba",
+      "home": "New York Knicks",
+      "away": "San Antonio Spurs",
+      "date": "Jun 8",
+      "time": "8:40 PM ET",
+      "spread": -1.5,
+      "total": 216.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Seattle Mariners",
+      "date": "Jun 8",
+      "time": "6:36 PM ET",
+      "spread": 1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Tampa Bay Rays",
+      "away": "Boston Red Sox",
+      "date": "Jun 8",
+      "time": "6:41 PM ET",
+      "spread": 1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Cleveland Guardians",
+      "away": "New York Yankees",
+      "date": "Jun 8",
+      "time": "6:41 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Toronto Blue Jays",
+      "away": "Philadelphia Phillies",
+      "date": "Jun 8",
+      "time": "7:08 PM ET",
+      "spread": 1.5,
+      "total": 7.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Los Angeles Angels",
+      "away": "Houston Astros",
+      "date": "Jun 8",
+      "time": "9:39 PM ET",
+      "spread": 1.5,
+      "total": 9,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "San Diego Padres",
+      "away": "Cincinnati Reds",
+      "date": "Jun 8",
+      "time": "9:41 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "San Francisco Giants",
+      "away": "Washington Nationals",
+      "date": "Jun 8",
+      "time": "9:46 PM ET",
+      "spread": -1.5,
+      "total": 8,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Athletics",
+      "away": "Milwaukee Brewers",
+      "date": "Jun 8",
+      "time": "10:06 PM ET",
+      "spread": 1.5,
+      "total": 11,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
