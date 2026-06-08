@@ -1,5 +1,5 @@
 {
-  "days": 13,
+  "days": 14,
   "total_orders_placed": 10,
   "wins": 3,
   "losses": 5,
@@ -240,6 +240,27 @@
         "pnl_dollars": 0.74,
         "roi_pct": 32.74,
         "win_pct": 100.0
+      }
+    },
+    {
+      "date": "2026-06-07",
+      "placed": 0,
+      "wins": 0,
+      "losses": 0,
+      "pushes": 0,
+      "ungraded": 0,
+      "total_stake_dollars": 0.0,
+      "total_pnl_dollars": 0,
+      "roi_pct": 0,
+      "alt_total": {
+        "placed": 4,
+        "wins": 3,
+        "losses": 1,
+        "ungraded": 0,
+        "cost_dollars": 2.93,
+        "pnl_dollars": 0.07,
+        "roi_pct": 2.39,
+        "win_pct": 75.0
       }
     }
   ]

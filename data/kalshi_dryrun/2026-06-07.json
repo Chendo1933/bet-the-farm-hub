@@ -56,7 +56,13 @@
       "stake_dollars": 0,
       "contracts": 0,
       "edge_pct": -0.012,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 3,
+      "away_score": 2,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     },
     {
       "pick": {
@@ -102,7 +108,13 @@
       "stake_dollars": 0.53,
       "contracts": 1,
       "edge_pct": 0.036,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "loss",
+      "home_score": 4,
+      "away_score": 1,
+      "payout_dollars": 0.0,
+      "pnl_dollars": -0.53,
+      "reconcile_status": "graded"
     }
   ],
   "paper_orders": [
@@ -124,7 +136,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.0850823976887276,
         "ticker": "KXMLBTOTAL-26JUN071510MILCOL-10"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 16,
+        "line": 9.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.3,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -144,7 +165,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26JUN071335CWSPHI-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 14,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.73,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -164,7 +194,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26JUN071610NYMSD-11"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 10,
+        "line": 10.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.27,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -184,7 +223,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26JUN071410ATHHOU-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 5,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.23,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -204,5 +252,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-07",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 4,
+      "wins": 3,
+      "losses": 1,
+      "ungraded": 0,
+      "cost_dollars": 2.93,
+      "pnl_dollars": 0.07,
+      "roi_pct": 2.39,
+      "win_pct": 75.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-07",
+    "placed": 1,
+    "wins": 0,
+    "losses": 1,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.53,
+    "total_payout_dollars": 0.0,
+    "total_pnl_dollars": -0.53,
+    "roi_pct": -100.0
   }
 }
