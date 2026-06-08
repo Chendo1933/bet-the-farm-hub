@@ -1,0 +1,19 @@
+{
+  "date": "2026-06-08",
+  "snapshot_time": "2026-06-08T21:09:39.239835+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Baltimore Orioles",
+        "away": "Seattle Mariners",
+        "commence": "2026-06-08T22:36:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": 112,
+        "ml_away": -132,
+        "snapshot_time": "2026-06-08T21:09:39.239835+00:00"
+      }
+    ]
+  }
+}
