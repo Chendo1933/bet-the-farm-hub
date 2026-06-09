@@ -20568,6 +20568,249 @@
           "l": "\ud83d\udcc8 +5.9% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Tampa Bay Rays ML (-104)",
+      "home": "Tampa Bay Rays",
+      "away": "Boston Red Sox",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -104,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.9615,
+      "homeScore": 3,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 58% vs implied 49%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -104"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "New York Yankees ML (+104)",
+      "home": "Cleveland Guardians",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 62,
+      "odds": 104,
+      "outcome": "win",
+      "margin": 2,
+      "units": 1.04,
+      "homeScore": 5,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 59% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +104"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "strong",
+      "pick": "New York Yankees +1.5",
+      "home": "Cleveland Guardians",
+      "away": "New York Yankees",
+      "spread": -1.5,
+      "total": null,
+      "score100": 63,
+      "rawScore100": 66,
+      "odds": -199,
+      "outcome": "win",
+      "margin": 3.5,
+      "units": 0.5025,
+      "homeScore": 5,
+      "awayScore": 7,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 59% vs implied 47%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +104"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 Underdog wins outright (+104) \u2192 auto-covers spread"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "lean",
+      "pick": "Toronto Blue Jays ML (+141)",
+      "home": "Toronto Blue Jays",
+      "away": "Philadelphia Phillies",
+      "spread": null,
+      "total": null,
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 141,
+      "outcome": "loss",
+      "margin": 3,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 5,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 49% vs implied 40%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +141"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Washington Nationals ML (+130)",
+      "home": "San Francisco Giants",
+      "away": "Washington Nationals",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 130,
+      "outcome": "win",
+      "margin": 1,
+      "units": 1.3,
+      "homeScore": 3,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 51% vs implied 42%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.3"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +130"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "spread",
+      "tier": "good",
+      "pick": "Washington Nationals +1.5",
+      "home": "San Francisco Giants",
+      "away": "Washington Nationals",
+      "spread": -1.5,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 64,
+      "odds": -162,
+      "outcome": "win",
+      "margin": 2.5,
+      "units": 0.6173,
+      "homeScore": 3,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 69% (18-8)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +10.1% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Season ATS 64%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.741 / WHIP 1.37 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 10 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 51% vs 42% implied (+130) \u2014 strong ML value"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\udcca Market prices pick as 42% win probability"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +130 dog \u2192 auto-covers if wins"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "Milwaukee Brewers ML (-149)",
+      "home": "Athletics",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": null,
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": -149,
+      "outcome": "win",
+      "margin": 1,
+      "units": 0.6711,
+      "homeScore": 14,
+      "awayScore": 15,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 65% win rate vs 57% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.7"
+        }
+      ]
     }
   ]
 }
