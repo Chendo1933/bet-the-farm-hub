@@ -60,7 +60,13 @@
       "stake_dollars": 1.44,
       "contracts": 3,
       "edge_pct": 0.098,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 5,
+      "away_score": 7,
+      "payout_dollars": 3.0,
+      "pnl_dollars": 1.56,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -103,7 +109,13 @@
       "model_prob": 0.566,
       "would_place": false,
       "skip_reason": "ambiguous",
-      "map_reason": "Multiple weak event matches"
+      "map_reason": "Multiple weak event matches",
+      "outcome": "win",
+      "home_score": 14,
+      "away_score": 15,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "skipped_dry_run"
     }
   ],
   "paper_orders": [
@@ -125,7 +137,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.06148852541329752,
         "ticker": "KXMLBTOTAL-26JUN082205MILATH-8"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 29,
+        "line": 7.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.24,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -145,7 +166,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.051488525413297515,
         "ticker": "KXMLBTOTAL-26JUN082138HOULAA-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 9,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.23,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -165,5 +195,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-08",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 2,
+      "wins": 2,
+      "losses": 0,
+      "ungraded": 0,
+      "cost_dollars": 1.53,
+      "pnl_dollars": 0.47,
+      "roi_pct": 30.72,
+      "win_pct": 100.0
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-08",
+    "placed": 1,
+    "wins": 1,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 1.44,
+    "total_payout_dollars": 3.0,
+    "total_pnl_dollars": 1.56,
+    "roi_pct": 108.33
   }
 }

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-08T12:18:25+00:00",
+  "updated": "2026-06-09T10:49:36+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 33,
-      "avg_clv_pct": 0.29,
+      "n": 35,
+      "avg_clv_pct": 0.28,
       "beat_close": 7,
-      "beat_close_pct": 21.2
+      "beat_close_pct": 20.0
     },
     "bets": [
       {
@@ -465,6 +465,34 @@
         "entry_total": 9,
         "close_total": 9.0,
         "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-08",
+        "away": "Milwaukee Brewers",
+        "home": "Athletics",
+        "line": 7.5,
+        "side": "over",
+        "entry_total": 11,
+        "close_total": 11.0,
+        "close_source": "midday",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8215,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-08",
+        "away": "Houston Astros",
+        "home": "Los Angeles Angels",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.0,
+        "close_source": "midday",
         "entry_prob": 0.8215,
         "close_prob": 0.8215,
         "clv": 0.0,
