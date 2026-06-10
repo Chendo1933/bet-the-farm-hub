@@ -1,0 +1,134 @@
+{
+  "date": "2026-06-10",
+  "logged": "2026-06-10T19:11:36.428874+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "San Diego Padres",
+      "away": "Cincinnati Reds",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Cincinnati Reds",
+      "pickLabel": "Cincinnati Reds ML (+143)",
+      "score100": 55,
+      "rawScore100": 57,
+      "odds": 143,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 49% vs implied 39%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +143"
+        }
+      ],
+      "date": "Jun 10",
+      "time": "4:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Mets",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+113)",
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 113,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ],
+      "date": "Jun 10",
+      "time": "7:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago White Sox",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-149)",
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -149,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 66% vs implied 57%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.7"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -149"
+        }
+      ],
+      "date": "Jun 10",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Athletics",
+      "away": "Milwaukee Brewers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Milwaukee Brewers",
+      "pickLabel": "Milwaukee Brewers ML (-110)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -110,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -110"
+        }
+      ],
+      "date": "Jun 10",
+      "time": "9:06 PM ET"
+    }
+  ],
+  "all_picks_count": 4,
+  "filter_stats": {
+    "prefilter": 19,
+    "sub60": 13,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 1,
+    "kept": 4,
+    "dropped": 15
+  }
+}
