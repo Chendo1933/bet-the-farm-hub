@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-09T10:49:36+00:00",
+  "updated": "2026-06-10T11:28:31+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 35,
-      "avg_clv_pct": 0.28,
-      "beat_close": 7,
-      "beat_close_pct": 20.0
+      "n": 39,
+      "avg_clv_pct": 0.14,
+      "beat_close": 8,
+      "beat_close_pct": 20.5
     },
     "bets": [
       {
@@ -496,6 +496,62 @@
         "entry_prob": 0.8215,
         "close_prob": 0.8215,
         "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-09",
+        "away": "Milwaukee Brewers",
+        "home": "Athletics",
+        "line": 9.5,
+        "side": "over",
+        "entry_total": 13,
+        "close_total": 13.5,
+        "close_source": "midday",
+        "entry_prob": 0.8215,
+        "close_prob": 0.8537,
+        "clv": 0.0323,
+        "beat_close": true
+      },
+      {
+        "date": "2026-06-09",
+        "away": "Chicago Cubs",
+        "home": "Colorado Rockies",
+        "line": 9.5,
+        "side": "over",
+        "entry_total": 12.5,
+        "close_total": 12.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-09",
+        "away": "Texas Rangers",
+        "home": "Kansas City Royals",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-09",
+        "away": "Atlanta Braves",
+        "home": "Chicago White Sox",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
         "beat_close": false
       }
     ]
