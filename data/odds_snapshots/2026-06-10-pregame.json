@@ -1,0 +1,19 @@
+{
+  "date": "2026-06-10",
+  "snapshot_time": "2026-06-10T18:22:43.249213+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "San Francisco Giants",
+        "away": "Washington Nationals",
+        "commence": "2026-06-10T19:46:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -116,
+        "ml_away": -102,
+        "snapshot_time": "2026-06-10T18:22:43.249213+00:00"
+      }
+    ]
+  }
+}
