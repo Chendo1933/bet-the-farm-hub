@@ -8027,8 +8027,8 @@
     "822970": {
       "home_id": 656876,
       "home_name": "Drew Rasmussen",
-      "away_id": null,
-      "away_name": null,
+      "away_id": 687562,
+      "away_name": "Jake Bennett",
       "home_team": "Tampa Bay Rays",
       "away_team": "Boston Red Sox"
     },
@@ -8097,8 +8097,8 @@
       "away_team": "Philadelphia Phillies"
     },
     "823618": {
-      "home_id": 681035,
-      "home_name": "Christian Scott",
+      "home_id": 681810,
+      "home_name": "Austin Warren",
       "away_id": 669467,
       "away_name": "Andre Pallante",
       "home_team": "New York Mets",
@@ -8131,8 +8131,8 @@
     "824996": {
       "home_id": 678022,
       "home_name": "Jack Perkins",
-      "away_id": null,
-      "away_name": null,
+      "away_id": 687075,
+      "away_name": "Brandon Sproat",
       "home_team": "Athletics",
       "away_team": "Milwaukee Brewers"
     },
@@ -8143,6 +8143,70 @@
       "away_name": "Peter Lambert",
       "home_team": "Los Angeles Angels",
       "away_team": "Houston Astros"
+    },
+    "823619": {
+      "home_id": 681035,
+      "home_name": "Christian Scott",
+      "away_id": 690928,
+      "away_name": "Hunter Dobbins",
+      "home_team": "New York Mets",
+      "away_team": "St. Louis Cardinals"
+    },
+    "824265": {
+      "home_id": 672456,
+      "home_name": "Keider Montero",
+      "away_id": 805673,
+      "away_name": "Zebby Matthews",
+      "home_team": "Detroit Tigers",
+      "away_team": "Minnesota Twins"
+    },
+    "823855": {
+      "home_id": 663969,
+      "home_name": "Tyler Phillips",
+      "away_id": 518876,
+      "away_name": "Merrill Kelly",
+      "home_team": "Miami Marlins",
+      "away_team": "Arizona Diamondbacks"
+    },
+    "824101": {
+      "home_id": 608379,
+      "home_name": "Michael Wacha",
+      "away_id": 677958,
+      "away_name": "Kumar Rocker",
+      "home_team": "Kansas City Royals",
+      "away_team": "Texas Rangers"
+    },
+    "824346": {
+      "home_id": 663372,
+      "home_name": "Ryan Feltner",
+      "away_id": 665795,
+      "away_name": "Edward Cabrera",
+      "home_team": "Colorado Rockies",
+      "away_team": "Chicago Cubs"
+    },
+    "823371": {
+      "home_id": 656605,
+      "home_name": "Mitch Keller",
+      "away_id": 680736,
+      "away_name": "Justin Wrobleski",
+      "home_team": "Pittsburgh Pirates",
+      "away_team": "Los Angeles Dodgers"
+    },
+    "824827": {
+      "home_id": 680694,
+      "home_name": "Kyle Bradish",
+      "away_id": 693433,
+      "away_name": "Bryan Woo",
+      "home_team": "Baltimore Orioles",
+      "away_team": "Seattle Mariners"
+    },
+    "824589": {
+      "home_id": null,
+      "home_name": null,
+      "away_id": 527048,
+      "away_name": "Mart\u00edn P\u00e9rez",
+      "home_team": "Chicago White Sox",
+      "away_team": "Atlanta Braves"
     }
   },
   "game_logs": {
@@ -23531,6 +23595,8 @@
     "2026-06-08",
     "2026-06-09",
     "2026-06-09",
-    "2026-06-10"
+    "2026-06-10",
+    "2026-06-10",
+    "2026-06-11"
   ]
 }
