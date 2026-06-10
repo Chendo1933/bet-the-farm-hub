@@ -1,0 +1,319 @@
+{
+  "date": "2026-06-10",
+  "logged": "2026-06-10T12:58:24.731990",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Cleveland Guardians",
+        "away": "New York Yankees",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "New York Yankees",
+        "pickLabel": "New York Yankees ML (-102)",
+        "score100": 67,
+        "rawScore100": 63,
+        "odds": -102,
+        "tier": "strong",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 62% vs implied 48%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +4.4"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -102"
+          }
+        ],
+        "date": "Jun 10",
+        "time": "1:11 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN101310NYYCLE-NYY",
+      "market_title": "New York Y vs Cleveland Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 49,
+      "yes_bid_cents": 48,
+      "last_price_cents": 49,
+      "previous_yes_ask_cents": 50,
+      "volume_24h": "121765.04",
+      "use_price_cents": 49,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.602,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 1.47,
+      "contracts": 3,
+      "edge_pct": 0.112,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Chicago White Sox",
+        "away": "Atlanta Braves",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-156)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -156,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 67% vs implied 58%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +4.6"
+          }
+        ],
+        "date": "Jun 10",
+        "time": "7:41 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN101940ATLCWS-ATL",
+      "market_title": "Atlanta vs Chicago WS Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 59,
+      "yes_bid_cents": 58,
+      "last_price_cents": 59,
+      "previous_yes_ask_cents": 62,
+      "volume_24h": "55206.82",
+      "use_price_cents": 59,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.626,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 0.59,
+      "contracts": 1,
+      "edge_pct": 0.036,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Athletics",
+        "away": "Milwaukee Brewers",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Milwaukee Brewers",
+        "pickLabel": "Milwaukee Brewers ML (-112)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -112,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 63% vs implied 50%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +6.4"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -112"
+          }
+        ],
+        "date": "Jun 10",
+        "time": "9:06 PM ET"
+      },
+      "market_ticker": null,
+      "market_title": null,
+      "yes_side": null,
+      "yes_ask_cents": null,
+      "yes_bid_cents": null,
+      "last_price_cents": null,
+      "previous_yes_ask_cents": null,
+      "volume_24h": null,
+      "use_price_cents": null,
+      "use_price_source": "no_price",
+      "model_prob": 0.626,
+      "would_place": false,
+      "skip_reason": "ambiguous",
+      "map_reason": "Multiple weak event matches"
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Colorado Rockies",
+        "away": "Chicago Cubs",
+        "line": 9.5,
+        "side": "over",
+        "market_total": 12.5,
+        "pickLabel": "OVER 9.5 (Chicago Cubs @ Colorado Rockies total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.71,
+        "our_prob": 0.7850823976887276,
+        "edge": 0.0750823976887276,
+        "ticker": "KXMLBTOTAL-26JUN102040CHCCOL-10"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Athletics",
+        "away": "Milwaukee Brewers",
+        "line": 11.5,
+        "side": "over",
+        "market_total": 14.5,
+        "pickLabel": "OVER 11.5 (Milwaukee Brewers @ Athletics total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.71,
+        "our_prob": 0.7850823976887276,
+        "edge": 0.0750823976887276,
+        "ticker": "KXMLBTOTAL-26JUN102105MILATH-12"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Detroit Tigers",
+        "away": "Minnesota Twins",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Minnesota Twins @ Detroit Tigers total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.76,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.06148852541329752,
+        "ticker": "KXMLBTOTAL-26JUN101840MINDET-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Pittsburgh Pirates",
+        "away": "Los Angeles Dodgers",
+        "line": 10.5,
+        "side": "under",
+        "market_total": 8,
+        "pickLabel": "UNDER 10.5 (Los Angeles Dodgers @ Pittsburgh Pirates total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.69,
+        "our_prob": 0.744697113569311,
+        "edge": 0.05469711356931106,
+        "ticker": "KXMLBTOTAL-26JUN101840LADPIT-11"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Kansas City Royals",
+        "away": "Texas Rangers",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 10,
+        "pickLabel": "UNDER 12.5 (Texas Rangers @ Kansas City Royals total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.69,
+        "our_prob": 0.744697113569311,
+        "edge": 0.05469711356931106,
+        "ticker": "KXMLBTOTAL-26JUN101940TEXKC-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "San Francisco Giants",
+        "away": "Washington Nationals",
+        "line": 7.5,
+        "side": "over",
+        "market_total": 8.5,
+        "pickLabel": "OVER 7.5 (Washington Nationals @ San Francisco Giants total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.55,
+        "our_prob": 0.6037855587977,
+        "edge": 0.05378555879769997,
+        "ticker": "KXMLBTOTAL-26JUN101545WSHSF-8"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Baltimore Orioles",
+        "away": "Seattle Mariners",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Seattle Mariners @ Baltimore Orioles total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26JUN101835SEABAL-13"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 4,
+    "picks_eligible_after_filter": 3,
+    "orders_would_place": 2,
+    "total_stake_dollars": 2.06,
+    "remaining_daily_capacity": 8.63,
+    "skipped_by_reason": {
+      "ambiguous": 1
+    },
+    "paper_candidates": 7,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
