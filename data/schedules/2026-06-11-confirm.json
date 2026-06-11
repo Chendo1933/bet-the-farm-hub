@@ -1,0 +1,73 @@
+{
+  "date": "2026-06-11",
+  "logged": "2026-06-11T19:18:42.535706+00:00",
+  "has_odds": true,
+  "games": [
+    {
+      "sport": "nhl",
+      "home": "Carolina Hurricanes",
+      "away": "Vegas Golden Knights",
+      "date": "Jun 11",
+      "time": "8:20 PM ET",
+      "spread": -1.5,
+      "total": 6.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Colorado Rockies",
+      "away": "Chicago Cubs",
+      "date": "Jun 11",
+      "time": "3:11 PM ET",
+      "spread": 1.5,
+      "total": 10.5,
+      "spreadMove": 0,
+      "totalMove": -0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Kansas City Royals",
+      "away": "Texas Rangers",
+      "date": "Jun 11",
+      "time": "3:41 PM ET",
+      "spread": 1.5,
+      "total": 10.5,
+      "spreadMove": 0,
+      "totalMove": 0.5
+    },
+    {
+      "sport": "mlb",
+      "home": "Pittsburgh Pirates",
+      "away": "Los Angeles Dodgers",
+      "date": "Jun 11",
+      "time": "6:41 PM ET",
+      "spread": 1.5,
+      "total": 9.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Baltimore Orioles",
+      "away": "Seattle Mariners",
+      "date": "Jun 11",
+      "time": "7:06 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    },
+    {
+      "sport": "mlb",
+      "home": "Chicago White Sox",
+      "away": "Atlanta Braves",
+      "date": "Jun 11",
+      "time": "7:41 PM ET",
+      "spread": 1.5,
+      "total": 8.5,
+      "spreadMove": 0,
+      "totalMove": 0
+    }
+  ]
+}
