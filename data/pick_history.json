@@ -21100,6 +21100,130 @@
           "l": "\ud83d\udcc8 +11.2% edge vs implied"
         }
       ]
+    },
+    {
+      "date": "2026-06-10",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "strong",
+      "pick": "New York Yankees ML (-102)",
+      "home": "Cleveland Guardians",
+      "away": "New York Yankees",
+      "spread": null,
+      "total": null,
+      "score100": 67,
+      "rawScore100": 63,
+      "odds": -102,
+      "outcome": "win",
+      "margin": 4,
+      "units": 0.9804,
+      "homeScore": 4,
+      "awayScore": 8,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -102"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "St. Louis Cardinals ML (+113)",
+      "home": "New York Mets",
+      "away": "St. Louis Cardinals",
+      "spread": null,
+      "total": null,
+      "score100": 57,
+      "rawScore100": 59,
+      "odds": 113,
+      "outcome": "win",
+      "margin": 7,
+      "units": 1.13,
+      "homeScore": 2,
+      "awayScore": 9,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 58% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +113"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Atlanta Braves ML (-156)",
+      "home": "Chicago White Sox",
+      "away": "Atlanta Braves",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -156,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 2,
+      "awayScore": 1,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 67% vs implied 58%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.6"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Milwaukee Brewers ML (-112)",
+      "home": "Athletics",
+      "away": "Milwaukee Brewers",
+      "spread": null,
+      "total": null,
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -112,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 4,
+      "awayScore": 3,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 63% vs implied 50%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +6.4"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -112"
+        }
+      ]
     }
   ]
 }
