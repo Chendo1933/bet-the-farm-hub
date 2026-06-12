@@ -21224,6 +21224,68 @@
           "l": "\ud83d\udcb0 Good value at -112"
         }
       ]
+    },
+    {
+      "date": "2026-06-11",
+      "sport": "NHL",
+      "betType": "ml",
+      "tier": "elite",
+      "pick": "Carolina Hurricanes ML (-162)",
+      "home": "Carolina Hurricanes",
+      "away": "Vegas Golden Knights",
+      "spread": null,
+      "total": null,
+      "score100": 75,
+      "rawScore100": 65,
+      "odds": -162,
+      "outcome": "win",
+      "margin": 2,
+      "units": 0.6173,
+      "homeScore": 4,
+      "awayScore": 2,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 71% vs implied 59%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +4.9"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -162"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "sport": "MLB",
+      "betType": "ml",
+      "tier": "good",
+      "pick": "St. Louis Cardinals ML (+119)",
+      "home": "New York Mets",
+      "away": "St. Louis Cardinals",
+      "spread": null,
+      "total": null,
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": 119,
+      "outcome": "loss",
+      "margin": 1,
+      "units": -1.0,
+      "homeScore": 5,
+      "awayScore": 4,
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 58% vs implied 44%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +119"
+        }
+      ]
     }
   ]
 }
