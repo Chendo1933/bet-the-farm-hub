@@ -1,0 +1,309 @@
+{
+  "date": "2026-06-12",
+  "logged": "2026-06-12T12:54:44.551505+00:00",
+  "has_live_odds": true,
+  "picks": [
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Baltimore Orioles",
+      "away": "San Diego Padres",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "San Diego Padres",
+      "pickLabel": "San Diego Padres ML (+119)",
+      "score100": 56,
+      "rawScore100": 58,
+      "odds": 119,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 52% vs implied 44%"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +119"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:06 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "New York Mets",
+      "away": "Atlanta Braves",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Atlanta Braves",
+      "pickLabel": "Atlanta Braves ML (-103)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -103,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 64% vs implied 48%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.6"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -103"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:15 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "New York Mets",
+      "away": "Atlanta Braves",
+      "atsPick": null,
+      "spread": null,
+      "total": 8,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 8",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -105,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: New York Mets 45% / Atlanta Braves 48% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Both bullpens elite (3.31/2.93 ERA) \u2192 late-inning Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +6.1% edge vs implied"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:15 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Cincinnati Reds",
+      "away": "Arizona Diamondbacks",
+      "atsPick": null,
+      "spread": null,
+      "total": 9.5,
+      "pickedTeam": "Over",
+      "pickLabel": "Over 9.5",
+      "score100": 57,
+      "rawScore100": 60,
+      "odds": -103,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Cincinnati Reds 64% / Arizona Diamondbacks 53% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83c\udfdf\ufe0f Mild hitter park (PF 1.05) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Shaky bullpens (avg 4.67 ERA) \u2192 slight Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.1% edge vs implied"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:16 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Toronto Blue Jays",
+      "away": "New York Yankees",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "New York Yankees",
+      "pickLabel": "New York Yankees ML (-105)",
+      "score100": 71,
+      "rawScore100": 64,
+      "odds": -105,
+      "tier": "elite",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 62% vs implied 49%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at -105"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:37 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Chicago White Sox",
+      "away": "Los Angeles Dodgers",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "Los Angeles Dodgers",
+      "pickLabel": "Los Angeles Dodgers ML (-149)",
+      "score100": 58,
+      "rawScore100": 60,
+      "odds": -149,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca 64% win rate vs 57% implied"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 Net RTG edge +5.5"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ou",
+      "home": "Milwaukee Brewers",
+      "away": "Philadelphia Phillies",
+      "atsPick": null,
+      "spread": null,
+      "total": 7.5,
+      "pickedTeam": "Under",
+      "pickLabel": "Under 7.5",
+      "score100": 56,
+      "rawScore100": 59,
+      "odds": -102,
+      "tier": "lean",
+      "factors": [
+        {
+          "t": "neu",
+          "l": "\ud83d\udcca O/U: Milwaukee Brewers 45% / Philadelphia Phillies 45% Over"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd12 Strong bullpens (avg 3.61 ERA) \u2192 slight Under"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +5.2% edge vs implied"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "7:41 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "ml",
+      "home": "Minnesota Twins",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": null,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals ML (+114)",
+      "score100": 61,
+      "rawScore100": 61,
+      "odds": 114,
+      "tier": "good",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca Win rate 57% vs implied 45%"
+        },
+        {
+          "t": "pos",
+          "l": "\u26a1 RTG edge +2.2"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Good value at +114"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "8:11 PM ET"
+    },
+    {
+      "sport": "MLB",
+      "betType": "spread",
+      "home": "Minnesota Twins",
+      "away": "St. Louis Cardinals",
+      "atsPick": "away",
+      "spread": -1.5,
+      "total": null,
+      "pickedTeam": "St. Louis Cardinals",
+      "pickLabel": "St. Louis Cardinals +1.5",
+      "score100": 62,
+      "rawScore100": 65,
+      "odds": -174,
+      "tier": "strong",
+      "factors": [
+        {
+          "t": "pos",
+          "l": "\u2708\ufe0f Away ATS 68% (17-8)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcc8 +7.3% edge vs implied"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcca OPS 0.715 / WHIP 1.33 edge"
+        },
+        {
+          "t": "neg",
+          "l": "\ud83d\ude91 7 questionable"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udcb0 Dog wins 57% vs 45% implied (+114) \u2014 strong ML value"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udd25 Picked team hot (last 10: 70% W)"
+        },
+        {
+          "t": "pos",
+          "l": "\ud83d\udca1 ML confirms: +114 dog \u2192 auto-covers if wins"
+        }
+      ],
+      "date": "Jun 12",
+      "time": "8:11 PM ET"
+    }
+  ],
+  "all_picks_count": 9,
+  "filter_stats": {
+    "prefilter": 21,
+    "sub60": 11,
+    "mlbFav": 1,
+    "coors": 0,
+    "exotic": 0,
+    "nbaPlayoff": 0,
+    "kept": 9,
+    "dropped": 12
+  }
+}
