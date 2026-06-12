@@ -60,7 +60,13 @@
       "stake_dollars": 0.6,
       "contracts": 1,
       "edge_pct": 0.05,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": "win",
+      "home_score": 4,
+      "away_score": 2,
+      "payout_dollars": 1.0,
+      "pnl_dollars": 0.4,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -110,7 +116,11 @@
       "stake_dollars": 1.59,
       "contracts": 3,
       "edge_pct": 0.096,
-      "kelly_fraction_used": 0.25
+      "kelly_fraction_used": 0.25,
+      "outcome": null,
+      "pnl_dollars": 0.0,
+      "payout_dollars": 0.0,
+      "reconcile_status": "no_history_match"
     }
   ],
   "paper_orders": [
@@ -132,7 +142,16 @@
         "our_prob": 0.8214885254132975,
         "edge": 0.08148852541329754,
         "ticker": "KXMLBTOTAL-26JUN111510CHCCOL-15"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 12,
+        "line": 14.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "win",
+      "pnl_dollars": 0.26,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -152,7 +171,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26JUN111410TEXKC-8"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 6,
+        "line": 7.5,
+        "side": "over"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.73,
+      "reconcile_status": "graded"
     },
     {
       "pick": {
@@ -172,7 +200,16 @@
         "our_prob": 0.7850823976887276,
         "edge": 0.05508239768872758,
         "ticker": "KXMLBTOTAL-26JUN111840LADPIT-13"
-      }
+      },
+      "alt_grade_info": {
+        "actual_total": 14,
+        "line": 12.5,
+        "side": "under"
+      },
+      "alt": true,
+      "outcome": "loss",
+      "pnl_dollars": -0.73,
+      "reconcile_status": "graded"
     }
   ],
   "summary": {
@@ -190,5 +227,38 @@
     "bankroll_source": "kalshi_live",
     "open_positions_dollars": 0.0,
     "total_account_dollars": 35.62
+  },
+  "paper_reconcile": {
+    "date": "2026-06-11",
+    "placed": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 0,
+    "total_stake_dollars": 0.0,
+    "total_pnl_dollars": 0,
+    "roi_pct": 0,
+    "alt_total": {
+      "placed": 3,
+      "wins": 1,
+      "losses": 2,
+      "ungraded": 0,
+      "cost_dollars": 2.2,
+      "pnl_dollars": -1.2,
+      "roi_pct": -54.55,
+      "win_pct": 33.3
+    }
+  },
+  "reconcile": {
+    "date": "2026-06-11",
+    "placed": 2,
+    "wins": 1,
+    "losses": 0,
+    "pushes": 0,
+    "ungraded": 1,
+    "total_stake_dollars": 2.19,
+    "total_payout_dollars": 1.0,
+    "total_pnl_dollars": 0.4,
+    "roi_pct": 18.26
   }
 }
