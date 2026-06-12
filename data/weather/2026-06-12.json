@@ -1,0 +1,157 @@
+{
+  "date": "2026-06-12",
+  "fetched_at": "2026-06-12T12:53:57.242600+00:00",
+  "parks": {
+    "Pittsburgh Pirates": {
+      "is_dome": false,
+      "park": "PNC Park",
+      "wind_mph": 12,
+      "wind_from_deg": 315,
+      "outfield_bearing_deg": 110,
+      "wind_out_component": 10.9,
+      "wind_label": "out to CF",
+      "temp_f": 81,
+      "game_time_utc": "2026-06-12T22:40:00+00:00"
+    },
+    "Washington Nationals": {
+      "is_dome": false,
+      "park": "Nationals Park",
+      "wind_mph": 8,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 3.4,
+      "wind_label": "crosswind",
+      "temp_f": 89,
+      "game_time_utc": "2026-06-12T22:45:00+00:00"
+    },
+    "Baltimore Orioles": {
+      "is_dome": false,
+      "park": "Camden Yards",
+      "wind_mph": 7,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 6.1,
+      "wind_label": "out to CF",
+      "temp_f": 88,
+      "game_time_utc": "2026-06-12T23:05:00+00:00"
+    },
+    "Cleveland Guardians": {
+      "is_dome": false,
+      "park": "Progressive Field",
+      "wind_mph": 9,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 0,
+      "wind_out_component": 0.0,
+      "wind_label": "crosswind",
+      "temp_f": 77,
+      "game_time_utc": "2026-06-12T23:10:00+00:00"
+    },
+    "Boston Red Sox": {
+      "is_dome": false,
+      "park": "Fenway Park",
+      "wind_mph": 3,
+      "wind_from_deg": 90,
+      "outfield_bearing_deg": 50,
+      "wind_out_component": 0.0,
+      "wind_label": "calm",
+      "temp_f": 79,
+      "game_time_utc": "2026-06-12T23:10:00+00:00"
+    },
+    "Cincinnati Reds": {
+      "is_dome": false,
+      "park": "Great American Ball Park",
+      "wind_mph": 6,
+      "wind_from_deg": 315,
+      "outfield_bearing_deg": 100,
+      "wind_out_component": 4.9,
+      "wind_label": "out to CF",
+      "temp_f": 82,
+      "game_time_utc": "2026-06-12T23:15:00+00:00"
+    },
+    "New York Mets": {
+      "is_dome": false,
+      "park": "Citi Field",
+      "wind_mph": 10,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 25,
+      "wind_out_component": 4.2,
+      "wind_label": "crosswind",
+      "temp_f": 87,
+      "game_time_utc": "2026-06-12T23:15:00+00:00"
+    },
+    "Toronto Blue Jays": {
+      "is_dome": true,
+      "park": "Rogers Centre"
+    },
+    "Chicago White Sox": {
+      "is_dome": false,
+      "park": "Rate Field",
+      "wind_mph": 15,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 40,
+      "wind_out_component": 9.6,
+      "wind_label": "crosswind",
+      "temp_f": 78,
+      "game_time_utc": "2026-06-12T23:40:00+00:00"
+    },
+    "Milwaukee Brewers": {
+      "is_dome": true,
+      "park": "American Family Field"
+    },
+    "Kansas City Royals": {
+      "is_dome": false,
+      "park": "Kauffman Stadium",
+      "wind_mph": 6,
+      "wind_from_deg": 180,
+      "outfield_bearing_deg": 45,
+      "wind_out_component": 4.2,
+      "wind_label": "out to CF",
+      "temp_f": 82,
+      "game_time_utc": "2026-06-13T00:10:00+00:00"
+    },
+    "Minnesota Twins": {
+      "is_dome": false,
+      "park": "Target Field",
+      "wind_mph": 10,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 90,
+      "wind_out_component": 10.0,
+      "wind_label": "out to CF",
+      "temp_f": 79,
+      "game_time_utc": "2026-06-13T00:10:00+00:00"
+    },
+    "Los Angeles Angels": {
+      "is_dome": false,
+      "park": "Angel Stadium",
+      "wind_mph": 10,
+      "wind_from_deg": 225,
+      "outfield_bearing_deg": 60,
+      "wind_out_component": 9.7,
+      "wind_label": "out to CF",
+      "temp_f": 80,
+      "game_time_utc": "2026-06-13T01:38:00+00:00"
+    },
+    "Athletics": {
+      "is_dome": false,
+      "park": "Sutter Health Park",
+      "wind_mph": 10,
+      "wind_from_deg": 247.5,
+      "outfield_bearing_deg": 135,
+      "wind_out_component": 3.8,
+      "wind_label": "crosswind",
+      "temp_f": 95,
+      "game_time_utc": "2026-06-13T02:05:00+00:00"
+    },
+    "San Francisco Giants": {
+      "is_dome": false,
+      "park": "Oracle Park",
+      "wind_mph": 9,
+      "wind_from_deg": 270,
+      "outfield_bearing_deg": 90,
+      "wind_out_component": 9.0,
+      "wind_label": "out to CF",
+      "temp_f": 64,
+      "game_time_utc": "2026-06-13T02:15:00+00:00"
+    }
+  }
+}
