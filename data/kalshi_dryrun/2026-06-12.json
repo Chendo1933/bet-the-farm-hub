@@ -1,0 +1,264 @@
+{
+  "date": "2026-06-12",
+  "logged": "2026-06-12T12:55:21.177939",
+  "config_snapshot": {
+    "environment": "live",
+    "min_calibrated_score": 60,
+    "supported_bet_types": [],
+    "max_stake_per_pick_dollars": 5,
+    "max_daily_exposure_dollars": 20,
+    "kelly_fraction": 0.25,
+    "bankroll_dollars": 500,
+    "skip_if_yes_ask_above_cents": 80
+  },
+  "orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "New York Mets",
+        "away": "Atlanta Braves",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "Atlanta Braves",
+        "pickLabel": "Atlanta Braves ML (-103)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -103,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 64% vs implied 48%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.6"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -103"
+          }
+        ],
+        "date": "Jun 12",
+        "time": "7:15 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN121915ATLNYM-ATL",
+      "market_title": "Atlanta vs New York M Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 50,
+      "yes_bid_cents": 49,
+      "last_price_cents": 50,
+      "previous_yes_ask_cents": 53,
+      "volume_24h": "159090.67",
+      "use_price_cents": 50,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.626,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 2.0,
+      "contracts": 4,
+      "edge_pct": 0.126,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Toronto Blue Jays",
+        "away": "New York Yankees",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "New York Yankees",
+        "pickLabel": "New York Yankees ML (-105)",
+        "score100": 71,
+        "rawScore100": 64,
+        "odds": -105,
+        "tier": "elite",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 62% vs implied 49%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 Net RTG edge +5.2"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at -105"
+          }
+        ],
+        "date": "Jun 12",
+        "time": "7:37 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN121937NYYTOR-NYY",
+      "market_title": "New York Y vs Toronto Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 51,
+      "yes_bid_cents": 50,
+      "last_price_cents": 51,
+      "previous_yes_ask_cents": 53,
+      "volume_24h": "37115.09",
+      "use_price_cents": 51,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.626,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 2.04,
+      "contracts": 4,
+      "edge_pct": 0.116,
+      "kelly_fraction_used": 0.25
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "ml",
+        "home": "Minnesota Twins",
+        "away": "St. Louis Cardinals",
+        "atsPick": "away",
+        "spread": null,
+        "total": null,
+        "pickedTeam": "St. Louis Cardinals",
+        "pickLabel": "St. Louis Cardinals ML (+114)",
+        "score100": 61,
+        "rawScore100": 61,
+        "odds": 114,
+        "tier": "good",
+        "factors": [
+          {
+            "t": "pos",
+            "l": "\ud83d\udcca Win rate 57% vs implied 45%"
+          },
+          {
+            "t": "pos",
+            "l": "\u26a1 RTG edge +2.2"
+          },
+          {
+            "t": "pos",
+            "l": "\ud83d\udcb0 Good value at +114"
+          }
+        ],
+        "date": "Jun 12",
+        "time": "8:11 PM ET"
+      },
+      "market_ticker": "KXMLBGAME-26JUN122010STLMIN-STL",
+      "market_title": "St. Louis vs Minnesota Winner?",
+      "yes_side": "YES",
+      "yes_ask_cents": 45,
+      "yes_bid_cents": 44,
+      "last_price_cents": 45,
+      "previous_yes_ask_cents": 49,
+      "volume_24h": "23756.95",
+      "use_price_cents": 45,
+      "use_price_source": "yes_ask",
+      "model_prob": 0.566,
+      "would_place": true,
+      "skip_reason": null,
+      "stake_dollars": 1.8,
+      "contracts": 4,
+      "edge_pct": 0.116,
+      "kelly_fraction_used": 0.25
+    }
+  ],
+  "paper_orders": [
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Athletics",
+        "away": "Colorado Rockies",
+        "line": 16.5,
+        "side": "under",
+        "market_total": 13.5,
+        "pickLabel": "UNDER 16.5 (Colorado Rockies @ Athletics total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.69,
+        "our_prob": 0.7850823976887276,
+        "edge": 0.09508239768872762,
+        "ticker": "KXMLBTOTAL-26JUN122205COLATH-17"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Washington Nationals",
+        "away": "Seattle Mariners",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Seattle Mariners @ Washington Nationals total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.75,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.07148852541329753,
+        "ticker": "KXMLBTOTAL-26JUN121845SEAWSH-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Kansas City Royals",
+        "away": "Houston Astros",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (Houston Astros @ Kansas City Royals total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.75,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.07148852541329753,
+        "ticker": "KXMLBTOTAL-26JUN122010HOUKC-13"
+      }
+    },
+    {
+      "pick": {
+        "sport": "MLB",
+        "betType": "alt_total",
+        "home": "Baltimore Orioles",
+        "away": "San Diego Padres",
+        "line": 12.5,
+        "side": "under",
+        "market_total": 9,
+        "pickLabel": "UNDER 12.5 (San Diego Padres @ Baltimore Orioles total)"
+      },
+      "track": "paper",
+      "would_grade": true,
+      "alt_meta": {
+        "kalshi_price": 0.77,
+        "our_prob": 0.8214885254132975,
+        "edge": 0.051488525413297515,
+        "ticker": "KXMLBTOTAL-26JUN121905SDBAL-13"
+      }
+    }
+  ],
+  "summary": {
+    "picks_total": 9,
+    "picks_eligible_after_filter": 3,
+    "orders_would_place": 3,
+    "total_stake_dollars": 5.84,
+    "remaining_daily_capacity": 4.85,
+    "skipped_by_reason": {},
+    "paper_candidates": 4,
+    "paper_bet_types_tracked": [
+      "alt_total"
+    ],
+    "bankroll_used_dollars": 35.62,
+    "bankroll_source": "kalshi_live",
+    "open_positions_dollars": 0.0,
+    "total_account_dollars": 35.62
+  }
+}
