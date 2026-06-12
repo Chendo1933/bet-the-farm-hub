@@ -1,0 +1,79 @@
+{
+  "date": "2026-06-12",
+  "snapshot_time": "2026-06-12T21:47:21.733967+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Pittsburgh Pirates",
+        "away": "Miami Marlins",
+        "commence": "2026-06-12T22:41:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -148,
+        "ml_away": 126,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "Washington Nationals",
+        "away": "Seattle Mariners",
+        "commence": "2026-06-12T22:46:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": 124,
+        "ml_away": -146,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "Baltimore Orioles",
+        "away": "San Diego Padres",
+        "commence": "2026-06-12T23:06:00Z",
+        "spread": -1.5,
+        "total": 9.5,
+        "ml_home": -130,
+        "ml_away": 110,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "Boston Red Sox",
+        "away": "Texas Rangers",
+        "commence": "2026-06-12T23:11:00Z",
+        "spread": -1.5,
+        "total": 8.5,
+        "ml_home": -134,
+        "ml_away": 114,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "Cleveland Guardians",
+        "away": "Detroit Tigers",
+        "commence": "2026-06-12T23:11:00Z",
+        "spread": 1.5,
+        "total": 8.5,
+        "ml_home": -118,
+        "ml_away": 100,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "New York Mets",
+        "away": "Atlanta Braves",
+        "commence": "2026-06-12T23:15:00Z",
+        "spread": -1.5,
+        "total": 8.0,
+        "ml_home": -131,
+        "ml_away": 108,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      },
+      {
+        "home": "Cincinnati Reds",
+        "away": "Arizona Diamondbacks",
+        "commence": "2026-06-12T23:16:00Z",
+        "spread": 1.5,
+        "total": 9.5,
+        "ml_home": -112,
+        "ml_away": -104,
+        "snapshot_time": "2026-06-12T21:47:21.733967+00:00"
+      }
+    ]
+  }
+}
