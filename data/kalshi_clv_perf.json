@@ -1,11 +1,11 @@
 {
-  "updated": "2026-06-12T11:32:28+00:00",
+  "updated": "2026-06-13T10:19:12+00:00",
   "paper_alt_total": {
     "summary": {
-      "n": 49,
-      "avg_clv_pct": -0.21,
+      "n": 53,
+      "avg_clv_pct": -0.4,
       "beat_close": 8,
-      "beat_close_pct": 16.3
+      "beat_close_pct": 15.1
     },
     "bets": [
       {
@@ -692,6 +692,62 @@
         "entry_prob": 0.7851,
         "close_prob": 0.7851,
         "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-12",
+        "away": "Colorado Rockies",
+        "home": "Athletics",
+        "line": 16.5,
+        "side": "under",
+        "entry_total": 13.5,
+        "close_total": 13.5,
+        "close_source": "midday",
+        "entry_prob": 0.7851,
+        "close_prob": 0.7851,
+        "clv": 0.0,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-12",
+        "away": "Seattle Mariners",
+        "home": "Washington Nationals",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-12",
+        "away": "Houston Astros",
+        "home": "Kansas City Royals",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
+        "beat_close": false
+      },
+      {
+        "date": "2026-06-12",
+        "away": "San Diego Padres",
+        "home": "Baltimore Orioles",
+        "line": 12.5,
+        "side": "under",
+        "entry_total": 9,
+        "close_total": 9.5,
+        "close_source": "pregame",
+        "entry_prob": 0.8215,
+        "close_prob": 0.7851,
+        "clv": -0.0364,
         "beat_close": false
       }
     ]
