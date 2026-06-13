@@ -1,0 +1,19 @@
+{
+  "date": "2026-06-13",
+  "snapshot_time": "2026-06-13T17:06:52.685788+00:00",
+  "type": "pregame",
+  "games": {
+    "mlb": [
+      {
+        "home": "Minnesota Twins",
+        "away": "St. Louis Cardinals",
+        "commence": "2026-06-13T18:11:00Z",
+        "spread": 1.5,
+        "total": 9.0,
+        "ml_home": -102,
+        "ml_away": -116,
+        "snapshot_time": "2026-06-13T17:06:52.685788+00:00"
+      }
+    ]
+  }
+}
