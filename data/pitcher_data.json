@@ -8337,8 +8337,8 @@
       "away_team": "St. Louis Cardinals"
     },
     "822802": {
-      "home_id": null,
-      "home_name": null,
+      "home_id": 592332,
+      "home_name": "Kevin Gausman",
       "away_id": 693645,
       "away_name": "Cam Schlittler",
       "home_team": "Toronto Blue Jays",
@@ -8363,8 +8363,8 @@
     "823369": {
       "home_id": 696149,
       "home_name": "Bubba Chandler",
-      "away_id": null,
-      "away_name": null,
+      "away_id": 669199,
+      "away_name": "Lake Bachar",
       "home_team": "Pittsburgh Pirates",
       "away_team": "Miami Marlins"
     },
@@ -8425,8 +8425,8 @@
       "away_team": "Philadelphia Phillies"
     },
     "824995": {
-      "home_id": 605488,
-      "home_name": "Jeffrey Springs",
+      "home_id": 683155,
+      "home_name": "Joey Estes",
       "away_id": 607536,
       "away_name": "Kyle Freeland",
       "home_team": "Athletics",
@@ -8441,12 +8441,132 @@
       "away_team": "Chicago Cubs"
     },
     "824019": {
-      "home_id": null,
-      "home_name": null,
+      "home_id": 667755,
+      "home_name": "Jos\u00e9 Soriano",
       "away_id": 643377,
       "away_name": "Griffin Jax",
       "home_team": "Los Angeles Angels",
       "away_team": "Tampa Bay Rays"
+    },
+    "823368": {
+      "home_id": 694973,
+      "home_name": "Paul Skenes",
+      "away_id": 676974,
+      "away_name": "Max Meyer",
+      "home_team": "Pittsburgh Pirates",
+      "away_team": "Miami Marlins"
+    },
+    "824823": {
+      "home_id": 669432,
+      "home_name": "Trevor Rogers",
+      "away_id": 621111,
+      "away_name": "Walker Buehler",
+      "home_team": "Baltimore Orioles",
+      "away_team": "San Diego Padres"
+    },
+    "822722": {
+      "home_id": 571945,
+      "home_name": "Miles Mikolas",
+      "away_id": 676106,
+      "away_name": "Emerson Hancock",
+      "home_team": "Washington Nationals",
+      "away_team": "Seattle Mariners"
+    },
+    "822801": {
+      "home_id": 571578,
+      "home_name": "Patrick Corbin",
+      "away_id": 701542,
+      "away_name": "Will Warren",
+      "home_team": "Toronto Blue Jays",
+      "away_team": "New York Yankees"
+    },
+    "824506": {
+      "home_id": 671096,
+      "home_name": "Andrew Abbott",
+      "away_id": 668678,
+      "away_name": "Zac Gallen",
+      "home_team": "Cincinnati Reds",
+      "away_team": "Arizona Diamondbacks"
+    },
+    "824424": {
+      "home_id": 668909,
+      "home_name": "Gavin Williams",
+      "away_id": 663554,
+      "away_name": "Casey Mize",
+      "home_team": "Cleveland Guardians",
+      "away_team": "Detroit Tigers"
+    },
+    "823615": {
+      "home_id": 642547,
+      "home_name": "Freddy Peralta",
+      "away_id": 693821,
+      "away_name": "Bryce Elder",
+      "home_team": "New York Mets",
+      "away_team": "Atlanta Braves"
+    },
+    "824099": {
+      "home_id": 663568,
+      "home_name": "Stephen Kolek",
+      "away_id": 681293,
+      "away_name": "Spencer Arrighetti",
+      "home_team": "Kansas City Royals",
+      "away_team": "Houston Astros"
+    },
+    "823693": {
+      "home_id": 671737,
+      "home_name": "Taj Bradley",
+      "away_id": 700241,
+      "away_name": "Michael McGreevy",
+      "home_team": "Minnesota Twins",
+      "away_team": "St. Louis Cardinals"
+    },
+    "824586": {
+      "home_id": 607200,
+      "home_name": "Erick Fedde",
+      "away_id": 686218,
+      "away_name": "Emmet Sheehan",
+      "home_team": "Chicago White Sox",
+      "away_team": "Los Angeles Dodgers"
+    },
+    "823777": {
+      "home_id": 690986,
+      "home_name": "Kyle Harrison",
+      "away_id": 650911,
+      "away_name": "Cristopher S\u00e1nchez",
+      "home_team": "Milwaukee Brewers",
+      "away_team": "Philadelphia Phillies"
+    },
+    "824994": {
+      "home_id": 605488,
+      "home_name": "Jeffrey Springs",
+      "away_id": 608372,
+      "away_name": "Tomoyuki Sugano",
+      "home_team": "Athletics",
+      "away_team": "Colorado Rockies"
+    },
+    "823212": {
+      "home_id": 657277,
+      "home_name": "Logan Webb",
+      "away_id": 607067,
+      "away_name": "Colin Rea",
+      "home_team": "San Francisco Giants",
+      "away_team": "Chicago Cubs"
+    },
+    "824021": {
+      "home_id": 680570,
+      "home_name": "Grayson Rodriguez",
+      "away_id": null,
+      "away_name": null,
+      "home_team": "Los Angeles Angels",
+      "away_team": "Tampa Bay Rays"
+    },
+    "824751": {
+      "home_id": 813349,
+      "home_name": "Connelly Early",
+      "away_id": 543135,
+      "away_name": "Nathan Eovaldi",
+      "home_team": "Boston Red Sox",
+      "away_team": "Texas Rangers"
     }
   },
   "game_logs": {
@@ -23740,7 +23860,8 @@
         "bf": 4
       }
     ],
-    "656457": []
+    "656457": [],
+    "683155": []
   },
   "dates_fetched": [
     "2026-03-22",
@@ -23841,6 +23962,8 @@
     "2026-06-11",
     "2026-06-12",
     "2026-06-12",
-    "2026-06-13"
+    "2026-06-13",
+    "2026-06-13",
+    "2026-06-14"
   ]
 }
